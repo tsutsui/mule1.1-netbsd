@@ -46,6 +46,8 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 	Support Big5. */
 /* 93.7.19  modified for Mule Ver.0.9.8 by K.Handa <handa@etl.go.jp>
 	Stop including "codeconv.h". */
+/* 94.3.9   modified for Mule Ver.1.1 by Y.Niibe <gniibe@oz.etl.go.jp>
+	In bdf_load_font(), fontp->extra->fs should not be set in emacs. */
 
 #include <stdio.h>
 #include <sys/param.h>
@@ -311,8 +313,10 @@ bdf_load_font(lc)
       if (fgets(line, LINE_BUF_SIZE, fontp->fp) == NULL)
 	return 0;
       if (!strncmp(line, "PIXEL_SIZE ", 11)) { /* 93.5.7 by K.Handa */
-	sscanf(line, "%s %d", dummy, &i);
-	((font_extra *)fontp->extra)->fs = i;
+	if (!in_emacs) {	/* 94.3.9 by Y.Niibe */
+	  sscanf(line, "%s %d", dummy, &i);
+	  ((font_extra *)fontp->extra)->fs = i;
+	}
       } else if (!strncmp(line, "FONT_ASCENT ", 12)) {
 	sscanf(line, "%s %d", dummy, &fontp->ury);
       } else if (!strncmp(line, "FONT_DESCENT ", 13)) {

@@ -39,7 +39,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 #undef PURESIZE
 
 #ifdef EGG
-#define EGG_PURESIZE 30000 /* egg */
+#define EGG_PURESIZE 60000 /* egg */
 #else
 #define EGG_PURESIZE 0
 #endif
@@ -51,7 +51,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 #endif
 
 #ifdef CANNA
-# define CANNA_PURESIZE 10000  /* canna */
+# define CANNA_PURESIZE 25000  /* canna */
 #else
 # define CANNA_PURESIZE 0
 #endif

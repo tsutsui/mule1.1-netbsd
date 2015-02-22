@@ -1,5 +1,35 @@
 ;;; -*-indented-text-*-
 
+Thu Mar 10 11:03:48 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
+    * The first patch for Ver.1.1.
+
+Thu Mar 10 11:03:04 JST 1994	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/mule.el (write-region):
+      `generate-new-buffer' is used for pre-write-conversion.
+
+Thu Mar 10 09:57:50 JST 1994	Fumio UENO <ueno@al.t.u-tokyo.ac.jp>
+    * src/s-linux.h, src/s-malloc.c: Modified for Linux.
+    * etc/server.c: `__const' should be defined before including <sys/types.h>.
+
+Wed Mar  9 10:18:47 JST 1994	Yutaka NIIBE <gniibe@oz.etl.go.jp>
+    * etc/bdf.c (bdf_load_font): fontp->extra->fs should not be set in emacs.
+
+Wed Mar  9 10:04:11 JST 1994	Tomotake FURUHATA <furuhata@trl.ibm.co.jp>
+    * src/codeconv.c (Fcode_detect_region): Document fixed.
+
+Wed Mar  9 10:03:54 JST 1994	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/regex.c: Bug in handling quoting character '\' fixed.
+    * src/mcpath.c (encode_path_1):
+      The last arg of encode() should be a pointer to a real Lisp_Object.
+
+Wed Mar  9 10:01:12 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el (set-file-coding-system): Bug fixed.
+    * src/codeconv.c (code_detect_iso2022):
+      Invalid esc-sequence is ignored, and bug fixed.
+
+Wed Mar  8 15:00:00 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
+    * Mule Ver.1.1 (HAHAKIGI) released.
+
 Tue Mar  8 14:47:36 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
     * lisp/quail.el, lisp/quail/etzy.el, lisp/quail/zozy.el:
       *quail-mode-tit-map* is created for etzy and zozy packages.

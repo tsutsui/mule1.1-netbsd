@@ -246,16 +246,16 @@
 (its-defrule   "]"    "｣")
 (its-defrule   "z/"   "･")
 
-(defvar use-kuten-for-comma t   "*ｺﾝﾏを句点に変換する")
-(defvar use-touten-for-period t "*ﾋﾟﾘｵﾄﾞを読点に変換する")
-
-(its-defrule-conditional ","
-  (use-kuten-for-comma "､")
-  (t ","))
+(defvar use-kuten-for-period t "*ﾋﾟﾘｵﾄﾞを句点に変換する")
+(defvar use-touten-for-comma t "*ｺﾝﾏを読点に変換する")
 
 (its-defrule-conditional "."
-  (use-touten-for-period "｡")
+  (use-kuten-for-period "｡")
   (t "."))
+
+(its-defrule-conditional ","
+  (use-touten-for-comma "､")
+  (t ","))
 
 (its-defrule (concat zenkaku-escape ",")  "，")
 (its-defrule (concat zenkaku-escape ".")  "．")

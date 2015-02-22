@@ -520,7 +520,11 @@ free (mem)
 
 #ifndef rcheck
     if (p -> mh_alloc != ISALLOC)
+#if defined(linux) && defined(CANNA2)
+      return;
+#else
       abort ();
+#endif
 
 #else rcheck
     if (p -> mh_alloc != ISALLOC)

@@ -17,6 +17,9 @@ You should have received a copy of the GNU General Public License
 along with GNU Emacs; see the file COPYING.  If not, write to
 the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
+/* 94.3.9   modified for Mule Ver.1.1 by T.Emami <enami@sys.ptg.sony.co.jp>
+	The last arg of encode() should be a pointer to a real Lisp_Object. */
+
 #define MCPATH_SOURCE
 #include <stdio.h>
 #include <sys/types.h>
@@ -111,7 +114,7 @@ static int encode_path_1 (src, srcsize, dst, dstsize)
       if (buf)
 	{
 	  int len;
-	  Lisp_Object dummy;
+	  Lisp_Object dummy = Qnil; /* 94.3.9 by T.Enami */
 
 	  len = encode(&code, src, buf, srcsize, &dummy);
 	  if (!CODE_CHAR(&code) && len <= dstsize)

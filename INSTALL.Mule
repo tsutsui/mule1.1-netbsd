@@ -18,7 +18,7 @@ Most of files in the distribution of Mule are compressed by
 'gzip' (GNU's effective compressor/expander) and have
 extension '.gz'.  You need 'gzip' to expand them.
 
-Format of all patch files (diff-18.59-1.0 and further
+Format of all patch files (diff-18.59-1.1 and further
 patches) are 'unified diff' created by GNU's diff program.
 Your patch program must understand this format.  'patch'
 program of the version 2.0.12u7 or higher works well.
@@ -41,15 +41,15 @@ To create Mule from the standard emacs you have to apply some patches.
 
 Change directory to $(mule) and apply patches as follows:
 	% cd $(mule)
-	% gzip -d < $(distribute)/diff-18.59-1.0.gz | patch -p1
+	% gzip -d < $(distribute)/diff-18.59-1.1.gz | patch -p1
 
 2.5. Apply whatever patches you find with version number higher than
-1.0 if any.
+1.1 if any.
 	% cd $(mule)
-	% gzip -d < $(distribute)/diff-1.0-1.1.gz | patch -p1
+	% gzip -d < $(distribute)/diff-1.1-1.2.gz | patch -p1
 	% ...
 	or
-	% gzip -d < $(distribute)/patch-1.0-01.gz | patch -p1
+	% gzip -d < $(distribute)/patch-1.1-01.gz | patch -p1
 	% ...
 
 3. Make Mule.

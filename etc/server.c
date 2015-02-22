@@ -24,12 +24,19 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 	Bug fix for the above patch. */
 /* 93.10.16 modified for Mule Ver.1.1 by K.Handa <handa@etl.go.jp>
 	`#define __const' for Linux. */
+/* 94.3.10  modified for Mule Ver.1.1 by F.Ueno <ueno@al.t.u-tokyo.ac.jp>
+	`__const' should be defined before including <sys/types.h> */
 
 /* The GNU Emacs edit server process is run as a subprocess of Emacs
    under control of the file lisp/server.el.
    This program accepts communication from client (program emacsclient.c)
    and passes their commands (consisting of keyboard characters)
    up to the Emacs which then executes them.  */
+
+#ifdef linux
+/* This must precede sys/types.h. */
+#define __const
+#endif
 
 /* This must precede sys/signal.h on certain machines.  */
 #include <sys/types.h>
@@ -42,12 +49,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #undef write
 #undef open
 #undef close
-
-/* 93.10.16 by K.Handa */
-#ifdef linux
-#define	__const
-#endif
-/* end of patch */
 
 #if !defined(BSD) && !defined(HAVE_SYSVIPC) && !defined(HAVE_SOCKETS)
 #include <stdio.h>

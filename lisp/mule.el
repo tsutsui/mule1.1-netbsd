@@ -158,13 +158,17 @@
 ;;; 94.3.8   modified for Mule Ver.1.1 by T.Enami <enami@sys.ptg.sony.co.jp>
 ;;;	call-process/start-process convert its argument by
 ;;;	code-convert-process-arguments.
+;;; 94.3.9   modified for Mule Ver.1.1 by K.Handa <handa@etl.go.jp>
+;;;	Bug in set-file-coding-system fixed.
+;;; 94.3.10  modified for Mule Ver.1.1 by T.Enami <enami@sys.ptg.sony.co.jp>
+;;;	In write-region, generate-new-buffer is used for pre-write-conversion.
 
 (provide 'mule)				;93.6.25 by T.Enami
 
-(defconst mule-version "1.1 (HAHAKIGI)" "\
+(defconst mule-version "1.1 (HAHAKIGI) PL01" "\
 Version numbers of this version of Mule.")
 
-(defconst mule-version-date "1994.3.8" "\
+(defconst mule-version-date "1994.3.10" "\
 Distribution date of this version of Mule.")
 
 (defun mule-version () "\
@@ -578,10 +582,8 @@ of ALIAS becomes a vector of them."
   (if (null force)
       (let ((x (get-code-eol file-coding-system))
 	    (y (get-code-eol coding-system)))
-	(if (and (numberp x) y (vectorp y))
-	    (setq coding-system (cond ((= x 1) (car y))
-				      ((= x 2) (aref y 1))
-				      (t (aref y 2)))))))
+	(if (and (numberp x) (>= x 1) (<= x 3) y (vectorp y))
+	    (setq coding-system (aref y (1- x)))))) ;94.3.9 by K.Handa
   ;; end of patch
   (setq file-coding-system coding-system)
   (update-mode-lines))
@@ -933,9 +935,8 @@ See also write-region-pre-hook, write-region-post-hook,
       coding-system
     (if (get coding-system 'pre-write-conversion)
 	(let ((curbuf (current-buffer))
-	      (tempbuf (get-buffer-create ;94.3.8 by S.Narazaki
-			(concat " *temp-write-buffer*"
-				(buffer-name (current-buffer)))))
+	      ;;94.3.10 by T.Enami
+	      (tempbuf (generate-new-buffer " *temp-write-buffer*"))
 	      (modif (buffer-modified-p)))
 	  (unwind-protect
 	      (save-excursion

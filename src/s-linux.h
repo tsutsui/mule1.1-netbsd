@@ -31,8 +31,15 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 /* 93.7.27  modified for Mule Ver.0.9.8
    			by S.Komeda <komeda@ics.es.osaka-u.ac.jp>
 	Modified to avoid wchar_t problem. */
+/* 94.3.10  modified for Mule Ver.1.1 by F.Ueno <ueno@al.t.u-tokyo.ac.jp>
+	Updated. */
 
 #include "s-usg5-2.h"		/* as close as anything */
+
+#ifdef SYSTEM_TYPE
+#undef SYSTEM_TYPE
+#endif
+#define SYSTEM_TYPE "linux"
 
 /* overrides for linux versus s-usg5-2.h */
 
@@ -76,7 +83,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 #define close sys_close
 
 #define C_COMPILER gcc
-#define C_DEBUG_SWITCH -g -O6 -fwritable-strings -fomit-frame-pointer -D__const=
+#define C_DEBUG_SWITCH -O6 -fwritable-strings -fomit-frame-pointer -D__const=
 #define C_OPTIMIZE_SWITCH -O6 -fwritable-strings -fomit-frame-pointer -D__const=
 #define OLDXMENU_OPTIONS CFLAGS=-O6 EXTRA=insque.o /* doesn't work anyway */
 #define LIB_X11_LIB -L/usr/X386/lib -lX11 /* 93.7.17 by K.Un */
@@ -101,7 +108,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 
 #define MAXNAMLEN NAME_MAX	/* missing SYSV-ism */
 
-#define SIGBUS SIGSEGV		/* rename to harmless work-alike */
+/* #define SIGBUS SIGSEGV		/* rename to harmless work-alike */
 #define SIGSYS SIGSEGV		/* rename to harmless work-alike */
 
 #define VSWTCH VSWTC		/* mis-spelling in termios.h? */
@@ -109,7 +116,8 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 
 /* we have non-standard standard I/O (iostream) ... */
 
-#define PENDING_OUTPUT_COUNT(FILE) ((FILE)->_pptr - (FILE)->_pbase)
+/* #define PENDING_OUTPUT_COUNT(FILE) ((FILE)->_pptr - (FILE)->_pbase) */
+#define PENDING_OUTPUT_COUNT(FILE) ((FILE)->_IO_write_ptr - (FILE)->_IO_write_base)
 
 /* defines for linux in preparation for m-intel386.h */
 

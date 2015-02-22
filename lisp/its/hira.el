@@ -318,16 +318,16 @@
 (its-defrule   "?"   "？")
 (its-defrule   "/"   "／")
 
-(defvar use-kuten-for-comma t   "*コンマを句点に変換する")
-(defvar use-touten-for-period t "*ピリオドを読点に変換する")
-
-(its-defrule-conditional ","
-  (use-kuten-for-comma "、")
-  (t "，"))
+(defvar use-kuten-for-period t "*ピリオドを句点に変換する")
+(defvar use-touten-for-comma t "*コンマを読点に変換する")
 
 (its-defrule-conditional "."
-  (use-touten-for-period "。")
+  (use-kuten-for-period "。")
   (t "．"))
+
+(its-defrule-conditional ","
+  (use-touten-for-comma "、")
+  (t "，"))
 
 ;;; Escape character to Zenkaku inputs
 

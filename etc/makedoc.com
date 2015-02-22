@@ -58,7 +58,7 @@ $!
 $ doit [lisp]mule-conf.el [lisp]mule-init.el
 $ doit [lisp]mule.elc [lisp]mule-util.elc
 $ doit [lisp]attribute.elc [lisp]kinsoku.elc
-$ doit [lisp]quail.elc [lisp]regexp.elc
+$ doit [lisp]quail.elc [lisp]trex.elc
 $ doit [lisp]keyboard.elc [lisp]ccl.elc
 $ doit [lisp]version.el
 $

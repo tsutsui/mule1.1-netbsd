@@ -66,6 +66,8 @@ what you give them.   Help stamp out software-hoarding!  */
 	In re_match_2(), charsetm(_not) should do FETCHn. */
 /* 93.8.3   modified for Mule Ver.1.1 by T.Enami <enami@sys.ptg.sony.co.jp>
 	In re_match_2(), needs "goto fail;" before "dynamic_wordbeg:". */
+/* 94.3.9   modified for Mule Ver.1.1 by T.Enami <enami@sys.ptg.sony.co.jp>
+	Bug in handling quoting character '\' fixed. */
 
 /* To test, compile with -Dtest.
  This Dtestable feature turns this into a self-contained program
@@ -315,7 +317,7 @@ static int mark_charset_entry (ip, c1, c2)
   return !0;
 }
 
-static int compile_charset_fetch_char_1 (ip)
+static int compile_charset_fetch_char (ip)
      struct compile_charset_information *ip;
 {
   int c;
@@ -332,15 +334,6 @@ static int compile_charset_fetch_char_1 (ip)
     }
   else c = -1;
       
-  return c;
-}
-
-static int compile_charset_fetch_char (ip)
-     struct compile_charset_information *ip;
-{
-  int c = compile_charset_fetch_char_1 (ip);
-  if (c == '\\' && ip->skip)
-    c = compile_charset_fetch_char_1 (ip);
   return c;
 }
 
@@ -430,6 +423,9 @@ int compile_charset (ip)
   c1 = compile_charset_fetch_char (ip);
   while (1)
     {
+      if ((c1 == '\\') && ip->skip)
+	c1 = compile_charset_fetch_char (ip);
+
       if (c1 == -1) return ip->skip? 0: -1;	/* -1 if end of pattern */
       if (!ip->skip && c1 == ']') return 0; /* success */
 

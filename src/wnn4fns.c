@@ -822,7 +822,7 @@ DEFUN ("wnn-server-word-add", Fwnn_word_toroku, Swnn_word_toroku, 5, 5, 0,
        "Add a word to dictionary. Arguments are\n\
 DIC-NUMBER, KANJI, YOMI, COMMENT, HINSI-NUMBER")
      (dicno, kanji, yomi, comment, hinsi)
-     register Lisp_Object dicno, kanji, yomi, hinsi;
+     register Lisp_Object dicno, kanji, yomi, comment, hinsi;
 {
   w_char		yomi_buf[256], kanji_buf[256], comment_buf[256];
   int	snum;

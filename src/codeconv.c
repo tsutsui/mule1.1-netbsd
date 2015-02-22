@@ -110,7 +110,11 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 	Sb2m() and Sm2b() are added for Big5 handling. */
 /* 94.2.23  modified for Mule Ver.1.1 by K.Handa <handa@etl.go.jp>
 	Big change of coding-system handling. */
-
+/* 94.3.9   modified for Mule Ver.1.1 by T.Furuhata <furuhata@trl.ibm.co.jp>
+	In Fcode_detect_region(), document fixed. */
+/* 94.3.9   modified for Mule Ver.1.1 by K.Handa <handa@etl.go.jp>
+	In code_detect_iso2022(), invalid esc-sequence is ignored,
+	and bug fixed. */
 
 #ifdef emacs
 #include "config.h"
@@ -240,16 +244,14 @@ code_detect_iso2022(buf, endp)
       while (buf < endp) {
 	c = *buf++;
 	esc_cntl = lookup(c, &lcg0, &lcg1, &lcg2, &lcg3, esc_cntl);
+	/* 94.3.9 by K.Handa */
 	if (esc_cntl == CC_ESC_DESIGNATE) {
 	  if (lcg2 || lcg3) return M_ISO_ELSE;
-	} else if (esc_cntl == CC_ESC_INVALID) {
-	  return M_BIN;
-	} else if (esc_cntl == CC_ESC_2_4
-		   || esc_cntl <= CC_ESC_2_4_15
-		   || esc_cntl >= CC_ESC_5_11) {
-	  continue;
+	} else if (esc_cntl != CC_ESC_2_4
+		   && esc_cntl > CC_ESC_2_4_15
+		   && esc_cntl < CC_ESC_5_11) {
+	  break;
 	}
-	break;
       }
       break;
     case SI: case SO:
@@ -264,7 +266,8 @@ code_detect_iso2022(buf, endp)
 	int count = 1;
 	mask &= ~M_ISO_7;
 	while (buf < endp && *buf >= 0xA0) count++, buf++;
-	if (count & 1) mask &= ~M_ISO_8_2;
+	if (count & 1 && buf < endp) /* 94.3.9 by K.Handa */
+	  mask &= ~M_ISO_8_2;
       } else if (c >= 0x80) {
 	return M_BIN;
       }
@@ -402,7 +405,7 @@ DEFUN ("code-detect-region", Fcode_detect_region, Scode_detect_region,
        2, 2, 0,
   "Detect coding-system of the text in the region between START and END.\n\
 Returned value is a list of possible coding-system ordered by priority.\n\
-If only ASCII characters are found, it returns *autoconv* or its
+If only ASCII characters are found, it returns *autoconv* or its\n\
 subsidieary coding-system accoding to a detected end-of-line type.")
   (b, e)
      Lisp_Object b, e;

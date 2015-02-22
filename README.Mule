@@ -15,6 +15,7 @@
 1993.1.22:  Mule Ver.0.9.7.1 Beta
 1993.6.14:  Mule Ver.0.9.8 Beta
 1993.8.1:   Mule Ver.1.0 (KIRITSUBO)
+1994.2.8:   Mule Ver.1.1 (HAHAKIGI)
 
 ############################################################
 	0. INTRODUCTION
@@ -31,7 +32,7 @@
 
 0. INTRODUCTION
 
-This directory contains the distribution of Mule Ver.1.0.
+This directory contains the distribution of Mule Ver.1.1.
 
 Mule is free software distributed either as patches to GNU Emacs
 (18.59) or as a complete tar file.  You can redistribute it and/or
@@ -224,10 +225,10 @@ As for a mail service, read the section 8.
 If you are accessing from out of Japan, please use the one
 of the last two sites.  For Europeans, the last site is
 probably the best.  Either ftp the complete tar file
-(mule-1.0.tar.gz), *or* if you have an unmodified GNU Emacs
-18.59 you can ftp just the patch file (diff-18.59-1.0.gz)
+(mule-1.1.tar.gz), *or* if you have an unmodified GNU Emacs
+18.59 you can ftp just the patch file (diff-18.59-1.1.gz)
 and apply that.  If you find a patch with version number
-higher than 1.0, apply that also.
+higher than 1.1, apply that also.
 
 These directories contain several other useful files such as
 X's fonts and contributed softwares.  See the file '00README'.
@@ -278,10 +279,10 @@ The acceptable format of Subject is:
 		Send the specified file to <mail-address>.
 The acceptable 'filename' is one of the followings:
 ------------------------------------------------------------
-	diff-18.59-1.0 -- Patch for GNU Emacs 18.59, 33 files
-	diff-18.59-1.0.N -- Nth part of diff-18.59-1.0
+	diff-18.59-1.1 -- Patch for GNU Emacs 18.59, 33 files
+	diff-18.59-1.1.N -- Nth part of diff-18.59-1.1
 			   -- N should be one of 01, 02 .. 33
-	patch-1.0-N -- Nth patch for Mule Ver.1.0
+	patch-1.1-N -- Nth patch for Mule Ver.1.1
 		      -- N should be one of 01, 02...
 	ETL.tar -- Fonts for Laint1,Cyrillic,Greek,Thai,Viet..., 3 files
 	Chinese.tar -- Fonts for Chinese-GB (16/24) , 20 files

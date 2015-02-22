@@ -1,4 +1,15 @@
 ############################################################
+List of new features in Mule Ver.1.1     -- 94.2.10
+
+1. CRLF is now handled automatically.
+
+By the big change in the structure of coding-system, we now
+can automatically detect how end-of-line of a text is
+encoded and choose an appropriate coding-system for a new
+buffer.  Please read doc/coding.txt for more information.
+
+
+############################################################
 List of new features in Mule Ver.0.9.8   -- 93.6.20
 
 1. CRLF is not handled automatically.
