@@ -1,0 +1,126 @@
+## GNU Emacs: GNU project Emacs
+
+GNU Emacs is a new version of Emacs, written by the author
+of the original (PDP-10) Emacs, Richard Stallman. Its user
+functionality encompasses everything other Emacs editors do,
+and it is easily extensible since its editing commands are
+written in Lisp.  (from etc/emacs.1)
+
+
+## Mule [mju:l]: Multilingual Enhancement to GNU Emacs
+
+Mule is a [MUL]tilingual [E]nhancement to GNU Emacs.  It can
+handle not only ASCII characters (7 bits) and ISO Latin-1 (8
+bits), but also Japanese, Chinese, Korean (16 bits) coded in
+the ISO2022 standard and its variants (e.g. EUC, Compound
+Text).
+
+
+## Wnn: Japanese Kana to Kanji translator
+
+Wnn consists of:
+	jserver - a background server for translating Kana
+		  string to Kanji-Kana mixed string.
+	uum - a front end of jserver used on terminal.
+	dictionary - quite big dictionary for the translation.
+Wnn is distributed as a contribution software of X.V11R5
+under the directory contrib/im/Xsi/Wnn.  The latest version
+is 4.108.
+
+
+## cWnn: Chinese PinYin/ZhuYin to Hanji translator
+
+cWnn consists of:
+	cserver - a background server for translating
+		  PinYin/ZhuYin string to Hanji string
+		  (for GB encoding).
+	tserver - a background server for translating
+		  PinYin/ZhuYin string to Hanji string
+		  (for Big-5 encoding).
+	cuum - a front end of cserver used on terminal.
+	dictionary - quite big dictionary for the translation.
+cWnn is distributed as a contribution software of X.V11R5
+under the directory contrib/im/Xsi/cWnn.  The latest version
+is 4.108.
+
+
+## EGG: Japanese inputting methods on Mule
+
+EGG provides two levels of user interface, one is to enter
+Kana/PinYin string from ASCII keyboard (ITS level), and the
+other is to tranlate Kana/PinYin string to Kanji/Hanzi
+string (TAKANA level) while communicating with
+jserver/cserver.
+
+Using EGG on Mule corresponds to using uum/cuum on
+kterm/cxterm, both uses jserver/cserver as background, but
+EGG provides much more convenient interface when you are
+running Mule.
+
+
+## sj3: Japanese Kana to Kanji translator
+
+'sj3' translates Japanese Kana string to Kanji-Kana mixed
+string.  'sj3' runs on Sony NEWS workstations.  
+
+When Mule is installed with EGG and SJ3, EGG communicate
+with sj3serv instead of jserver/cserver.
+
+
+## CANNA: Japanese Kana to Kanji translator
+
+Canna converts kana to kanji based on a server-client model.
+That is, an application program communicates with a
+kana-to-kanji conversion server and achieves Japanese input.
+Canna is distributed as a contribution software of X.V11R5
+under the directory contrib/im/Canna.
+
+When Mule is installed with CANNA, you can use Canna server
+for inputting Japanese.
+
+
+## Quail: Inputting method of multilingual characters in Mule
+
+Quail system is bundled with Mule (quail.el) and provides inputting
+methods of various character sets (quail-xxx.el).
+For European:
+	quail-latin.el, quail-greek.el, quail-cyrillic.el, quail-hebrew.el
+For Chinese (corresponds to cxterm's *.cit):
+	quail-ccdospy.el, quail-ctcps3.el, quail-etzy.el, quail-punct-b5.el,
+	quail-punct.el, quail-py-b5.el, quail-py.el, quail-qj-b5.el,
+	quail-qj.el, quail-sw.el, quail-tonepy.el, quail-zozy.el
+For Korean:
+	quail-hangul.el
+For Japanese (tcode users):
+	quail-tcode-dvorak.el, quail-tcode-qwerty.el
+
+
+## kterm, cxterm, ixterm, exterm: Terminal emulators which runs on X
+
+	kterm: Japanese version of 'xterm'.
+	cxterm: Chinese version of 'xterm'.
+	ixterm: European version of 'xterm'.
+	exterm: multilingual version of 'xterm'.
+			(Japanese/Chinese/Korean/European/et al)
+Distributed as contribution softwares of X.V11R5 under the
+directory contrib/clients.
+
+
+## ISO2022: Code extension techniques of
+	    ISO 7-bit and 8-bit coded character sets
+
+ISO2022 is the International Standard of character code
+encoding techniques.  It defines how to encode character
+sets registered by ECMA.  Here we gives a very short essence
+of these techniques.  See mule/doc/ISO2022 for more information.
+
+
+## ECMA: European Computer Manufacturers Association
+
+ECMA is engaged in administration of The International
+Register for character sets.  Any character set can be a
+candidate for registration so long as it satisfies the
+technical requirements of ISO2022 and the format
+requirements of ISO2375.
+
+

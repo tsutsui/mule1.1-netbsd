@@ -1,0 +1,122 @@
+Mule on OpenVMS VAX (It's a new name of VAX/VMS.)
+
+	Mule 1.0 and GNU Emacs 18.59
+		10-MAR-1993	T.Atsushiba	(toshiki@jit.dec.com)
+		26-APR-1993	T.Atsushiba	(toshiki@jit.dec.com)
+		16-JUN-1993	T.Atsushiba	(toshiki@jit.dec.com)
+		08-SEP-1993	T.Atsushiba	(toshiki@jit.dec.com)
+
+This document describes the following topics about Mule on OpenVMS VAX.
+
+    - Features
+    - Installation
+    - Usage
+
+
+* Features
+~~~~~~~~~~~
+
+Mule works well also on OpenVMS VAX, while a few restrictions exist.
+Each of them originates from original GNU Emacs.
+
+    - X interface isn't supported.
+    - Process facility isn't supported.
+
+
+* Installation
+~~~~~~~~~~~~~~~
+
+Installation is fundamentally the same as installing original 
+GNU Emacs 18.59.  But a few operations are added or changed for Mule.
+See also VMSINSTALL, INSTALL.Mule and src/VMSBUILD.
+The installation procedure is as following:
+
+
+1. Expand All Mule source files to OpenVMS VAX.
+
+   In Mule 1.0, the following filename isn't suit for VMS file system.
+   It should be renamed.  For example:
+
+	mule-1.0/			  -->	mule/
+
+   TCP/IP utilities on OpenVMS VAX, such as ANET+, VMS/ULTRIX Connection and 
+   WIN/TCP may be useful (NFS-mounting VMS disk to unix and `tar'ing).
+
+
+2. Make Mule
+
+    (1) Execute mule.com.  This is maintainance-free version of emacs.com, 
+	an original startup command procedure file for GNU Emacs.
+
+	$ @mule
+
+	Emacs.com is also available on Mule.  If you use emacs.com,
+	you have to edit it before executing.  See VMSINSTAL.
+
+    (2) Create [.src]config.h from [.src]config.h-dist.
+	#Include s-vms4-4.h and m-vax.h for VMS V5.4 or lower.
+	#Include s-vms5-5.h and m-vax.h for VMS V5.5 or upper.
+
+    (3) Create [.src]mconfig.h from [.src]mconfig.h-dist.
+	Unless you use EGG on OpenVMS VAX (!), comment-out `#define EGG'.
+
+    (4) Create [.src]paths.h from [.src]vmspaths.h.
+	You don't have to edit.  Just copy it.
+
+    (5) Create [.lisp]site-init.el if needed.  See INSTALL.Mule.
+
+    (6) Execute [.src]vms-pp.com to rename all too long variable names 
+	for VMS.  See VMSBUILD.  It takes a few minutes.
+
+	$ set def [.src]
+	$ @vms-pp
+
+    (7) Compile, link and build Mule.
+
+	$ set def [.src]
+	$ @compile		! Compile [.src].c
+	$ @link			! Link Mule
+	$ @mule-bytecomp	! Compile [.lisp].el
+	$ @[.etc]complink	! Compile and link [.etc]
+	$ @[.etc]makedoc	! Mkae DOC file
+	$ @build		! Build Mule
+
+    (8) Install Mule.
+
+	$ set def [.src]
+	$ rename temacs.dump [-]mule.dump
+	$ rename temacs.exe [-]mule.exe
+
+	And you may have to `purge' and `set prot=(g:re,w:re)' for
+	all files and directories.
+
+
+* Usage
+~~~~~~~~
+
+Using Mule is completely the same as using original GNU Emacs on OpenVMS VAX.
+Additionally, command `mule' is also available.  It is equivalent to
+command `emacs'.
+
+
+1. Setting up
+
+   Execute mule.com, and symbol `mule', symbol `emacs' and logical name
+   EMACS_LIBRARY are defined.
+
+	$ @mule
+
+  It's useful add this command your SYS$LOGIN:LOGIN.COM.
+  If you use `emacs.com' instead, you may have to edit it.  See VMSINATAL.
+
+
+2. Invoking Mule
+
+   Type `mule', and Mule is invoked.  Type `emacs' is also good.
+
+
+3. Suspending and Resuming
+
+   C-z (suspend-emacs) makes Mule suspend and control returns to DCL.
+   To resume (continue) it,  type `mule' (or `emacs') on DCL prompt.
+

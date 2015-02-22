@@ -1,0 +1,59 @@
+!include <ntwin32.mak> 
+
+SUPPORT_DIR = ../nt
+INCLUDE_DIR = -I$(SUPPORT_DIR)/include -I$(WNN_DIR)/include
+
+#
+# for Wnn
+#
+WNN_DIR = E:/usr/src/wnn
+WNN_OBJ = wnn4fns.obj
+WNN_LIB = $(WNN_DIR)/jlib/wnn.lib
+
+#
+# Use this for debugging
+#
+CFLAGS  = $(cdebug) -Demacs $(INCLUDE_DIR)
+LDFLAGS = $(linkdebug) -heap:24000000 -stack:1000000
+
+#
+# Use this for maximum optimization (without debugging)
+#
+#CFLAGS  = -Ox -Demacs $(INCLUDE_DIR)
+#LDFLAGS = -heap:24000000 -stack:1000000
+
+OBJS    = dispnew.obj scroll.obj window.obj cm.obj \
+	emacs.obj keyboard.obj macros.obj keymap.obj \
+	buffer.obj insdel.obj marker.obj term.obj \
+	minibuf.obj cmds.obj casefiddle.obj indent.obj search.obj \
+	regex.obj undo.obj alloc.obj data.obj doc.obj \
+	callint.obj eval.obj fns.obj print.obj \
+	lread.obj abbrev.obj syntax.obj mocklisp.obj \
+	bytecode.obj process.obj callproc.obj doprnt.obj \
+	mule.obj codeconv.obj category.obj ccl.obj \
+	tparam.obj termcap.obj xdisp.obj \
+	editfns.obj filelock.obj filemode.obj \
+	dired.obj fileio.obj alloca.obj sysdep.obj \
+	$(WNN_OBJ) \
+	win32fns.obj \
+	win32term.obj \
+	win32main.obj \
+	lastfile.obj
+
+all: temacs.exe
+
+.c.obj:
+    $(cc) $(cflags) $(CFLAGS) $(cvarsdll) $<
+
+#temacs.res: temacs.rc
+#	rc -r -fo temacs.res $(cvarsdll) temacs.rc
+#	cvtres -$(CPU) temacs.res -o temacs.rbj
+
+temacs.exe : $(OBJS) $(SUPPORT_DIR)/lib/libc/libc.lib $(WNN_LIB)
+	$(link) $(LDFLAGS) -out:$*.exe \
+	$(LIB)/binmode.obj \
+	$(OBJS) \
+	$(SUPPORT_DIR)/lib/libc/libc.lib \
+	$(WNN_LIB) \
+	$(guilibsdll) \
+	advapi32.lib winmm.lib wsock32.lib

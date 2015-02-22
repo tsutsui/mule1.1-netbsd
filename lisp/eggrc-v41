@@ -1,0 +1,126 @@
+;;	-*-Emacs-Lisp-*-
+;; Standard Start Up File for EGG
+;; Copyright (C) 1992 Free Software Foundation, Inc.
+;; This file is part of Mule (MULtilingual Enhancement of GNU Emacs).
+
+;; Mule is free software distributed in the form of patches to GNU Emacs.
+;; You can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 1, or (at your option)
+;; any later version.
+
+;; Mule is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with GNU Emacs; see the file COPYING.  If not, write to
+;; the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+
+;;;	 Version 1.0
+;;;      Written by Satoru.Tomura@etl.jp 1988
+;;;      modified for LUNA'default  ryuji@nfa.ncl.omron.junet
+;;;
+;;;      modified for Wnn V4 - Use compatible library of Wnn v3
+;;;	 Copyright 1989 OMRON Tateisi Electronics, Co.
+;;;	 1989 7/12 by H.Kuribayashi kuri@frf.oron.junet
+
+;;; 92.5.19  modified for Wnn V4 by T.Shingu <shingu@cpr.canon.co.jp>
+;;;	Use non compatible library.
+;;; 93.1.8   file names of frequency and private dictionary ware adjusted
+;;;	to Wnn version 4.1.
+;;; 93.4.2   dictianary, frequency files are set up on normal/reverse
+;;;	environment individually.
+;;; 93.6.30  specifying default user directory to make customize easily
+;;;	suggested by K.Sakai <ksakai@mtl.t.u-tokyo.ac.jp>
+
+(defvar wnn-usr-dic-dir "usr/$USER")
+
+(cond ((eq wnn-server-type 'jserver)
+       (set-wnn-reverse nil)
+       (set-wnn-fuzokugo "pubdic/full.fzk")
+       (add-wnn-dict "pubdic/kihon.dic" (concat wnn-usr-dic-dir "/kihon.h") 5 nil t)
+       (add-wnn-dict "pubdic/setsuji.dic" (concat wnn-usr-dic-dir "/setsuji.h") 5 nil t)
+       (add-wnn-dict "pubdic/koyuu.dic" (concat wnn-usr-dic-dir "/koyuu.h") 1 nil t)
+       (add-wnn-dict "pubdic/chimei.dic" (concat wnn-usr-dic-dir "/chimei.h") 1 nil t)
+       (add-wnn-dict "pubdic/jinmei.dic" (concat wnn-usr-dic-dir "/jinmei.h") 1 nil t)
+       (add-wnn-dict "pubdic/special.dic" (concat wnn-usr-dic-dir "/special.h") 5 nil t)
+       (add-wnn-dict "pubdic/computer.dic" (concat wnn-usr-dic-dir "/computer.h") 5 nil t)
+       (add-wnn-dict "pubdic/symbol.dic" (concat wnn-usr-dic-dir "/symbol.h") 1 nil t)
+       (add-wnn-dict "pubdic/tankan.dic" "" 1 nil nil)
+       (add-wnn-dict "pubdic/bio.dic" (concat wnn-usr-dic-dir "/bio.h") 1 nil t)
+       (add-wnn-dict (concat wnn-usr-dic-dir "/ud") "" 5 t t)
+;       (add-wnn-dict "wnncons/tankan2.dic" "" 1 nil nil)
+;       (add-wnn-dict "wnncons/tankan3.dic" "" 1 nil nil)
+       (set-wnn-param  2 10 2 45 5  80 5 1 40  0 400 -100 400   80 200 2 200)
+       (set-wnn-reverse t)
+       (set-wnn-fuzokugo "pubdic/full.fzk")
+       (add-wnn-dict "pubdic/kihon.dic" (concat wnn-usr-dic-dir "/kihon.h") 5 nil t)
+       (add-wnn-dict "pubdic/setsuji.dic" (concat wnn-usr-dic-dir "/setsuji.h") 5 nil t)
+       (add-wnn-dict "pubdic/koyuu.dic" (concat wnn-usr-dic-dir "/koyuu.h") 1 nil t)
+       (add-wnn-dict "pubdic/chimei.dic" (concat wnn-usr-dic-dir "/chimei.h") 1 nil t)
+       (add-wnn-dict "pubdic/jinmei.dic" (concat wnn-usr-dic-dir "/jinmei.h") 1 nil t)
+       (add-wnn-dict "pubdic/special.dic" (concat wnn-usr-dic-dir "/special.h") 5 nil t)
+       (add-wnn-dict "pubdic/computer.dic" (concat wnn-usr-dic-dir "/computer.h") 5 nil t)
+;       (add-wnn-dict "pubdic/symbol.dic" (concat wnn-usr-dic-dir "/symbol.h") 1 nil t)
+       (add-wnn-dict "pubdic/tankan.dic" "" 1 nil nil)
+       (add-wnn-dict "pubdic/bio.dic" (concat wnn-usr-dic-dir "/bio.h") 1 nil t)
+       (add-wnn-dict (concat wnn-usr-dic-dir "/ud") "" 5 t t)
+;       (add-wnn-dict "wnncons/tankan2.dic" "" 1 nil nil)
+;       (add-wnn-dict "wnncons/tankan3.dic" "" 1 nil nil)
+       (set-wnn-param  2 10 2 45 1 80 5 1 50 -20 400 -10  100  -100 200 0 200)
+
+       )
+      ((eq wnn-server-type 'cserver)
+       (set-wnn-reverse nil)
+       (set-wnn-fuzokugo "sys/full.con")
+       (add-wnn-dict "sys/level_1.dic" (concat wnn-usr-dic-dir "/level_1.h") 4 nil t)
+       (add-wnn-dict "sys/level_2.dic" (concat wnn-usr-dic-dir "/level_2.h") 1 nil t)
+       (add-wnn-dict "sys/basic.dic"	(concat wnn-usr-dic-dir "/basic.h") 7 nil t)
+       (add-wnn-dict (concat wnn-usr-dic-dir "/ud") "" 5 t t)
+       (set-wnn-param 1 5  2 750 10 80 10 5 1000 50  0  -200  0  0  0  16  0)
+       (set-wnn-reverse t)
+       (set-wnn-fuzokugo "sys/full.con")
+       (add-wnn-dict "sys/level_1.dic" (concat wnn-usr-dic-dir "/level_1.h") 4 nil t)
+       (add-wnn-dict "sys/level_2.dic" (concat wnn-usr-dic-dir "/level_2.h") 1 nil t)
+       (add-wnn-dict "sys/basic.dic"	(concat wnn-usr-dic-dir "/basic.h") 7 nil t)
+       (add-wnn-dict (concat wnn-usr-dic-dir "/ud") "" 5 t t)
+       (set-wnn-param 1 5  2 750 10 80 10 5 1000 50  0  -200  0  0  0  16  0)
+       )
+      ((eq wnn-server-type 'tserver)
+       (set-wnn-reverse nil)
+       (set-wnn-fuzokugo "sys/full.con")
+       (add-wnn-dict "sys/cns_ch.dic" (concat wnn-usr-dic-dir "/cns_ch.h") 4 nil t)
+       (add-wnn-dict "sys/cns_wd.dic" (concat wnn-usr-dic-dir "/cns_wd.h") 1 nil t)
+       (add-wnn-dict (concat wnn-usr-dic-dir "/ud") "" 5 t t)
+       (set-wnn-param 1 5 2 750 10 80 10 5 1000 50  0 -200 0 0 0 16 0)
+       (set-wnn-reverse t)
+       (set-wnn-fuzokugo "sys/full.con")
+       (add-wnn-dict "sys/cns_ch.dic" (concat wnn-usr-dic-dir "/cns_ch.h") 4 nil t)
+       (add-wnn-dict "sys/cns_wd.dic" (concat wnn-usr-dic-dir "/cns_wd.h") 1 nil t)
+       (add-wnn-dict (concat wnn-usr-dic-dir "/ud") "" 5 t t)
+       (set-wnn-param 1 5 2 750 10 80 10 5 1000 50  0 -200 0 0 0 16 0)
+       )
+      ((eq wnn-server-type 'kserver)
+       (set-wnn-reverse nil)
+       (set-wnn-fuzokugo "sys/full.fzk")
+;       (add-wnn-dict "sys/hword.dic" (concat wnn-usr-dic-dir "/hword.h") 4 nil t)
+       (add-wnn-dict "sys/single.dic" (concat wnn-usr-dic-dir "/single.h") 1 nil t)
+       (add-wnn-dict (concat wnn-usr-dic-dir "/ud") "" 5 t t)
+;       (add-wnn-dict (concat wnn-usr-dic-dir "/hangul") "" 5 t t)
+;       (add-wnn-dict (concat wnn-usr-dic-dir "/fuzokugo") "" 5 t t)
+       (set-wnn-param 1 5 2 750 10 80 10 5 1000 50  0 -200 0 0 0 16 0)
+       (set-wnn-reverse t)
+       (set-wnn-fuzokugo "sys/full.fzk")
+;       (add-wnn-dict "sys/hword.dic" (concat wnn-usr-dic-dir "/hword.h") 4 nil t)
+       (add-wnn-dict "sys/single.dic" (concat wnn-usr-dic-dir "/single.h") 1 nil t)
+       (add-wnn-dict (concat wnn-usr-dic-dir "/ud") "" 5 t t)
+;       (add-wnn-dict (concat wnn-usr-dic-dir "/hangul") "" 5 t t)
+;       (add-wnn-dict (concat wnn-usr-dic-dir "/fuzokugo") "" 5 t t)
+       (set-wnn-param 1 5 2 750 10 80 10 5 1000 50  0 -200 0 0 0 16 0)
+       )
+)
+
+;;       N nsho hindo len jiri flag jisho sbn dbn_len sbn_cnt suuji kana eisuu kigou toji_kakko fuzokogo kaikakko
+

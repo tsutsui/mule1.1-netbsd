@@ -1,0 +1,147 @@
+## Brief description about ISO2022
+## 93.2.28  modified by K.Handa <handa@etl.go.jp>
+## 93.8.5   modified by K.Handa <handa@etl.go.jp>
+
+# Since the following description is intended to be understood
+# easily, some parts are NOT ACCURATE.  For the thorough
+# understanding, please refer to the original document of
+# ISO2022.
+
+Character sets (charset) are classified into the following
+four categories, 94 charset, 96 charset, 94x94 charset, and
+96x96 charset according to the number of characters of
+charset.
+	94-charset: ASCII(B), left(J) and right(I) half of JISX0201, ...
+	96-charset: Latin-1(A), Latin-2(B), Latin-3(C), ...
+	94x94-charset: GB2312(A), JISX0208(B), KSC5601(C), ...
+	96x96-charset: none for the moment
+The character in parenthesis after the name of each charset
+is the final character <F>, which can be regarded as
+identifiers of the charsets.  ECMA allocates <F> to each
+charset.  <F> is in the range of 0x30..0x7F, but 0x30..0x3F
+are only for private use.
+
+Note: ECMA = European Computer Manufacturers Association
+
+There are four registers of charsets, called G0 thru G3.
+You can designate (or assign) any charset to one of these
+registers.
+
+A code area (one byte) is divided into 4 areas, C0, GL, C1,
+and GR, and GL and GR are the places where each register of
+charset is invoked.
+	C0: 0x00 - 0x1F
+	GL: 0x20 - 0x7F
+	C1: 0x80 - 0x9F
+	GR: 0xA0 - 0xFF
+Usually, at the initial state, G0 is invoked into GL, and G1
+is invoked into GR.
+
+ISO2022 distinguishes 7-bit environment and 8-bit
+environment.  In 7-bit environment, only C0 and GL is used.
+
+Designation is done by escape sequences of the form:
+	ESC [I] I <F>
+where 'I' is an intermediate characters (0x20 .. 0x2F).  The
+meaning of intermediate characters are:
+	$ [0x24]: indicate multiple byte charsets (94x94 or 96x96)
+	( [0x28]: designate to G0 a 94-charset whose final char is <F>.
+	) [0x29]: designate to G1 a 94-charset whose final char is <F>.
+	* [0x2A]: designate to G2 a 94-charset whose final char is <F>.
+	+ [0x2B]: designate to G3 a 94-charset whose final char is <F>.
+	- [0x2D]: designate to G1 a 96-charset whose final char is <F>.
+	. [0x2E]: designate to G2 a 96-charset whose final char is <F>.
+	/ [0x2F]: designate to G3 a 96-charset whose final char is <F>.
+The following rule is not allowed in ISO220 but can be used
+in Mule.
+	, [0x2C]: designate to G0 a 96-charset whose final char is <F>.
+
+Here are examples of designations.
+	ESC ( B : designate ASCII to G0
+	ESC - A : designate Latin-1 to G1
+	ESC $ ( A or ESC $ A : designate GB2312 to G0
+	ESC $ ( B or ESC $ B : designate JISX0208 to G0
+	ESC $ ) C : designates KSC5601 to G1
+
+To use a charset designated to G2 or G3, and to use a
+charset designated to G1 in 7-bit environment, you must
+explicitly invoke G1, G2, or G3 into GL.  There are two
+types of invocation, Locking Shift (forever) and Single
+Shift (one character only).
+
+Locking Shift is done as follows:
+	SI or LS0: invoke G0 into GL
+	SO or LS1: invoke G1 into GL
+	LS2: invoke G2 into GL
+	LS3: invoke G3 into GL
+	LS1R: invoke G1 into GR
+	LS2R: invoke G2 into GR
+	LS3R: invoke G3 into GR
+
+Single Shift is done as follows:
+	SS2 or ESC N: invoke G2 into GL
+	SS3 or ESC O: invoke G3 into GL
+
+You may realize that there are a lot of ways for encoding
+multilingual text along ISO2022.  Now in the world, there
+exist many coding systems such as X's Compound Text,
+Japanese JUNET code, and so called EUC [Extended UNIX Code],
+all of these are the variants of ISO2022.
+
+In Mule, we characterized ISO2022 by the following attributes:
+	1. Initial designation to G0 thru G3.
+	2. Allow designation of short form for Japanese and Chinese.
+	3. Should we designate ASCII to G0 before control characters?
+	4. Should we designate ASCII to G0 at the end of line?
+	5. 7-bit environment or 8-bit environment.
+	6. Use Locking Shift or not.
+And the following two are only for Japanese:
+	7. Use ASCII or JIS0201-1976-Roman.
+	8. Use JISX0208-1983 or JISX0208-1976.
+By specifying these attributes, you can create any variant
+of ISO2022.
+
+I'll give you several examples.
+
+*junet* -- Coding system used in JUNET.
+	1. G0 <- ASCII, G1..3 <- never used
+	2. Yes.
+	3. Yes.
+	4. Yes.
+	5. 7-bit environment
+	6. No.
+	7. Use ASCII
+	8. Use JISX0208-1983
+
+*ctext* -- Compound Text
+	1. G0 <- ASCII, G1 <- Latin-1, G2,3 <- never used
+	2. No.
+	3. No.
+	4. Yes.
+	5. 8-bit environment
+	6. No.
+	7. Use ASCII
+	8. Use JISX0208-1983
+
+*euc-china* -- Chinese EUC.  Although many people call this
+as "GB encoding", the name may cause misunderstanding.
+	1. G0 <- ASCII, G1 <- GB2312, G2,3 <- never used
+	2. No.
+	3. Yes.
+	4. Yes.
+	5. 8-bit environment
+	6. No.
+	7. Use ASCII
+	8. Use JISX0208-1983
+
+*korean-mail* -- Coding system used in Korean network.
+	1. G0 <- ASCII, G1 <- KSC5601, G2,3 <- never used
+	2. No.
+	3. Yes.
+	4. Yes.
+	5. 7-bit environment
+	6. Yes.
+	7. No.
+	8. No.
+
+Mule creates all these coding systems by default.

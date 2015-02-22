@@ -1,0 +1,1230 @@
+Info file: mule-jp,    -*-Text-*-
+produced by texinfo-format-buffer
+from file: mule-jp.texi
+
+
+
+
+File: mule-jp  Node: Set Coding System, Prev: Buffers, Up: Multilingual Char, Next: Key Input
+
+コード系の指定
+==============
+
+Mule では、ファイル入出力、キー入力、画面表示、プロセス間通信について、
+それぞれ独立にコード系を指定することができます。実際にコード系として指定
+できる値(コード系オブジェクト)としては、あらかじめ以下のものが定義されて
+います。
+
+`*noconv*'
+     無変換
+`*autoconv*'
+     自動変換
+`*internal*'
+     バッファ内部コード
+`*sjis*'
+     MS 漢字コード(シフト JIS コード)
+`*sjis-dos*'
+     MS 漢字コード(シフト JIS コード)、行末は CRLF
+`*junet*'
+     JUNET で使われているコード(およびそれに類するもの)
+`*oldjis*'
+     旧 JIS コード
+`*ctext*'
+     X で使われているコンパウンドテキストのコード
+`*euc-japan*'
+     日本語 EUC コード
+`*euc-korea*'
+     韓国語 EUC コード
+`*iso-2022-kr*'
+`*korean-mail*'
+     韓国のネットワークで使われているコード
+`*euc-china*'
+     中国語 EUC コード
+`*iso-2022-ss2-8*'
+     96 文字セットの呼び出しに SS2 を用いる ISO2022 コード系(8ビット系)
+`*iso-2022-ss2-7*'
+     96 文字セットの呼び出しに SS2 を用いる ISO2022 コード系(7ビット系)
+`*iso-2022-lock*'
+     96 文字セットの呼び出しにロッキングシフトを用いる ISO2022 コード系
+`*big5-eten*'
+     BIG5-ETen コード
+`*big5-hku*'
+     BIG5-HKU コード
+`*big5-eten-dos*'
+     BIG5-ETen コード、行末は CRLF
+`*big5-hku-dos*'
+     BIG5-HKU コード、行末は CRLF
+
+なお、出力時においては `*noconv*', `*autoconv*', `*internal*' は全部同じ
+意味になります。また、入力時には `*noconv*' と `*internal*' は同じ意味に
+なります。
+
+
+以上のコード系があらかじめ定義されていますが、必要ならば関数 
+*make-coding-system* を使って自分で新たにコード系を定義することもできま
+す。詳しくは `$MULE/doc/coding.text' をみてください。
+
+関数:
+## Function: make-coding-system NAME TYPE MNEMONIC DOC &optional CRLF FLAGS
+     シンボル NAME を TYPE, MNEMONIC, DOC, CRLF, FLAGS で示されるコード
+     系として登録する。TYPE はエンコーディングあるいはデコーディングの情
+     報を示す。もし TYPE が次のうちいずれかならば、
+
+     nil: 無変換, t: 自動変換, 0: Internal, 1: Shift-JIS, 2: ISO2022, 3: Big5.
+
+     システムは適切なコード変換機能を提供する。
+
+     MNEMONIC
+          このコード系のニモニックとしてモードラインに表示される文字
+     DOC
+          コード系の説明
+     CRLF (OPTION)
+          `non-nil' の場合は、入出力時に CRLF <-> LF 変換を行なう
+     FLAGS (OPTION)
+          コード系についてのより細かい情報
+
+     TYPEが 2(ISO2022) ならば、FLAGS は以下の list でなければなら
+     ない。
+
+     LC-G0, LC-G1, LC-G2, LC-G3
+          初期値として G? に指示されている文字セットのリーディングキャラ
+          クタ。 `nil' は G? に最初は何も指示されていないことを意味し、
+          `lc-invalid' は G? には文字セットを指示できないことを意味する。
+          `(- loading-char)' が指定されていると、出力時に指示が行なわれ
+          る。
+     SHORT
+          `non-nil' の場合、日本語と中国語の漢字を指示する時の省略形を許す
+     ASCII-EOL
+          `non-nil' の場合、出力時、行末毎に G0 に ASCII をに指示する
+     ASCII-CNTL
+          `non-nil' の場合、TAB および SPACE を出力する前に G0 に ASCII 
+          を指示する
+     SEVEN
+          `non-nil' の場合は 7ビット系を意味する
+     LOCK-SHIFT
+          `non-nil' の場合、シングルシフトやエスケープシーケンスによる指
+          示の代わりにロッキングシフトを使用する
+     USE-ROMAN
+          `non-nil' の場合、JIS X0201-1976 ローマ字を ASCII として使用す
+          る
+     USE-OLDJIS
+          `non-nil' の場合、JIS X0208-1976 を JIS X0208-1983 として使用
+          する
+
+     TYPE が 3 ならば、FLAGS の `t' は Big5-ETen を意味し、 `non-nil' は 
+     Big5-HKU を意味する。
+
+
+* Menu:
+
+* Key Input::		キーボードからの入力.
+* Display::		画面への表示.
+* File I/O::		ファイル入出力.
+* Process::		外部プロセスとの通信.
+
+
+File: mule-jp  Node: Key Input, Prev: Set Coding System, Up: Set Coding System, Next: Display
+
+キーボード入力
+--------------
+
+キーボードから ASCII 以外の文字を入力するには、どのコード系を使いたいか
+をあらかじめ Mule に教えてやる必要があります。これは `C-x C-k i' (コマン
+ド *set-keyboard-coding-system*) によって行なえます。 `C-x C-k i' と入力
+すると、Mule はミニバッファで、
+
+     Keybaord-coding-system:
+
+と聞いてきますので、キーボード文字コードとして指定したいコード系を入力し
+ます。このとき、スペースキーや TAB キーによるコード系名の補完機能が使え
+ます。また、`.emacs' などでキーボード文字コードを指定する場合は、
+
+     (set-keyboard-coding-system *euc-japan*)
+
+などのようにします。なお、キーボード文字コードに `*euc-japan*' や 
+`*sjis*' などの 8ビット系のコードを指定するとメタキーが使用できなくなる
+ので注意してください。また、Mule は `keyboard-coding-system' によっては、
+キーマッピングを変更する場合があります。
+
+
+指定したコード系は `keyboard-coding-system' の値として保持され、 Mule は
+入力をそのコードだと思って受け取り、内部コードに変換します。
+
+変数:
+## Global Variable: keyboard-coding-system
+     Muleがキーボード入力として予期しているコード系を保持する変数。指定
+     できる値は以下のいずれか。
+     `*noconv*'
+          無変換
+     `*sjis*'
+          MS 漢字コード(シフト JIS コード)
+     `*sjis-dos*'
+          MS 漢字コード(シフト JIS コード)、行末は CRLF
+     `*junet*'
+          JUNET で使われているコード(およびそれに類するもの)
+     `*oldjis*'
+          旧 JIS コード
+     `*ctext*'
+          X で使われているコンパウンドテキストのコード
+     `*euc-japan*'
+          日本語 EUC コード
+     `*euc-korea*'
+          韓国語 EUC コード
+     `*iso-2022-kr*'
+     `*korean-mail*'
+          韓国のネットワークで使われているコード
+     `*euc-china*'
+          中国語 EUC コード
+     `*iso-2022-ss2-8*'
+          96 文字セットの呼び出しに SS2 を用いる ISO2022 コード系(8ビット系)
+     `*iso-2022-ss2-7*'
+          96 文字セットの呼び出しに SS2 を用いる ISO2022 コード系(7ビット系)
+     `*iso-2022-lock*'
+          96 文字セットの呼び出しにロッキングシフトを用いる ISO2022 コード系
+
+     デフォルト値は `nil'。
+
+コマンド:
+## Command: set-keyboard-coding-system CODING-SYSTEM
+     変数 `keyboard-coding-system' を CODING-SYSTEM に設定する。
+
+
+File: mule-jp  Node: Display, Prev: Key Input, Up: Set Coding System, Next: File I/O
+
+ディスプレイへの表示
+--------------------
+
+Mule を端末(あるいは端末エミュレータ)で使用している場合、Mule は文字を変
+数 `display-coding-system' の値で指定されたコードに変換してからディスプ
+レイに送ります。変数 `display-coding-system' は `C-x C-k d'
+(*set-display-coding-system*) を呼ぶことで設定できます。`C-x C-k d' と入
+力すると、Mule はミニバッファで、
+
+     Display-coding-system:
+
+と聞いてきますので、指定したいコード系を入力します。このとき、スペースキー
+や TAB キーによるコード系名の補完機能が使えます。また、 `.emacs' などで
+ディスプレイ文字コードを指定する場合は、
+
+     (set-display-coding-system *euc-japan*)
+
+などのようにします。
+
+変数:
+## Global Variable: display-coding-system
+     Mule が端末表示用に送信するコード系を保持する変数。指定できる値は以
+     下のいずれか。
+     `*noconv*'
+          無変換
+     `*autoconv*'
+          自動変換
+     `*internal*'
+          バッファ内部コード
+     `*sjis*'
+          MS 漢字コード(シフト JIS コード)
+     `*sjis-dos*'
+          MS 漢字コード(シフト JIS コード)、行末は CRLF
+     `*junet*'
+          JUNET で使われているコード(およびそれに類するもの)
+     `*oldjis*'
+          旧 JIS コード
+     `*ctext*'
+          X で使われているコンパウンドテキストのコード
+     `*euc-japan*'
+          日本語 EUC コード
+     `*euc-korea*'
+          韓国語 EUC コード
+     `*iso-2022-kr*'
+     `*korean-mail*'
+          韓国のネットワークで使われているコード
+     `*euc-china*'
+          中国語 EUC コード
+     `*iso-2022-ss2-8*'
+          96 文字セットの呼び出しに SS2 を用いる ISO2022 コード系(8ビット系)
+     `*iso-2022-ss2-7*'
+          96 文字セットの呼び出しに SS2 を用いる ISO2022 コード系(7ビット系)
+     `*iso-2022-lock*'
+          96 文字セットの呼び出しにロッキングシフトを用いる ISO2022 コード系
+     `*big5-eten*'
+          BIG5-ETen コード
+     `*big5-hku*'
+          BIG5-HKU コード
+     `*big5-eten-dos*'
+          BIG5-ETen コード、行末は CRLF
+     `*big5-hku-dos*'
+          BIG5-HKU コード、行末は CRLF
+
+     デフォルト値は `*junet*'。
+
+コマンド:
+## Command: set-display-coding-system CODING-SYSTEM
+     変数 `display-coding-system'を CODING-SYSTEM に設定する。
+
+
+File: mule-jp  Node: File I/O, Prev: Display, Up: Set Coding System, Next: File Input
+
+ファイルの読み書き
+------------------
+
+Mule の各バッファは2つの変数 `mc-flag' と `file-coding-system' を持ちま
+す。1つめの `mc-flag' はそのバッファが多国語文字を含むかどうかを示します。
+つまり `mc-flag' が nil ならば、 Mule は多国語文字があらわれないと思い、
+基本的に GNU Emacs と同じように振舞います。この場合には Mule を用いて 8
+ビットデータの編集ができます。
+
+2つめの変数 `file-coding-system' は、Mule がファイルを書き出すときに使う
+多国語文字コード系を示します。この変数は関数 `C-x C-k f'
+(*set-file-coding-system*) によって設定できます。デフォルト値は 
+`default-file-coding-system'に保持され、`C-x C-k F'
+(*set-default-file-coding-system*) によって変更可能です。
+
+例えば、`C-x C-k f' と入力すると、Mule はミニバッファで、
+
+     File-coding-system:
+
+と聞いてきますので、指定したいコード系を入力します。このとき、スペース
+キーや TAB キーによるコード系名の補完機能が使えます。
+
+また、`.emacs' などでデフォルトのファイル文字コードを指定する場合は、
+
+     (set-default-file-coding-system *euc-japan*)
+
+などのようにします。変数 `file-coding-system' は、バッファローカルな変数
+なので、`.emacs' で値を指定しても意味はありません。
+
+Muleは、ファイルに文書を書き出す前には文書を `file-coding-system' で指定
+されるコードに変換します。
+
+変数:
+## Local Variable: mc-flag
+     t
+          多国語表示を行ない、カーソルも多国語文字単位で移動。
+     nil
+          多国語表示を行なわない。カーソル移動などは GNU Emacs と同じ。
+     いずれの場合もファイル I/O、プロセス I/O におけるコード系変換が行われま
+     す。
+## Local Variable: file-coding-system
+     ファイルを書き出すときに用いられるコード系を保持する変数。指定でき
+     る値は以下のいずれか。
+     `*noconv*'
+          無変換
+     `*autoconv*'
+          自動変換
+     `*internal*'
+          バッファ内部コード
+     `*sjis*'
+          MS 漢字コード(シフト JIS コード)
+     `*sjis-dos*'
+          MS 漢字コード(シフト JIS コード)、行末は CRLF
+     `*junet*'
+          JUNET で使われているコード(およびそれに類するもの)
+     `*oldjis*'
+          旧 JIS コード
+     `*ctext*'
+          X で使われているコンパウンドテキストのコード
+     `*euc-japan*'
+          日本語 EUC コード
+     `*euc-korea*'
+          韓国語 EUC コード
+     `*iso-2022-kr*'
+     `*korean-mail*'
+          韓国のネットワークで使われているコード
+     `*euc-china*'
+          中国語 EUC コード
+     `*iso-2022-ss2-8*'
+          96 文字セットの呼び出しに SS2 を用いる ISO2022 コード系(8ビット系)
+     `*iso-2022-ss2-7*'
+          96 文字セットの呼び出しに SS2 を用いる ISO2022 コード系(7ビット系)
+     `*iso-2022-lock*'
+          96 文字セットの呼び出しにロッキングシフトを用いる ISO2022 コード系
+     `*big5-eten*'
+          BIG5-ETen コード
+     `*big5-hku*'
+          BIG5-HKU コード
+     `*big5-eten-dos*'
+          BIG5-ETen コード、行末は CRLF
+     `*big5-hku-dos*'
+          BIG5-HKU コード、行末は CRLF
+## Global Variable: default-file-coding-system
+     バッファの変数 `file-coding-system' のデフォルト値。
+
+コマンド:
+## Command: set-file-coding-system CODING-SYSTEM
+     変数 `file-coding-system' の値を CODING-SYSTEM に設定する。
+## Command: set-default-file-coding-system CODING-SYSTEM
+     変数 `default-file-coding-system'の値を CODING-SYSTEM に設定する。
+
+* Menu:
+
+* File Input::		ファイル入力.	入力時にコード系をどう決めるか
+* File Output::		ファイル出力.	出力時に何をするか.
+
+
+File: mule-jp  Node: File Input, Prev: File I/O, Up: File I/O, Next: File Output
+
+ファイル入力
+............
+
+バッファの変数 `mc-flag' の値が t の時は、Mule はそのバッファに読み込ま
+れるファイルは ASCII 以外のコードを含むことを仮定します。Mule はたくさん
+のコード系を扱えるので、入力されるファイルがそのうちのどのコードで書かれ
+ているかを調べなければなりません。入力ファイルが書かれているコードをその
+ファイルの*ファイル文字コード*と呼びます。
+
+Mule は三つの変数、`file-coding-system-for-read', `file-coding-system',
+`default-file-coding-system' にしたがって*ファイル文字コード*を決定しま
+す。`file-coding-system' は `C-x C-k f'(コマンド 
+*set-file-coding-system*) で、 `default-file-coding-system' は `C-x C-k
+F'(コマンド *set-default-file-coding-system*)によって設定できます。
+
+ファイルを読み込む時の文字コードは `file-coding-system-for-read' で決め
+られます。通常この変数は `*autoconv*' に設定されており、どのコードが使わ
+れているかは自動判別します。
+
+ただし、ファイルを読み込むときにそのファイルが見つからなかったとき、すな
+わち新規ファイルの場合には、変数 `default-file-coding-system' に指定され
+たコード系がファイル文字コードになります。
+
+まとめると、*ファイル文字コード*は以下のように設定されます。
+
+既存ファイル読み込時
+     file-coding-system-for-read に指定されているコード系。通常は *autoconv* 
+     になっているので、ファイルのコード系を自動判別してファイル文字コードを設
+     定する。
+空ファイル読み込時
+     default-file-coding-system に指定されているコード系。
+新バッファ作成時
+     default-file-coding-system に指定されているコード系。
+ローカルに file-coding-system が設定されていないバッファに既存ファイル挿入時
+     file-coding-system-for-read に指定されているコード系。通常は *autoconv* 
+     になっているので、挿入されるファイルのコード系を自動判別してファイル文字
+     コードを設定する。
+
+
+また、*find-file*, *find-alternate-file*, *find-file-other-window*,
+*find-file-read-only*, *insert-file* のいずれかを行なってファイルを読み
+込む場合に、数引数を与えることによって対話的に 
+`file-coding-system-for-read' を指定することができます。
+
+例えば、`C-u C-x C-f'(*find-file*) と入力すると、Mule はミニバッファでファ
+イル名を聞いた後、
+
+     Coding-system:
+
+のようにファイル文字コードを聞いてきますので、指定したいコード系を入力
+すれば、指定したコード系でファイルの読み込みを行います。
+
+## Local Variable: file-coding-system
+     ファイルを書き出すときに用いられるコード系を保持する変数。指定でき
+     る値は以下のいずれか。
+     `*noconv*'
+          無変換
+     `*autoconv*'
+          自動変換
+     `*internal*'
+          バッファ内部コード
+     `*sjis*'
+          MS 漢字コード(シフト JIS コード)
+     `*sjis-dos*'
+          MS 漢字コード(シフト JIS コード)、行末は CRLF
+     `*junet*'
+          JUNET で使われているコード(およびそれに類するもの)
+     `*oldjis*'
+          旧 JIS コード
+     `*ctext*'
+          X で使われているコンパウンドテキストのコード
+     `*euc-japan*'
+          日本語 EUC コード
+     `*euc-korea*'
+          韓国語 EUC コード
+     `*iso-2022-kr*'
+     `*korean-mail*'
+          韓国のネットワークで使われているコード
+     `*euc-china*'
+          中国語 EUC コード
+     `*iso-2022-ss2-8*'
+          96 文字セットの呼び出しに SS2 を用いる ISO2022 コード系(8ビット系)
+     `*iso-2022-ss2-7*'
+          96 文字セットの呼び出しに SS2 を用いる ISO2022 コード系(7ビット系)
+     `*iso-2022-lock*'
+          96 文字セットの呼び出しにロッキングシフトを用いる ISO2022 コード系
+     `*big5-eten*'
+          BIG5-ETen コード
+     `*big5-hku*'
+          BIG5-HKU コード
+     `*big5-eten-dos*'
+          BIG5-ETen コード、行末は CRLF
+     `*big5-hku-dos*'
+          BIG5-HKU コード、行末は CRLF
+## Global Variable: default-file-coding-system
+     バッファの変数 `file-coding-system' のデフォルト値。
+## Global Variable: file-coding-system-for-read
+     ファイルを読み込むときに使われるコード系。指定できる値は、 
+     `file-coding-system' に指定できるものと同じコード系名か `'query'。
+     `'query' を指定した場合には、ファイル読み込み時にファイル文字コード
+     を対話的に指定できるようになる。
+
+
+File: mule-jp  Node: File Output, Prev: File Input, Up: File I/O, Next: Process
+
+ファイル出力
+............
+
+バッファをファイルに書き出す時には、Mule はバッファ中の文書を変数 
+`file-coding-system' に示されたコードに変換した上で、書き出しを行ないま
+す。
+
+*write-file*, *append-to-file* のいずれかを行なってファイルを書き出す場
+合に、数引数を与えることによって対話的に書き出すファイル文字コードを指定
+することができます。
+
+例えば、`C-u C-x C-w'(*write-file*) と入力すると、Mule はミニバッファで
+出力するファイル名を聞いた後、
+
+     Coding-system:
+
+のようにファイル文字コードを聞いてきますので、指定したいコード系を入力
+すると、そのコード系でファイルを書き出します。
+
+ただし、`C-x C-s'(*save-buffer*) ではこの手は使えません (*save-buffer* 
+で数引数を指定すると別の意味になります)。 *save-buffer* で文字コードを変
+えたい場合は、`C-x C-k f'(*set-file-coding-system*) でコード系を指定して
+から *save-buffer* して下さい。
+
+変数:
+## Local Variable: file-coding-system
+     ファイル出力に用いられるコード系。指定できる値は以下のいずれか。
+     `*noconv*'
+          無変換
+     `*autoconv*'
+          自動変換
+     `*internal*'
+          バッファ内部コード
+     `*sjis*'
+          MS 漢字コード(シフト JIS コード)
+     `*sjis-dos*'
+          MS 漢字コード(シフト JIS コード)、行末は CRLF
+     `*junet*'
+          JUNET で使われているコード(およびそれに類するもの)
+     `*oldjis*'
+          旧 JIS コード
+     `*ctext*'
+          X で使われているコンパウンドテキストのコード
+     `*euc-japan*'
+          日本語 EUC コード
+     `*euc-korea*'
+          韓国語 EUC コード
+     `*iso-2022-kr*'
+     `*korean-mail*'
+          韓国のネットワークで使われているコード
+     `*euc-china*'
+          中国語 EUC コード
+     `*iso-2022-ss2-8*'
+          96 文字セットの呼び出しに SS2 を用いる ISO2022 コード系(8ビット系)
+     `*iso-2022-ss2-7*'
+          96 文字セットの呼び出しに SS2 を用いる ISO2022 コード系(7ビット系)
+     `*iso-2022-lock*'
+          96 文字セットの呼び出しにロッキングシフトを用いる ISO2022 コード系
+     `*big5-eten*'
+          BIG5-ETen コード
+     `*big5-hku*'
+          BIG5-HKU コード
+     `*big5-eten-dos*'
+          BIG5-ETen コード、行末は CRLF
+     `*big5-hku-dos*'
+          BIG5-HKU コード、行末は CRLF
+## Global Variable: default-file-coding-system
+     バッファの変数 `file-coding-system' のデフォルト値。
+
+
+File: mule-jp  Node: Process, Prev: File Output, Up: Set Coding System, Next: More Process
+
+外部プロセスとの通信
+--------------------
+
+Mule は外部プロセスやネットワーク上のサーバプロセスを起動し、それらと通
+信することができます。それぞれのプロセスは入力用/出力用の別々に独自の *
+プロセス文字コード*を持っています。Mule は指定された文字コードにテキスト
+を変換して外部プロセスやサーバプロセスと通信し、外部プロセスやサーバプロ
+セスから受け取ったテキストを Mule の内部表現に変換します。あるプロセスと
+の通信に使われる*プロセス文字コード*は、入力用と出力用のコード系の cons 
+として変数 *current-process-coding-system* に格納されています。
+
+関数 *start-process* や *open-network-stream* によって外部プロセスを起動
+したり、*call-process* や *call-process-region* によって実行したりする場
+合には、Mule はそれぞれの関数別に設定されたフックを呼び出して*プロセス文
+字コード*を設定します。また `C-x C-k p'(コマンド 
+*set-current-process-coding-system*)によって*プロセス文字コード*を直接設
+定することもできます。さらに、フック *find-process-coding-system* の値を
+変更して Mule が*プロセス文字コード*を見つける方法をユーザ毎に変更したり
+することもできます (*Note More Process::)。 
+
+*プロセス文字コード*のデフォルト値は `default-process-coding-system' に
+保持され、関数 *set-default-process-coding-system*(`C-x C-k P')で設定で
+きます。 
+
+変数:
+## Local Variable: current-process-coding-system
+     *プロセス文字コード*の値。
+## Global Variable: default-process-coding-system
+     *プロセス文字コード*のデフォルト値。
+
+コマンド:
+## Function: find-process-coding-system BUFFER PROGRAM &optional SERVICEP &rest ARG
+     引数で示されるプログラムまたはサービスが使用する入力と出力のコード
+     系の cons を返す。
+## Command: set-current-process-coding-system (INPUT OUTPUT)
+     変数 `current-process-coding-system' の値、すなわち現在のバッファで
+     走っているプロセスの*プロセス文字コード*を (INPUT OUTPUT) に設定す
+     る。
+## Command: set-default-process-coding-system (INPUT OUTPUT)
+     プロセス文字コードのデフォルト値 `default-process-coding-system' の
+     値を設定する。
+
+* Menu:
+
+* More Process:: 	プロセスについてもっと.
+
+
+File: mule-jp  Node: More Process, Prev: Process, Up: Process, Next: Auto Conversion
+
+プロセスについてもっと
+......................
+
+`(load-library "mule-util")' を行なうと、Mule が*プロセス文字コード*を決
+める方法を変えることができるようになります(`mule-util' はデフォルトで 
+load されています)。関数 *define-program-coding-system* は外部プロセスの
+*プロセス文字コード*を宣言し、関数 *define-service-coding-system* はネッ
+トワーク上のサーバの*プロセス文字コード*を宣言します。これらの宣言を行う
+と、関数 *find-process-coding-system* は宣言に沿った値を返すようになりま
+す。*find-process-coding-system* が適当な値を返さなかった場合には、Mule 
+は代わりに変数 `default-process-coding-system' の値を用いてプロセス間通
+信を行ないます。
+
+関数:
+## Function: find-process-coding-system BUFFER PROGRAM &optional SERVICEP &rest ARG
+     引数で示されるプログラムまたはサービスが使用する入力と出力のコード
+     系の cons を返す。
+## Function: define-program-coding-system BUFFER PROGRAM CODE
+     BUFFER と PROGRAM は正規表現か `nil'。`nil' は任意のストリングとマッ
+     チする。*find-process-coding-system*が BUFFER と PROGRAM の 2つの引
+     数で呼ばれた場合に、*プロセス文字コード*を決定する CODE を定義する。
+
+     たとえば、`(define-program-coding-system nil ".*mail.*" (cons
+     *junet* *junet*))' は、プログラム名が "mail" を含む場合には、そのプ
+     ログラムとの通信は入力/出力ともに JUNET で使われている JIS コードを
+     使うように *find-process-coding-system* を変更する。
+## Function: define-service-coding-system SERVICE HOST CODE
+     SERVICE と HOST は正規表現か `nil'。`nil' は任意のストリングとマッ
+     チする。*find-process-coding-system*の引数 SERVICEP が `nil' 以外の
+     値で呼ばれた場合に、*プロセス文字コード*決定する CODE を定義する。
+
+     たとえば、`(define-service-coding-system "wnn" nil (cons *noconv*
+     *noconv*))'は Mule がサービス "wnn" を使用する場合には入力/出力とも
+     にコード変換を行なわないことを宣言する。
+
+
+File: mule-jp  Node: Auto Conversion, Prev: More Process, Up: Multilingual Char, Next: Summary for Char
+
+コード系の自動変換
+==================
+
+Mule では、入力時におけるコード系の自動変換機能を持っています。しかし、
+この機能はそれほど強力ではなく、以下に示す部類のコード系のみが識別できま
+す。
+
+ASCII
+     ASCII コード
+INTERNAL
+     Mule のバッファ内部コード
+SJIS
+     MS 漢字コード(シフト JIS)
+JUNET
+     ISO2022 での、すべての文字が GL に呼び出されているもの
+CTEXT
+     ISO2022 での、GR に呼び出されている文字が 1バイトコードのもの
+EUC
+     ISO2022 での、GR に呼び出されている文字が 2バイトコードのもの
+BIG5
+     Big5 コード
+
+また、行末が CRLF になっているかどうかも検出します。
+
+
+もしコード系識別ルーチンが上の部類の一つを検出すると、以下の部類による
+コード系を返します。
+
+`nil (for ASCII)'
+`*internal-code-category*'
+`*sjis-code-category*'
+`*junet-code-category*'
+`*ctext-code-category*'
+`*euc-code-category*'
+`*big5-code-category*'
+
+これらはデフォルトでは次のように定義されています。
+
+     (setq *internal-code-category* '(*internal* . *sjis-dos*)
+           *sjis-code-category* '(*sjis* . *sjis-dos*)
+           *junet-code-category* '(*junet* . *sjis-dos*)
+           *euc-code-category* '(*euc-japan* . *sjis-dos*)
+           *ctext-code-category* '(*ctext* . *sjis-dos*)
+           *big5-code-category* '(*big5-hku* . *big5-hku-dos*))
+
+それぞれの car 部分は行末が LF のコード系で、cdr 部分は行末が CRLF のコー
+ド系です。
+
+すなわち、Mule には日本語 EUC, 中国語 EUC, 韓国語 EUC の間の区別はつけら
+れないので、(デフォルトでは)自動変換時にはすべて日本語 EUC であるとみな
+します。
+
+もしコード系識別ルーチンが、一つのコード系に決定できなかった場合には、変
+数 `code-priority' に基づく最も優先順位の高いコード系を返します。また、
+テキストが ASCII 文字のみからなっているが行末が CRLF のものの場合は、以
+下のように定義されている `*crlf-code-category*' を返します。
+
+     (setq *crlf-code-category* '(nil . *sjis-dos*))
+
+変数:
+## Global Variable: code-priority
+     コード系を識別するときの優先順位リスト。
+
+
+File: mule-jp  Node: Summary for Char, Prev: Auto Conversion, Up: Multilingual Char, Next: Features
+
+多国語文字についてのまとめ
+==========================
+
+Mule では、以下のような文字セットを使用することができます。
+
+  1. コード長が 1バイトのもの
+        * ASCII
+        * ISO8859-1 Latin-1
+        * ISO8859-2 Latin-2
+        * ISO8859-3 Latin-3
+        * ISO8859-4 Latin-4
+        * ISO8859-7 Greek
+        * ISO8859-6 Arabic
+        * ISO8859-8 Hebrew
+        * JIS X0201 Japanese Katakana
+        * JIS X0201 Japanese Roman
+        * ISO8859-5 Cyrillic
+        * ISO8859-9 Latin-5
+  2. コード長が 2バイトのもの
+        * JIS X0208 Japanese Old
+        * GB2312-1980 Chinese
+        * JIS X0208 Japanese
+        * KS C5601-1987 Korean
+        * JIS X0212 Japanese Supplement
+        * Big5 Level 1
+        * Big5 Level 2
+  3. プライベート文字セット
+        * Pin-Yin-ZhuYin
+        * Thai TSCII
+
+Mule は以下に示すような様々なコード系をサポートしています。
+
+`*noconv*'
+     無変換
+`*autoconv*'
+     自動変換
+`*internal*'
+     バッファ内部コード
+`*sjis*'
+     MS 漢字コード(シフト JIS コード)
+`*sjis-dos*'
+     MS 漢字コード(シフト JIS コード)、行末は CRLF
+`*junet*'
+     JUNET で使われているコード(およびそれに類するもの)
+`*oldjis*'
+     旧 JIS コード
+`*ctext*'
+     X で使われているコンパウンドテキストのコード
+`*euc-japan*'
+     日本語 EUC コード
+`*euc-korea*'
+     韓国語 EUC コード
+`*iso-2022-kr*'
+`*korean-mail*'
+     韓国のネットワークで使われているコード
+`*euc-china*'
+     中国語 EUC コード
+`*iso-2022-ss2-8*'
+     96 文字セットの呼び出しに SS2 を用いる ISO2022 コード系(8ビット系)
+`*iso-2022-ss2-7*'
+     96 文字セットの呼び出しに SS2 を用いる ISO2022 コード系(7ビット系)
+`*iso-2022-lock*'
+     96 文字セットの呼び出しにロッキングシフトを用いる ISO2022 コード系
+`*big5-eten*'
+     BIG5-ETen コード
+`*big5-hku*'
+     BIG5-HKU コード
+`*big5-eten-dos*'
+     BIG5-ETen コード、行末は CRLF
+`*big5-hku-dos*'
+     BIG5-HKU コード、行末は CRLF
+
+これらのコード系を、ファイル入出力、スクリーン表示、キーボード入力、プロ
+セス間通信のそれぞれについて独立に設定できるようになっています。それぞれ
+の処理に設定されているコード系のことを、以下のように呼びます。
+
+*ファイル文字コード*
+     文書ファイルで用いられるコード系。
+*ディスプレイ文字コード*
+     Mule が端末表示用に送信するコード系。
+*キーボード文字コード*
+     Mule がキーボード入力として予期しているコード系。
+*プロセス文字コード*
+     Mule と外部プロセスの通信に用いられるコード系。
+
+コード系を設定したり、どのコード系が設定されているかを表示させるコマンド
+は、`C-x C-k' で始まるキーにバインドされています。
+
+キーボード文字コードの設定
+     `C-x C-k i'(*set-keyboard-coding-system*)
+ディスプレイ文字コードの設定
+     `C-x C-k d'(*set-display-coding-system*)
+ファイル文字コードの設定
+     `C-x C-k f'(*set-file-coding-system*)
+プロセス文字コードの設定
+     `C-x C-k p'(*set-current-process-coding-system*)
+選択されているコード系を表示
+     `C-x C-k c'(*list-coding-system*)または`C-x C-k
+     C'(*list-coding-system-briefry*)
+ファイル文字コードのデフォルト値の設定
+     `C-x C-k F'(*set-default-file-coding-system*)
+プロセス文字コードのデフォルト値の設定
+     `C-x C-k P'(*set-default-process-coding-system*)
+
+
+File: mule-jp  Node: Features, Prev: Summary for Char, Up: Top, Next: Functions
+
+Muleの機能
+**********
+
+Mule は多国語文書編集の様々な機能を提供します。
+
+* Menu:
+
+* Functions::		多国語文字コード系に関する関数.
+* Features for Text::	多国語文書編集の機能.
+* Enhancement::		多国語処理のための拡張.
+
+
+File: mule-jp  Node: Functions, Prev: Features, Up: Features, Next: Features for Text
+
+多国語文字コード関連の関数
+==========================
+
+Mule は多国語文字コード系に関連して以下の関数を提供しています。これら
+によって、バッファ中のテキストの多国語文字コード系を変換することなどが
+可能です。
+
+コマンド:
+## Command: code-convert-region START END SOURCE TARGET
+     SOURCE と TARGET は文字コード系の指定。START から END までのテキストの
+     多国語文字コードを、SOURCE からTARGET に変換する。
+
+関数:
+## Function: code-convert-string STRING SOURCE TARGET
+     STRING の多国語文字コードを SOURCE から TARGET に変換し、その結果を返す。
+## Function: code-detect-region
+     ポイントからマークまでのテキストの、多国語文字コード系を調べる。
+
+
+File: mule-jp  Node: Features for Text, Prev: Functions, Up: Features, Next: Syntax
+
+多国語文書編集機能
+==================
+
+Mule は、日本語でいうところの文節単位のオペレーションや多国語テキストの
+探索、置換を行なうことができます。特に日本語文書においては語単位の操作よ
+り、文節単位の操作の方が一般的であるという判断に基づいて、Mule では日本
+語文字については疑似的な文節単位の操作を行なうように語の概念を拡張してい
+ます(ASCII文字のみのテキストについては、オリジナルの GNU Emacs が提供す
+る語単位の操作と同等です。*Note Syntax::)。日本語などには文節境界
+を示す記法はないので、Mule はすべての文字に対してカテゴリを定義し、これ
+を用いて文節境界を推測し、疑似文節を切り出しています。
+
+* Menu:
+
+* Syntax::		多国語文字のシンタックス.
+* Regular Expression::	正規表現の拡張.
+* Clause::		文節(語の概念の拡張).
+* Search::		多国語文書の探索と置換.
+* Filling&Justifying::	行詰めと行揃え.
+
+
+File: mule-jp  Node: Syntax, Prev: Features for Text, Up: Features for Text, Next: char-syntax
+
+多国語文字のシンタックス
+------------------------
+
+GNU Emacs では各バイトに対して *char-syntax* が定義できます。Mule では 
+GNU Emacs の *char-syntax* を拡張して、多国語文字コードに対するシンタッ
+クスが使えるようになっています。
+
+さらに Mule では *char-syntax* を多国語文字用に拡張した *char-category* 
+を定義しています。*char-category* は、多国語文字コード系に含まれる文字を
+いくつかのカテゴリに分類します。また、これに伴って、正規表現が拡張および
+変更されています。
+
+関数:
+## Function: char-syntax CHAR
+     CHAR のシンタックスコードを返す。
+## Function: char-category CHAR &optional TABLE
+     TABLE における CHAR のカテゴリニモニック文字列を返す。TABLE は、デフォル
+     トではカレントバッファのカテゴリテーブルが使われる。
+
+* Menu:
+
+* char-syntax::		char-syntax について.
+* char-category::	char-category について.
+
+
+File: mule-jp  Node: char-syntax, Prev: Syntax, Up: Syntax, Next: char-category
+
+char-syntax
+...........
+
+Mule では、関数 *modify-syntax-entry* によって、すべてのマルチバイト文字
+のシンタックスを定義することができます。
+
+## Function: modify-syntax-entry CHAR S
+     文字 CHAR を S で示されるシンタックスに設定する。CHAR は以下のいずれか。
+       1. ASCII 文字
+       2. マルチバイト文字
+       3. マルチバイト文字のリーディングキャラクタ
+       4. (リーディングキャラクタ << 8) | (マルチバイト文字の最初のバイト)
+
+     S の最初の文字には次のものが指定できる。
+
+     `SPC'
+          whitespace syntax.
+     `w'
+          word constituent.
+     `_'
+          symbol constituent.
+     `.'
+          punctuation.
+     `('
+          open parenthesis.
+     `)'
+          close parenthesis.
+     `"'
+          string quote.
+     `\'
+          character quote.
+     `$'
+          paired delimiter.
+     `''
+          expression prefix operator.
+     `<'
+          comment starter.
+     `>'
+          comment ender.
+
+     コメントのシンタックスの扱いについては GNU Emacs と同じであるが、
+     parenthesis のマッチング文字については制限がある。もし、CHAR がマルチバ
+     イト文字またはマルチバイト文字のリーディングキャラクタであれば、マッチン
+     グ文字は同じリーディングキャラクタを持ったものでなくてはならない。もし 
+     CHAR が 2バイト文字ならば、マッチング文字の最初のバイトは CHAR の最初の
+     バイトと同じでなければならない。
+
+
+
+File: mule-jp  Node: char-category, Prev: char-syntax, Up: Syntax, Next: Regular Expression
+
+char-category
+.............
+
+シンタックスと同様に、カテゴリも文字の特性を定義します。シンタックスとの
+違いは以下の通りです。
+
+  1. 各文字は一つ以上のカテゴリに属することができる。
+  2. ユーザは *define-category* で新しいタイプのカテゴリを定義することが
+     できる。(例: japanese.el参照)
+  3. char-category は、文字のすべてのカテゴリニモニックを文字列として返す。
+  4. 正規表現による検索では、\sm や \Sm のかわりに、\cm または \Cm (m はニモ
+     ニック) が使える。
+
+## Function: define-category MNEMONIC CHAR DOC
+     MNEMONIC を新しいカテゴリニモニックとしてつくり、CHAR がカテゴリとして 
+     MNEMONIC を含むようにそのカテゴリを変更する。
+## Function: char-category CHAR &optional TABLE
+     TABLE における CHAR のカテゴリニモニック文字列を返す。TABLE は、デフォル
+     トではカレントバッファのカテゴリテーブルが使われる。
+
+
+Mule ではあらかじめ以下の char-category を定義しています。
+
+`a'
+     ASCII 文字
+`b'
+     アラビア文字
+`c'
+     中国語 2バイト文字
+`g'
+     ギリシャ文字
+`h'
+     韓国語 2バイト文字
+`j'
+     日本語 2バイト文字
+`k'
+     日本語 1バイトカタカナ
+`l'
+     Latin-1 文字
+`r'
+     日本語 1バイトローマ字
+`t'
+     Big5 Level2 文字
+`w'
+     ヘブライ文字
+`y'
+     キリル文字
+
+また、japanese.el で日本語文字に対して以下に示すような char-category を
+定義しています。
+
+`S'
+     記号。漢字コードの区点が 1, 2, 8区のもの。
+`A'
+     英数字。漢字コードの区点が 3区のもの。
+`H'
+     ひらがな。漢字コードの区点が 4区のもの、および "ー", "゛", "゜"。
+`K'
+     カタカナ。漢字コードの区点が 5区のもの、および "ー", "゛", "゜"。
+`G'
+     ギリシャ文字。漢字コードの区点が 6区のもの。
+`Y'
+     キリル文字。漢字コードの区点が 7区のもの。
+`C'
+     漢字。漢字コードの区点が 16区以上のもの、および "ヽ", "ヾ", "ゝ", "ゞ",
+     "〃", "仝", "々", "〆", "〇"
+
+
+ある文字のカテゴリは *modify-category-entry* で変更することができ
+ます。
+
+## Function: modify-category-entry CHAR CATEGORY &optional TABLE RESET
+     CHAR のカテゴリコードを CATEGORY に設定する。CHAR はリーディングキャ
+     ラクタまたは 1バイト文字コードのリストが指定できる。CATEGORY はニモ
+     ニック文字で与えられる。カテゴリは、テーブル TABLE に対してのみ変更
+     される。デフォルトではカレントバッファのカテゴリテーブルが指定され
+     る。もし RESET が `non-nil' の場合は、CHAR のカテゴリはリセットされ
+     る。
+
+また、現用のカテゴリテーブルの内容の説明は *describe-category* を
+使って表示ができます。
+
+## Command: describe-category
+     `*Help*'バッファを作り、そこにカテゴリテーブルの内容を表示する。
+
+
+File: mule-jp  Node: Regular Expression, Prev: char-category, Up: Features for Text, Next: Regular Expression Compiler
+
+正規表現の拡張
+--------------
+
+Mule は非常に強力な*正規表現コンパイラ*(regular expression compiler)を提
+供しています。これによって backward の re-match や、regular expression 
+で記述された任意のテキストチャンクのサーチが出来ます。また、正規表現は多
+国語文字や char-category に対応して拡張および変更されています。
+
+* Menu:
+
+* Regular Expression Compiler:: 正規表現コンパイラ.
+* Extended Pattern::		拡張パターン.
+
+
+File: mule-jp  Node: Regular Expression Compiler, Prev: Regular Expression, Up: Regular Expression, Next: Extended Pattern
+
+正規表現コンパイラ
+..................
+
+Gnu Emacs での正規表現の探索は、まず正規表現を中間コードに変換してからそ
+の中間コードを実行して探索します。この変換は正規表現の探索をするたびに行
+われます。Mule の正規表現コンパイラはこの中間コードを生成します。また正
+規表現探索を行う関数は正規表現パターンの他に中間コードにしたがって探索を
+行います。Mule での中間コードは Gnu Emacs のものより拡張されており、より
+高速に探索を行うことができます。正規表現コンパイラは、さらに後方正規表現
+を探索する中間コードも生成します。Gnu Emacs での後方正規表現探索はポイン
+トを一つずつ後方へずらしてはそこから始まる文字列が正規表現に合致するかど
+うかを判定し、合致したとき探索が成功します。 Mule の正規表現コンパイラの
+後方正規表現探索では真の後方検索を行います。さらに Mule では疑似的な文節
+(word) も正規表現を使って記述し、ユーザが定義することができます。
+
+正規表現のコンパイルには、関数 *regexp-compile* および関数 
+*regexp-word-compile* を用います。
+
+## Function: regexp-compile RE
+     正規表現 RE をコンパイルして前方および後方正規表現探索する中間コードを生成する。
+
+## Function: regexp-word-compile RE
+     正規表現 RE をコンパイルして文節判定を行うための中間コードを生成する。
+
+例えばバッファに `AAAABBBBCDDDD' という文字列があり、ポイントが 
+`C' にある場合、
+
+     (re-search-backward "B+")
+
+ではポイントは最後の `B' に移動しますが、
+
+     (re-search-backward (regexp-compile "B+"))
+
+ではポイントは最初の `B' に移動します。
+
+
+File: mule-jp  Node: Extended Pattern, Prev: Regular Expression Compiler, Up: Regular Expression, Next: Clause
+
+拡張パターン
+............
+
+Mule では、正規表現は以下に示すように多国語文字や char-category に対応し
+て拡張および変更されています。
+
+拡張:
+\cCATEGORY
+     char-category が CATEGORY の文字と合致する。
+\CCATEGORY
+     char-category が CATEGORY でない文字と合致する。
+[...]
+     各コードと等しい 1バイトもしくは マルチバイト文字と合致する。
+normal code
+     それと等しい 1バイトもしくは マルチバイト文字と合致する。
+変更:
+.
+     改行文字を除く 1バイト文字 1文字またはすべてのマルチバイト文字 1文
+     字と合致する。
+
+
+
+File: mule-jp  Node: Clause, Prev: Extended Pattern, Up: Features for Text, Next: Search
+
+文節(語の概念の拡張)
+--------------------
+
+GNU Emacsでは「語」は、word constituent の並びとして定義されています。 
+Mule では、関数 *define-word* を使うことによって、ユーザが正規表現で「語」
+を定義することができます。
+
+## Function: define-word-regexp NAME PAT
+     「語」NAME の定義を正規表現 PAT で行う。
+
+## Function: set-word-regexp NAME
+     「語」NAME の定義を正規表現の「語」として使用する。
+
+
+例えば、
+
+     (define-word-regexp English-word-regexp "\\w+")
+
+は、「語」English-word-regexp を word constitute である文字が 1文字以上
+並んだものであることを定義します。これは元の word の定義と同じです。
+
+Mule では、この機能を利用して日本語における「語」、すなわち文節を以下の
+ように定義することができます(この定義は worddef.el でなされています)。
+
+     (define-word-regexp japanese-word-regexp
+        "\\(\\cA+\\|\\cH+\\|\\cK+\\|\\cG+\\|\\cY+\\|\\cC+\\)\\cH*\\|\\w+")
+
+さらに
+
+     (set-word-regexp japanese-word-regexp)
+
+によって先の「語」の定義が正規表現で使用されます。（この宣言は 
+japanese.el でなされています。）これによってMule は次のような文字のシー
+ケンスを 1つの「語」とみなします。
+
+  1. 連続する word constituents
+  2. 連続する同一のカテゴリに属する文字
+  3. 前項のものに 0個以上のひらがなが続いたもの
+
+この「語」は、日本語文中ではほぼ文節に対応し、1バイト文字シーケンス中
+では word と同じものです。
+
+
+File: mule-jp  Node: Search, Prev: Clause, Up: Features for Text, Next: Filling&Justifying
+
+多国語ストリングの探索と置換
+----------------------------
+
+多国語文書についても探索コマンド *search-forward*, *search-backward*,
+*isearch-forward*, *isearch-backward*, *re-search-forward*,
+*re-search-backward*, *isearch-forward-regexp*,
+*isearch-backward-regexp* や置換コマンド *replace-string*,
+*replace-regexp* を使うことができます。
+
+インクリメンタル探索(*isearch*)中にストリング入力を行なうには、 `C-k' を
+タイプして下さい。このモードではミニバッファ中でストリングの入力を行なう
+ことができます。ストリング入力が終ったら、RET キーを押して下さい。Mule 
+は *isearch* を再開します。
+
+探索や置換に用いる正規表現は、多国語文字や char-category に対応して拡張
+および変更されています(*Note Regular Expression::)。
+
+
+File: mule-jp  Node: Filling&Justifying, Prev: Search, Up: Features for Text, Next: Filling
+
+行詰めと行揃え
+--------------
+
+Mule は多国語文書についても行詰めと行揃えの機能を提供しています。
+
+* Menu:
+
+* Filling::		多国語文書の行詰め.
+* Justifying::		多国語文書の行揃え.
+
+
+File: mule-jp  Node: Filling, Prev: Filling&Justifying, Up: Filling&Justifying, Next: Justifying
+
+行詰め
+......
+
+Mule は多国語文書についても、コマンド *fill-paragraph* による行詰めや、
+`auto-fill-mode' における自動行詰め機能を提供しています。
+
+日本語や中国語の文書では、語の間にスペースはなく行は一定の長さで折り返さ
+れるのが普通です。しかしこれらの文字のうちの一部(ほとんど記号です)は行頭
+や行末に現れることができません。このような文字を正しく扱うために、Mule 
+は行の長さを変えることがあります。多国語文書の行詰めはオリジナルの Text
+Filling の拡張として実現されているので、英文字単語中で行が終ることはあり
+ません。
+
+行頭及び行末禁則の一般規則は次のようになります。
+
+*行頭禁則文字*
+     文／句の終りを示す記号は行頭に現れない。このような記号としては句点(、)
+     読点(。)などがある。変数 `kinsoku-bol-chars' はこのような文字のリス
+     トを保持する。
+*行末禁則文字*
+     文／句の始まりを示す記号は行末に現れない。このような記号としてはか
+     ぎ括弧開け(「)、括弧開け(()などがある。変数 `kinsoku-eol-chars' は
+     このような文字のリストを保持する。
+
+Mule は、以下のどちらかの方法(禁則処理)を使って行の長さを変え、行頭行末
+禁則の規則を守ります。
+
+*ぶら下げ処理*
+     行の長さを 1ないし複数文字分伸ばす。変数 `kinsoku-nobashi-limit' が
+     伸ばし得る最大文字数を示す。
+*追いだし処理*
+     行の長さを 1ないし複数文字分短くする。
+
+Mule は次の場合に限り追い出しを、それ以外の場合ぶら下げを行ないます。
+
+   * 禁則処理を行なわないと行末が行末禁則文字であり、その次の文字が行末
+     禁則でない場合。
+   * 行末禁則文字が行末付近で続き、変数 `kinsoku-nobashi-limit' で示され
+     る以上にぶら下げる必要がある場合。
+
+変数:
+## Global Variable: kinsoku-bol-chars
+     行頭禁則文字のリスト。
+## Global Variable: kinsoku-eol-chars
+     行末禁則文字のリスト。
+## Global Variable: kinsoku-nobashi-limit
+     ぶら下げ処理によって伸ばし得る文字数(1バイト文字)の最大値。
+
+

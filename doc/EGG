@@ -1,0 +1,149 @@
+How to use EGG inputting methods with jserver/cserver?
+
+1. Installing Wnn4 and Mule
+
+To use EGG Mule, you must, at first, install Wnn/cWnn
+Ver.4.107 or the higher version.  Then install Mule with
+"#define EGG" and "#define WNN4" in 'src/mule-config.h'.
+
+
+2. Starting Mule
+
+To input Chinese, you have to run Mule as a client of X
+because Chinese inputting methods require special fonts for
+SiSheng.  See the file 'X11' for more detail.
+
+3. Getting start with EGG
+
+At first, check if your mule has already loaded necessary
+ITS (Input Translation System) modes.  By 'C-x C-k m'.  You
+can see the list at the echo area.  'C-n' will show you the
+rest.  To input Chinese, you need 'PinYin' mode.  If it
+can't be found in the list,
+	M-x load-library<CR>chinese<CR>
+is the easiest way.
+
+Next you should tell the system a hostname on which cserver
+is running by:
+	M-x set-cserver-host-name<CR>hostname<CR>
+Putting
+	(set-cserver-host-name "hostname")
+in your .emacs may be easier.
+
+Then type 'C-\'.  You'll see the change in the left of
+modeline.  The text in brackets shows the current mode.  If
+it is not the mode you want to use, select any mode (for
+instance 'PinYin') by 'C-x C-k m' and 'C-n', 'C-f' (for
+moving around the cursor at the echo area) and <CR> (for
+selecting).  If you chose 'PinYin', you'll see Chinese
+character "QuanPin" at the modeline.
+
+Now you can type in PinYin.  Long sequence is ok.  For
+instance,
+	nihaobeijing<SP>
+will build Chinese text for "Ni Hao Bei Jing".
+
+Reversed region shows the current target word.  C-f, C-b
+moves cursor to another word.  <SP> select next candidate of
+Chinese text.  M-s (or ESC s) shows list of candidates at
+the echo area.  C-n, C-p chose another candidate.  M-i/M-o
+change the length of word shorter/longer.  <CR> or another
+alphabet key settle the current text, C-g cancels.
+
+
+4. More details
+
+4.1 Four phases
+
+If your Mule is installed with EGG, you'll move around four
+phases: normal-phase, transition-phase, fence-phase, and
+translation-phase.
+
+o normal-phase
+
+Left edge of modeline is something like:
+	[--]J:--**-Mule: ...
+In this phase, all the keys typed are processed as normal.
+You won't be conscious of the existence of EGG.
+
+o transition-phase
+
+When you type C-\ (toggle-egg-mode) at normal-phase, you'll
+be in translation-phase.
+Left edge of modeline shows something like:
+	[ITS_MODE_INDICATOR]J:--**-Mule: ...
+where ITS_MODE_INDICATOR is a multilingual string indicating
+the current its-mode.  For instance, if the current its-mode
+is PinYin, Chinese text "QuanPin" is shown.  In this phase,
+all your editing commands (say, delete, next-line, ...)  are
+still processed as normal.  But, once you type any graphic
+key ('0'..'~'), you are thrown into fence-phase.
+
+o fence-phase
+
+The modeline is the same as in transition-phase.  But, the
+last character you typed is surrounded by '|' (fence).  Any
+more graphic characters you type are translated along rules
+defined in the current its-mode.  For instance, your type
+'n' in transition-phase, the buffer will change as follows:
+
+YourKey	n	i	3	h	a	o	3
+Buffer	|n|	|ni|	|Ni |	|Ni h|	|Ni ha|	|Ni hao||Ni Hao |
+			  ^       ^                          ^
+where 'i' and 'a' characters at ^ are shown with tone marks.
+This is because its-mode for PinYin has rules:
+	ni3 -> Ni , hao3 -> Hao
+		^            ^
+If you are not sure about tones, you can omit them.
+
+In this phase, you can move cursor only within the fence by
+C-a, C-e, C-f, C-b.
+
+When you type <SPC>, the string in the fence are sent to
+background 'cserver' and a converted string appears in the
+fence.  At the same time, you are thrown into
+translation-phase
+
+Hitting C-g will let you go back to transition-phase after
+deleting the fence (and its contents).
+
+o translation-phase
+
+Left edge of the modeline is something like:
+	[TRS_MODE_INDICATOR]J:--**-Mule: ...
+where TRS_MODE_INDICATOR is a string indicating the server.
+In the case of 'cserver', Chinese character "Han" of "Hanzi"
+is shown.  Now you are seeing Chinese text in the fence.
+The text in the fence may have the form:
+	|A-B-C-DE-F GH|
+where A..H are Chinese characters.  In this case, the text
+is divided into two BIG-PHRASEs A-B-C-DE-F and GH, and the
+former is divided into 5 SMALL-PHRASEs A, B, C, DE, and F.
+You can change the division point of current phase (which
+your cursor is on) by:
+	C-i: make BIG-PHRASE shorter
+	C-o: make BIG-PHRASE longer
+	M-i: make SMALL-PHRASE shorter
+	M-o: make SMALL-PHRASE longer
+When you get a desired text, fix it by typing <CR> or C-l.
+Just type another graphic key is also ok.  In the former
+case, you are moved to transition-phase, and in the latter
+case, you are moved to fence-phase.
+
+Hitting C-g will let you go back to fence-phase.
+
+
+Summary of the phases:
+
+	normal-phase
+	     ^
+	     |
+	    C-\
+	     |
+	     V
+	transition-phase -- graphic-key --> fence-phase
+			\		     |      ^
+			 \		   <SPC>    |
+			  \		     |    graphic-key
+			   \		     V      |
+			    `<-- <CR> --- translation-phase

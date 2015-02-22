@@ -1,0 +1,52 @@
+Quail is a simple key-translation system which allows users
+to input any multilingual text from normal ASCII keyboard.
+
+We provide several quail-packages, each package corresponds
+to one inputting methods.  For instance, the file
+lisp/quail-py.el provides a package for inputting Chinese by
+PinYin.  lisp/quail-hangul.el provides a package for
+inputting Korean.
+
+You can load several packages at once but only the
+translation rules defined in the current package are
+effective.  Quail-mode is toggled by C-].  When you enter in
+quail-mode, the current package is shown in modeline as:
+	Q-xxxxx
+where xxxxx is the multilingual text for the current
+package.  In quail-mode, M-s changes the current package
+(normal completion is performed by hitting <SPC> or <TAB>).
+
+In quail-mode, all graphic keys you type is translated
+according to the rules of the current package.  Brief
+description about the rules and key-bindings are shown by
+M-z.
+
+While there are more than one candidates for what you type,
+the first candidate is shown in buffer with underscore.  By
+M-n and M-p you can select any other candidate.  M-i shows
+list of candidates (showing each candidate with index number
+[two digits]).  You can select one also by typing these
+digits.
+
+Once you select a desired candidate, please just type a key
+for another character.  The underscore moves to the next key
+automatically.  But, in some packages (e.g. quail-hangul),
+there are rules something like:
+	ab  -> A
+	aba -> B
+	b   -> C
+In this case, if you type "abab", quail will enter "BC".  If
+what you want is "AA", you must explicitly tell the division
+point of the character by hitting <SPC>.  In this example,
+you should have typed "ab<SPC>ab".
+
+Here's the summary of command keys:
+------------------------------------------------------------
+C-]:	Exit from quail-mode.
+DEL:	Delete characters backward in quail-mode.
+M-i:	Show list of candidates.
+M-n:	Select next candidate.
+M-p:	Select previous candidate.
+M-s:	Select quail-package.
+M-z:	Show brief description of the current quail-pacakge.
+------------------------------------------------------------

@@ -1,0 +1,341 @@
+**************** Vietnamese translation of README.Mule **********************                                                                            
+
+This file is in plain 8-bit VISCII (VIetnamese Standard Code for Information
+Interchange).  VISCII was designed by the oversea Vietnamese Standardization
+Group (viet-std@haydn.stanford.EDU).  VISCII documents and public-domain
+VISCII-compliant software running on Unix, X-Windows, DOS, MS-Windows 3.1 can
+all be retrieved by anonymous ftp from media.mit.edu (18.85.0.2) under the
+directory /pub/Vietnet/Viet-std (for documents) and /pub/Vietnet/Viscii (for
+software).  Please read FAQ.VISCII for more info. 
+
+This translation is contributed by the Viet-Std Group -- May 24, 1993 (Hoc Ngo)
+
+****************** Bän d¸ch Vi®t ngæ cüa README.Mule *************************
+  Chú thích:  Nguyên bän tiªng Anh ğôi khi ğßşc ghi lÕi trong ngo£c vuông [].
+******************************************************************************
+1989.12.15: Nemacs „n bän 3.2.1 (¤n bän MUSUME-DOUJOUJI)
+1989.12.17: Nemacs „n bän 3.2.1A (¤n bän MUSUME-DOUJOUJI v¾i ch¡p n¯i ANCHIN)
+1989.12.22: Nemacs „n bän 3.2.3 (¤n bän YUMENO-AWAYUKI)
+1990.3.3:   Nemacs „n bän 3.3.1 (¤n bän HINAMATSURI)
+1990.6.6:   Nemacs „n bän 3.3.2 (¤n bän FUJIMUSUME)
+1992.3.4:   Mule „n bän 0.9.0 Beta
+1992.3.23:  Mule „n bän 0.9.1 Beta
+1992.4.6:   Mule „n bän 0.9.2 Beta
+1992.4.18:  Mule „n bän 0.9.3 Beta
+1992.5.28:  Mule „n bän 0.9.4 Beta
+1992.7.31:  Mule „n bän 0.9.5 Beta
+1992.8.5:   Mule „n bän 0.9.5.1 Beta
+1992.10.27: Mule „n bän 0.9.6 Beta
+1992.12.28: Mule „n bän 0.9.7 Beta
+1993.1.22:  Mule „n bän 0.9.7.1 Beta
+1993.6.14:  Mule „n bän 0.9.8 Beta
+
+
+########################################################################
+        0. M— Ğ¥U
+        1. MULE LÀ GÌ?
+        2. CÁC NGÔN NGÿ Ğ¿”C PHC V
+        3. CÁC H THNG Ğ¿”C PHC V
+        4. CÁCH CÀI ĞƒT
+        5. TÀI LIU
+        6. PHÂN PHI
+        7. DANH SÁCH ĞIN TH¿
+        8. D˜CH V ĞIN TH¿
+########################################################################
+
+
+0. M— Ğ¥U
+
+Thß møc [directory] này chÑa ğñng nhu li®u MULE ¤n bän 0.9.8 beta.
+
+Mule là nhu li®u mi­n phí ğßşc phát hành dß¾i dÕng ch¡p n¯i [patch] vào
+GNU Emacs (18.18) ho£c dß¾i dÕng mµt h° s½ lßu træ ğ¥y ğü [complete tar file].
+BÕn có th¬ phân ph¯i lÕi ho£c biªn ğ±i nó trong khuôn kh± qui ğ¸nh trong Gi¤y
+Phép Công Cµng T±ng Quát cüa GNU [GNU General Public License] do T± ChÑc Nhu
+Li®u Mi­n Phí [Free Software Foundation] phát hành; ho£c ¤n bän 1, ho£c
+b¤t kÏ ¤n bän nào m¾i h½n (do bÕn ch÷n lña).
+
+Mule ğßşc phân ph¯i v¾i ni«m hy v÷ng r¢ng nó s¨ giúp ích cho bÕn, nhßng không
+có bäo ğäm; không có mµt sñ bäo ğäm ng¥m nào v« tính ch¤t thß½ng mÕi ho£c
+v« vi®c nó s¨ thích hşp cho mµt møc ğích riêng bi®t nào.  Xin ğ÷c Gi¤y Phép
+Công Cµng T±ng Quát cüa GNU ğ¬ biªt thêm chi tiªt h½n.
+
+Có l¨ bÕn ğã nh§n ğßşc mµt bän Gi¤y Phép Công Cµng T±ng Quát cüa GNU chung
+v¾i GNU Emacs; xin xem h° s½ COPYING.  Nªu không, xin viªt th½ t¾i T± ChÑc
+Nhu Li®u Mi­n Phí theo ğ¸a chï sau:
+            Free Software Foundation
+            675 Mass Ave
+            Cambridge, MA 02139
+            USA
+
+
+1. MULE LÀ GÌ?
+
+Mule là mµt sñ gia công v« ğa ngôn ngæ cho GNU Emacs [MULtilingual Enhancement
+to GNU Emacs].  Không nhæng nó có th¬ xØ lı chæ ASCII (7 bit) và ISO Latin-1
+(8 bit) mà còn có th¬ xØ lı Nh§t ngæ, Hoa ngæ, Hàn ngæ (16 bit) mã hóa theo
+tiêu chu¦n ISO2022 và các d¸ bän (thí dø nhß EUC, Compound Text).  Ğ¯i v¾i
+Hoa ngæ, Mule có th¬ phøc vø cho cä GB lçn Big5.  Ngoài ra, hi®n nay chúng
+tôi cûng phøc vø cho chæ Thái dña trên TIS620 m£c d¥u tiêu chu¦n này không
+tuân theo ISO nhßng r¤t ph± thông · Thái Lan.
+
+Mµt vùng ğ®m chÑa vån bän [text buffer] trong Mule có th¬ chÑa lçn lµn 
+các chæ t× nhi«u ngôn ngæ.  Ğ¬ có th¬ ğánh vào nhæng chæ này, bÕn có th¬ dùng
+các phß½ng pháp ğánh chæ khác nhau do Mule cung c¤p.  Ngoài ra, nªu bÕn 
+sØ døng Mule trong các bµ mô phöng thiªt b¸ ğ¥u cu¯i [terminal emulator]
+nhß kterm, cxterm, ho£c exterm, bÕn có th¬ dùng b¤t kÏ phß½ng pháp ğánh chæ
+nào do bµ mô phöng ğó h² trş.
+
+
+2. CÁC NGÔN NGÿ Ğ¿”C PHC V
+
+2.0 ANH NGÿ [ENGLISH]
+
+CÑ vi®c ğánh vào.  :-)
+
+
+2.1 NH‡T NGÿ [JAPANESE]
+
+Chúng tôi mÕnh m¨ khuyªn cáo vi®c cài ğ£t Wnn4.108.  H® th¯ng EGG ğßşc gµp
+chung v¾i [bundled with] Mule có th¬ liên lÕc v¾i jserver cüa Wnn và có th¬
+cung c¤p cho bÕn mµt phß½ng pháp ğánh chæ Nh§t r¤t thu§n ti®n.  Xin ğ÷c h°
+s½ doc/EGG ğ¬ biªt v« cách sØ døng h® th¯ng này.  BÕn có th¬ xØ lı Mule nhß
+là khách hàng [client] cüa  khung X, ho£c xØ lı trong các thiªt b¸ ğ¥u cu¯i
+Nh§t bän [Japanese terminal] (k¬ cä các bµ mô phöng nhß kterm và exterm).
+Trong trß¶ng hşp sau, bÕn có th¬ dùng b¤t kÏ phß½ng pháp ğánh chæ nào có sÇn
+trên thiªt b¸ ğ¥u cu¯i.  Các phß½ng pháp ğánh chæ khác g°m có:
+
+           EGG-SJ3, CANNA (ğßşc gµp chung v¾i Mule)
+           SKK, boiled-egg (trong thß møc 'contrib')
+
+2.2 HOA NGÿ [CHINESE]
+
+Chúng tôi mÕnh m¨ khuyªn cáo vi®c cài ğ£t Wnn4.108.  H® th¯ng EGG ğßşc gµp
+chung v¾i Mule có th¬ liên lÕc v¾i cserver cüa cWnn và có th¬ cung c¤p
+cho bÕn mµt phß½ng pháp ğánh Hoa ngæ r¤t thu§n ti®n.  Xin ğ÷c h° s½ 
+doc/EGG ğ¬ biªt v« cách sØ døng h® th¯ng này.  BÕn có th¬ xØ lı Mule nhß
+là khách hành cüa khung X, ho£c xØ lı trong các thiªt b¸ ğ¥u cu¯i Hoa Ngæ
+[Chinese terminal] (k¬ cä các bµ mô phöng nhß cxterm và exterm).  Trong
+trß¶ng hşp sau, bÕn có th¬ dùng b¤t kÏ phß½ng pháp ğánh chæ nào có sÇn
+trên thiªt b¸ ğ¥u cu¯i.
+
+H® th¯ng QUAIL (gµp chung v¾i Mule) cûng cung c¤p nhi«u phß½ng pháp ğánh chæ
+cho:
+           GB: PINYIN, PINYIN_with_TONE, CCDOSPY, SW
+           Big5: PINYIN, ETZY, ZOZY
+
+Xin ğ÷c h° s½ 'doc/QUAIL' ğ¬ biªt v« cách sØ døng các h® th¯ng này.
+
+Ğµc giä cüa bäng thông tin alt.chinese.text s¨ nh§n th¤y r¤t ti®n lşi khi
+dùng GNUS (bµ ğ÷c thß viªt b¢ng Emacslisp) v¾i hz2gb.el (trong
+'contrib/lisp.tar.Z').  Bµ ğ÷c thß này s¨ tñ ğµng mã hóa/giäi mã t× mã 
+HZ/zW ğªn mã nµi bµ dùng trong Mule.
+
+
+2.3 HÀN NGÿ [KOREAN]
+
+Phß½ng pháp ğánh Hàn ngæ ğßşc cung c¤p trong h® th¯ng QUAIL (gµp chung
+v¾i Mule).  Xin ğ÷c 'doc/QUAIL' ğ¬ biªt cách sØ døng h® th¯ng này.  BÕn có
+th¬ xØ lı Mule nhß là khách hàng cüa khung X, ho£c xØ lı Mule trong thiªt b¸
+ğ¥u cu¯i Hangul [Hangul terminal] ho£c exterm.
+
+
+2.4 CHÿ ÂU CHÂU [EUROPEAN]
+
+Nhi«u phß½ng pháp ğánh chæ Âu châu ğßşc cung c¤p trong h® th¯ng QUAIL (gµp
+chung v¾i Mule).  Hi®n nay QUAIL cung c¤p nhæng phß½ng pháp ğánh chæ cho
+
+            Latin1, Latin2, ..., Latin5, Hy-lÕp (ISO8859-7)
+            Hebrew (ISO8859-8), Cyrillic (ISO8859-5)
+
+Xin ğ÷c 'doc/QUAIL' ğ¬ biªt cách sØ døng h® th¯ng này.  V« ph¥n chæ Do Thái
+[Hebrew], vi®c viªt chæ t× phäi qua trái chßa ğßşc h² trş.  Xin ch¶ ğşi ¤n
+bän sau.
+
+
+2.5 THÁI NGÿ [THAI]
+
+B¢ng phß½ng pháp kªt hşp ğµng [dynamic composition] các chæ, hi®n nay chúng
+tôi có th¬ phøc vø chæ Thái Lan dña trên bµ chæ TIS620.  H® th¯ng QUAIL cûng
+cung c¤p phß½ng pháp ğánh chæ Thái.  Xin ğ÷c 'doc/QUAIL' ğ¬ biªt cách sØ døng
+h® th¯ng này.  Tên cüa kh¯i nhu li®u Quail cho chæ Thái lan là 'thai'.  Mµt
+bµ phông chæ TIS620 mi­n phí (kh± 12x29 ch¤m) cûng ğßşc cung c¤p trong
+'fonts/ETL.tar.Z'.  Ğ¬ có th¬ dùng ğßşc bµ phông này v¾i phông chæ ASCII
+kh± 12x24, bÕn phäi gia tång "khoäng cách dòng phía trên" [upper linespace]
+b¢ng cách dùng m®nh l®nh x-set-linespace ho£c dùng "tham s¯ trên dòng m®nh
+l®nh" [command line argument] cüa "-lsp".  Hãy dùng tham s¯ "5+".
+
+
+2.6 VIT NGÿ
+
+Vi®c phøc vø Vi®t ngæ ğßşc dña trên phß½ng pháp 2 bäng VISCII, mµt bäng cho
+chæ thß¶ng và mµt bäng cho chæ hoa.  Hi®n nay Mule có th¬ ğ÷c/viªt vån bän
+· b¤t cÑ dÕng VISCII, VIQR, ho£c VSCII.  H® th¯ng QUAIL (ğßşc gµp chung
+v¾i Mule) cûng cung c¤p phß½ng pháp ğánh chæ Vi®t.  Xin ğ÷c 'doc/QUAIL'
+ğ¬ biªt cách dùng h® th¯ng này.  Tên cüa kh¯i nhu li®u phøc vø tiªng Vi®t
+là 'viet'.  Ğ¯i v¾i X, bÕn có th¬ dùng cä phông VISCII lçn phông VSCII.  
+Trong 'fonts/ETL.tar.Z' có chÑa mµt phông VISCII mi­n phí, phông này ğßşc
+thiªt kª ğ¬ có th¬ dùng chung v¾i các phông ETL khác.
+
+
+2.7 CÁC NGÔN NGÿ KHÁC
+
+Chúng tôi r¤t mu¯n phøc vø chæ Ä-r§p và Devanagali ngay sau khi chúng tôi
+thu th§p ğü tin tÑc ğ¬ biªt rõ các nhu li®u khác ğã phøc vø nhæng ngôn ngæ
+này nhß thª nào.
+
+
+3. CÁC H THNG Ğ¿”C PHC V
+
+V« c½ bän mà nói, Mule có th¬ v§n hành trên b¤t cÑ h® th¯ng (và máy) nào
+mà chß½ng trình viªt bài GNU Emacs chÕy ğßşc.  Ngoài ra, chúng tôi cûng phøc
+vø nhi«u h® th¯ng, k¬ cä MS-DOS.  Xin ğ÷c etc/MACHINES.
+
+
+4. CÁCH CÀI ĞƒT
+
+Xin xem h° s½ INSTALL.Mule ğ¬ biªt cách cài ğ£t Mule.
+
+
+5. TÀI LIU
+
+Hi®n nay chúng tôi có nhæng tài li®u sau ğây.
+
+Thß møc 'etc' chÑa ğñng:
+         FAQ         (cho nguyên bän GNU Emacs b¢ng tiªng Anh)
+         FAQ.jp      (cho nguyên bän GNU Emacs b¢ng tiªng Nh§t)
+         FAQ.Mule    (cho Mule b¢ng tiªng Anh)
+         FAQ.Mule.jp (cho Mule b¢ng tiªng Nh§t)
+         emacs.1     (h° s½ hß¾ng dçn [man file] cho nguyên bän GNU Emacs
+                     b¢ng tiªng Anh)
+         mule.1      (h° s½ hß¾ng dçn cho Mule b¢ng tiªng Anh)
+
+Thß møc 'info' chÑa ğñng:
+        emacs       (cho nguyên bän GNU Emacs b¢ng tiªng Anh)
+        mule-jp     (cho Mule b¢ng tiªng Nh§t)
+        egg-jp      (cho EGG b¢ng tiªng Nh§t)
+        canna-jp    (cho CANNA b¢ng tiªng Nh§t)
+
+BÕn cûng có th¬ tìm th¤y nhi«u tài li®u khác trong thß møc 'doc'.
+Ğ£c bi®t, khi nào bÕn g£p nhæng t× ngæ lÕ không biªt, xin tham khäo
+'doc/TERMINOLOGY'.  Ngß¶i m¾i t§p sØ døng có th¬ phäi ğ÷c 'doc/X11',
+'doc/EGG', và 'doc/QUAIL'.
+
+Ğ¯i v¾i Vi®t ngæ, nhóm Nghiên CÑu Tiêu Chu¦n Tiªng Vi®t (Viet-Std Group)
+ğã có nhã ı d¸ch mµt s¯ tài li®u Mule ra tiªng Vi®t.  Nhæng tài li®u
+Vi®t ngæ này n¢m trong thß møc 'doc/viet'.
+
+H° s½ NEWFEATURE cûng r¤t là quan tr÷ng.
+
+B·i vì nhi«u tài li®u (k¬ cä h° s½ này) ğßşc viªt b·i mµt ngß¶i mà tiªng Anh
+không phäi là tiªng m© ğë (chính là tôi), bÕn có th¬ tìm th¤y nhæng l¯i di­n
+tä lÕ kÏ.  Xin làm ½n sØa lÕi cho ğúng.  Ngoài ra, chúng tôi cûng mu¯n tìm
+ngß¶i tình nguy®n ğ¬ d¸ch các tài li®u ra Hoa ngæ, Hàn Ngæ, và các thÑ tiªng
+khác.
+
+
+6. PHÂN PHI
+
+BÕn có th¬ l¤y nhu li®u Mule b¢ng cách ftp (chuy¬n h° s½) vô danh 
+[anonymous ftp] t× các trÕm sau ğây:
+
+        etlport.etl.go.jp [192.31.197.99]:/pub/mule
+                Quän-lı: Ken'ichi HANDA <handa@etl.go.jp>
+        sh.wide.ad.jp [133.4.11.11]:/JAPAN/mule/mule-0.9.8
+                Quän-lı: Akira KATO <kato@wide.sfc.keio.ac.jp>
+        ftp.funet.fi [128.214.6.100]:/pub/gnu/emacs/mule
+                Quän-lı: Hannu Aronsson <haa@cs.hut.fi>
+
+V« d¸ch vø ği®n thß, xin xem Ph¥n 8.
+
+Nªu bÕn · ngoài nß¾c Nh§t, xin bÕn dùng mµt trong hai trÕm cu¯i.
+— châu Âu, trÕm cu¯i cùng có l¨ là n½i t¯t nh¤t.  Có th¬ ftp nguyên cä
+h° s½ lßu træ [complete tar file] tên là mule-0.9.8.tar.Z, ho£c nªu bÕn có
+nhu li®u GNU Emacs 18.58 chßa b¸ biªn ğ±i [unmofified GNU Emacs], bÕn có
+th¬ ftp h° s½ ch¡p n¯i tên là diff-18.58-0.9.8.Z và sØ døng nó.  Nªu bÕn tìm
+th¤y h° s½ ch¡p n¯i v¾i ¤n bän cao h½n 0.9.8 (thí dø diff-0.9.8-0.9.8.1.Z)
+thì xin hãy sØ døng nó.
+
+Nhæng thß møc này cûng chÑa nhi«u h° s½ hæu ích khác, chÆng hÕn nhß
+phông X và các nhu li®u c¯ng hiªn [contributed software].  Xin ğ÷c h° s½
+00README.
+
+Chúng tôi cûng ğang tìm kiªm các trÕm ftp · ngoài Nh§t Bän.  Nªu bÕn có th¬
+vui lòng cung c¤p d¸ch vø này, xin gØi ği®n thß ğªn handa@etl.go.jp.
+
+
+7. DANH SÁCH ĞIN TH¿
+
+Chúng tôi hi®n ğang ği«u hành 2 danh sách ği®n thß:
+
+        mule@etl.go.jp     (ngôn ngæ chính: Anh ngæ)
+        mule-jp@etl.go.jp  (ngôn ngæ chính: Nh§t ngæ)
+
+T¤t cä thß t× gØi ğªn mule@etl.go.jp s¨ ğßşc tñ ğµng gØi ğªn mule-jp@etl.go.jp.
+
+Chúng tôi yêu c¥u t¤t cä nhæng bÕn nh§n ğßşc Mule hãy tham gia mµt trong
+nhæng danh sách ği®n thß này.  Xin vui lòng gØi thß ğång kı [subscribe]
+ho£c rút tên [unsubcribe] ğªn
+
+        mule-request@etl.go.jp
+
+trong ğó xin phát bi¬u rõ tên danh sách mà bÕn mu¯n gia nh§p.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Xin chú ı bÕn có th¬ dùng ngôn ngæ khác v¾i 'ngôn ngæ chính' li®t kê trong
+cä hai danh sách ği®n thß.  BÕn có th¬ ğ÷c/viªt b¤t cÑ ngôn ngæ nào b¢ng
+cách dùng Mule.
+
+Cu¯i cùng, chúng tôi xin bày tö lòng biªt ½n sâu xa v« sñ cµng tác cüa
+t¤t cä hµi viên ği®n thß hi®n gi¶.
+
+
+8. D˜CH V ĞIN TH¿
+
+Ğ¯i v¾i nhæng ngß¶i không th¬ liên lÕc b¢ng IP, chúng tôi ğã kh·i xß¾ng mµt
+d¸ch vø ği®n thß tñ ğµng.  Xin gØi yêu c¥u cüa bÕn ğªn ğ¸a chï
+
+        mule-by-mail@etl.go.jp
+
+trong ğó dòng "Subject:" phäi tuân theo nhæng ği«u ğßşc mô tä sau ğây.
+----------------------------------------------------------------------------
+Chß½ng trình ği®n thß tñ ğµng s¨ phân tách dòng "Subject:" trong tiêu ğ«
+[header] cüa lá thß.  Dòng "Subject:" có dÕng sau ğây:
+
+        Subject: tênh°s½  ğ¸achï-ği®nthß
+
+có nghîa là gØi h° s½ có tên chï ğ¸nh ğªn ğ¸a chï chï ğ¸nh.
+
+Nhæng tênh°s½ có th¬ ch¤p nh§n ğßşc là mµt trong nhæng tên sau ğây:
+
+        -----------------------------------------------------------------
+        diff-18.58-0.9.8    -- ch¡p n¯i cho GNU Emacs 18.58, 43 h° s½
+        diff-18.58-0.9.8.N  -- ph¥n thÑ N cüa diff-18.58-0.9.7
+                            -- N có th¬ là 01, 02, 03, ..., 43.
+        diff-0.9.7-0.9.7.1  -- ch¡p n¯i cho Mule 0.9.7, 5 h° s½
+        patch-0.9.7.1.N     -- ch¡p n¯i thÑ N cho ¤n bän m¾i nh¤t
+                            -- N có th¬ là 01, 02, ...
+        ETL.tar -- phông chæ Latin1, Cyrillic, Hy-lÕp, Thái, ..., 4 h° s½
+        Chinese.tar    -- phông chæ Hán-GB (16/24) và (?), 23 h° s½
+        Japanese.tar   -- phông chæ Nh§t-JIS (14/16/24), 29 h° s½
+        Korean.tar     -- phông chæ Hàn-KSC (16/24), 22 h° s½
+        READMEDIR.tar  -- nhi«u tài li®u v« Mule, 2 h° s½
+        HELP           -- tài li®u này
+        -----------------------------------------------------------------
+
+ChÆng hÕn, mµt ği®n thß v¾i dòng "Subject:" v¾i nµi dung
+        Subject: Chinese.tar me@etl.go.jp
+s¨ khiªn cho bµ phông chæ Hán (chia ra làm 4 h° s½) s¨ ğßşc gØi
+ğªn ğ¸a chï <me@etl.go.jp>.
+----------------------------------------------------------------------------
+
+Các trÕm · nß¾c Nga ho£c nß¾c Ukrain nên gØi thß ğªn
+        postmaster@ts.kiev.ua    ho£c
+        nib@ts.kiev.ua
+
+Tuy nhiên, theo tôi ğßşc biªt, các h® th¯ng này chßa ğßşc tñ ğµng hóa.
+
+---
+Ken'ichi HANDA   Electrotechnical Lab., JAPAN.  <handa@etl.go.jp>
+Satoru TOMURA    Electrotechnical Lab., JAPAN.  <tomua@etl.go.jp>
+Mikito NISIKIMI  Electrotechnical Lab., JAPAN.  <nisikimi@etl.go.jp>

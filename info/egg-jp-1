@@ -1,0 +1,1311 @@
+Info file: egg-jp,    -*-Text-*-
+produced by texinfo-format-buffer
+from file: egg-jp.texi
+
+
+
+
+
+File: egg-jp  Node: Top, Up: (dir), Next: Overview
+
+たまご・たかなバージョン
+************************
+
+「たまご」はネットワーク仮名漢字変換サーバを利用し、Mule における日本語・
+中国語の入力環境を提供するシステムです。「たまご・たかなバージョン」では 
+Wnn V4 の変換サーバを使用しています。
+
+この Info ファイルでは、「たまご」の使い方やカスタマイズの方法について説
+明します。
+
+
+* Menu:
+
+* Overview::		「たまご」とは何か.
+* Kanji Input::		漢字入力の方法.
+* Hangul Input::	ハングル入力.
+* Dictionary Management:: 辞書管理.
+* Customization::	自分流の使い方.
+* Key Maps::		キーマップ.
+* Japanese Texinfo::	日本語 Texinfo.
+
+* Sun Key map::		Sun の X11 におけるキー割当.
+* Part-of-Speech::	品詞の扱いについて.
+
+* Concept Index::	概念索引.
+* Functions&Variables::	関数・変数索引.
+
+
+Overview
+* Features::		特徴.
+* Configuration::	動作環境.
+* Bug Report::		バグレポート.
+
+
+Kanji Input
+* Interactive Method::	対話式漢字入力法.
+* Input Translation Table:: 入力変換表の切り替え.
+* Batch Method::	一括変換機能.
+* Input in Minibuffer::	ミニバッファでの漢字入力方法.
+* Isearch::		インクリメンタルサーチでの漢字入力方法.
+
+Interactive Method
+* Transparent Mode::	透過モード.
+* Input Mode::		入力文字変換モード.
+* Fence Mode::		フェンスモード.
+* Conversion Mode::	漢字変換モード.
+
+Input Translation Table
+* Selecting Translation Table:: 透過モードと入力文字変換モードでの変換表指定.
+* Selecting in Fence::	フェンスモードでの変換表指定.
+* Kuten and Touten::	句点読点などの変換.
+
+Batch Method
+* JIS Input::		JIS 入力.
+* Zenkaku Conversion::	全角文字への文字変換.
+* Hankaku Conversion::	半角文字への文字変換.
+* Hiragana Conversion::	ひらがな変換.
+* Katanaka Conversion::	カタカナ変換.
+* RomaHira Conversion::	ローマ字ひらがな変換.
+* RomaKan Conversion::	ローマ字漢字変換.
+* Kanji Conversion::	漢字変換.
+* Reverse Conversion::	逆変換.
+
+
+Dictionary Management
+* Registration::	辞書登録.
+* Editing::		辞書編集.
+
+
+Customization
+* Language Specific File:: 言語特定ファイル.
+* Initialization::	初期設定.
+* Input Translation::	入力変換方法の変更.
+
+Initialization
+* Server::		仮名漢字変換サーバの指定.
+* Dictionary::		使用辞書の指定.
+
+
+Key Maps
+* global-map::		global-map の key binding の変更
+* fence-mode-map:: 	フェンスモードの key binding の変更
+* henkan-mode-map::	漢字変換モードの key binding の変更
+
+
+Japanese Texinfo
+* Japanese Font::	日本語文字の使用.
+* Japanese in Index::	日本語文字を含む索引項目.
+* Extension to defvr::	defvr の拡張.
+
+
+
+File: egg-jp  Node: Overview, Prev: Top, Up: Top, Next: Features
+
+「たまご」とは何か
+******************
+
+「たまご」は、ネットワーク仮名漢字変換サーバを利用し Mule における日本語・
+中国語・韓国語などの入力環境を提供するシステムです。最新版は、「たまご・
+たかなバージョン」3.09 です。Mule は GNU Emacs を拡張し、多国語表示、コー
+ド変換などの基本機能を追加したシステムです。
+
+「たまご」は大きく分けると次の 3つの部分から成り立っています。
+
+  1. 入力文字変換系(Input character Translation System, ITS レベル) 
+     ASCII キーボードからの入力を、仮名/PinYin/ハングル文字に変換する。
+  2. 仮名漢字変換部(たかなレベル) 
+     ネットワーク変換サーバを利用して漢字変換を行う。「たまご・たかなバージョ
+     ン」では、変換サーバとして Wnn V4.108 以降の JSERVER/CSERVER を使用する。
+  3. 日本語編集機能 
+     日本語特有の正書法に対応した編集機能を提供する。
+
+実際には、最後の日本語編集機能は Mule 本体の方に吸収されており、「たまご」
+の範囲としては曖昧になっていますが、これらを全部含めて「たまご」と呼びま
+す。日本語編集機能の説明は Mule の Texinfo マニュアルの方にあります。
+
+
+「たまご」の名前は、「沢山/待たせて/御免なさい。」の各文節の先頭 1音であ
+る「た」と「ま」と「ご」を取ったものです。EGG は「たまご」の英訳です。 
+卵は料理の基本材料で、いろいろな料理に使えるので、このことから「たまご」
+もいろいろな日本語環境を作る材料になりたい、という意味も込められています。
+また、「たかなバージョン」の「たかな」とは、漬け物のたかなではありません。
+「たまごよ/かしこく/なーーれ」の略をとって命名されました。
+
+
+
+「たまご」では、日本語・中国語・韓国語の入力ができますが、このマニュアル
+では主に日本語の入力方法について説明します。中国語の入力においては、かな
+→ PinYin、漢字→ Hanzi と読みかえて下さい。
+
+* Menu:
+
+* Features::		「たかな」バージョンの特徴.
+* Configuration::	「たまご」の動作環境.
+* Bug Report::		バグレポート.
+
+
+File: egg-jp  Node: Features, Prev: Overview, Up: Overview, Next: Configuration
+
+特徴
+====
+
+たまご「たかな」バージョンでは、従来の「たまご」(Nemacs版)にくらべて以下
+のような特徴を持っています。
+
+   * 日本語・中国語の入力が可能
+   * 大文節/小文節変換
+   * 逆変換(漢字 → 仮名)
+   * V4 jserver が持つ品詞(人名など)での辞書登録
+   * 単語を辞書から削除しないで有効/無効にできる
+   * 単語の頻度の設定
+   * 辞書にコメントを設定する
+
+
+File: egg-jp  Node: Configuration, Prev: Features, Up: Overview, Next: Bug Report
+
+動作環境
+========
+
+「たまご」を動作させるには次のものが必要です。
+
+*漢字端末または漢字端末エミュレータ*
+     漢字を表示するために必要です。中国語文字やハングル文字を使う場合は、
+     それらを表示できる端末または端末エミュレータが必要です。Mule を X
+     Window System で利用する場合は、Mule 独自のウィンドウで漢字やハング
+     ル文字の表示ができます。
+*「たまご」を使うように構築された Mule*
+     「たまご・たかなバージョン」では、 JSERVER/CSERVER との通信は従来の
+     ように Wnn V3 互換ライブラリは使わず、Wnn V4 のライブラリを利用して
+     います。この部分は C 言語で記述されているため、EGG 機能を組み込んで 
+     Mule を構築する必要があります。
+*Wnn Version 4.108 以降*
+     Wnn 仮名漢字システムは、京都大学数理解析研究所、オムロン株式会社、
+     株式会社アステックの 3者が共同開発したもので、Mule あるいは「たまご」
+     には含まれません。Wnn はフリーソフトウェアであり、X Window System 
+     の Version 11 Release 5 などに含まれています。Wnn のインストール、
+     起動については Wnn のマニュアルを見て下さい。「たまご」を使うために
+     は Version 4.108 以降の Wnn が必要です。
+*「たまご」システム*
+
+
+「たまご」システムは次のファイルから構成されます。
+
+`lisp/egg.el'
+     「たまご」の入力システム変換系
+`lisp/wnn4-egg.el'
+     「たまご」の仮名漢字変換部
+`lisp/egg-keymap.el'
+     Sun の X11 用の keymap 定義ファイル
+`lisp/eggrc-v41'
+     標準スタートアップファイル
+`man/egg-jp.texinfo'
+     この texinfo のソースファイル
+`src/wnn4fns.c'
+     Wnn の JSERVER と emacs lisp とのインターフェース
+
+
+File: egg-jp  Node: Bug Report, Prev: Configuration, Up: Overview, Next: Kanji Input
+
+バグレポート
+============
+
+「たまご」 に関する提案・バグ情報は、以下に示すアドレスのメーリングリス
+トに送ってください。
+
+`mule@etl.go.jp'
+     通常の使用言語は英語
+`mule-jp@etl.go.jp'
+     通常の使用言語は日本語
+
+これらのメーリングリストには、必要に応じて Mule がサポートしている 
+`*junet*' というコード系を用いた多国語テキストを流すことが出来ます。
+
+
+
+File: egg-jp  Node: Kanji Input, Prev: Bug Report, Up: Top, Next: Interactive Method
+
+漢字の入力方法
+**************
+
+Mule で「たまご」を動かして漢字を入力するためには、まず第一に Wnn 4.108 
+がインストールされ、JSERVER が動いている必要があります。そして、Mule が
+「たまご」の機能を組み込んでコンパイルされていなければなりません。
+
+「たまご」での漢字入力方法には、大きく分けると次の 2種類があります。
+
+  1. 対話式漢字入力方法。
+  2. Mule の `M-x' コマンドによる一括変換方法。
+
+* Menu:
+
+* Interactive Method::	    対話式漢字入力法.
+* Input Translation Table:: 入力変換表の切り替え.
+* Batch Method::	    一括式変換機能.
+* Input in Minibuffer::     ミニバッファでの漢字入力.
+* Isearch::		    インクリメンタルサーチでの漢字入力.
+
+
+File: egg-jp  Node: Interactive Method, Prev: Kanji Input, Up: Kanji Input, Next: Transparent Mode
+
+対話式漢字入力法
+================
+
+対話式漢字入力とは、キーボードから入力した文字列を変換キーやその他のキー
+操作によって対話的に漢字に変換する方法です。普段の使用では、ほとんどがこ
+の対話式漢字入力になると思います。
+
+
+対話式漢字入力では、以下の 4つのモードを移動しながら入力を行います。
+
+*透過モード*
+     変換を一切行なわない。つまり通常の Mule と同じ。
+*入力文字変換モード*
+     普通ローマ字仮名変換を行なう。図形文字(graphic character)を入力する
+     とフェンスモードに移る。
+*フェンスモード*
+     図形文字の入力と特定の編集コマンドだけが入力可能。特定のコマンド入
+     力によって漢字変換モードに移る。
+*漢字変換モード*
+     仮名漢字変換をおこなう。
+
+これらのモードはバッファ毎に設定され、各バッファのモードライン左端に、例
+えば次のように表示されます(例は漢字変換モードです)。
+
+      [漢]-:-----Mule: *scratch*      (Lisp Interaction) ---All----------
+
+すべてのモード中で、`C-^'(コマンド*special-symbol-input*) によって特殊記
+号を含む文字入力を行なうことができます。
+
+## Command: special-symbol-input
+     メニューによる記号あるいは漢字入力を行なう。ミニバッファに表示され
+     るメニュー中から、まず種類を、つづいて文字を選択する。選択は `RET' 
+     を押すことで確定する。選択方法は次の通り。
+
+     `0..9'
+          カーソルを番号で示される項目に移動
+     `C-n'
+          次の候補一覧
+     `C-p'
+          前の候補一覧
+     `C-f'
+          カーソルを次の候補に移動
+     `C-b'
+          カーソルを前の候補に移動
+     `C-g'
+          メニュー選択を中止する
+     `RET'
+          カーソルのいる項目を選択する
+
+
+また、部首や画数による漢字入力を行なうこともできます。それぞれ専用のコマ
+ンドもありますが、*special-symbol-input* で部首入力あるいは画数入力を選
+択して入力することもできます。
+
+## Command: busyu-input
+     メニューによる部首入力を行なう。メニューの選択方法は 
+     *special-symbol-input* と同じ。
+
+## Command: kakusuu-input
+     メニューによる画数入力を行なう。メニューの選択方法は 
+     *special-symbol-input* と同じ。
+
+
+* Menu:
+
+* Transparent Mode::	透過モード.
+* Input Mode::		入力文字変換モード.
+* Fence Mode::		フェンスモード.
+* Conversion Mode::	漢字変換モード.
+
+
+File: egg-jp  Node: Transparent Mode, Prev: Interactive Method, Up: Interactive Method, Next: Input Mode
+
+透過モード
+----------
+
+「たまご」システムが利用可能な Mule を起動すると、モードラインが次のよう
+に表示されます。このときのモードを*透過モード*といいます。
+
+      [--]-:-----Mule: *scratch*      (Lisp Interaction) ---All----------
+       ^^
+
+透過モードでは「たまご」は一切の変換を行ないません。つまり通常の Mule と
+同様に利用できます。
+
+
+File: egg-jp  Node: Input Mode, Prev: Transparent Mode, Up: Interactive Method, Next: Fence Mode
+
+入力文字変換モード
+------------------
+
+透過モード中で `C-\'(コマンド *toggle-egg-mode*) を入力すると、「たまご」
+は*入力文字変換モード*に入ります。モードラインは次のように変わります。
+
+      [あ]-:-----Mule: *scratch*      (Lisp Interaction) ---All----------
+       ^^
+
+透過モードに戻るには、もう一度 `C-\' を入力します。
+
+`C-\' を押しても上記のようにならない場合は、必要な入力文字変換系のモー
+ドがロードされていないことが考えられます。必要なモードをロードして下さい。
+
+入力文字変換モードでは、「たまご」はコントロールキーやメタキーが通常の意
+味を持つと解釈します。つまりカーソル移動などは透過モード時と同様に実行で
+きます。ここで普通の文字(図形文字）を入力すると、カーソルの位置に縦棒 
+`|' 2つが現れ、その間に入力文字変換(ふつうはローマ字仮名変換)した文字列
+が表示されます。この縦棒をフェンスと呼び、この状態を*フェンスモード*とい
+います。
+
+例えば、Wnnでおなじみの変換例、「私の名前は中野です」のローマ字表記
+
+     watasinonamaehanakanodesu
+
+を入力すると
+
+     |わたしのなまえはなかのです|
+
+と「かな」に変換されて表示されます。
+
+このモードでの変換の方法は、入力文字変換表を選択することで切り替えること
+ができます(*Note Input Translation Table::)。
+
+## Command: toggle-egg-mode
+     透過モードと入力文字変換モードの切り替えを行なう。フェンスモード中
+     では、ローマ字仮名入力モードと ASCII 文字入力モードを切り替える。
+
+
+File: egg-jp  Node: Fence Mode, Prev: Input Mode, Up: Interactive Method, Next: Graphic Character
+
+フェンスモード
+--------------
+
+フェンスモードでは、図形文字入力とフェンスモード編集コマンドによる編集の
+みが行なえます。英数字、記号などの通常の図形文字を入力した場合は入力文字
+変換(ローマ字仮名変換)されて入力されます。その他に、フェンスモードでは以
+下の編集コマンドが使用できます。
+
+カーソル移動のコマンド：
+`C-a'
+     フェンス内の先頭の文字へ移動
+`C-e'
+     フェンス内の最後の文字へ移動
+`C-b'
+     フェンス内で一文字分前へ
+`C-f'
+     フェンス内で一文字分後ろへ
+
+削除・転置を行なうコマンド：
+`C-d'
+     一文字削除
+`C-k'
+     フェンス内のカーソルから後ろを削除
+`C-t'
+     フェンス内の文字の転置
+`DEL'
+     直前の文字を削除
+
+変換を行なうコマンド：
+`SPC あるいは C-@ あるいは C-w'
+     仮名漢字変換開始
+`M-h'
+     フェンス内の文字をひらがなにする(コマンド *fence-hiragana*)
+`M-k'
+     フェンス内の文字をカタカナにする(コマンド *fence-katakana*)
+`M-<'
+     フェンス内の文字を半角文字にする(コマンド *fence-hankaku*)
+`M->'
+     フェンス内の文字を全角文字にする(コマンド *fence-zenkaku*)
+
+モードの変更等を行なうコマンド：
+`C-c あるいは C-g'
+     入力をキャンセルし、フェンスモードから抜ける
+`C-l または RET'
+     フェンス内の入力を確定し、フェンスモードから抜ける
+`C-\'
+     入力文字変換モードと ASCII 文字モードの切り替え(コマンド 
+     *toggle-egg-mode*)
+`C-M-h'
+     ひらがな入力を選択する(コマンド *its:select-hiragana*)
+`C-M-k'
+     カタカナ入力を選択する(コマンド *its:select-katakana*)
+`M-q'
+     小文字入力を選択する(コマンド *its:select-downcase*)
+`M-Q'
+     大文字入力を選択する(コマンド *its:select-upcase*)
+`M-z'
+     全角小文字入力を選択する(コマンド 
+     *its:select-zenkaku-downcase*)
+`M-Z'
+     全角大文字入力を選択する(コマンド *its:select-zenaku-upcase*)
+
+その他：
+`C-z'
+     式を評価
+`C-_'
+     JIS コード入力(*Note JIS Input::)
+
+
+フェンスモードを示す方法(縦棒など)は、コマンド 
+*set-egg-fence-mode-format* で変えることができます。例えば、 
+`(set-egg-fence-mode-format "" "" 'underline)' を実行すると、フェンス領
+域が下線で示されるようになります。
+
+## Command: set-egg-fence-mode-format OPEN CLOSE &optional ATTR
+     OPEN, CLOSE はそれぞれ領域の始点と終点を示す文字列。 ATTR はフェン
+     ス領域に設定される属性(有効かどうかは端末の機能に依る)。標準の状態
+     では、 `(set-egg-fence-mode-format "|" "|" nil)' になっている。
+## Command: toggle-egg-mode
+     透過モードと入力文字変換モードの切り替えを行なう。フェンスモード中
+     では、ローマ字仮名入力モードと ASCII 文字入力モードを切り替える。
+
+* Menu:
+
+* Graphic Character::	フェンスモードでの図形文字入力.
+
+
+File: egg-jp  Node: Graphic Character, Prev: Fence Mode, Up: Fence Mode, Next: Conversion Mode
+
+フェンスモードでの図形文字入力
+..............................
+
+フェンスモードでは、`q' を入力することによって図形文字がそのまま入力でき
+るようになります。このときモード表示は `<aa>' になります。
+
+また `Q' を入力すると JIS X0208 文字で図形文字が入力されます。モード表示
+は`<ａ>'となります。
+
+これらのモードからは `C-q' によって元のモードに戻ります。またフェンスモー
+ドから抜けた場合にも、同様にもとのモードに戻ります。
+
+また、フェンスモード中で `C-\' をタイプしても、英数字や記号文字がそのま
+ま入力できるようになります。もう１度 `C-\' を叩くとローマ字仮名モードに
+戻ります。モード表示は`[aa]'になります。
+
+
+
+File: egg-jp  Node: Conversion Mode, Prev: Graphic Character, Up: Interactive Method, Next: Conversion Command
+
+漢字変換モード
+--------------
+
+フェンスモードでは、`SPC'、`C-@'、`C-w' のいづれかによって *漢字変換モー
+ド*に入り、仮名漢字変換が開始されます。モードラインは次のようになります。
+
+      [漢]-:-----Mule: *scratch*      (Lisp Interaction) ---All----------
+       ^^
+
+「たまご」は、漢字変換モードに入ったときに初めて JSERVER とのコネクショ
+ンを開き、
+
+     ホスト vanilla の WNN を起動しました。
+
+というメッセージをミニバッファに表示して、辞書設定を行います。よって、
+Mule を起動してから最初の仮名漢字変換だけは多少時間がかかります。また、
+頻度情報ファイルや個人辞書がない場合はそれらを作成するかどうかを質問しま
+す。
+
+もし JSERVER が動いていないと、
+
+     サーバと接続できませんでした。
+
+というエラーメッセージをミニバッファに表示します。この場合、モードは入力
+文字変換モードのままです。JSERVER を自分で起動するか、Wnn 担当者に起動し
+てもらうかして下さい。
+
+「たまご」からのメッセージはすべて ` *Notification* ' というバッファに保
+存されます。このバッファは、`M-x select-notification' を実行すると選択さ
+れます。
+
+## Command: select-notification
+     バッファを「たまご」の Notification ウィンドウに切り替える。
+
+
+File: egg-jp  Node: Conversion Command, Prev: Conversion Mode, Up: Conversion Mode, Next: Conversion Example
+
+変換コマンド
+............
+
+変換モードでは、「たまご」はフェンス内の文字列を文節に分割し、各文節ごと
+に変換の候補を表示します。ユーザは、文節への分割の仕方を修正し変換候補中
+から正しいものを選ぶことで、希望した漢字仮名交じり文を入力できます。カー
+ソルの移動は文節単位で行ないます。
+
+「たまご・たかなバージョン」では大文節・小文節という概念が取り入れられ、
+文節の操作も、大文節・小文節といった単位で行います。以前のバージョンでい
+う文節が、「たかなバージョン」では小文節に対応します。大文節は 1つ以上の
+小文節の列で、接続条件を満たすように定義されています。 
+
+     小文節、大文節の例:
+
+     第  ２  回の        小 文節は         お 食べ    下さい
+     --  --  ----        -- ------         -- ----    ------
+     小  小   小         小   小           小  小       小
+     ------------        ---------         -------    ------
+         大                 大               大         大
+
+
+仮名漢字変換モード中では、以下のコマンドを使って変換を行ないます。
+
+カーソル移動のコマンド：
+`C-a'
+     先頭の文節へカーソルを移動する
+`C-e'
+     最後尾の文節へカーソルを移動する
+`C-b'
+     直前の文節へカーソルを移動する
+`C-f'
+     直後の文節へカーソルを移動する
+
+文節の切り方を変えるコマンド：
+`C-i'
+     カーソル位置の大文節の長さを１字短くする
+`C-o'
+     カーソル位置の大文節の長さを１字長くする
+`M-i'
+     カーソル位置の小文節の長さを１字短くする
+`M-o'
+     カーソル位置の小文節の長さを１字長くする
+`M-<'
+     カーソル位置の文節の長さを最大にする(コマンド 
+     *henkan-saichou-bunsetu*)
+`M->'
+     カーソル位置の文節の長さを最小にする(コマンド 
+     *henkan-saishou-bunsetu*)
+
+変換の候補を見るためのコマンド：
+`SPC または C-w'
+     カーソル位置の大文節の次候補を表示する
+`C-z'
+     カーソル位置の小文節の次候補を表示する
+`C-n'
+     小/大文節変換中に、小/大文節の次候補を表示する
+`C-p'
+     小/大文節変換中に、小/大文節の前候補を表示する
+`M-s'
+     カーソル位置の大文節の変換候補一覧をミニバッファに表示し、選択可能
+     にする (コマンド *henkan-select-kouho-dai*)
+`M-z'
+     カーソル位置の小文節の変換候補一覧をミニバッファに表示し、選択可能
+     にする (コマンド *henkan-select-kouho-sho*)
+`C-v'
+     カーソル位置の文節の変換情報を表示する(コマンド 
+     *henkan-inspect-bunsetu*)
+
+変換を確定するコマンド：
+`C-k'
+     カーソルのある文節より前を確定し、カーソルを含む文節以降を入力文字
+     変換モードに戻す
+`C-l または RET'
+     すべての変換を確定する
+`C-SPC'
+     確定文字列の最初の一文字だけ挿入する
+
+仮名変換を行なうコマンド：
+`M-h'
+     文節をひらがなにする(コマンド *henkan-hiragana*)
+`M-k'
+     文節をカタカナにする(コマンド *henkan-katakana*)
+
+モードの変更等を行なうコマンド：
+`C-c あるいは C-g あるいは DEL'
+     変換を中止し、入力文字変換モードにもどる
+`C-h'
+     漢字変換モードのコマンドを一覧表示する
+
+辞書への登録を行なうコマンド：
+`C-t'
+     変換文字列を辞書に登録する
+
+
+File: egg-jp  Node: Conversion Example, Prev: Conversion Command, Up: Conversion Mode, Next: Menu Selection
+
+変換の例
+........
+
+実際の変換は、以下のように行ないます。
+
+例えばフェンスモードで
+
+     |わたしのなまえはなかたです|
+
+と入力したところで `SPC'、`C-@'、`C-w' のいずれかを押すと漢字変換モード
+に入って以下のように表示が変わります。
+
+     |私のな 前は 中田です|
+
+これは例ですので、辞書の状況によっては別の変換になる場合もあります。
+
+「たまご」では、大文節を一個の空白で区切り、小文節を `-' で区切って表示
+します(区切りを表示する方法は、コマンド *set-egg-henkan-mode-format*で変
+更できます)。
+
+ここでは文節の切り方が間違っているので、“私のな”という文節にカーソルを
+持っていき、`C-i' と入力することによってカーソルのある文節を短くします
+(`C-o' によってカーソルがある文節を長くすることができます)。
+
+     |私の なまえは 中田です|
+
+さて、2つめの文節を漢字にするために、その文節の他の変換候補を選択します。
+まず `C-f' によって 2つめの文節にカーソルを移動してから、`SPC' または 
+`C-n' によって次候補を出してみます。
+
+     |私の 名前は 中田です|
+
+変換の候補を選ぶためには、この他にも `C-p' によって直前の候補に戻る、 
+`M-s', `M-z' によって ミニバッファ で候補一覧から選ぶなどの方法がありま
+す。
+
+さて、実は中田さんではなく中野さんがこの文を入力しているとしましょう。こ
+こで最後の文節にカーソルを移してから `C-k' をタイプすると、カーソルのあ
+る文節の直前までが確定し、残りがひらがなに戻ります。またモードは入力文字
+変換モードに戻っています(`C-c', `C-g', `DEL' のいずれかをタイプすると、
+フェンスの中のすべての文字がひらがなに戻ります)。
+
+     私の名前は|なかたです|
+
+ここでひらがなを修正し `C-w'、`C-@'、`SPC' のいずれかのコマンドを入力す
+ると、変換候補がこのように表示されます。
+
+     私の名前は|中野です|
+
+この候補で満足な場合には、`C-l' あるいは RET を入力することによってこの
+変換が確定します。
+
+     私の名前は中野です
+
+
+上の例では小文節は出てきませんでしたが、小文節単位で変換することもできま
+す。例えば、「時定数」と入力したくて、フェンスモードで
+
+     |じていすう|
+
+と入れて変換すると、以下のような候補が出てきます。
+
+     |次-定数|
+
+この場合は、先頭の小文節だけが望みのものではないので、`C-z' を押して
+小文節単位で次候補を出します。
+
+     |時 定数|
+
+望みの結果になったら `C-l' か `RET' で確定します。
+
+
+文節の区切りを表示する方法は、コマンド *set-egg-henkan-mode-format* で変
+更できます。
+
+## Command: set-egg-henkan-mode-format OPEN CLOSE KUGIRI-DAI KUGIRI-SHO &optional ATTR1 ATTR2 ATTR3
+     変換モードの表示方法を設定する。OPEN, CLOSE はそれぞれ変換の始点、
+     終点を示す文字列あるいは `nil'。KUGIRI-DAI, KUGIRI-SHO は大文節、小
+     文節の区切りを示す文字列または `nil'。 ATTR1, ATTR2, ATTR3 はそれぞ
+     れ変換区間、大文節区間、小文節区間に設定される属性あるいは `nil'(有
+     効かどうかは端末の機能に依る)。標準の状態では、 
+     `(set-egg-henkan-mode-format "|" "|" " " "-" nil nil nil)' 
+     である。
+
+
+File: egg-jp  Node: Menu Selection, Prev: Conversion Example, Up: Conversion Mode, Next: Input Translation Table
+
+メニューによる変換候補の選択
+............................
+
+漢字変換モードで `M-s'(*henkan-select-kouho-dai*) や 
+`M-z'(*henkan-select-kouho-sho*) を入力することによってミニバッファを利
+用したメニューシステムでの変換候補の選択が出来ます。
+
+候補が 1行に入りきらない場合には、`C-n' で次の候補一覧が、また `C-p' で
+前の候補一覧が表示されます。選択したい候補の番号を入力するか、カーソルを
+その候補に移動して RET を押すと、その候補が選択され候補一覧から抜けます。
+`C-f' でカーソルが次候補に、`C-b' でカーソルが前の候補に移動します。変換
+を選択することなしに候補一覧の状態から抜けるには `C-g' を入力します。
+
+メニューからの変換候補選択のコマンド：
+`0..9'
+     その番号を持つ候補にカーソルを移動
+`C-n'
+     次の候補一覧
+`C-p'
+     前の候補一覧
+`C-f'
+     カーソルを次の候補に移動
+`C-b'
+     カーソルを前の候補に移動
+`C-g'
+     メニュー選択を中止する
+`RET'
+     カーソルのある項目を選択して、メニュー選択から抜ける
+
+
+File: egg-jp  Node: Input Translation Table, Prev: Menu Selection, Up: Kanji Input, Next: Selecting Translation Table
+
+入力変換表の切り替え
+====================
+
+入力文字変換モードで、「たまご」は入力文字変換表に基づいてキー入力を変換
+します。したがってこの表を切り替えることによって、どのような変換が行なわ
+れるかを指定できます。
+
+日本語が入力できる状態、すなわち `japanese.el' がロードされている状態で
+は、次の 6つの変換表が指定可能です。変換表を自分で作成することもできます 
+(*Note Input Translation::)。
+
+*roma-kana*
+     ひらがな変換。入力をローマ字として解釈し、ひらがなに変換する。モー
+     ドの表示は `[あ]' となる。
+*roma-kata*
+     カタカナ変換。入力をローマ字として解釈し、カタカナに変換する。モー
+     ドの表示は `[ア]' となる。
+*downcase*
+     小文字変換。入力変換を行わない。モードの表示は`[aa]'となる。 
+
+*upcase*
+     大文字変換。入力を大文字に変換する。モードの表示は`[aA]'となる。
+
+*zenkaku-donwcase*
+     全角(JIS X0208)小文字変換。入力を全角文字の小文字に変換する。モード
+     の表示は `[ａ]' となる。
+*zenkaku-upcase*
+     全角大文字変換。入力を全角文字の大文字に変換する。モードの表示は `
+     [Ａ]' となる。
+
+`chinese.el' がロードされている場合は、次の変換表が指定可能です。
+
+*PinYin*
+     PinYin変換を行なう。モードラインには、中国語文字の `QuanPin' が表示
+     される。
+
+
+句点や読点、文字 *ん* がどのように変換されるかを設定するにはより簡単な方
+法があります(*Note Kuten and Touten::)。
+
+* Menu:
+
+* Selecting Translation Table::	透過モードと入力文字変換モードでの変換表指定.
+* Selecting in Fence::		フェンスモードでの変換表指定.
+* Kuten and Touten::	  	句点読点などの変換.
+
+
+File: egg-jp  Node: Selecting Translation Table, Prev: Input Translation Table, Up: Input Translation Table, Next: Selecting in Fence
+
+透過モードと入力文字変換モードでの変換表指定
+--------------------------------------------
+
+透過モードと入力文字変換モードでは、以下のコマンドで変換表を指定すること
+ができます。コマンド `C-x C-k m' を実行するとメニューを用いて変換表を選
+択できます。変換表によっては、それぞれを直接選択するコマンドがあります。
+
+`C-x C-k m'
+     コマンド *its:select-mode-from-menu*。変換表名のメニューが表示され
+     るので、変換表を 1つ選択する。デフォルトの変換表以外に、ユーザが追
+     加した変換表も選択可能。`C-f', `C-b', `C-p', `C-n' で適当な項目にカー
+     ソルを移動し、RET を押して選択する。
+`C-x C-k >'
+     コマンド *its:next-mode*。メニュー上で現在使用中の変換表の次にあら
+     われる変換表を選択する。
+`C-x C-k <	'
+     コマンド *its:previous-mode*。メニュー上で現在使用中の変換表の前に
+     あらわれる変換表を選択する。
+`C-x C-k h'
+     コマンド *its:select-hiragana*。ひらがな変換表(roma-kana)を選択する。
+`C-x C-k k'
+     コマンド *its:select-katakana*。カタカナ変換表(roma-kata)を選択する。
+`C-x C-k q	'
+     コマンド *its:select-downcase*。小文字変換表(downcase)を選択する。
+`C-x C-k Q'
+     コマンド *its:select-upcase*。大文字変換表(upcase)を選択する。
+`C-x C-k z'
+     コマンド *its:select-zenkaku-downcase*。全角小文字変換表 
+     (zenkaku-downcase)を選択する。
+`C-x C-k Z'
+     コマンド *its:selct-zenkaku-upcase*。全角大文字変換表 
+     (zenkaku-upcase)を選択する。
+
+
+File: egg-jp  Node: Selecting in Fence, Prev: Selecting Translation Table, Up: Input Translation Table, Next: Kuten and Touten
+
+フェンスモードでの変換表指定
+----------------------------
+
+フェンスモードでは、以下のコマンドで変換表を切り替えられます。
+
+`C-M-h'
+     コマンド *its:select-hiragana*。ひらがな変換表(roma-kana)を選択する。
+`C-M-k'
+     コマンド *its:select-katakana*。カタカナ変換表(roma-kata)を選択する。
+`M-q'
+     コマンド *its:select-downcase*。小文字変換表(downcase)を選択する。
+`M-Q'
+     コマンド *its:select-upcase*。大文字変換表(upcase)を選択する。
+`M-z'
+     コマンド *its:select-zenkaku-downcase*。全角小文字変換表 
+     (zenkaku-downcase)を選択する。
+`M-Z'
+     コマンド *its:select-zenaku-upcase*。全角大文字変換表 
+     (zenkaku-upcase)を選択する。
+
+
+File: egg-jp  Node: Kuten and Touten, Prev: Selecting in Fence, Up: Input Translation Table, Next: Batch Method
+
+句点読点などの変換
+------------------
+
+句点や読点、文字 *ん* がどのように変換されるかは、`~/.emacs' ファイル中
+などで以下の変数の値を設定することによって指定できます。
+
+## Global variable: enable-double-n-syntax
+     この変数が `t' の場合には、`nn' を *ん* に変換する。
+
+## Global variable: use-kuten-for-comma
+     この変数が `t' の場合には、`,' を `、' に、それ以外の場合は、
+      `，' に変換する。
+
+## Global variable: use-touten-for-period
+     この変数が`t'の場合には、`.' を `。' に、それ以外の場合は、
+      `．' に変換する。
+
+
+File: egg-jp  Node: Batch Method, Prev: Kuten and Touten, Up: Kanji Input, Next: JIS Input
+
+一括変換機能
+============
+
+「たまご」は、一括式変換方式として JISコード入力、全角変換、半角変換、ひ
+らがな変換、カタカナ変換、ローマ字ひらがな変換、ローマ字漢字変換、漢字変
+換を提供しています。
+
+* Menu:
+
+* JIS Input::		JIS 入力.
+* Zenkaku Conversion::	全角変換.
+* Hankaku Conversion::	半角変換.
+* Hiragana Conversion::	ひらがな変換.
+* Katanaka Conversion::	カタカナ変換.
+* RomaHira Conversion::	ローマ字ひらがな変換.
+* RomaKan Conversion::	ローマ字漢字変換.
+* Kanji Conversion::	漢字変換.
+* Reverse Conversion::	逆変換.
+
+
+File: egg-jp  Node: JIS Input, Prev: Batch Method, Up: Batch Method, Next: Zenkaku Conversion
+
+JISコード入力
+-------------
+
+`M-x jis-code-input'によって JIS コード入力が行なえます。また、この機能
+はフェンスモードでは `C-_' に割り当てられています。
+
+`M-x jis-code-input' と入力すると、ミニバッファに
+
+     JIS code: 
+
+とプロンプトが出るので16進コードで JIS コードを入力します。例えば
+
+     JIS code: 3b7a
+
+と入力すると、カーソルの位置に「字」が入力されます(16進数の大文字・小文
+字の区別はありません)。
+
+## Command: jis-code-input
+     JIS コードによる直接入力を行う。
+
+
+File: egg-jp  Node: Zenkaku Conversion, Prev: JIS Input, Up: Batch Method, Next: Hankaku Conversion
+
+全角文字への変換
+----------------
+
+「たまご」は英数字や記号などの ASCII 文字(いわゆる半角文字)を、それに対
+応する JIS X0208 文字(いわゆる全角文字)に、一括して変換することができま
+す。このために、以下のコマンドを提供しています。
+
+`M-x zenkaku-region'
+     指定したリージョンの半角文字を全角文字にする
+`M-x zenkaku-word'
+     直後の word の半角文字を全角文字にする
+`M-x zenkaku-paragraph'
+     直後の paragraph の半角文字を全角文字にする
+`M-x zenkaku-sentence'
+     直後の sentence の半角文字を全角文字にする
+
+
+File: egg-jp  Node: Hankaku Conversion, Prev: Zenkaku Conversion, Up: Batch Method, Next: Hiragana Conversion
+
+半角文字への変換
+----------------
+
+「たまご」は、いわゆる全角文字の英数字や記号などを、一括して半角文字にす
+ることができます(日本語文字など、ASCII 文字に対応するものがない場合は変
+換されません)。このために、以下のコマンドを提供しています。
+
+`M-x hankaku-region'
+     指定したリージョンの全角文字を半角文字にする。
+`M-x hankaku-word'
+     直後の word の全角文字を半角文字にする。
+`M-x hankaku-paragraph'
+     直後の paragraph の全角文字を半角文字にする。
+`M-x hankaku-sentence'
+     直後の sentence の全角文字を半角文字にする。
+
+
+File: egg-jp  Node: Hiragana Conversion, Prev: Hankaku Conversion, Up: Batch Method, Next: Katakana Conversion
+
+ひらがな変換
+------------
+
+「たまご」はカタカナを一括してひらがなにすることができます(英数字、漢字
+などはそのままです)。このために、以下のコマンドを提供しています。
+
+`M-x hiragana-region'
+     指定したリージョンのカタカナをひらがなにする。
+`M-x hiragana-word'
+     直後の word のカタカナをひらがなにする。
+`M-x hiragana-paragraph'
+     直後の paragraph のカタカナをひらがなにする。
+`M-x hiragana-sentence'
+     直後の sentence のカタカナをひらがなにする。
+
+
+File: egg-jp  Node: Katakana Conversion, Prev: Hiragana Conversion, Up: Batch Method, Next: RomaHira Conversion
+
+カタカナ変換
+------------
+
+「たまご」はひらがなを一括してカタカナにすることができます(英数字、漢字
+などはそのままです)。このために、以下のコマンドを提供しています。
+
+`M-x katakana-region'
+     指定したリージョンのひらがなをカタカナにする。
+`M-x katakana-word'
+     直後の word のひらがなをカタカナにする。
+`M-x katakana-paragraph'
+     直後の paragraph のひらがなをカタカナにする。
+`M-x katakana-sentence'
+     直後の sentence のひらがなをカタカナにする。
+
+
+File: egg-jp  Node: RomaHira Conversion, Prev: Katakana Conversion, Up: Batch Method, Next: RomaKan Conversion
+
+ローマ字ひらがな変換
+--------------------
+
+「たまご」はローマ字を一括してひらがなにすることができます(全角文字はそ
+のまま、半角数字、記号等は全角になります)。このために、以下のコマンドを
+提供しています。
+
+`M-x roma-kana-region'
+     指定したリージョンのローマ字をひらがなにする。
+`M-x roma-kana-word'
+     直後の word のローマ字をひらがなにする。
+`M-x roma-kana-paragraph'
+     直後の paragraph のローマ字をひらがなにする。
+`M-x roma-kana-sentence'
+     直後の sentence のローマ字をひらがなにする。
+
+
+例えばローマ字文字列
+
+     koreharo-majidesu.
+
+は、ひらがな文字列
+
+     これはろーまじです。
+
+に変換されます。
+
+
+File: egg-jp  Node: RomaKan Conversion, Prev: RomaHira Conversion, Up: Batch Method, Next: Kanji Conversion
+
+ローマ字漢字変換
+----------------
+
+「たまご」はローマ字を一括して仮名漢字交じりにすることができます(全角文
+字はそのまま、半角数字、記号等は全角になります)。このために、以下のコマ
+ンドを提供しています。
+
+`M-x roma-kanji-region'
+     指定したリージョンのローマ字を漢字にする。漢字変換モードに入る。
+`M-x roma-kanji-word'
+     直後の word のローマ字を漢字にする。漢字変換モードに入る。
+`M-x roma-kanji-paragraph'
+     直後の paragraph のローマ字を漢字にする。漢字変換モードに入る。
+`M-x roma-kanji-sentence'
+     直後の sentence のローマ字を漢字にする。漢字変換モードに入る。
+
+
+例えばローマ字文字列
+
+     watashino namaeha nakano desu.
+
+は、
+
+     |私のな 前は 中野です|
+
+になり、漢字変換モードに入ります(リージョン内の空白文字は削除されます)。
+
+
+File: egg-jp  Node: Kanji Conversion, Prev: RomaKan Conversion, Up: Batch Method, Next: Reverse Conversion
+
+漢字変換
+--------
+
+「たまご」はひらがなを一括して仮名漢字交じりにすることができます。このた
+めに、以下のコマンドを提供しています。
+
+`M-x henkan-region'
+`C-x SPC'
+     指定したリージョンのひらがなを漢字にする。漢字変換モードに入る。
+`M-x henkan-word'
+     直後の word のひらがなを漢字にする。漢字変換モードに入る。
+`M-x henkan-paragraph'
+     直後の paragraph のひらがなを漢字にする。漢字変換モードに入る。
+`M-x henkan-sentence'
+     直後の sentence のひらがなを漢字にする。漢字変換モードに入る。
+
+
+例えばひらがな文字列
+
+     わたしのなまえはなかのです。
+
+は、
+
+     |私のな 前は 中野です|
+
+になり、漢字変換モードに入ります。
+
+
+File: egg-jp  Node: Reverse Conversion, Prev: Kanji Conversion, Up: Batch Method, Next: Input in Minibuffer
+
+逆変換
+------
+
+「たまご」は漢字文字列をひらがなに逆変換することができます。逆変換を行な
+うためには、eggrc で逆変換環境に附属語ファイルと辞書を読み込んでおく必要
+があります。逆変換のために、以下のコマンドを提供しています。
+
+`M-x gyaku-henkan-region'
+     指定したリージョンの漢字をひらがなにする。変換モードに入る。
+`M-x gyaku-henkan-word'
+     直後の word の漢字をひらがなにする。変換モードに入る。
+`M-x gyaku-henkan-paragraph'
+     直後の paragraph の漢字をひらがなにする。変換モードに入る。
+`M-x gyaku-henkan-sentence'
+     直後の sentence の漢字をひらがなにする。変換モードに入る。
+
+
+例えば、文字列
+
+     私の名前は中野です
+
+を逆変換すると
+
+     |わたしの なまえは なかのです|
+
+になり、変換モードに入ります。この変換モードは、通常の変換モードと違い、
+変換前が漢字仮名混じりの文字列、変換後が仮名の文節の列になります。一般に
+漢字から仮名への変換は、仮名漢字変換と違って候補の数が少ないのでかなりの
+確率で正しい読みが得られます。
+
+
+File: egg-jp  Node: Input in Minibuffer, Prev: Reverse Conversion, Up: Kanji Input, Next: Isearch
+
+ミニバッファでの漢字入力方法
+============================
+
+「たまご」はミニバッファ内での入力文字変換、仮名漢字変換機能を提供してい
+ます。普通のバッファ中と同様にコマンド `C-\' によって入力文字変換モード
+になります。モードはミニバッファの先頭に表示されます。
+
+     例:
+
+      [--]J:-----Mule: wnn4-egg.el      (Emacs-Lisp) --- 3%----------
+      [あ]Query replace: 
+      ^^^^
+
+
+File: egg-jp  Node: Isearch, Prev: Input in Minibuffer, Up: Kanji Input, Next: Hangul Input
+
+インクリメンタルサーチでの漢字入力方法
+======================================
+
+インクリメンタルサーチ(*isearch*)中に漢字文字列を入力するには、 `C-k' を
+タイプします。
+
+このモードではミニバッファでストリングの入力を行なうことができるので、通
+常のミニバッファ中と同様に `C-\' で入力文字変換モードになります。漢字入
+力が終ったら、RET キーを押せばインクリメンタルサーチを再開します。
+
+
+File: egg-jp  Node: Hangul Input, Prev: Isearch, Up: Top, Next: Dictionary Management
+
+ハングル入力
+************
+
+「たまご」の入力文字変換系の機能を利用して、Mule でハングル文字の入力を
+行うことができます。ハングル文字のフォントは、X11R5 についています。
+
+ハングル入力を行うには、まず `korean.el' をロードします。 `korean.el' は、
+ハングルの変換表 "hangul" を定義する `its-hangul.el' を読み込み、「たま
+ご」のメニューに "hangul" を追加します。実際にハングル入力をはじめるには、
+`C-x C-k m' でメニューを出し、その中から "hangul" を選択してやります。モー
+ドラインは以下のようになります。
+
+      [HG]-:-----Mule: *scratch*      (Lisp Interaction) ---All----------
+       ^^
+
+
+日本語の音節は、/CV/, /CjV/, /CwV/, /n/, /q/, /V/ (Cは子音、Vは母音、nは
+撥音、qは捉音)のいずれかであり、ローマ字表記から各かな文字への変換の規則
+にはほとんど重なりがありません。ローマ字仮名変換中に、子音音素を示すロー
+マ字のあと母音音素に対応するローマ字が入力されれば、仮名文字が１つ確定し
+ます。また、音節を構成しない音素、たとえば子音を示すローマ字だけが入力さ
+れた状態での表示は、そのローマ字そのものを用いることが一般的です。
+
+一方ハングルでは、音節を示す記号(音節文字)は子音と母音のどちらかを示す記
+号(音素文字)の組合せで構成されます。終声子音があるため、１つの音節文字は
+CV, CVC, CVCC, CVV, CVVC, CVVCCのいずれかの音を示すシンボルの組合せでで
+きています(音価ゼロの子音を示す音素文字があるので、V, VC, VCCなどに対応
+する音節文字はありません)。また、音素文字から音節文字への変換規則には重
+なりがあります。たとえば 音素 C1V1, C1V1C2, C2V2 に対応する音節文字 S1,
+S2, S3 がありえます。
+
+各音素文字を１つのキーに割り付けて入力する場合、各入力ごとに音素文字が表
+示され、それまでのいくつかの入力をまとめた音節文字が存在する場合にはその
+文字が表示されることが自然です。ここで C1, V1, C2, V2 という音素が順にキー
+入力されたとしましょう。C1 と C2 の音を示す音素文字は P1, P2 であるとし
+ます。このとき各キーストロークの終了した時点では、P1→S1→S2→S3 のよう
+に表示されるべきです。一方 C1V1C2 に対応するような文字が、たまたまない場
+合に限っては、P1→S1→S1P2→S3 のように表示されなくてはなりません。
+
+これは「たまご」を用いて、次のような変換の定義をすることによって実現でき
+ます。
+
+     (its-define-mode "hangul" "HG" t)
+
+     (its-defrule "c"   "p1"  nil "あ")
+     (its-defrule "cv"  "s1"  nil "い")
+     (its-defrule "cvC" "s2"  nil "う")
+     (its-defrule "C"   "p2"  nil "え")
+     (its-defrule "CV"  "s3"  nil "お")
+
+このとき c,v,C,V という入力に対して「たまご」は、
+
+      "" --> "あ" --> "い" --> "う" --> "s1s3"
+
+という変換を行ないます。また以下のようにs2に対応する文字がない場合は
+
+     (its-defrule "c"   "p1"  nil "あ")
+     (its-defrule "cv"  "s1"  nil "い")
+     (its-defrule "C"   "p2"  nil "え")
+     (its-defrule "CV"  "s3"  nil "お")
+
+
+      ""--> "あ" --> "s1" --> "s1え" --> "s1s3"
+
+と変換されます。
+
+
+File: egg-jp  Node: Dictionary Management, Prev: Hangul Input, Up: Top, Next: Registration
+
+辞書管理
+********
+
+「たまご」は、辞書の管理のための機能として、辞書登録と辞書編集の２つを提
+供しています。
+
+* Menu:
+
+* Registration::	辞書登録.
+* Editing::		辞書編集.
+
+
+File: egg-jp  Node: Registration, Prev: Dictionary Management, Up: Dictionary Management, Next: Editing
+
+辞書登録
+========
+
+「たまご」は、バッファ中の文字列を辞書に単語として登録できます。このため
+にはコマンド *toroku-region* を用います。
+
+## Command: toroku-region START END
+     リージョン(START, END)で指定された文字列を辞書に登録します。
+
+例えば、バッファ中の『電子技術総合研究所』という単語を辞書に登録する手順
+は次のようになります。
+
+  1. 登録文字列をリージョンで指定します。登録する語の先頭(この場合は「電」
+     の字)にカーソルを移動させ、`C-SPC' を押してマークをセットし、登録す
+     る語の最後の次の文字(この場合は「所」の次の文字)までカーソルを進め
+     ます。
+  2. `M-x toroku-region' を実行します。
+  3. 読みを指定します。ミニバッファに
+
+          辞書登録『電子技術総合研究所』 読み：
+
+     と表示されるので読みをローマ字で入力し(自動的にひらがなに変換する)
+     RET で読みの入力を終了します。
+  4. 登録する辞書を指定します。`C-f', `C-b', `C-n', `C-p' 等を使ってカー
+     ソルを登録したい辞書に移動し選択します。
+  5. 品詞を指定します。ミニバッファに品詞一覧が表示されます。品詞名は 
+     JSERVER が持っている情報を引いてくるので、サイト毎に設定できます。
+     詳しくは各サイトの `$WNNLIB/hinsi.data' を見てください。
+
+          品詞名:  0.普通名詞/  1.固有名詞/  2.動詞/  3.特殊な動詞/
+
+     品詞名の最後に `/' がついているものは品詞群を表しています。
+     `C-f' でカーソルが右に移動し、`C-b' でカーソルが左に移動します。
+     また、数字を入力するとその項目にカーソルが移動します。`C-n' で次の品
+     詞一覧が表示されます。
+
+
+          品詞名: 0.動詞以外の用言/ 1.その他の独立語/
+
+     `C-p' で前の品詞一覧に戻ります。
+
+     目的の品詞にカーソルを移動し、RET によって品詞を選択します。動詞に
+     はいろいろな種類があるため、例えば「サ行(する)&名詞」を選択するには、
+     まず「動詞」を選択し、次の選択リストから、「サ行(する)&名詞」を探し、
+     選択します。
+
+     例の場合、電子技術総合研究所は固有名詞なので「固有名詞」を選びます。
+     するとさらに
+
+          0./  1.人名  2.地名  3.人名&地名  4.固有名詞
+
+     のようにメニューが出てきます。今度は名前の最後に `/' がついていない
+     ので、それぞれは品詞を表しています。ここでは 3.固有名詞を選び、RET 
+     を押せば単語が登録されます。
+
+     なお、品詞ノードが一番上(品詞名: 0.普通名詞/ 1.固有名詞 2.動詞 3.特
+     殊な動詞/ ...)でない時には、上の例のように `/' だけの項目が出ます。
+     その項目を選択すると、一番上のノードに戻ります。
+
+
+また、漢字変換モードで単語を登録することもできます。この場合は、コマンド 
+*toroku-henkan-mode* を用います。
+
+## Command: toroku-henkan-mode
+     漢字変換中の文字列を辞書に登録します。
+
+手順は次のようになります。
+
+  1. 登録文字列を漢字変換して確定する直前の状態にします。例えば『電子技
+     術総合研究所』という単語を登録したい場合は、
+          |電子 技術 総合 研究所|
+     という状態にします。
+  2. `C-t'(*toroku-henkan-mode*)を実行します。
+  3. ミニバッファに
+          [あ]漢字：電子技術総合研究所
+     と表示されるので、これでよければそのまま`RET'を押します。もし変更し
+     たい場合は編集することができます。
+  4. 続いてミニバッファに
+          [あ]辞書登録『電子技術総合研究所』 読み：でんしぎじゅつそうご
+     うけんきゅうじょと出てきます。読みは先ほど漢字変換時に入力した読み
+     が自動的に入っています。このままの読みで良ければ`RET'を押します。も
+     し変更したい場合は編集することができます。
+  5. この後は*toroku-region*のときと同様で、登録辞書を指定し、品詞を指定
+     すると登録は完了します。
+
+
+
+

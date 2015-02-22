@@ -1,0 +1,34 @@
+############################################################
+#        Syntax and Category of character		   #
+############################################################
+
+1. syntax
+
+Mule can define syntax of all multi-byte characters by
+modify-syntax-entry.
+
+The first of modify-syntax-entry should be one of below:
+  (1) ASCII character
+  (2) multi-byte character
+  (3) leading character of multi-byte character
+  (4) (leading character << 8) | (first byte of multi-byte character)
+
+There's a restriction of specifying matching character within 
+second argument.  If the first argument specifies multi-byte
+character or leading char of multi-byte character, the
+matching character should have the same leading character.  If
+the character is 2-byte code, the first-byte of it should
+also be the same with the first-byte of first argument.
+
+2. category
+
+Like syntax, category also defines characteristics of
+characters.  The difference is:
+  (1) Each Character can have more than one category.
+  (2) User can define new type of category as he wishes.
+	Example: See japanese.el
+  (3) char-category returns all mnemonics of the character
+	by string.
+  (4) For regular expression search, you can use the \cm or
+	\Cm (any mnemonics comes at the place of 'm')
+	instead of \sm and \Sm.

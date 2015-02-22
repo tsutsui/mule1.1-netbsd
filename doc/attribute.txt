@@ -1,0 +1,48 @@
+############################################################
+#        Character Attributes				   #
+############################################################
+
+1. Types of attributes
+
+Currently supported attributes are underline, inverse (you
+may call it highlight or standout), and bold.  Termcap
+entries used for there attributes are (when you use Emacs
+from normal terminal (e.g. VT100) or terminal-emulator (e.g.
+xterm):
+  us/ue: start/end underline
+  so/se: start/end inverse
+  md/me: start/end bold
+
+2. Information of attribute
+
+Information of attributes are hold in a new buffer-local
+variable 'attributed-region', which is nil or has the
+following form:
+	((0 . 0) (m_1 . a_1) ... (m_n . a_n))
+where m_i is a marker to hold a position where attribute a_i
+starts, a_i is a mask bits for each type of attribute:
+Mask values of attributes are:
+  1 -- underline
+  2 -- inverse
+  4 -- bold
+
+However, it's not recommended that user modify this variable
+directly, but you are expected to use the following
+functions.
+
+(defun attribute-on-region (attr &optional from to)
+  "Set an character attribute ATTR within the region on.\n\
+Currently supported attributes are 'underline', 'inverse', and 'bold'.\n\
+If called from program, takes two optional arguments FROM and TO.\n\
+If FROM or TO is NIL, (point-min) or (point-max) is used instead.\n\
+Information of attribute is stored in a buffer local variable\n\
+attributed-region, but manipulating these variables\n\
+directly may cause serious problems."
+
+(defun attribute-off-region (attr &optional from to)
+  "Set an character attribute ATTR within the region off.\n\
+See the function attribute-on-region for the detail."
+
+(defun attribute-get-attribute (&optional pos)
+  "Return a list of attributes  at POS.\n\
+POS is an optional argument and the default is the current point."

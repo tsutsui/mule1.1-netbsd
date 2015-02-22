@@ -1,0 +1,398 @@
+% Reference Card for Mule 0.9 on Unix systems
+%**start of header
+\newcount\columnsperpage
+
+% This file can be printed with 1, 2, or 3 columns per page (see below).
+% Specify how many you want here.  Nothing else needs to be changed.
+
+\columnsperpage=3
+
+%% inserted by toshi@isl.melco.co.jp from texinfo-jp.tex Dec 8 '92
+%% 92.7.8 by K.Handa
+\newif\ifNTT
+\ifx\gtfam\undefined
+\NTTtrue
+\else
+\NTTfalse
+\fi
+%% end by toshi@isl.melco.co.jp
+
+% Copyright (c) 1987 Free Software Foundation, Inc.
+
+% This file is part of GNU Emacs.
+
+% GNU Emacs is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 1, or (at your option)
+% any later version.
+
+% GNU Emacs is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+
+% You should have received a copy of the GNU General Public License
+% along with GNU Emacs; see the file COPYING.  If not, write to
+% the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+
+% This file is intended to be processed by plain TeX (TeX82).
+%
+% The final reference card has six columns, three on each side.
+% This file can be used to produce it in any of three ways:
+% 1 column per page
+%    produces six separate pages, each of which needs to be reduced to 80%.
+%    This gives the best resolution.
+% 2 columns per page
+%    produces three already-reduced pages.
+%    You will still need to cut and paste.
+% 3 columns per page
+%    produces two pages which must be printed sideways to make a
+%    ready-to-use 8.5 x 11 inch reference card.
+%    For this you need a dvi device driver that can print sideways.
+% Which mode to use is controlled by setting \columnsperpage above.
+%
+% Author:
+%  Stephen Gildea
+%  UUCP: mit-erl!gildea
+%  Internet: gildea@erl.mit.edu
+%
+% Thanks to Paul Rubin, Bob Chassell, Len Tower, and Richard Mlynarik
+% for their many good ideas.
+
+% If there were room, it would be nice to see sections on
+% Abbrevs, Rectangles, and Dired.
+
+%
+% mule refcard
+% 当リファレンスカードは mule-jp, egg-jp を元に作成したものです. 
+%
+
+\def\versionnumber{0.9}
+\def\year{1992}
+\def\version{Dec \year\ v\versionnumber}
+
+\def\shortcopyrightnotice{\vskip 1ex plus 2 fill
+  \centerline{\small \copyright\ \year\ Free Software Foundation, Inc.
+  Permissions on back.  v\versionnumber}}
+
+\def\copyrightnotice{
+\vskip 1ex plus 2 fill\begingroup\small
+\centerline{Copyright \copyright\ \year\ Free Software Foundation, Inc.}
+\centerline{designed by toshi@isl.melco.co.jp, \version}
+\centerline{for Mule version 0.9}
+
+Permission is granted to make and distribute copies of
+this card provided the copyright notice and this permission notice
+are preserved on all copies.
+
+For copies of the GNU Emacs manual, write to the Free Software
+Foundation, Inc., 675 Massachusetts Ave, Cambridge MA 02139.
+
+\endgroup}
+
+% make \bye not \outer so that the \def\bye in the \else clause below
+% can be scanned without complaint.
+\def\bye{\par\vfill\supereject\end}
+
+\newdimen\intercolumnskip
+\newbox\columna
+\newbox\columnb
+
+\def\ncolumns{\the\columnsperpage}
+
+\message{[\ncolumns\space 
+  column\if 1\ncolumns\else s\fi\space per page]}
+
+\def\scaledmag#1{ scaled \magstep #1}
+
+% This multi-way format was designed by Stephen Gildea
+% October 1986.
+\if 1\ncolumns
+  \hsize 4in
+  \vsize 10in
+  \voffset -.7in
+  \font\titlefont=\fontname\tenbf \scaledmag3
+  \font\headingfont=\fontname\tenbf \scaledmag2
+  \font\smallfont=\fontname\sevenrm
+  \font\smallsy=\fontname\sevensy
+%% patched by toshi@isl.melco.co.jp  Dec 8 '92
+  \ifNTT
+  \jfont\jtitlefont=dg10 scaled \magstep3
+  \jfont\jheadingfont=dg10 scaled \magstep2
+  \def\jsmallfont{\sevendm}
+  \else
+  \jfont\jtitlefont=goth10 scaled \magstep3
+  \jfont\jheadingfont=goth10 scaled \magstep2
+  \def\jsmallfont{\sevenmin}
+  \fi
+%% end of patch toshi@isl.melco.co.jp
+
+  \footline{\hss\folio}
+  \def\makefootline{\baselineskip10pt\hsize6.5in\line{\the\footline}}
+\else
+  \hsize 3.2in
+  \vsize 7.95in
+  \hoffset -.75in
+  \voffset -.745in
+  \font\titlefont=cmbx10 \scaledmag2
+  \font\headingfont=cmbx10 \scaledmag1
+  \font\smallfont=cmr6
+  \font\smallsy=cmsy6
+  \font\eightrm=cmr8
+  \font\eightbf=cmbx8
+  \font\eightit=cmti8
+  \font\eighttt=cmtt8
+  \font\eightsy=cmsy8
+%% patched by toshi@isl.melco.co.jp  Dec 8 '92
+  \ifNTT
+  \jfont\jtitlefont=dg10 scaled \magstep2
+  \jfont\jheadingfont=dg10 scaled \magstep1
+  \jfont\jsmallfont=dm6
+  \jfont\eightdm=dm8
+  \jfont\eightdg=dg8
+  \else
+  \jfont\jtitlefont=goth10 scaled \magstep2
+  \jfont\jheadingfont=goth10 scaled \magstep1
+  \jfont\jsmallfont=min6
+  \jfont\eightdm=min8
+  \jfont\eightdg=goth8
+  \fi
+%% end of patch toshi@isl.melco.co.jp
+  \textfont0=\eightrm
+  \textfont2=\eightsy
+  \def\rm{\eightrm}
+  \def\bf{\eightbf}
+  \def\it{\eightit}
+  \def\tt{\eighttt}
+  \normalbaselineskip=.8\normalbaselineskip
+  \normallineskip=.8\normallineskip
+  \normallineskiplimit=.8\normallineskiplimit
+  \normalbaselines\rm       %make definitions take effect
+
+  \if 2\ncolumns
+    \let\maxcolumn=b
+    \footline{\hss\rm\folio\hss}
+    \def\makefootline{\vskip 2in \hsize=6.86in\line{\the\footline}}
+  \else \if 3\ncolumns
+    \let\maxcolumn=c
+    \nopagenumbers
+  \else
+    \errhelp{You must set \columnsperpage equal to 1, 2, or 3.}
+    \errmessage{Illegal number of columns per page}
+  \fi\fi
+
+  \intercolumnskip=.46in
+  \def\abc{a}
+  \output={%
+      % This next line is useful when designing the layout.
+      %\immediate\write16{Column \folio\abc\space starts with \firstmark}
+      \if \maxcolumn\abc \multicolumnformat \global\def\abc{a}
+      \else\if a\abc
+    \global\setbox\columna\columnbox \global\def\abc{b}
+        %% in case we never use \columnb (two-column mode)
+        \global\setbox\columnb\hbox to -\intercolumnskip{}
+      \else
+    \global\setbox\columnb\columnbox \global\def\abc{c}\fi\fi}
+  \def\multicolumnformat{\shipout\vbox{\makeheadline
+      \hbox{\box\columna\hskip\intercolumnskip
+        \box\columnb\hskip\intercolumnskip\columnbox}
+      \makefootline}\advancepageno}
+  \def\columnbox{\leftline{\pagebody}}
+
+  \def\bye{\par\vfill\supereject
+    \if a\abc \else\null\vfill\eject\fi
+    \if a\abc \else\null\vfill\eject\fi
+    \end}  
+\fi
+
+% we won't be using math mode much, so redefine some of the characters
+% we might want to talk about
+\catcode`\^=12
+\catcode`\_=12
+
+\chardef\\=`\\
+\chardef\{=`\{
+\chardef\}=`\}
+
+\hyphenation{mini-buf-fer}
+
+\parindent 0pt
+\parskip 1ex plus .5ex minus .5ex
+
+% patched by toshi@isl.melco.co.jp  Jul 16 '90
+%\def\small{\smallfont\textfont2=\smallsy\baselineskip=.8\baselineskip}
+\def\small{\jsmallfont\smallfont\textfont2=\smallsy\baselineskip=.8\baselineskip}
+% end of patch toshi@isl.melco.co.jp
+
+\outer\def\newcolumn{\vfill\eject}
+
+% patched by toshi@isl.melco.co.jp  Jul 16 '90
+%\outer\def\title#1{{\titlefont\centerline{#1}}\vskip 1ex plus .5ex}
+\outer\def\title#1{{\jtitlefont\titlefont\centerline{#1}}\vskip 1ex plus .5ex}
+% end of patch toshi@isl.melco.co.jp
+
+\outer\def\section#1{\par\filbreak
+% patched by toshi@isl.melco.co.jp  Jul 16 '90
+%  \vskip 3ex plus 2ex minus 2ex {\headingfont #1}\mark{#1}%
+  \vskip 3ex plus 2ex minus 2ex {\jheadingfont\headingfont #1}\mark{#1}%
+% end of patch toshi@isl.melco.co.jp
+  \vskip 2ex plus 1ex minus 1.5ex}
+
+\newdimen\keyindent
+
+\def\beginindentedkeys{\keyindent=1em}
+\def\endindentedkeys{\keyindent=0em}
+\endindentedkeys
+
+\def\paralign{\vskip\parskip\halign}
+
+\def\<#1>{$\langle${\rm #1}$\rangle$}
+
+\def\kbd#1{{\tt#1}\null}    %\null so not an abbrev even if period follows
+
+\def\beginexample{\par\leavevmode\begingroup
+  \obeylines\obeyspaces\parskip0pt\tt}
+{\obeyspaces\global\let =\ }
+\def\endexample{\endgroup}
+
+\def\key#1#2{\leavevmode\hbox to \hsize{\vtop
+  {\hsize=.75\hsize\rightskip=1em
+  \hskip\keyindent\relax#1}\kbd{#2}\hfil}}
+
+\newbox\metaxbox
+\setbox\metaxbox\hbox{\kbd{M-x }}
+\newdimen\metaxwidth
+\metaxwidth=\wd\metaxbox
+
+\def\metax#1#2{\leavevmode\hbox to \hsize{\hbox to .75\hsize
+  {\hskip\keyindent\relax#1\hfil}%
+  \hskip -\metaxwidth minus 1fil
+  \kbd{#2}\hfil}}
+
+\def\threecol#1#2#3{\hskip\keyindent\relax#1\hfil&\kbd{#2}\quad
+  &\kbd{#3}\quad\cr}
+
+%**end of header
+
+\title{Mule, たかな リファレンス カード}
+
+\section{チュートリアル}
+
+\key{日本語チュートリアル}{C-h T}
+
+\section{多国語文字モードの設定}
+
+\key{多国語文字モードと英数モードの切替え}{C-x C-k t}
+\key{多国語文字モードと英数モードのデフォルト値の切替え}{C-x C-k T}
+
+\section{使用する多国語文字コード系の設定}
+
+\key{キーボード文字コードの設定}{C-x C-k i}
+\key{ディスプレイ文字コードの設定}{C-x C-k d}
+\key{ファイル文字コードの設定}{C-x C-k f}
+\key{ファイル読み込み時のファイル文字コードの一時的設定}{C-u C-x C-f}
+\key{ファイル書き出し時のファイル文字コードの一時的設定}{C-u C-x C-w}
+\key{プロセス文字コードの設定}{C-x C-k p}
+\key{選択されているコード系の表示}{C-x C-k C}
+\key{選択されているコード系の簡単な表示}{C-x C-k c}
+\key{ファイル文字コードのデフォルト値の設定}{C-x C-k F}
+\key{プロセス文字コードのデフォルト値の設定}{C-x C-k P}
+
+\section{インクリメンタルサーチ}
+
+\key{ストリング入力(\kbd{C-s,C-r}等の後)}{C-k {\it string} RET}
+
+\section{ピクチュアモード}
+
+\key{左へ2カラム上へ1行カーソル移動}{C-c \~{ }}
+\key{右へ2カラム上へ1行カーソル移動}{C-c $\backslash$}
+\key{左へ2カラム下へ1行カーソル移動}{C-c ?}
+\key{右へ2カラム下へ1行カーソル移動}{C-c |}
+
+\section{変更}
+
+\key{ポイントのある単語の綴りチェック}{M-\#}
+\key{括弧の挿入}{M-\{}
+
+\section{透過モード}
+
+\key{文字入力変換モードのオン・オフ}{C-$\backslash$}
+
+\section{文字入力変換モード}
+
+\key{文字入力変換モードのオン・オフ}{C-$\backslash$}
+\key{変換表の選択}{C-x C-k m}
+\key{次の変換表の選択}{C-x C-k >}
+\key{前の変換表の選択}{C-x C-k <}
+\key{平仮名変換表の選択}{C-x C-k h}
+\key{片仮名変換表の選択}{C-x C-k k}
+\key{小文字変換表の選択}{C-x C-k q}
+\key{大文字変換表の選択}{C-x C-k Q}
+\key{2byte 小文字変換表の選択}{C-x C-k z}
+\key{2byte 大文字変換表の選択}{C-x C-k Z}
+
+\section{fence モード}
+
+\metax{仮名漢字変換開始}{SPC {\rm or} C-SPC {\rm or} C-w}
+\key{先頭の文字へ移動}{C-a}
+\key{一文字前へ}{C-b}
+\key{入力を中止し fence モードから抜ける}{C-c {\rm or} C-g}
+\key{一文字削除}{C-d}
+\key{最後の文字へ移動}{C-e}
+\key{一文字後へ}{C-f}
+\key{カーソルから後を削除}{C-k}
+\key{入力を確定し，fence モードから抜ける}{C-l {\rm or} RET}
+\key{文字の入れ換え}{C-t}
+\key{式を評価}{C-z}
+\key{JIS コード入力}{C-_}
+\key{1byte 文字モードと入力文字変換モードの切替え}{C-$\backslash$}
+\key{直前の文字を削除}{DEL}
+\key{fence 内の文字をひらがなにする}{M-h}
+\key{fence 内の文字をカタカナにする}{M-k}
+\key{fence 内の文字を全角文字にする}{M->}
+\key{fence 内の文字を半角文字にする}{M-<}
+\key{平仮名入力を選択}{C-M-h}
+\key{片仮名入力を選択}{C-M-k}
+\key{小文字入力を選択}{M-q}
+\key{大文字入力を選択}{M-Q}
+\key{2byte 小文字入力を選択}{M-z}
+\key{2byte 大文字入力を選択}{M-Z}
+
+\section{漢字変換モード}
+
+\metax{小文節の次候補を表示する}{C-z}
+\metax{大文節の次候補を表示する}{C-w}
+\key{先頭の１文字のみ挿入する}{C-SPC}
+\key{先頭文節へカーソルを移動する}{C-a}
+\key{直前の文節へカーソルを移動する}{C-b}
+\key{変換を中止しローマ字仮名モードにもどる}{C-c {\rm or} C-g}
+\key{最終文節へカーソルを移動する}{C-e}
+\key{直後の文節へカーソルを移動する}{C-f}
+\key{漢字変換モードのコマンド一覧表示}{C-h}
+\key{大文節の長さを短くする}{C-i}
+\key{カーソルのある文節より前を確定しカーソルを含む文節以降を入力文字
+変換モードに戻す}{C-k}
+\key{全ての変換を確定する}{C-l {\rm or} RET}
+\key{次候補表示する}{SPC {\rm or} C-n}
+\key{大文節の長さを長くする}{C-o}
+\key{前候補表示する}{C-p}
+\key{変換情報の表示}{C-v}
+\key{大文節の変換候補一覧をミニバッファに表示し選択可能にする}{M-s}
+\key{文節をひらがなにする}{M-h}
+\key{小文節の長さを短くする}{M-i}
+\key{文節をカタカナにする}{M-k}
+\key{小文節の長さを長くする}{M-o}
+\key{小文節の変換候補一覧をミニバッファに表示し選択可能にする}{M-z}
+\key{文節の長さを最大にする}{M->}
+\key{文節の長さを最小にする}{M-<}
+
+\section{全モード}
+
+\key{記号入力を行なう}{C-^}
+
+\bye
+
+% Local variables:
+% compile-command: "jtex mule-refcard"
+% End:
+

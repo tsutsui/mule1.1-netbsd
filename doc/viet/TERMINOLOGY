@@ -1,0 +1,133 @@
+*********** Vietnamese translation of mule-0.9.7/doc/TERMINOLOGY ************
+
+This file is in plain 8-bit VISCII (VIetnamese Standard Code for Information
+Interchange).  VISCII was designed by the oversea Vietnamese Standardization
+Group (viet-std@haydn.stanford.EDU).  VISCII documents and public-domain
+VISCII-compliant software running on Unix, X-Windows, DOS, MS-Windows 3.1 can
+all be retrieved by anonymous ftp from media.mit.edu (18.85.0.2) under the
+directory /pub/Vietnet/Viet-std (for documents) and /pub/Vietnet/Viscii (for
+software).  Please read FAQ.VISCII for more info. 
+
+This translation is contributed by the Viet-Std Group -- May 24, 1993 (Hoc Ngo)
+
+****************** Bän d¸ch Vi®t ngæ cüa TERMINOLOGY *************************
+  Chú thích:  Nguyên bän tiªng Anh ðôi khi ðßþc ghi lÕi trong ngo£c vuông [].
+******************************************************************************
+
+## GNU Emacs:  GNU project Emacs
+
+GNU Emacs là ¤n bän m¾i cüa Emacs ðßþc viªt b·i Richard Stallman,
+tác giä cüa nguyên bän [original version] Emacs trên máy PDP-10.
+Các chÑc nång sØ døng cüa GNU Emacs bao g°m t¤t cä m÷i chÑc nång mà các
+nhu li®u viªt bài Emacs có, và nó có th¬ ðßþc m· rµng ra d­ dàng b·i vì
+các m®nh l®nh viªt bài ðßþc viªt b¢ng Lisp.  (t× etc/emacs.1)
+
+## Mule [mju:l]: Multilingual Enhancement to GNU Emacs
+
+Mule là chæ viªt t¡t cüa MULtilingual Enhancement to GNU Emacs.  Không
+nhæng nó có th¬ xØ lý chæ ASCII (7 bit) và ISO Latin-1 (8 bit) mà còn có th¬
+xØ lý Nh§t ngæ, Hoa ngæ, Hàn ngæ (16 bit) mã hoá theo tiêu chu¦n ISO2022 và
+các d¸ bän (thí dø nhß EUC, Compound Text).
+
+## Wnn: Japanese Kana to Kanji translator
+
+Wnn là bµ d¸ch Nh§t ngæ t× chæ Kana sang chæ Kanji.
+Wnn g°m có:
+	jserver - mµt thiªt b¸ phøc vø n«n [background server] dùng ð¬
+		  d¸ch chu²i [string] Kana sang chu²i h²n hþp Kanji-Kana.
+	uum     - mµt bµ ph§n ð¥u [front end] cüa jserver dùng trong
+		  thiªt b¸ ð¥u cu¯i [terminal].
+	dictionary - mµt bµ tñ ði¬n r¤t l¾n dùng ð¬ d¸ch.
+
+Wnn là mµt nhu li®u c¯ng hiªn cho X.V11R5 trong thß møc contrib/im/Xsi/Wnn.
+„n bän m¾i nh¤t là 4.108.
+
+## cWnn: Chinese PinYin/ZhuYin to Hanji translator
+
+cWnn là bµ d¸ch Hoa ngæ t× chæ PinYin/ZhuYin sang chæ Hanji.
+cWnn g°m có:
+	cserver - mµt thiªt b¸ phøc vø n«n dùng ð¬ d¸ch chu²i PinYin/ZhuYin
+	          sang chu²i Hanji (cho mã GB).
+	tserver - mµt thiªt b¸ phøc vø n«n dùng ð¬ d¸ch chu²i PinYin/ZhuYin
+		  sang chu²i Hanji (cho mã Big-5).
+	uum     - mµt bµ ph§n ð¥u cüa cserver dùng trong thiªt b¸ ð¥u cu¯i
+	dictionary - mµt bµ tñ ði¬n r¤t l¾n dùng ð¬ d¸ch.
+
+cWnn là mµt nhu li®u c¯ng hiªn cho X.V11R5 trong thß møc contrib/im/Xsi/cWnn.
+„n bän m¾i nh¤t là 4.108.
+
+## EGG: Japanese inputting methods on Mule
+
+EGG cung c¤p hai c¤p ðµ [levels] giao di®n ngß¶i dùng [user interface]: 
+c¤p ðµ ITS dùng ð¬ ðánh chu²i Kana/PinYin t× bàn chæ ASCII và
+c¤p ðµ TANAKA dùng ð¬ d¸ch chu²i Kana/PinYin sang chu²i Kanji/Hanzi trong
+khi ð¯i thoÕi v¾i jserver/cserver.
+
+Vi®c sØ døng EGG trên Mule tß½ng Ñng v¾i vi®c sØ døng uum/cuum trên
+kterm/cxterm, cä hai ð«u dùng jserver/cserver nhß là n«n [background],
+nhßng EGG cung c¤p mµt giao di®n thu§n ti®n r¤t nhi«u khi bÕn chÕy Mule.
+
+## sj3: Japanese Kana to Kanji translator:
+
+'sj3' d¸ch chu²i Nh§t ngæ Kana sang chu²i h²n hþp Kanji-Kana. 'sj3' chÕy
+trên các trÕm làm vi®c [workstations] Sony NEWS.
+
+Khi Mule ðßþc cài ð£t v¾i EGG và SJ3, EGG s¨ ð¯i thoÕi v¾i sj3server
+thay vì v¾i jserver/cserver.
+
+## CANNA: Japanese Kana to Kanji translator:
+
+Canna biªn ð±i t× Kana sang Kanji dña trên mô hình phøc vø viên--khách hàng
+[server-client model].  Nghîa là, mµt chß½ng trình Ñng døng s¨ ð¯i thoÕi
+v¾i mµt chß½ng trình biªn ð±i t× kana sang kanji ðóng vai trò phøc vø viên
+ð¬ ðÕt ðßþc dæ ki®n nh§p vào b¢ng Nh§t ngæ.  Canna là mµt nhu li®u c¯ng
+hiªn cho X.V11R5 trong thß møc contrib/im/Canna.
+
+Khi Mule ðßþc cài ð£t v¾i CANNA, bÕn có th¬ dùng chß½ng trình phøc vø
+Canna ð¬ ðánh Nh§t ngæ.
+
+## Quail: Inputting method for multilingual characters in Mule
+
+H® th¯ng Quail ðßþc gµp chung v¾i Mule (quail.el) ð¬ cung c¤p các phß½ng
+pháp ðánh chæ cho nhi«u bµ chæ khác nhau (quail-xxx.el).
+
+Ð¯i v¾i chæ Âu Châu:
+	quail-latin.el, quail-greek.el, quail-cyrillic.el, quail-hebrew.el
+Ð¯i v¾i Hoa ngæ (tß½ng Ñng v¾i cxterm's *.cit):
+	quail-ccdospy.el, quail-ctcps3.el, quail-etzy.el, quail-punct-b5.el,
+	quail-punct.el, quail-py-b5.el, quail-py.el, quail-qj-b5.el,
+	quail-qj.el, quail-sw-b5.el, quail-tonepy.el, quail-zozy.el
+Ð¯i v¾i Hàn ngæ:
+	quail-hangul.el
+Ð¯i v¾i Nh§t ngæ (cho nhæng ngß¶i sØ døng tcode):
+	quail-tcode-dvorak.el, quail-tcode-qwerty.el
+
+## kterm, cxterm, ixterm, exterm:  Terminal emulators which run on X
+
+Ðó là tên nhæng bµ mô phöng thiªt b¸ ð¥u cu¯i chÕy trên khung X.
+
+	kterm:  „n bän cüa 'xterm' dành cho Nh§t ngæ
+	cxterm: „n bän cüa 'xterm' dành cho Hoa ngæ 
+	ixterm: „n bän cüa 'xterm' dành cho chæ Âu châu
+	exterm: „n bän cüa 'xterm' dành cho ngôn ngæ ða qu¯c gia
+		(Nh§t/Hoa/Hàn/Châu Âu/và các ngôn ngæ khác)
+
+Ðßþc phân ph¯i nhß là mµt nhu li®u c¯ng hiªn cho X.V11R5 trong thß møc 
+contrib/clients.
+
+## ISO2022:  Code extension techniques of ISO 7-bit and 8-bit coded
+	     character sets
+
+ISO2022 là tiêu chu¦n qu¯c tª v« phß½ng pháp mã hóa chæ. ISO2022 ð¸nh
+nghîa cách thÑc mã hóa các bµ chæ ðång ký b·i ECMA.  — ðây chúng tôi chï
+cho biªt c½ bän v« nhæng phß½ng pháp này.  Xin ð÷c mule/doc/ISO2022
+ð¬ biªt thêm chi tiªt.
+
+### ECMA: European Computer Manufacturers Association
+
+ECMA là chæ viªt t¡t cüa Hi®p Hµi Các Nhà Sän Xu¤t Máy Tính · Châu Âu.
+ECMA lo vi®c hành chánh cho C½ quan ðång bµ qu¯c tª v« các bµ chæ
+[The International Register for character sets].  B¤t cÑ bµ chæ nào
+cûng có th¬ ðång ký ðßþc nªu nó thöa mãn nhæng yêu c¥u kÛ thu§t cüa
+ISO2022 và yêu c¥u v« hình thÑc cüa ISO2375.
+sets.

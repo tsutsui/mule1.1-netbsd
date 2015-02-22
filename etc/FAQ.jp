@@ -1,0 +1,3074 @@
+/*                                                        -*- indented-text -*-
+ * Copyright (C) 1992 Manabu Higashida
+ *                    manabu@sigmath.osaka-u.ac.jp
+ *                       boo@soum.co.jp
+ *
+ * これは GNU Emacs 18.58 の配布パッケージに含まれる etc/FAQ ファイルを
+ * 翻訳したものです。当翻訳物の二次的著作権は東田 学に留保されますが、
+ * Free Software Foundation が公表した GNU 一般公有許諾の第 1 版が
+ * 定める条項に従ってこの翻訳を再配布または変更することができます。
+ */
+
+
+このドキュメントを GNU Emacs のバッファで読んでいるなら,
+"M-2 C-x $" と入力すると質問だけを抜き出すことができます.
+答も読みたいときは "C-x $" と入力すると元に戻ります.
+
+質問番号 XXX で検索しいたいときは,
+"M-C-s ^XXX:" と入力してください.
+もし見つからなかったら,
+続けて "C-r" とタイプしてみてください.
+質問が見つかったら ESC をタイプすると検索モードから抜けられます.
+
+78 列目の `+' マークは前版から行が加わったことを表しています.
+同様に `-' マークは行が削除されたことを,
+`!' マークは挿入や削除など何らか変更があったことを表しています.
+
+最新の FAQ を入手するための手順は
+ニュース・グループ `news.answers' の
+`Introduction to news.answer' という記事を参照してください.
+USENET のニュースを購読していない人は,
+`mail-server@pit-manager.mit.edu' に
+本文に `help' と `index' という 2 行だけ書いたメールを送ってみてください.
+もしくは anonymous FTP で pit-manager.mit.edu からも入手できます.
+
+
+この FAQ で使っている記法の紹介 (この節を最初に読むこと!)
+  
+  GNU Emacs に充分慣れていたらこの節は跳ばして構わないでしょう.
+  いくつかは「しばしば出る質問」ではありませんが,
+  読んでおくと次節以降の解答を理解するのに役立ちます.
+  
+1: どんな意味ですか: C-h, M-C-a, RET, etc.?
+  
+  C-a は "コントロール" キーを押しながら "a" キーを押すことを意味します.
+  このときに送られる ASCII コードは
+  "a" キーのみを押したときに送られるコードから 96 を引いた値です
+  (一般に "コントロール" キーを押しながらキーを押すと
+  キーのみを押したときに送られるコードから 
+  96 または 64 を引いた値が送られます).
+  "コントロール" キーを押しながらキーを押すことで
+  ASCII コードの 0 から 31 までを送ることができます.
+  
+  M-a は "メタ" キーを押しながら (または ESC キーを押してから) 
+  "a" キーを押すことを意味します.
+  このときに送られる ASCII コードは 
+  "a" のみを押したときに送られるコードに 128 を加えた値です.
+  
+  M-C-a は "コントロール" キーと "メタ" キーの両方を押しながら
+  "a" キーを押すことを意味します. 
+  C-M-a は M-C-a と同じ意味です.
+  
+  * RET は "リターン" キーを押すことを意味します. 
+    RET は C-m と同じです.
+    これは ASCII コードの 13 を送ります.
+  
+  * LFD は "ラインフィード" キーを押すことを意味します. 
+    LFD は C-j と同じです.
+    これは ASCII コードの 10 を送ります. 
+    Unix では, ASCII コードの 10 はしばしば "ニューライン" と呼ばれます.
+  
+  * DEL は "デリート" キーを押すことを意味します. 
+    DEL は C-? と同じです.
+    これは ASCII コードの 127 を送ります. 
+    (注意: C-? を "コントロール" キーと呼ぶのは間違いです. 
+    というのは, 
+    127 は 6, 7 番目のビットが立っていますが,
+    コントロール・キーの約束は 6, 7 番目のビットが立っていないことだからです.
+    さらに, コントロール-? で ASCII コードの 127 が生成されるキーボードは
+    ほとんどありません. 実際, コントロール-? (コントロール-シフト-/) は 
+    C-_, ASCII コードの 31 を生成するものがほとんどです.)
+  
+  * ESC は "エスケープ" キーを押すことを意味します. 
+    ESC は C-[ と同じです.
+    これは ASCII コードの 27 を送ります.
+  
+  * SPC は "スペース" キーを押すことを意味します. 
+    これは ASCII コードの 32 を送ります.
+  
+  * TAB は "タブ" キーを押すことを意味します. 
+    TAB は C-i と同じです.
+    これは ASCII コードの 9 を送ります.
+  
+  C-@ や C-^ は, 普通はシフト・キーを押しながらではなく, 単にコントロール-2 
+  またはコントロール-6 を押すだけで入力できます.
+  C-_ は, シフト・キーを押しながらハイフン (-) キーを押さなくては
+  入力できないでしょう.
+  C-@ はしばしばコントロール-スペースで入力できます.
+  C-@ は普通 NUL 文字と呼ばれます. すなわち ASCII コードの 0 です.
+  C-_ はしばしばコントロール-7 またはコントロール-/ で入力できます.
+  C-? (すなわち DEL) はシフト-バックスペースまたはコントロール-バックスペース
+  で入力できるかもしれません.
+  コントロール・キーを押しながらキーボードの数字キーを押して何が生成されるか
+  確かめてみるとよいでしょう.
+  
+  この件に関してさらにオンラインで読むことができます. 
+  "C-h i m emacs RET m characters RET" または "C-h i m emacs RET m keys RET" 
+  をタイプしてください.
+  
+2: 次のように書いてあったらどうしたらいいんですか: "ESC a" をタイプする?
+  
+  このドキュメントでは
+  二つ以上のキーを入力するキー列をダブルクオートに囲んで表します.
+  次の表し方はキーを一回の操作で入力することになります 
+　(モディファイヤと一緒に入力するものもあります).
+  
+    C-x, M-x, M-C-x
+    RET, LFD, DEL, ESC, SPC, TAB
+  
+  ダブル・クオートの中でスペースで区切ってこれらのキーを区別します. 
+  ダブル・クオートの中の本当のスペースは無視してください. 
+  スペース・キーを押すときは SPC と書きます.
+  ダブル・クオートの中のこれ以外の文字は
+  ひとつのキーを押すことを表します (シフトする場合もあります).
+  
+3: メタ・キーがない場合はどうしたらいいのですか?
+  
+  M-a とタイプする代わりに, "ESC a" とタイプすることができます. 
+  実際, Emacs は内部で M-a を "ESC a" に分解して処理しています
+  (ただし meta-prefix-char の値にもよります).
+  
+4: エスケープ・キーがない場合はどうしたらいいのですか?
+  
+  C-[ が代わりに使えます. これはエスケープ・キーと同じく
+  ASCII コードの 27 を送ることになっています.
+  
+5: "M-x command" はどんな意味ですか?
+  
+  "M-x command" は M-x をタイプして, コマンドの名前を入力して, 
+  RET をタイプすることを意味します.
+  
+  M-x はデフォルトでは "execute-extended-command" を起動するキー列です.
+  コマンド名を知っている場合は, 
+  このコマンドで Emacs のコマンドを起動することができます.
+  コマンド名がわからない場合は, 
+  TAB または SPC でコマンド名が補完されます. 
+  ? で補完可能なコマンドの一覧が表示されます.
+  "コマンド" とは "対話的 (interactive)" に実行できる Emacs の関数のことです.
+  
+  註: システム管理者が execute-extended-command を起動するキー列を
+  別のキーにも定義してくれてあるかもしれません. 
+  "Do" とラベルの付いたファンクション・キーがあったら「疑って」みてください.
+  
+  対話的に実行できない Emacs 関数を実行するには, 
+  M-ESC をタイプしてリスプ式を入力してください (質問 103 参照).
+  
+6: なんのことですか: etc/SERVICE, src/config.h, lisp/default.el?
+  
+  これらは GNU Emacs の配布パッケージに含まれるファイルの名前です.
+  GNU Emacs の配布パッケージはいくつかのサブディレクトリに分けられています;
+  重要なサブディレクトリは "etc", "lisp" と "src" です.
+  
+  GNU Emacs を使うのに, それらのディレクトリがシステムのどこにあるかを
+  知っている必要はありませんが, Emacs を起動して
+  "C-h v exec-directory RET" とすると 
+  "etc" ディレクトリがインストールされているディレクトリの
+  フルパスが表示されます.
+  
+  FTP まはた e-mail で個々のファイルを入手することもできます (質問 20 を参照).
+  
+7: FSF, LPF, OSF, GNU, RMS, FTP そして GPL って何のこと?
+  
+  FSF == Free Software Foundation
+  LPF == League for Programming Freedom (プログラミング自由連盟)
+  OSF == Open Software Foundation
+  GNU == GNU's Not Unix
+  RMS == Richard Matthew Stallman
+  FTP == File Transfer Protocol
+  GPL == GNU General Public Licence (GNU 一般公有許諾)
+  
+  註: FSF と LPF と OSF を混同しないように. 
+  LPF は「ルック・アンド・フィール」に対する著作権とソフトウェアの特許に
+  反対する組織です.
+  FSF は高品質のフリー・ソフトウェアをすべての人に提供するための組織です.
+  OSF は AT&T に縛られない標準 Unix を提供するための商業団体です.
+  
+  註: Free Software Foundation の "フリー" は
+  "無料" ではなく "自由" を意味します.
+  GPL が適用されたソフトウェアを配布することにより対価を受けることもできますが,
+  誰もが支払えるくらいの低価格であること,
+  そして再販売または再配布できることを GPL では要求しています.
+
+
+Sources of Information and Help
+  
+8: GNU Emacs を使い始めたばかりなのですが, 基本的な操作はどうするのですか?
+  
+  "C-h t" をタイプするとチュートリアルが起動されます. 
+  C-h をタイプするとヘルプ・システムが起動されます.
+  
+  注意: システム管理者が C-h を DEL のように働くように
+  変更してあるかもしれません.
+  そのときは M-x help-for-help でヘルプが起動できます.
+  どのキーでヘルプが起動できるかは,
+  "M-x where-is RET help-for-help RET" で判ります.
+  コンマ (,) で区切られてキー列が表示されます.
+  各々のキー列の最後のコンマは無視してください.
+  それぞれキー列を入力するとヘルプが起動されます.
+  
+  註: Emacs のヘルプ機能はヘルプがひとつのキーで起動されたときのみ働きます.
+  変数 help-char がこの文字の値を格納しています.
+  
+9: GNU Emacs で何ができるか知るにはどうしたらよいのですか?
+  
+  GNU Emacs で何がどうできるか知るにはいくつかの方法があります.
+  
+  * Emacs のオンライン・ドキュメントを使いこなせるようになりましょう.
+    GNU Emacs マニュアルはすべてオンラインで参照することができます.
+    しかも "Info" マニュアル・リーダを使うと
+    ハイパー・テキスト形式で読めます.
+    "C-h i" で Info を起動できます.
+  
+  * FSF にマニュアルのハード・コピーを注文できます. 詳細は質問 12 を参照.
+  
+  * コマンドとコマンドを起動するキーを一覧した
+    リファレンス・カードを入手できます.
+    FSF に 1 ドルで注文するか (10 部で 5 ドル),
+    もしくは etc/refcard.tex を印刷すると入手できます.
+  
+  * コマンド "command-apropos" を使うと,
+    文字列 (正規表現も使える) を含むすべてのコマンドを一覧することができます.
+    "C-h a" でこのコマンドが起動されます.
+  
+  * コマンド "apropos" を使うと,
+    文字列を含むすべてのコマンドと変数を一覧できます.
+    M-x apropos でこのコマンドが起動されます.
+  
+  * その他にもたくさんのヘルプと情報を得るためのコマンドがあります.
+    "C-h C-h C-h" でそれらのコマンドの一覧と簡単な説明が表示されます.
+  
+  註: command-apropos と apropos コマンドの実行が非常に遅いことがあります.
+  これは Emacs 19 では直る予定です.
+  それまで待てないときは,
+  Emacs Lisp アーカイブ (質問 18 参照) から 
+  "fast-apropos.el" を入手してください.
+  このパッケージは,
+  文字列を含むすべてのコマンドと変数と
+  ドキュメント・ストリングを一覧できる "super-apropos" コマンドを含んでいます.
+  
+10: GNU Emacs をネットワークから入手するにはどうしたらいいのですか?
+  
+  etc/DISTRIB と etc/FTP ファイルから近くのアーカイブ・サイトを捜してください.
+  まだ GNU Emacs を入手していないときは,
+  質問 20 を読んでまずこの二つのファイルを入手してください.
+  
+  最新バージョンは常に anonymous FTP で MIT から入手できます
+  (prep.ai.mit.edu:/pub/gnu/emacs-18.57.tar.Z).
+  
+11: GNU Emacs のインストールを手助けしてもらいたいのですが, どこに頼めばよいのですか?
+  
+  etc/SERVICE にインストール・サービスを有償で提供している
+  会社や個人の情報が含まれています.
+  最新の SERVICE ファイルは prep.ai.mit.edu から入手できます.
+  このファイルを入手する方法は質問 20 を参照してください.
+  
+12: GNU Emacs のマニュアルのハードコピーはどうしたら入手できるのですか?
+  
+  GNU Emacs マニュアルのハード・コピーは FSF に 20 ドルで注文できます.
+  6 部以上では 1 部当たり 13 ドルになります.
+  (価格は業務上の控除費目となるかもしれません.)
+  
+  Emacs の配布パッケージの "man" ディレクトリに 
+  TeX のフル・ソースが含まれています.
+  豪気な人ならこの 300 ページに及ぶマニュアルを打ち出してみるとよいでしょう.
+  打ち出し方は質問 14 を参照してください.
+  
+  自分で打ち出してみたいのだが, TeX を持っていないという場合は
+  PostScript バージョンを anonymous FTP で入手できます
+  (cs.ubc.ca:src/gnu/manuals_ps/emacs-18.57.ps.Z, 
+  ただし彼らの時間で深夜から早朝にかけてアクセスして欲しいとのことです.
+  pacific time zone, GMT-8).
+  
+  TeX を持っていなくても "texi2roff" というプログラムを使うと 
+  Texinfo のソースを {t,n,ps}roff 形式に変換することができます.
+  texi2roff は anonymous FTP で入手できます.
+  (archive.cis.ohio-state.edu:/pub/gnu/texi2roff/texi2roff.shar.Z)
+  
+  Carl Witty <cwitty@cs.stanford.edu> は次のように書いています:
+  
+    Emacs マニュアルは Info システムを使うとオンラインでも読めるんだ.
+    "C-h i" で Info システムを起動すると, 
+    ハイパー・テキスト形式でリンクをたどったり,
+    検索をすることができる.
+    たいていの人はハード・コピーよりこちらを選ぶだろうね.
+  
+13: Texinfo 形式のドキュメントをインストールするにはどうすればいいのですか?
+  
+  まず Texifnfo 形式のファイルから Info 形式のファイルを作成します.
+  "makeinfo" というプログラムを使うとよいでしょう.
+  makeinfo は最新の Texinfo パッケージに含まれています
+  (prep.ai.mit.edu:/pub/gnu/texinfo-2.12.tar.Z).
+  
+  Texinfo 形式の情報は,
+  Emacs の配布パッケージに含まれる Texinfo マニュアルを読むと得られます.
+  このマニュアルは Info フォーマットでもインストールされているはずなので,
+  オンラインで読むことができます.
+  
+  Emacs の texinfo-format-buffer コマンドも makeinfo プログラムも
+  Info ファイルを Emacs の Info ツリーにインストールしてくれません.
+  次のようにしてインストールしてください:
+  
+  1. 出来上がった Info ファイルを "info" ディレクトリに移動してください.
+     質問 6 に "info" ディレクトリのパスを知る方法があります.
+  
+  2. ファイル info/dir を編集して,
+     インストールした Info ファイルのトップレベル・ノードを追加してください.
+     ファイルにすでに書いてあるノードを参考にするとよいでしょう.
+     例えば次のように書きます:
+  
+       * Topic: (relative-pathname).  Short description of topic.
+  
+  Info ファイルをインストールしたいのだが, 
+  info ディレクトリや info/dir ファイルに書き込む権利がないときは
+  次のようにして凌ぐことができます:
+  
+  * Info ファイルは使う前にインストールされている必要はありません.
+    (Info モードで "g" をタイプしたときに起動される) 
+    Info-goto-node コマンドにファイル名を丸括弧で囲んで指定することができます.
+    このとき指定したファイルの "Top" という名前のノードに進みます.
+    例えばホーム・ディレクトリの "XXX" というファイルを見たいときは,
+    次のように入力します:
+  
+      C-h i g (~/XXX) RET
+  
+  * あなただけの Info ディレクトリを作ることができます.
+    変数 Info-directory にあなたの Info ディレクトリのパスを設定します.
+    例えばホーム・ディレクトリに "Info" というサブディレクトリを
+    あなたの Info ディレクトリに設定したいときは, 次のように指定します:
+      
+      (setq Info-directory (expand-file-name "~/Info"))
+  
+    "dir" という名前のトップレベル Info ファイルが必要です.
+    あなたの Info ディレクトリにシステムの Info ディレクトリからコピーするか
+    シンボリック・リンクを張るとよいでしょう.
+  
+  * 複数の Info ディレクトリを扱うことができる
+    機能拡張版 lisp/info.el を使うことができます.
+    これなら個人的な Info ディレクトリとシステムで共有する Info ディレクトリを
+    両方とも参照することができます.
+    Dave Gillespie <daveg@csvax.cs.caltech.edu> が
+    このような機能をもつ版を作っています.
+    また他にも似た機能を持つ版があるそうです.
+  
+14: Texinfo 形式のファイルを印刷するにはどうするのですか?
+  
+  註: Info ファイルからは奇麗なプリント・アウトを得ることはできません.
+  元の Texinfo ファイルを削除しないようにしましょう.
+  
+  1. Texinfo ファイルの先頭に
+  
+       \input texinfo
+  
+  と書かれていることを確認してください.
+  この "texinfo" を man/texinfo.tex のフルパスに変える必要があるかもしれません
+  (またはカレント・ディレクトリにコピーするかリンクを張ってください).
+  
+  2. tex XXX.texinfo
+  
+  3. texindex XXX.??
+  
+    "texindex" プログラムは man/texindex.c をコンパイルするとできます.
+  
+  4. tex XXX.texinfo
+  
+  5. できあがった DVI ファイル XXX.dvi を DVI ファイルを普通に打ち出す
+     方法で打ち出してください.
+  
+  もっと一般的な手順は, 
+  質問 13 でふれた最新の Texinfo パッケージから入手してください.
+  
+15: GNU Emacs 以外で Info ファイルを読むことができますか?
+  
+  できます.
+  `info', `xinfo' そして `ivinfo' といったプログラムがあります.
+  info は curses を,
+  xinfo は標準的な X11R4 のライブラリを,
+  ivinfo は InterViews を使っています.
+  info は最新の Texinfo パッケージに含まれます (質問 19 参照).
+  xinfo は独立して anonymousFTP で入手できます
+  (prep.ai.mit.edu:pub/gnu/xinfo-1.01.01.tar.Z).
+  ivinfo は comp.sources.misc アーカイブまたは 
+  Tom Horsley <tom@ssd.csd.harris.com> から入手できます.
+  ivinfo を作るには,
+  スタンフォードから InterViews C++ X ライブラリを入手する必要があります.
+  anonymous FTP で入手できます
+  (interviews.stanford.edu).
+  
+16: GNU Emacs Lisp のドキュメントはどうしたら入手できますか?
+  
+  Emacs の中から,
+  "C-h f" で関数のドキュメントを,
+  "C-h v" で変数のドキュメントを読むことができます.
+  
+  より多くの情報は,
+  Unix で動く Emacs 第 18 版の GNU Emacs Lisp リファレンス・マニュアル
+  から得ることができます.
+  このマニュアルは FSF から 50 ドル (5 部で 200 ドル) で入手できます.
+  最新版 (1.03 版 1991 年 1 月 28 日) は anonymous FTP で入手できます.
+  
+  オンライン向けには,
+  あらかじめ整形してある Info ファイルが Texinfo 形式のソースと一緒に
+  anonymous FTP で入手できます
+  (Emacs Lisp Archive, prep.ai.mit.edu:pub/gnu/elisp-manual-1.03.tar.Z).
+  (もちろん Texinfo のソースから整形することもできます.)
+  質問 13 に Info ファイルのインストール法が出ています.
+  
+  550 ページに及ぶマニュアルを印刷できるなら,
+  質問 14 に手順があります.
+  
+  または USENET の格言を引くなら, "真実はソースにある".
+  
+17: XXX なことをするための GNU Emacs Lips パッケージはありますか?
+  
+  たぶんあります.
+  Lisp コード・ディレクトリと呼ばれる Emacs Lisp パッケージのリストは,
+  Dave Brennan <brennan@hal.com> と Dave Sill <de5@ornl.gov> 
+  によって保守されています.
+  このリストの中からあなたの望みのパッケージを捜してみてください.
+  
+  このリストは Emacs Lisp Archive の "LCD-datafile.Z" です
+  (質問 18 にこのファイルを入手する方法があります).
+  "lispdir.el.Z" と "lispdir.doc.Z" にこのリストを読むためにためになある情報が
+  含まれています.
+  lispdir.el と LCD-datafile をインストールすると,
+  "M-x lisp-dir-apropos" コマンドでデータベースを引くことができます.
+  例えば, "M-x lisp-dir-apropos RET ange-ftp RET" から
+  次のような出力が得られます (この例は最新ではありません):
+  
+                    GNU Emacs Lisp Code Apropos -- "ange-ftp"
+  
+    ange-ftp (3.112)  91-08-12
+         Andy Norman, <ange@hplb.hpl.hp.com>
+         archive.cis.ohio-state.edu:
+           /pub/gnu/emacs/elisp-archive/as-is/ange-ftp.el.Z
+         transparent FTP Support for GNU Emacs
+  
+18: Emacs の配布パッケージに含まれない GNU Emacs Lisp パッケージはどうしたら入手できますか?
+  
+  まず第一に,
+  リスプ・コードのあるディレクトリにあなたの捜しているファイルがないか
+  もう一度確認して下さい (質問 17 参照).
+  次ぎにあなたのサイトのアーカイブや Emacs Lisp アーカイブを捜してみてください.
+  それでも見つからないときは,
+  作者に電子メールで問い合わせてください.
+  
+  註: アーカイブを保守している人には個々のパッケージに対する要望や質問に
+  時間はありません.
+  FTP や UUCP によるアクセスができない場合は,
+  友達に当たってみてください.
+  くれぐれもアーカイブの管理者を煩わせないようにしましょう.
+  
+  Emacs Lisp アーカイブは anonymous FTP でアクセスできます
+  (archive.cis.ohio-state.edu:/pub/gnu/emacs/elisp-archive/).
+  まず "README" ファイルを取り寄せて読んでください.
+  
+  註: ".Z" という拡張子で終わるファイルは圧縮されています.
+  FTP の "binary" モードで取り寄せる必要があります.
+  拡張子が ".elc" のファイルも binary モードで取り寄せてください.
+  
+19: Emacs Lisp アーカイブに登録するにはどうしたらよいのですか?
+  
+  elisp-archive@cis.ohio-state.edu へ電子メールで申請します.
+  メッセージ (申請) は自動的に保存され一定期間アーカイブされます.
+  緊急のメールは直接
+  Dave Sill <de5@ornl.gov> または Dave Brennan <brennan@dg-rtp.dg.com>
+  へサブジェクトに "urgent" という文字を入れて送って下さい.
+  オハイオ州の要請によりもはや ftp で登録することはできません.
+  
+  しかし,
+  もし複数のファイル (tar 形式でアーカイブするにせよ) やバイナリ・ファイルを
+  登録するときは,
+  FTP による転送の方が好ましいので,
+  どこかの anonymous FTP サイトと調整すべきでしょう.
+  uudecode したり unshar したりしてファイルを調整するよりは手早いでしょう.
+  
+  とにかく申請する前に "guidelines.Z" を取り寄せて読んで下さい.
+  管理者の保守の手間を省くため LCD エントリを埋めておくべきです.
+  次のような形式でファイルに埋め込みます:
+  
+    ;; LCD Archive Entry:
+    ;; package name|author's name|email address
+    ;; |description
+    ;; |date|version|archive path
+  
+  例えば
+  
+    ;; LCD Archive Entry:
+    ;; tex-complete|Sebastian Kremer|sk@thp.Uni-Koeln.DE
+    ;; |Minibuffer name completion for editing [La]TeX.
+    ;; |91-03-26|$Revision: 1.12 $|~/packages/tex-complete.el.Z
+  
+  のように書きます.
+  
+  Dave Brennan はこの形式から自動的にデータを引き出すソフトウェアを
+  作成しています.
+  この形式は柔軟性があります.
+  異なるプレフィクスの行が現れるか,
+  または 7 番目のフィールドの区切りが現れるまでがデータです.  
+  
+20: GNU Emacs からどのような情報を引出せるのですか?
+  
+  これは「しばしば出る質問」ではありませんが, 書かずにはいられません!
+  GNU Emacs と GNU プロジェクトに関連する情報を記した様々なファイルは
+  あなたのそばで読まれるのを待っているのです.
+  
+  次のファイルは GNU Emacs の配布パッケージの "etc" ディレクトリにあります.
+  最新版は anonymous FTP で個別に入手できます
+  (prep.ai.mit.edu:/pub/gnu/etc/):
+  
+    APPLE -- なぜ FSF は GNU Emacs で Apple のコンピュータに対応しないのか
+    DISTRIB -- GNU Emacs を入手するための情報,
+        "Free Software Foundation Order Form" を含みます
+    FTP -- Internet FTP または UUCP で GNU Software を得るための方法
+    INTERVIEW -- Richard Stallman が BYTE の編集者と交した
+        彼のパブリック・ドメインで UNIX と互換性のある
+        ソフトウェア・システムに関するインタビュー
+    MACHINES -- GNU Emacs が稼動するマシンとシステムの現状
+    MAILINGLISTS -- GNU プロジェクトのメーリング・リスト案内
+    SERVICE -- GNU のサポート・サービスの案内
+    SUN-SUPPORT -- "Using Emacstool with GNU Emacs" を含む
+  
+  次のファイルも GNU Emacs の配布パッケージの "etc" ディレクトリにあります:
+  
+    DIFF -- GNU Emacs と Twenex Emacs の違い
+    CCADIFF -- GNU Emacs と CCA Emacs の違い
+    GOSDIFF -- GNU Emacs と Gosling (Unipress??) Emacs の違い
+    COPYING -- GNU Emacs の一般公有許諾
+    NEWS -- GNU Emacs のニュース, ユーザが知るべき変更
+    LPF -- なぜ League for Programming Freedom なのか
+    FAQ -- GNU Emacs に関してしばしば聞かれる質問 (いま読んでいるファイル)
+    OPTIONS -- 起動時に有効なオプションの一覧
+  
+  次のファイルは anonymous FTP で入手できます (prep.ai.mit.edu:/pub/gnu/):
+  
+    tasks -- GNU の仕事一覧
+    standards.text -- GNU のコーディング・スタイルの標準
+    
+  加えて, 上に述べたすべてのファイルは FSF から電子メールで直接入手できます.
+  もちろん, 手元のソースを確かめてから連絡してください.
+  
+  FSF から電子メールで次のファイルを入手することができます:
+  
+  * GNU's Bulletin, June, 1991 -- this file includes:
+      GNU'S Who
+      What Is the Free Software Foundation?
+      What Is Copyleft?
+      A Small Way to Help Free Software
+      GNUs Flashes (important recent developments for project GNU)
+      Free Software Support (and how to get it!)
+      Copyrighted Programming Languages
+      AT&T Threatens Users of X Windows (and other software patent threats)
+      Project Gutenberg
+      GNU Project Status Report
+      GNU in Japan
+      GNU Wish List
+      Help Keep Government Software Free
+      GNU Software Available Now
+        Contents of the Emacs Tape
+        Contents of the Compiler Tape
+        Contents of the X11 Tapes
+        VMS Emacs and Compiler Tapes
+      GNU Documentation
+      How to Get GNU Software
+      Free Software for Microcomputers
+        GNU Software on Apple computers
+        GNU Software on the Amiga
+        GNU Software on the Atari
+        GNUish MS-DOS project
+        Freemacs, an Extensible Editor for MS-DOS
+      GNU in Japan
+      FSF Order Form
+      Thank GNUs
+  * Legal issues about contributing code to GNU
+  * GNU Project Status Report
+  
+21: 次のソフトウェア最新版はどこから入手できますか: VM, Supercite, GNUS, Calc, Calendar, Ange-FTP, VIP, Dired, Ispell, Epoch, Demacs, Freemacs しして Patch?
+  
+  {ここに載せるべきパッケージで漏れているものがあったら教えてください.
+  メーリング・リストやニュース・グループがあるもの,
+  またはソース・コードが 0.5 メガバイトを超えるものには掲載資格があるでしょう.}
+  
+  * VM (View Mail) -- another mail reader within Emacs
+  
+    Author: Kyle Jones <kyle@uunet.uu.net>
+    Latest released version: 4.41
+    Beta test version: 5.31
+    Anonymous FTP:
+      Emacs Lisp Archive: packages/vm-4.41.tar.Z, as-is/timer.shar.Z         -
+      ftp.uu.net:/pub/vm-{4.41,5.31beta}.tar.Z
+    Newsgroups and mailing lists:
+      Info-VM:
+        gnu.emacs.vm.info
+        info-vm-request@uunet.uu.net (for subscriptions)
+        info-vm@uunet.uu.net (for submissions)                               +
+      Bug-VM:
+        gnu.emacs.vm.bug
+        bug-vm-request@uunet.uu.net (for subscriptions)
+        bug-vm@uunet.uu.net (for submissions)                                +
+  
+  * SuperCite -- mail and news citation package within Emacs
+  
+    Author: Barry Warsaw <bwarsaw@cen.com>
+    Mailing list: supercite-request@anthem.nlm.nih.gov (for subscriptions)
+                  supercite@anthem.nlm.nih.gov (for submissions)             +
+    Latest version: 2.2
+    Anonymous FTP:
+      Emacs Lisp Archive: packages/sc-2.2.tar.Z
+    Via e-mail:
+      To: library@cme.nist.gov
+      Subject: help
+  
+    NOTE: Superyank is an old version of SuperCite.
+  
+  * GNUS -- news reader within Emacs
+  
+    Author: Masanobu Umeda <umerin@mse.kyutech.ac.jp>
+    Latest official version: 3.13
+    Unofficial test version: 3.14.1
+    Anonymous FTP:
+      cs.umn.edu:pub/gnu/emacs/gnus-3.14.1.tar.Z.
+      aun.uninett.no:pub/gnus-3.14.1.tar.Z
+      wnoc-fuk.wide.ad.jp:pub/GNU/etc/gnus-3.14.1.tar.Z
+      liasun3.epfl.ch:pub/gnu/emacs/gnus-3.14.1.tar.Z
+      aix370.rrz.uni-koeln.de:/pub/gnu/emacs/gnus-3.14.1.tar.Z
+      funet.fi:/networking/news/gnus-3.14.1.tar.Z
+      src.doc.ic.ac.uk:/gnu/EmacsBits/gnus/gnus-3.14.1.tar.Z
+      Emacs Lisp Archive: packages/gnus-3.13.tar.Z
+    Newsgroups and mailing lists:
+      English-only:    
+        gnu.emacs.gnus
+        info-gnus-english-request@cis.ohio-state.edu (for subscriptions)
+        info-gnus-english@cis.ohio-state.edu (for submissions)               +
+      Japanese (and some English):
+        info-gnus-request@flab.fujitsu.co.jp (for subscriptions)
+        info-gnus@flab.fujitsu.co.jp (for submissions)                       +
+  
+  * Calc -- poor man's Mathematica within Emacs
+  
+    Author: Dave Gillespie <daveg@csvax.cs.caltech.edu>
+    Latest released version: 2.02                                            !
+    Anonymous FTP:
+      csvax.cs.caltech.edu:pub/calc-2.02.tar.Z                               !
+      prep.ai.mit.edu:pub/gnu/calc-2.02.tar.Z                                !
+    NOTE: Unlike Wolfram Research, Dave has never threatened to sue anyone
+      for having a program with a similar command language to Calc.  :-)
+  
+  * Calendar/Diary -- calendar manager within Emacs
+  
+    Author: Ed Reingold <reingold@cs.uiuc.edu>
+    Latest version: 4.01
+    Anonymous FTP:
+      emr.cs.uiuc.edu:/pub/emacs/calendar
+    Via e-mail:
+      To: reingold@cs.uiuc.edu
+      Subject: send-emacs-cal
+      Put your best internet e-mail address in the body.
+  
+  * Ange-FTP -- adds transparent FTP access to Emacs's file access routines
+  
+    Author: Andy Norman <ange@hplb.hpl.hp.com>
+    Latest version: 3.143
+    Anonymous FTP:
+      ftp.gnu.ai.mit.edu:ange-ftp/ange-ftp.el.Z
+      Emacs Lisp Archive:
+        as-is/ange-ftp.el.Z (current version)
+        packages/ange-ftp.el.Z (old version)
+    Mailing list: ange-ftp-lovers-request@anorman.hpl.hp.com (subscriptions) !
+                  ange-ftp-lovers@anorman.hpl.hp.com (for submissions)       +
+    NOTE: now with support for accessing VMS systems
+  
+  * VIP -- vi emulation for Emacs                                            -
+  
+    Author: Aamod Sane <sane@cs.uiuc.edu>
+    Latest released version: 4.3                                             +
+    Anonymous FTP:
+      cs.uiuc.edu:pub/vip4.3.tar.Z
+      Emacs Lisp Archive: modes/vip-mode.tar.Z
+    NOTE: This version much more closely emulates vi than the one
+      distributed with Emacs.
+  
+    Version distributed with Emacs: 3.5
+    Author: Masahiko Sato <ms@sail.stanford.edu,
+                           masahiko@sato.riec.tohoku.junet>
+  
+  * Dired -- directory editor for Emacs
+  
+    Author: Sebastian Kremer <sk@thp.uni-koeln.de>
+    Latest released version: 5.239                                           +
+    Anonymous FTP: ftp.cs.buffalo.edu:pub/Emacs/diredall.tar.Z               -
+                   ftp.uni-koeln.de:pub/gnu/emacs/diredall.tar.Z             -
+    NOTE: This is a huge improvement over the Dired distributed with Emacs.
+      This version will be in Emacs 19.
+  
+  * AUC TeX -- enhanced LaTeX mode                                           +
+                                                                             +
+    Author: Kresten Krab Thorup <krab@iesd.auc.dk>                           +
+    Latest released version: 5.4                                             +
+    Anonymous FTP: iesd.auc.dk:pub/emacs-lisp/auc-tex-5.4.tar.Z              +
+    Mailing list:                                                            +
+      auc-tex-request@iesd.auc.dk (for subscriptions)                        +
+      auc-tex@iesd.auc.dk (for submissions)                                  +
+      auc-tex_mgr@iesd.auc.dk (auc-tex development team)                     +
+                                                                             +
+  * Hyperbole -- extensible hypertext management system within Emacs         +
+                                                                             +
+    Author: Bob Weiner <rsw@cs.brown.edu>                                    +
+    Anonymous FTP:                                                           +
+      wilma.cs.brown.edu:pub/hyperbole/h*.tar.Z                              +
+    Mailing lists:                                                           +
+      hyperbole-announce -- Hyperbole release announcements only.            +
+        Subscriptions:                                                       +
+          To: hyperbole-request@cs.brown.edu                                 +
+          Subject: Add <mailbox@domain.name> to hyperbole-announce.          +
+      hyperbole -- Hyperbole discussion.                                     +
+        Subscriptions:                                                       +
+          To: hyperbole-request@cs.brown.edu                                 +
+          Subject: Add <mailbox@domain.name> to hyperbole.                   +
+        Submissions:                                                         +
+          hyperbole@cs.brown.edu                                             +
+        NOTE: Any member of the hyperbole mailing list is automatically a    +
+          member of the hyperbole-announce mailing list.                     +
+      NOTE: No .UUCP or ! addresses are allowed on these mailing lists.      +
+                                                                             +
+  * Ispell -- spell checker in C with interface for Emacs                    +
+  
+    Author: Geoff Kuenning <geoff@itcorp.com> (latest of many)
+    Latest released version: 2.0.02
+    Beta test version: 3.0 (9 patches)
+    Anonymous FTP:
+      archive.cis.ohio-state.edu:/pub/gnu/ispell/* (version 2.0.02)
+      ftp.cs.ucla.edu:/pub/ispell/* (version 3.0, patches, dictionaries)
+    NOTE: Do not send mail to Geoff asking him to send you the latest
+      version of Ispell.  He does not have free e-mail.
+  
+  * Epoch -- enhanced GNU Emacs with better X interface
+  
+    Latest released version: 3.2
+    Beta test version: 4.0 beta patchlevel 0                                 !
+    Anonymous FTP:
+      cs.uiuc.edu:pub/epoch-files/epoch/epoch-4.0b0.tar.Z                    !
+      cs.uiuc.edu:pub/epoch-files/epoch/epoch-3.2{.tar.Z,-patch-{1,2.tar.Z}}
+    Newsgroup and mailing lists:                                             !
+      Epoch:                                                                 !
+        gnu.emacs.epoch
+        epoch-request@cs.uiuc.edu (for subscriptions)
+        epoch@cs.uiuc.edu (for submissions)                                  +
+      Epoch-Design:                                                          +
+        epoch-design-request@cs.uiuc.edu (for subscriptions)                 +
+        epoch-design@cs.uiuc.edu (for submissions)                           +
+  
+  * Demacs -- GNU Emacs altered to work under MS-DOS on 386 and 486 machines
+  
+    Authors: Manabu Higashida <manabu@sigmath.osaka-u.ac.jp>
+             HIRANO Satoshi <hirano@tkl.iis.u-tokyo.ac.jp>
+    Latest released version: 1.2.0
+    Anonymous FTP:
+      utsun.s.u-tokyo.ac.jp:GNU/demacs/* (nearest to U.S.A.)
+      ftp.sigmath.osaka-u.ac.jp:pub/Msdos/Demacs/*
+      wnoc-fuk.wide.ad.jp:pub/msdos/Demacs/*
+      ftp.3com.com:pub/gnu/msdos/demacs/*                                    +
+      mindseye.berkeley.edu:pub/kanji/demacs/*                               +
+      ftp.hawaii.edu:pub/editors/demacs.tar.Z                                +
+      ftp.math.ksu.edu:pub/pc/demacs/*                                       +
+      wsmr-simtel20.army.mil:pd1:<msdos.demacs>*                             +
+      ftp.uni-koeln.de: (PLEASE USE ONLY OUTSIDE WORKING HOURS!)             +
+        msdos/gnuprogs/dem120e.zip (executables, lisp-code, doc)
+        msdos/gnuprogs/dem120s.zip (sources, diffs)
+      ftp.lysator.liu.se:pub/msdos/gnu/emacs/?????????????
+      mizar.docs.uu.se:pub/gnu/demacs/*                                      +
+      iamsun.unibe.ch:PC/demacs/*                                            +
+      flop.informatik.tu-muenchen.de:outgoing/demacs.tar                     +
+      ftp.funet.fi:pub/gnu/emacs/demacs/*                                    +
+      garbo.uwasa.fi:pc/editor/dem120{e,s}.zip                               +
+      ftp.win.tue.nl:pub/gnu/demacs/*                                        +
+      ugle.unit.no:pub/gnu/Demacs/*                                          +
+      {Does anyone know which sites have the Kanji version?}                 +
+    Via e-mail:                                                              +
+      From garbo.uwasa.fi:                                                   +
+        To: mailserv@garbo.uwasa.fi                                          +
+        Subject: garbo-request                                               +
+        Body: send pc/editor/dem120e.zip                                     +
+              send pc/editor/dem120s.zip                                     +
+              quit                                                           +
+    Downloading:
+      EXEC-PC (Milwaukee, WI) 414-789-4210 (2400 bps)
+        in the Mahoney MS-DOS file area in its Editors/wordprocessors
+        library (F), named GNUEMACS.ZIP
+      Channel 1 (Cambridge, MA) 617-345-8873 (9600 bps)
+        in the New Uploads file area, named GNUEMACS.ZIP
+    NOTE: Use the -d option of [pk]unzip for all .zip archives.  Some sites
+      have Demacs lharc'ed.  {Can anyone tell me FTP sites for programs to
+      extract lharc and zip format files?  Or even better, give me a pointer
+      to another FAQ that answers these questions.}
+    Mailing list:                                                            +
+      NOTE: There is no mailing list for Demacs.  However, there is a list   +
+        for DJGPP, which is the environment that Demacs runs in.  Many       +
+        Demacs problems are actually issues with DJGPP.                      +
+      DJGPP:                                                                 +
+        Subscriptions:                                                       +
+          To: listserv@sun.soe.clarkson.edu                                  +
+          body: add <your-address> djgpp                                     +
+          or put "help" in the body.                                         +
+          If this fails, mail to djgpp-request@sun.soe.clarkson.edu.         +
+        Submissions:                                                         +
+          djgpp@sun.soe.clarkson.edu                                         +
+  
+  * Freemacs -- a small Emacs for MS-DOS
+  
+    Author: Russ Nelson <nelson@sun.soe.clarkson.edu>                        +
+    Latest released version: 1.6a
+    Anonymous FTP:
+      simtel20.army.mil:PD:<MSDOS.FREEMACS>*
+      grape.ecs.clarkson.edu:pub/msdos/freemacs/*
+    Via e-mail:
+      To: archive-server@sun.soe.clarkson.edu
+      body: help
+    Via snail mail:
+      address: Russell Nelson, 11 Grant St., Potsdam, NY 13676
+      Send $15 copying fee, and specify preferred floppy disk format:
+        5.25", 360K, or 3.50", 720K
+    Mailing lists: 
+      Subscriptions:
+        To: listserv@sun.soe.clarkson.edu
+        body: add <your-address> <name-of-list>
+        or put "help" in the body.
+      List distribution addresses:
+        freemacs-announce@sun.soe.clarkson.edu
+        freemacs-help@sun.soe.clarkson.edu
+        freemacs-workers@sun.soe.clarkson.edu (send bug reports here)
+  
+  * Patch -- program to apply "diffs" for updating files
+  
+    Author: Larry Wall <lwall@netlabs.com>
+    Latest version: 2.0 patchlevel 12u5
+      (This is the version that supports the new "unified" diff format.)
+    Anonymous FTP:
+      prep.ai.mit.edu:pub/gnu/patch-2.0.12u4.tar.Z
+  
+22: GNU copyleft の法的な意義は何ですか?
+  
+  RMS は次のように書いています:
+  
+    GNU copyleft が持つ法的な意味は, 
+    それが持つ精神的意味からしたら重要ではない.
+    Emacs はフリー・ソフトウェアのプロジェクトであり,
+    Emacs に付随する作品はすべてフリー・ソフトウェアであるべきなんだ.
+    ここで "フリー" とは
+    すべての利用者が Emacs を
+    研究し, 共有し, 変更し, そして改善する自由を意味している.
+    すべての人がこの自由を持つことを確認するために,
+    Emacs のどんな版を配布するときもソース・コードを一緒に配布すべきだし,
+    受取った人にもあなたが謳歌しているのと同じ自由が与えられるべきなんだ.
+  
+    それでもなお copyleft の法的意味にこだわるなら,
+    精神に注意を払わないとするとどうなるのか自問して欲しい.
+  
+23: gnu.emacs.help, gnu.emacs.bug, comp.emacs はどのように使い分ければいいのですか?
+  
+  etc/MAILINGLISTS ファイルに GNU のメーリング・リストに関する
+  情報が書かれています.
+  (入手法は質問 20 を参照.)
+  メーリング・リストに送られたメールが
+  自動的にネットワーク・ニュースにも投稿されるものについては
+  ニュース・グループ名とメール・アドレスを掲載します.
+  
+  comp.emacs は Emacs プログラム一般について議論するために使います.
+  もちろん GNU Emacs を含みますが,
+  JOVE, MicroEmacs, Freemacs, MG, Unipress, CCA, Epsilon など
+  さまざまな Emacs についても議論できます.
+  
+  GNU Emacs に関する質問は comp.emacs に投稿します.
+  というのは gnu.* ニュース・グループを購読していないサイトも多いからです.
+  GNU Emacs 特有の記事を投稿するに関しては賛否両論あるでしょうが,
+  個人の判断に任せます.
+  
+  "non-free" ソフトウェアを擁護するいかなる記事も
+  gnu ニュース・グループに投稿することは容認されていません.
+  ただし gnu.misc.discuss は
+  このような話題についても議論するために作成されたものです.
+  ここで "non-free" ソフトウェアとは
+  ユーザがソース・コードを入手できないものを含みます.
+  記事にフォローアップするとき
+  そのようなソフトウェアを推奨するときは
+  注意深く "Newsgroup:" 行から gnu ニュース・グループを削除して下さい.
+  
+  GNU Emacs のバグは
+  電子メールで bug-gnu-emacs@prep.ai.mit.edu へ報告してください.
+  これらのメールは同時に gnu.emacs.bug ニュース・グループにも投稿されます.
+  くれぐれもニュースではなく電子メールでバグを報告して下さい.
+  信頼できる返信アドレスを沿えることにより
+  バグの詳細を確認することができるようになります.
+  
+  RMS は次のように書いています:
+  
+    help-gnu-emacs へバグを報告することはやめて欲しい.
+    報告は同時に gnu.emacs.help ニュース・グループへも投稿されるが,
+    このニュース・グループを購読しているのは
+    このような情報は不要なユーザであって,
+    たぶん問題を解決できないだろうが,
+    そのために余分な時間を割かれることになるからだ.
+    bug-gnu-emacs なら
+    もしかしたら問題を解決できるかもしれない精鋭が読んでいて,
+    より詳細な情報を必要とするかもしれない.
+  
+  バグかどうか不確かなときのために, RMS の次の文章も引用しておきましょう:
+  
+    ... もし Emacs がクラッシュするなら, それはバグだ.
+    Emacs をコンパイルするときにエラーが出るなら, それもバグだ.
+    Emacs を構築するときにクラッシュするなら, やはりバグだ.
+    ドキュメント通りに Lisp コードが動作しないなら, それもやはりバグだ.
+  
+24: メーリング・リストに参加するにはどうしたらいいのですか?
+  
+  "XXX" という GNU のメーリング・リストを受けとりたいなら,
+  "XXX-request@prep.ai.mit.edu" へ参加を申し込んで下さい.
+  ただし Internet とメールがやりとりできないと駄目です.
+  必ずポストマスタに問い合わせてから申し込んで下さい.  
+  
+25: LPF とは何ですか? 参加すべきですか?
+  
+  LPF はソフトウェアに関する特許や look-and-feel に関する著作権が
+  広まることに危機感を持ち反対しています.
+  league@prep.ai.mit.edu から情報を得てください.
+  LPF に関する記述を anonumous FTP (prep.ai.mit.edu:/pub/lpf/*) と
+  anonymous UUCP (ocu-cis!~/lpf/*) で入手できます.
+  
+26: FSF の現住所は?
+  
+  Snail mail address:
+    Free Software Foundation, Inc.
+    675 Massachusetts Avenue
+    Cambridge, MA 02139, USA
+  
+  Phone number:
+    (617) 876-3296
+  
+  E-mail addresses:
+    gnu@prep.ai.mit.edu
+  
+27: LPF の現住所は?
+  
+  Snail mail address:
+    League for Programming Freedom
+    1 Kendall Square, Number 143
+    Post Office Box 9171
+    Cambridge, MA 02139, USA
+  
+  Phone number:
+    (617) 243-4061 { or 243-4091, I'm not sure ... }
+    {Will someone please tell me which of the above numbers is correct?}
+  
+  E-mail address:
+    league@prep.ai.mit.edu
+  
+28: 最新の GNU プロダクトを入手するにはどうしたらいいのですか?
+  
+  公式のリリースは常に prep.ai.mit.edu に置かれます.
+  anonymous FTP でアクセスできますが,
+  まず etc/DISTRIB や etc/FTP (入手方は質問 28 を参照) を参照して
+  身近なアーカイブ・サイトを探してください.
+  
+  ヨーロッパ向けには,
+  nic.funet.fi で prep.ai.mit.edu:/pub/gnu ディレクトリを再配布しています.
+    
+29: このドキュメント (オリジナルの英語版 FAQ リスト) の最新版はどこから入手できますか?
+  
+  GNU Emacs の FAQ はいくつかの方法で入手できます:
+  
+  1. ネットワーク・ニュースを読むことができるなら,
+     ニュース・スプールの 
+     "gnu.emacs.help" または "comp.emacs" のいずれかのニュース・グループで
+     FAQ を読むことができます.
+     あなたがまだ読んでいないなら, 
+     ニュース・リーダを起動すればスプールから読むことができます.
+     ニュースの読み方はニュース・リーダの取扱説明を読んでください.
+     "rn" では, 
+     "article selection level" で次のコマンドを使ってください:
+  
+       ?GNU Emacs FAQ?rc:m
+  
+    GNUS では,
+    *Subject* バッファで "C-u G" とタイプするか,
+    *Newsgroup* バッファで "C-u SPC" とするとすべての記事を読むことができます.
+  
+    FAQ の記事のメッセージ ID は
+  
+       <GNU-Emacs-FAQ-0.92Feb23210646@bigbird.bu.edu>
+       <GNU-Emacs-FAQ-1.92Feb23210646@bigbird.bu.edu>
+       <GNU-Emacs-FAQ-2.92Feb23210646@bigbird.bu.edu>
+       <GNU-Emacs-FAQ-3.92Feb23210646@bigbird.bu.edu>
+  
+    です. 
+    もしあなたがこの FAQ を GNUS の *Article* バッファで読んでいたら,
+    ポイントを上のメッセージ ID のところへ移動させて "r" をタイプしてください.
+    参照されていた記事が *Article* バッファに表示されます.
+    *Article* バッファで "o" をタイプするともとの内容に戻ります.
+    GNUS の *Article* バッファ以外で読んでいるときは,
+    "r" の代わりに M-x gnus-Article-refer-article を使ってください.
+    GNUS が走っていれば *Article* バッファに結果が表示されます.
+  
+    FAQ の記事が期限切れでスプールから削除されてしまっていたら,
+    ニュース・システムの管理者に苦情を言ってみてください.
+    最新の FAQ は 1992 年 4 月 15 日まで期限切れにならないように
+    設定されているからです.
+  
+  2. anonymous FTP から.
+    anonymous FTP で FAQ を入手できます.
+    (pit-manager.mit.edu:pub/usenet/news.answers/GNU-Emacs-FAQ/part?).
+  
+  3. e-mail から.
+     本文で次の呪文を唱えて mail-server@pit-manager.mit.edu 宛に
+     電子メールを送ると FAQ を入手できます.
+  
+       send usenet/news.answers/GNU-Emacs-FAQ/part0
+       send usenet/news.answers/GNU-Emacs-FAQ/part1
+       send usenet/news.answers/GNU-Emacs-FAQ/part2
+       send usenet/news.answers/GNU-Emacs-FAQ/part3
+  
+  4. WAIS を利用できるなら,
+     pit-manager.mit.edu の "usenet" データベースから取り寄せることができます.
+     (標準的な IP ポートは 20 です.)
+  
+  5. GNU Emacs の配布パッケージから.
+     GNU Emacs の 18.56 から, 
+     その当時最新の FAQ が一緒に配布されるようになりました.
+     GNU Emacs の最新バージョン 18.58 には,
+     1992 年 2 月にリリースした FAQ が収められています.
+
+
+GNU Emacs and Various Computing Environments
+  
+30: "Emacs" ってどんな意味ですか?
+  
+  EMACS はもともと Editor MACroS からできた単語です.
+  一番最初の Emacs は Richard Stallman と Guy Steel によって書かれた
+  PDP-10 上の 
+  TECO (Text Editor and COrrector, 元は Tape Editor and COrrector) という
+  エディタのマクロ・セットでした. 
+  (楽しい事実: たくさんの人から TECO のコードはライン・ノイズに見えるとの
+  指摘をもらいました. 興味のある人は alt.lang.teco を覗いてみてください.)
+  
+  [訳註: 名前の由来は etc/EMACS に詳しい]
+  
+31: GNU Emacs の最新版は?
+  
+  GNU Emacs の現在のバージョンは 18.58 です.
+  18.57 からのバグ・フィックスは
+  よりよいメール・アドレスの解析,
+  X でのビジブル・ベルの高速化,
+  call-process の改良,
+  正規表現の変更,
+  数字の挿入に回数を指定するための変更,
+  RESOURCE_MANAGER プロパティから X のリソースを得る,
+  信頼できるシェル・モードでのジョブ・コントロール,
+  copy-keymap の変更
+  に及ぶ.
+  また, 
+  より多くのシステムに対応している.
+  
+  1991 年版の GNU's Bulletin は Emacs について次のように書いている:
+  [訳註: 日本語版からの引用]
+  
+    GNU Emacs の現在のバージョンは 18.57 である.
+    取消機能を書き直して, 
+    一時的に大きさに制限のないデータを保持し, 
+    ユーザの指定によってかなり以前のものまで復旧できるようにした.
+  
+    Berkeley では 4.3 の配布と一緒に GNU Emacs も配布しており, 
+    また数多くの企業も GNU Emacs を配布している.
+  
+    バージョン 18 の保守を続行している.
+  
+  最近行なわれた変更に関しての情報は "C-h n" で表示される.
+  
+32: GNU Emacs の第 19 版はいつ出るのですか?
+  
+  いい質問ですね, 私には判りません. 
+  きっと開発者にも判らないのでしょう.
+  1990 年代のいつかに出ることには間違いありません:-)
+  アルファ・テストが行なわれているのは, いい前兆といえるでしょう.
+  第 20 版の準備も始まったようです.
+  
+  RMS は
+  
+    第 19 版の準備は順調に進んでいて, 
+    「しなくちゃならない」項目は確実に減っている.
+    だけど, その準備がいつ終わるかを誤って伝えたくないんだ.
+  
+  と言っています.
+  
+33: GNU Emacs 第 19 版では何が変わるのですか?
+  
+  1991 年 6 月に発行された GNU's Bulletin からの引用:
+  [訳註: 日本語版からの引用]
+  
+    バージョン 19 では次のような多くの特徴が組み入れられ,
+    リリースされる日が近づいてきた.
+  
+    * 変更前後のホック, 
+    * ソース・レベルの GNU Emacs Lisp のデバッグ, 
+    * X の選択処理 (CLIPBOARD 選択も入っている),
+    * スクロール・バー,
+    * ヨーロッパ文字セットのサポート,
+    * 浮動小数点数,
+    * バッファごとのマウス・コマンド,
+    * X リソース・マネージャとのインタフェース機能,
+    * マウス・トラッキング,
+    * Lisp レベルの関数キーの定義,
+    * 複数の X ウィンドウ機能 (Emacs に対する `スクリーン'),
+    * 新しい入力システム (Lisp オブジェクトの形式ですべての入力を行う),
+    * 新しいバッファ割り当て (バッファを消した時にシステムへその領域を
+      戻すことができる新しいメカニズム).
+  
+    マルチウィンドウ Emacs の最初フィードバックを得てくれた
+    Alan Carroll (Epoch の作成者) とその他の人々 に感謝する.
+  
+    その他に, 将来のバージョン 19 には次の機能を入れようと考えている:
+  
+    * バッフアー内のテキストの一部に対する連想属性リスト,
+      この属性のなかで
+      フォントや色, ピクセルマップが定義されている領域に対してや, 
+      一つのバッファの複数ウィンドウ表示に対して別々に設定できる可視性条件
+    * ポイントが, ある範囲から外れた場合に実行されるようなフック
+    * ファイルで undo 履歴をインクリメンタルに保存する機能. 
+      これで復旧対象ファイルも, 
+      バッファの undo 履歴から再構成することができる.
+    * 静的メニュー・バーや改良したポップアップ・メニュー
+  
+  1991 年 1 月刊の GNU's Bulletin の記述から次の二つの項目が落ちました:
+  
+  * 様々なプログラム言語のためのインクリメンタルな文法解析 (Leif).
+  * ネットワーク透過的な Emacs の部品的な機能を提供する, 
+    洗練された emacsclient/server モデル. 
+  
+34: マウスと X ウィンドウ・システムをサポートしたよりよい版はありますか?
+  
+  Emacs 第 18 版は X ウィンドウ・システムに限定的に対応していますが, 
+  問題がないわけではありません.
+  第 19 版は飛躍的にマウスとウィンドウをサポートする予定です.
+  いまのところ,
+  Emacs 18.55 版に "Epoch" というマウスとウィンドウに対する改良版が存在します.
+  Epoch の入手方法は質問 21 を参照のこと.
+  
+  Emacs の第 18 版でマウスに対応するための様々な Emacs Lisp による
+  拡張パッケージが存在します.
+  そのなかには C のソース・レベルで改良を加えているものもあります.
+  Emacs Lisp アーカイブの "mouse" ディレクトリを捜してみてください 
+  (質問 17 参照).
+  
+  註: Epoch は X ウィンドウ・システム上でのみ動作します.
+  通常の端末では動作しません.
+  
+35: HP をサポートした非公式版があるようですが, どうしたら入手できますか?
+  
+  非公式な HP 版の GNU Emacs は anonymous FTP で入手できます
+  (me10.lbl.gov:pub/interex/HUGE/HUGE.{README.HP,tar.Z.??},
+  ee.utah.edu:HUGE/*, 作業時間外にアクセスしてください!!!).
+  作成するには 35 メガバイトものディスク領域が必要です.
+  HP 以外のマシンでも使えるのですが,
+  いくつかの追加機能は HP-UX でしか動作しません.
+  
+  または HP-UX 8.0 または 700 シリーズで動作するパッチを
+  Darryl Okahata <darrylo@sr.hp.com> から
+  電子メールで入手できます.
+  
+36: PC で動く Emacs はありますか?
+  
+  ** Demacs
+  
+  386 または 486 PC 用の Demacs と呼ばれる GNU Emacs があります.
+  Demacs の入手方法は質問 21 を見てください.
+  
+  アナウンスから引用:
+  
+    Demacs はほぼフル・セットの GNU Emacs ですがいくつかの機能が欠落しています:
+    非同期プロセスやファイルのロック機能などです.
+  
+    Demacs には次のような DOS 特有の機能が追加されています:
+  
+      * ファイル・タイプの指定: 
+        テキストまたはバイナリ・ファイル・トランスレーション
+      * 8 ビット・クリーンな表示モード
+      * int86 リスプ関数による 8086 のソフトウェア割り込みの呼び出し
+      * ファンクション・キーのサポートなどマシン特有の機能
+      * ドライブ名を含むファイル名の補完
+      * 子プロセスの呼び出し (suspend-emacs, call-process)
+      * 'ls.exe' がなくても使える機能拡張版 dired モード
+  
+    残念なことにシェル・モードは働きませんが, 
+    compile コマンドは順当に機能します.
+  
+  Demacs は djgpp という 
+  D.J. Delorie <dj@ctron.com> による MS-DOS 版の gcc で開発されています.
+  djgpp を使うと MS-DOS でも大きなプログラムを
+  コンパイルして実行することができますが,
+  MS Windows で実行することができません.
+  Demacs は直接 GNU Emacs から作成されたのではなく Nemacs から作成されています.
+  [訳註: Nemacs は GNU Emacs のスーパー・セットです]
+  
+  これ以外にも様々な MS-DOS 上の Emacs があります. 
+  そのいくつかを次ぎに掲載します.
+  
+  ** Freemacs
+  
+  作者の Russ Nelson <nelson@sun.soe.clarkson.edu> は Freemacs に関して
+  次のように語っています:
+  
+    * Freemacs は無料です. 当初からプログラム可能なように設計されています.
+    * Freemacs は IBM PC では唯一の GNU Emacs ライクなエディタです.
+    * Freemacs は 64 K 以下のサイズのファイルしか編集できません.
+    * Freemacs にはアンドゥ機能がありません.
+  
+  Carl Witty <cwitty@cs.stanford.edu> は Freemacs を次のように語っています:
+  
+    Freemacs のほうがより好ましいといえるだろう.
+    ITS や GNU Emacs の血統を引いて, 
+    Freemacs はチューリング・コンプリートな全く拡張可能言語を持っているからね.
+    しかもそれは他の何者にも似ていないんだ.
+    実際, GNU Emacs よりも ITS Emacs により近いといえるだろう.
+    なぜなら Mint (Freemacs の拡張言語) は実に判読不能な言語だからね.
+    これを読むには数週間の学習が必要だろう. TECO みたいにね.
+  
+  入手方法は質問 21 を参照.
+  
+  ** MicroEmacs
+  
+  MicroEmacs は Microemacs {オリジナルは Dave conroy か?} の後継エディタです.
+  BASIC に似た言語でプログラムするごとができます.
+  キー・バインディングの多くが GNU Emacs とは異なります.
+  MicroEmacs はメモリよりも大きなサイズのファイルを正しく編集できないそうです.
+  作者は Daniel Lawrence 
+  <dan@mdbs.uucp, dan@midas.mgmt.purdue.edu, nwd@j.cc.purdue.edu> です.
+  最新版は 3.10 で anonymous FTP で入手できます
+  (midas.mgmt.purdue.edu (仕事時間外のみ), durer.cme.nist.gov,
+  wuarchive.wustl.edu:/mirrors/msdos/memacs/*).
+  第 3.11 版のベータ・テスト中です.
+  
+  ** JOVE
+  
+  別の小規模なマシン向けの Emacs が 
+  JOVE (Jonathan's Own Version of Emacs) です.
+  最新の公式版は 4.14 です.
+  より新しい版も出回っているようです.
+  作者には Mark Moraes <moraes@cs.toronto.edu> と
+  Bill Marsh <bmarsh@cod.nosc.mil> が含まれているようです.
+  anonymous FTP で入手できます.
+  (cs.rochester.edu:/pub/jove.tar.4.14.Z,
+  cs.toronto.edu:/pub/moraes/jove4.14.3.tar.Z, 
+  ftp.uu.net:????).
+  
+  ** MG
+  
+  MG は Microemacs の別の後継エディタです.
+  MG は MicroGNUEmacs を表しています.
+  見ためや使ってみた感じが GNU Emacs そっくりに作られています.
+  MG もメモリより大きなファイルが正しく編集できないようです.
+  現版は 2 で, Amiga でも動作する第 3 版がベータ・テスト中のようです.
+  anonymous FTP で入手できます
+  (ftp.white.toronto.edu:pub/mg/*,
+  wuarchive.wustl.edu: /mirrors/unix-c/editors/mg*, 
+  procyon.cis.ksu.edu (source and executable)).
+  
+37: Atari ST で動く Emacs はありますか?
+  
+  Anonymous FTP:
+    cs.uni-sb.de:/pub/atari/emacs/????????
+  
+38: Amiga で動く Emacs はありますか?
+  
+  すべてのファイルは lharc でアーカイブされています.
+  
+  Anonymous FTP:
+    oes.orst.edu:/pub/almanac/comp/amiga/software/gnuemacs-1.10/*
+  
+  Via e-mail:
+    To: almanac@oes.orst.edu:
+    body:
+      mode uuencode
+      send computer amiga software gnuemacs <file>
+    <file> を次のうちからひとつ選んでください:
+      Required: d1.lzh d2.lzh
+      Recommended: d3_info.lzh d3_infolisp.lzh
+      Optional: d3_autoloaded.lzh d3_entertainmentetc.lzh
+        d3_entertainmentlisp.lzh d4_src.lzh d5_languagelisp.lzh
+        d5_viclone.lzh d6_gnulibsrc.lzh d6_mailpackage.lzh
+        d6_mathpackage.lzh d6_misc.lzh d6_textformat.lzh
+    ファイル名の先頭の `d#' はディスク番号です. 
+    詳細はドキュメントに記してあります.
+  
+39: Apple のコンピュータで動く Emacs はありますか?
+  
+  Apple が係争中の "look and feel" 訴訟のため
+  FSF は Apple をボイコットしています.
+  詳しくは etc/APPLE を読んでください.
+  このため, FSF は Macintosh など Apple のコンピュータに対する
+  GNU ソフトウェアのサポートを行っていません.
+  
+  アップルのコンピュータ向けの移植や開発に荷担しないようにしましょう.
+  
+40: NeWS 対応の Emacs はありますか?
+  
+  Chris Maio による NeWS 対応パッケージを anonymous FTP と
+  (columbia.edu:pub/ps-emacs.tar.Z, 
+  archive.cis.ohio-state.edu:pub/gnu/emacs/ps-emacs.tar.Z)
+  電子メール
+  (body: send NeWS emacs-support, To: archive-server@columbia.edu)
+  で入手できます.
+  
+41: VMS と DECwindows で動く Emacs はありますか?
+  
+  Hal R. Brand <BRAND@addvax.llnl.gov> は
+  X ウィンドウ・システム対応の Emacs 18.55 で VMS ですぐに稼動できる状態の
+  ものを anonymous FTP で提供しています
+  (addvax.llnl.gov).
+  他からもコンパイル済みの X に対応した VMS バージョンの Emacs は入手できます.
+  etc/FTP に入手先の情報があります.
+  
+  Johan Vromans <jv@mh.nl> は言っています:
+  
+    DECwindows で稼動する VMS バージョンの Emacs を作るには
+    ソースにたくさんの変更を加える必要があるんだ.
+    Joshua Marantz <josh@viewlogic.com> が Emacs 18.52 に変更を加えている.
+    この変更は Johan Vromans <jv@mh.nl> が 18.55 に移植している.
+    さらに DEC の LK201 キーボードに対応するための変更も含まれている.
+    Unix 上で Emacs 18.55 に変更を加えて
+    VMS にコピーしてからコンパイルするんだ.
+  
+    変更箇所はこの 12 カ月に少なくとも 3 回も投稿されているから
+    きっと入手できるだろう.
+  
+42: SunView で emacstool を使うにはどうしたらよいのですか?
+  
+  まず emacstool のマニュアル (etc/emacstool.1) を読んでください.
+  etc/SUN-SUPPORT にはより多くの情報がはいっています.
+  
+43: 8-ビット文字を Emacs に表示する方法はありますか?
+  
+  `8-ビット ctl-arrow パッチ' と呼ばれるパッチを当てると 
+  Emacs で 128 から 255 のコードの文字をそのまま表示することができます.
+  {作者は Kenneth Cline <cline@proof.ergo.cs.cmu.edu> です.}
+  
+  Anonymous FTP:
+    cs.purdue.edu:pub/ygz/cemacs.tar.Z:cemacs/8bit-patch-18.57
+    sics.se:archive/emacs-18.55-8bit-diff (new version not available)
+    laas.laas.fr:pub/emacs/patch-8bit-18.5{5,7}
+  
+  Via e-mail:
+    To: mail-server@sics.se
+    body: send emacs-18.55-8bit-diff
+  
+  Anders Edenbrandt <anderse@dna.lth.se> は
+  8-ビットの入力と表示ができる
+  より広範なパッチを発表しています.
+  
+  Anonymous FTP:
+    sics.se:archive/emacs-8bit-diff-lth
+    gatekeeper.dec.com:pub/GNU/DS-emacs-18.57-8bit-diff-lth
+  
+  もっとも広範なパッチは Howard Gayle による 18.55 に対するパッチでしょう.
+  このパッチを当てると任意の文字列をある 8-ビット文字 (TAB と C-j を除く) で
+  表すことができます. 
+  また並び替え順や大文字と小文字の変換ルールも定義することができます.
+  Emacs 第 19 版での 8-ビット文字の対応はほぼこのパッチを元にしているそうです.
+  Thomas Bellman <Bellman@lysator.liu.se> はこのパッチを 
+  18.57 対応に更新しています.
+  
+  Anonymous FTP:
+    sics.se:archive/emacs-gayle.tar.Z (patches for 18.55)
+    ftp.lysator.liu.se:pub/emacs/gayle-18.57.diff.tar.Z (patches for 18.57)
+    ftp.lysator.liu.se:pub/emacs/emacs-18.57-gayle.tar.Z (patched 18.57)
+  
+  Nemacs も 8-ビット文字を表示できます.
+  8-ビットの ISO-8859 のアルファベットを表示するのに使えるかもしれませんが,
+  確信は持てません.
+  Nemacs については質問 46 を参照.
+  
+44: 8-ビット文字を入力する方法はありますか?
+  
+  何人かの人が ISO Latain-1 の文字を簡単に入力するためのマイナー・モードを
+  作成しています.
+  Matthieu Herrb <matthieu@laas.fr> (laas.laas.fr:pub/emacs/iso-latin-1.el)
+  Johan Vromans <jv@mh.nl> {FTP site??}, 
+  Marc Shapiro <shapiro@sor.inria.fr> {FTP site??}.
+  
+  これらのアプローチは 8-ビット文字を入力するために複数のキーを入力します.
+  Anders Edenbrandt は直接 8-ビット文字を入力する方法を提供しています.
+  {しかしこの方法だとメタ・キーが使えなくなるらしいのです.
+  Emacs が X で動いているかに依存すると思うのですが.
+  どなたか解決していませんか?}
+  
+  Karl Heuer <karl@haddock.ima.isc.com> も 8-ビット文字を入力するための
+  パッチを作成しています.
+  
+45: 他のウィンドウですでに動いている Emacs を使う方法はありますか?
+  
+  `emacsclient' プログラムを使うと
+  新しく Emacs を起動しないでも
+  すでに動いている Emacs を使って編集することができます.
+  このために Emacs を `server-start' 関数を使って
+  すでに動いている Emacs に対して接続の要求を出して起動します.
+  このためにはコマンドラインから
+  
+    emacs -f server-start
+  
+  と実行するか, または .emacs ファイルで server-start 関数を実行します:
+  
+    (if (some conditions are met) (server-start))
+  
+  このようにして Emacs を起動すると,
+  Emacs は `server' というサブプロセスを起動します.
+  `server' は Unix ドメインのソケットをユーザのホーム・ディレクトリに
+  `.emacs_server' という名前で生成します.
+  
+  ここで emacsclient を起動すると,
+  このソケットに接続し,
+  コマンド・ラインオプションを `server' に渡します.
+  emacsclient と server は同じファイルシステムを共有しているマシン上で
+  走らせる必要があります.
+  emacsclient が指定するパス名は Emacs プロセスが走っているマシンで
+  正しくなくてはなりません.
+  emacsclient の走っているマシン上で同じである必要はありません.
+  
+  `server' がこれらの要求を受けると,
+  Emacs のプロセスの情報を送り,
+  次の機会に指定されたファイルを開きます.
+  (Emacs のように行数を指定することができます.)
+  "C-x #" とタイプすると
+  ファイルの編集が終わったことをサーバに伝えます.
+  このとき emacsclient の要求があったときに生成されたバッファに切り替わります.
+  emacsclient が編集していたすべてのファイルが "C-x #" によって閉じられると,
+  Emacs は `server' を終了させます.
+  
+  gnuserv という emacsclient/server の拡張版が
+  Andy Norman <ange@hplb.hpl.hp.com> によって作成され
+  Emacs Lisp アーカイブから入手できます.
+  gnuserv は Internet ドメインのソケットを使っているので,
+  ネットワーク経由でも接続できます.
+  任意の Emacs Lisp 式の実行に対応していますが,
+  ファイルを開くことはできません.
+  anonymous FTP でも入手できます (Emacs Lisp Archive: packages/gnuserv.shar).
+  
+46: ニュースやメール・プログラムから emacsclient を使うことができますか?
+  
+  環境変数 EDITOR (または VISUAL) で `emacsclinet' と設定してください.
+  フル・パス名を指定する必要があるかもしれません.
+  例えば
+  
+    # csh commands:
+    setenv EDITOR emacsclient
+    setenv EDITOR /usr/local/emacs/etc/emacsclient  # using full pathname
+  
+    # sh command:
+    EDITOR=emacsclient export EDITOR
+  
+  のように設定します.
+  
+47: 日本語を使える Emacs はありますか?
+  
+  Emacs 18.55 を改良した Nemacs 3.3.2 (Nihongo GNU Emacs) は
+  日本語を扱うことができます.
+  anonymous FTP で入手できます.
+  (crl.nmsu.edu:pub/misc/nemacs-3.3.2.tar.Z, 
+  uhccux.uhcc.hawaii.edu:editors/Nemacs-3.3.2/*, 
+  miki.cs.titech.ac.jp:JAPAN/nemacs/nemacs-3.3.2.tar.Z)
+  日本語を入力するには "wnn" が必要です
+  (wnn-4.0.3{-README,.tar.Z} {on which machine?}).
+  さらに JIS, Shift-JIS または EUC (Extended Unix Code) を表示できる
+  端末 (または端末エミュレータ) が必要です.
+  もしくは Nemacs を X のクライアントとして
+  起動できるように作成するとよいでしょう.
+  
+48: 中国語を使える Emacs はありますか?
+  
+  Stephen G. Simpson <simpson@math.psu.edu> による `cemacs' は
+  Emacs 18.57 の ctl-arrow に対するパッチと
+  いくつかの Emacs Lisp コードによって
+  Cxterm を使うと中国語を表示できます.
+  anonymous FTP で入手できます
+  (crl.nmsu.edu:pub/chinese/cemacs.tar.Z,
+  cs.purdue.edu:pub/ygz/cemacs.tar.Z).
+  Cxterm も同じ場所から入手できます
+  (cs.purdue.edu: pub/ygz/cxterm-11.5.1.tar.Z).
+  
+49: セム語 (右から左へ記述するアルファベット) を使える Emacs はありますか?
+
+
+Binding Keys to Commands
+  
+50: "Key sequence XXX uses invalid prefix characters" というメッセージは何のことですか?
+  
+  もっともあり得るのは,
+  "ESC [" で始まるキー列をバインドしようとして, 
+  それがすでにバインドされている場合です.
+  このときバインドに失敗してこのメッセージが出ます.
+  次の式をまず評価してください:
+  
+    (define-key esc-map "[" nil)
+  
+  註: デフォルトでは, "ESC [" は backward-paragraph にバインドされています.
+  上の式を評価するとこのバインディングが失われますが,
+  たぶんほとんどの人は影響を受けないでしょう.
+  
+51: 端末やウィンドウ・システムをセットアップするコードが, Emacs が起動した後は問題なく動くのに, 起動時に .emacs でうまく働かないのは何故でしょうか?
+  
+  これは .emacs の中で
+  端末/ウィンドウ・システムのセットアップ・コードがロードされるまで
+  有効にならないコードを書いたからです.
+  これは Emacs が起動するときに何をするかの順番に起因しています
+  (詳細は質問 60 参照).
+  
+  端末/ウィンドウ・システムのセットアップ・コードがロードされるまで
+  実行を遅らせるには,
+  変数 term-setup-hook まはた window-setup-hook に
+  あなたのやりたい関数を設定します.
+  
+  etc/OPTIONS に Emacs が起動するまでにどんなことをするかが書かれています.
+  
+  term-setup-hook の例を挙げておきます:
+  
+    (setq term-setup-hook
+          (function
+           (lambda ()
+             (cond ((string-match "\\`vt220" (or (getenv "TERM") ""))
+                    ;; Make vt220's "Do" key behave like M-x:
+                    (define-key CSI-map "29~" 'execute-extended-command))
+                   ))))
+  
+51: ともかくキー・バィンディングに失敗するのは何故でしょう?
+  
+  これまでの失敗例をみると ESC 文字の指定が間違っていることが考えられます.
+  Emacs Lisp の文字列では, ESC は "\e" と指定します.
+  (ESC は ASCII 文字の 27 で直接そのものを書くこともできますが,
+  印刷や表示したりメールで送ったりするときに問題を引き起こす場合があるので
+  お薦めできません.)
+  例えば,
+  キー列 "ESC O D" にコマンド 'my-backward-char をバインドするときは
+  次のように指定します:
+  
+    (global-set-key "\eOD" 'my-backward-char)
+  
+  次のようにも指定できます (全く等価な表現です):
+  
+    (define-key global-map "\eOD" 'my-backward-char)
+    (define-key esc-map "OD" 'my-backward-char)
+  
+  RET, LFD, DEL, ESC, SPC そして TAB はそれぞれ
+  "\r", "\n", "\C-?", "\e", " " そして "\t" と書きます.
+  
+52: X ウィンドウ・システムでファンクション・キーを使うにはどうするのですか?
+  
+  これは Emacs が xterm のような端末エミュレータ・ウィンドウで起動されているか,
+  または Emacs 自身がウィンドウを開いているかで異なります.
+  起動時にどちらかを指定することができます.
+  
+  もし Emacs を端末エミュレータで起動しているときは,
+  他の端末から使っている場合と全く同様です.
+  この場合には,
+  端末エミュレータからファンクション・キーを押したときに
+  文字列がプログラムに送られます.
+  "xterm" はファンクション・キーが押されたときに
+  二つのことなる文字列の集合を生成することができます.
+  X のリソース sunFunctionKeys または
+  コマンドライン・オプションの -sf と +sf で指定できます.
+  (どのような文字列が生成されるかを知るには質問 53 の方法を使ってください.)
+  加えて, xterm では "translations" リソースを変更することで
+  ファンクション・キー (もちろん他のキーも) が生成する文字列を
+  変更することができます.
+  例えば
+  
+    XTerm.VT100.Translations: #override \
+      <KeyPress>F1: string(0x1b) string("[xyzzy")
+  
+  とすると, F1 は "ESC [xyzzy" という文字列を生成します.
+  
+  一方, Emacs が自分でウィンドウを開いているときは
+  次のような方法を使うことができます.
+  キーボード・フォーカスがウィンドウに与えられている間,
+  キーが押されると Emacs は X サーバから `KeyPress' というイベントを受取ります.
+  KeyPress イベントは X の `keysym' コードを含みます.
+  keysym コードは単なる数字ですが,
+  さらに `control' や `shift' キーが押されていたことを判断するための
+  "modifiers" という情報を含みます.
+  例えば `Tab' keysym は 0xff09 です.
+  (`Tab' キーは `Tab' keysym を生成します.
+  一般に, キーボードのキーはキーに記されたラベルと同じ keysym を生成しますが,
+  xmodmap というプログラムで変更することもできます.)
+  Emacs は標準的な ASCII 文字に対応するすべての keysym を理解できます.
+  内部的には ASCII 文字を使っています.
+  
+  (注意: I am about to describe a gross, disgusting hack to you, have
+  your barf bag ready.)
+  
+  Emacs が矢印キーに対応する X の keysym を受取ると,
+  コントロール・キーが押された状態で文字キーが押されたように振舞います.
+  (これはハード・コードされています):
+  
+    Up    becomes C-p
+    Down  becomes C-n
+    Right becomes C-f
+    Left  becomes C-b
+  
+  これ以外の keysym がどのように扱われるかは
+  どんなマシンで Emacs をコンパイルしたかに依存します.
+  ファンクション・キーはエスケープ文字列を生成しますが,
+  他のキーは完全に無視されます.
+  
+  1. Sun でコンパイルした場合は,
+     Emacs は X の keysym を Sun のキーボードと同様に解釈します:
+  
+       F1 から F9 まで
+       L1 から L10 まで (F11 から F20 までと同じ)
+       R1 から R15 まで (F21 から F35 までと同じ)
+         (R8, R10, R12 そして R14 は X の keysym
+	 Up, Left, Right そして Down を生成する)
+       Break ("Alternate" キーもこの keysym を生成する)
+       
+     これらのキーは Sun のファンクション・キーと同様に働きます.
+     Emacs がこれらの keysym を受けとると,
+     内部的に "ESC [ ### z" という文字列に変換します.
+     ここで ### は適当な数です.
+     この文字列は Sun のキーボードが SunView 上で生成するものと同じです.
+     上に挙げた以外のファンクション・キーは "ESC [ - 1 z" という
+     文字列を生成します.
+  
+  2. Sun 以外でコンパイルした場合は,
+     ファンクション・キーは DEC LK201 キーボード
+     (VT シリーズの端末で使われている) とほぼ同様に振舞います.
+     次の X の keysym は認識されます:
+  
+       F1 から F20 まで
+       Help (F15 と同様に扱われる)
+       Menu (F16 と同様に扱われる, LK201 では "Do" キー)
+       Find
+       Insert (LK201 では "Insert Here" キー)
+       Select
+  
+     次のキーはサポートされているはずなのですが,
+     バグのためか認識できません:
+  
+       Prior (LK201 の "Prev Screen" キー)
+       Next (LK201 の "Next Screen" キー)
+  
+     LK201 キーボードで `Remove' または `Delete' とラベルのあるキーは,
+     LK201 が生成する文字列の代わりに,
+     通常 Delete keysym を生成し, Emacs では DEL 文字 (C-?) を生成します.
+  
+     ファンクション・キーは Emacs の内部で "ESC [ ## ~" という文字列に
+     置き換わります.
+     ここで ## は適当な数です.
+     この文字列は LK201 キーボードが生成する文字列と同じです.
+     上に挙げていないファンクション・キーは "ESC [ - 1 ~" を生成します.
+  
+  ファンクション・キーが生成する文字列の完全な一覧は
+  src/x11term.c の関数 "stringFuncVal" を参照して下さい.
+   
+  X サーバは別のマシンでも (例えば X 端末を使っている場合)
+  Emacs を Sun で動かしているなら,
+  Sun のところで紹介した設定になります.
+  どの設定を使うべきかは,
+  どのマシンのディスプレイで X サーバが動いているかではなく,
+  どのマシンでコンパイルした Emacs を使っているかに依存します.
+  "xmodmap" プログラムを使うと keysym を変更できますが,
+  他のプログラムにも影響します.
+  リソースで Emacs の生成するキー列を変更することはできません.
+  
+  もし使いたいファンクション・キーが上の一覧に挙がっていなくて,
+  xmodmap で名前を変更したくないときは,
+  Emacs に変更を加えることになります.
+  Johan Vromans <jv@mh.nl> は次のように説明しています:
+  
+    トリッキーな設定はいくらでもあるが,
+    もっともエレガントな解答だと思われるのは
+    "x-rebind-key" 関数を使うものだ.
+    ただしこの関数はわけあってソース中でコメントアウトされている
+    ---実はバグがあるんだ.
+  
+    ただし対策は簡単で
+    Epoch のソースから epoch:rebind-key という関数を持ってきて
+    そっくり取り替えてしまえばいいんだ.
+  
+    こうするとすべてのキーの設定を変更することができる.
+    例えば
+  
+      (x-rebind-key "KP_F1" 0 "\033OP")
+  
+    とすると PF1 キーで "ESC O P" という
+    VT 端末と同じ文字列を生成させることができるようになるんだ.
+  
+54: ファンクション・キーや矢印キーがどんな文字列を生成するかわかりますか?
+  
+  Randal L. Schwartz <merlyn@iwarp.intel.com> による
+  次の関数を使ってみてください:
+  
+    (defun see-chars ()
+      "Displays characters typed, terminated by a 3-second timeout."
+      (interactive)
+      (let ((chars "")
+            (inhibit-quit t))
+        (message "Enter characters, terminated by 3-second timeout.")
+        (while (not (sit-for 3))
+          (setq chars (concat chars (list (read-char)))
+                quit-flag nil))         ; quit-flag maybe set by C-g
+        (message "Characters entered: %s" (key-description chars))))
+  
+  もしくは,
+  "C-h l" (view-lossage) を使ってください.
+  Emacs がどのような文字を受取ったかが 100 文字まで表示されます.
+  Kevin Gallagher <kgallagh@digi.lonestar.org> は
+  "wxyz" のような判りやすい文字列の後 "C-h l" を使うと,
+  "wxyz" と "C-h l" に挟まれて判りやすくなるとアドバイスしています.
+  
+55: Emacs が自発的に "I-search: " と表示してビープするのですが何故ですか?
+  
+  端末が (または端末とホスト・コンピュータの間で)
+  C-s と C-q をフロー制御文字として使っていると,
+  Emacs がこれらの文字をコマンドとして解釈してしまいます.
+  (C-s は通常 isearch-forward コマンドを起動します.)
+  もっともよい解決法は C-s と C-q によるフロー制御を止めることです.
+  こうできないときは,
+  次の式を評価して Emacs に C-s と C-q をフロー制御文字であると認識させます:
+  
+    (set-input-mode nil t)
+  
+  個人で対処する場合は .emacs に記述します.
+  サイトで対処する場合はどこに記述するかは議論の分かれるところです.
+  Emacs を構築するときに lisp/site-init.el に記述しても効果があるかは
+  定かではありません.
+  {どなたか試して教えて下さい.}
+  各ユーザの .emacs に入れて回るのは問題があるでしょう.
+  lisp/default.el に記述すると
+  ユーザの .emacs ファイルに誤りがあったときロードされないので,
+  .emacs を修正するのに Emacs を使えないことになってしまいます
+  (.emacs をロードしない方法を知っていればよいのですが).
+  
+  もし XON/XOFF フロー制御をする端末としない端末が存在するなら,
+  次のような解決法もあります.
+  lisp/site-init.el で keyboard-translate-table の C-s と C-q を
+  無効にするように,
+  swap-keys (質問 61 参照) を使うか,
+  または次のようにすればよいのです:
+  
+    ;; by Roger Crew <crew@cs.stanford.edu>:
+    (setq keyboard-translate-table
+          "\C-@\C-a\C-b\C-c\C-d\C-e\C-f\C-g\C-h\C-i\C-j\C-k\C-l\C-m\C-n\C-o\C-p\C-^\C-r\C-\\\C-t\C-u\C-v\C-w\C-x\C-y\C-z\C-[\C-s\C-]\C-q\C-_")
+  
+  こうして lisp/default.el でもし XON/XOFF フロー制御を無効にできるなら
+  通常の keyboard-translate-table を使うように設定すればいいでしょう
+  (ユーザが keyboard-translate-table をめちゃめちゃにしないように
+  このときは swap-keys を使うとよいでしょう).
+  そうでないときは set-input-mode で C-s と C-q を全く無効にしてしまいます.
+  
+  より詳しい説明は etc/PROBLEMS にあるので参照して下さい.
+  
+56: C-s や C-q によるフロー制御を無効にするにはどうしたらよいのですか?
+  
+  端末が C-s と C-q を使ってフロー制御しているときは
+  大抵の端末ではセットアップ・メニューを使うとこの設定を解除できます.
+  
+  端末とホストをつないでいるネットワーク・ハードウェアが
+  C-s と C-q を使ってフロー制御している場合は
+  ネットワーク管理者に尋ねたほうが賢明です.
+  
+57: 端末がフロー制御文字として C-s と C-q を使っていて, この設定を解除できないときはどうしたらいいのでしょうか?
+  
+  質問 55 参照.
+  
+58: C-s と C-q でコマンドを起動するのではなくフロー制御するように Emacs を設定できますか?
+  
+  質問 55 参照.
+  
+59: ネットワーク経由で接続すると Emacs で C-s と C-q が見えないのですが何故ですか?
+  
+  Eirik Fuller <eirik@theory.tn.cornell.edu> は次のように書いています:
+  
+    rlogin (または telnet) のとある版ではリモート・システムに接続したときに
+    フロー制御文字を渡さないことがあります.
+    このようなシステムでは,
+    リモート・システムの Emacs は
+    ローカル・システムのフロー制御を無効にできません.
+    "rlogin -8" とするとこの問題を解決できる場合があります.
+  
+    ローカル・ホスト (rlogind ではなく rlogin コマンドが動いているホスト)
+    上でフロー制御を無効にするように対処するには
+    rlogin コマンドを使う前に stty コマンドで設定を行ないます.
+    たいていのシステムでは "stty start u stop u" とすればよいでしょう.
+  
+60: C-s と C-q にバインドされているコマンドを使うにはどうしたらよいですか? 端末に食われてしまうのです.
+  
+  次のようにして C-s を C-\ と, C-q を C-^ と交換するとよいでしょう:
+  
+    (swap-keys ?\C-s ?\C-\\)
+    (swap-keys ?\C-q ?\C-^)
+  
+  質問 61 で swap-keys の実装を解説しています.
+  
+61: キーの役割を交換したいのですが, どうしたらよいですか?
+  
+  keyboard-translate-table という変数を設定すると
+  Emacs が文字を受け取ったとき
+  あたかも異なる文字を受け取ったように設定できます.
+  次の Emacs Lisp コードでキーを取り替えることができます.
+  Emacs に評価させて,
+  `(swap-keys ?A ?B)' とすると A と B を取り替えることができます.
+  
+  注意: ミニバッファのコードで C-g (7) の値はハード・コードされています.
+  C-g を取り替えると問題を引き起こすかもしれません.
+  (これは Emacs 18.58 では修正されています.)
+  
+    (defun swap-keys (key1 key2)
+      "Swap keys KEY1 and KEY2 using map-key."
+      (map-key key1 key2)
+      (map-key key2 key1))
+  
+    (defun map-key (from to)
+      "Make key FROM behave as though key TO was typed instead."
+      (setq keyboard-translate-table
+	    (concat keyboard-translate-table
+		    (let* ((i (length keyboard-translate-table))
+			   (j from)
+			   (k i)
+			   (str (make-string (max 0 (- j (1- i))) ?X)))
+		      (while (<= k j)
+			(aset str (- k i) k)
+			(setq k (1+ k)))
+		      str)))
+      (aset keyboard-translate-table from to)
+      (let ((i (1- (length keyboard-translate-table))))
+	(while (and (>= i 0) (eq (aref keyboard-translate-table i) i))
+	  (setq i (1- i)))
+	(setq keyboard-translate-table
+	      (if (eq i -1)
+		  nil
+		(substring keyboard-translate-table 0 (1+ i))))))
+  
+  註: swap-keys を使う前には必ず定義を評価してください!
+  .emacs などのファイルに書いておくことをお勧めします.
+  
+62: 何故 "バックスペース" キーがヘルプ・コマンドを起動するのですか?
+  
+  バックスペース・キーは (すくなくとも私が使っているすべてのキーボードでは)
+  ASCII コードの 8 を生成します.
+  C-h も同じコードを生成します.
+  Emacs はデフォルトで C-h が `help-command' を起動します.
+  `help' の先頭が `h' なので覚えやすいようにこう決められました.
+  もっとも簡単な解決法は
+  C-h (すなわちバックスペース) で help を
+  DEL (デリート・キー) で直前の文字を削除するというデフォルトの設定で
+  使うことです.
+  
+  少なからず問題が残るのですが次のような解決法もあります:
+  
+  1. Emacs 以外では通常
+     バックスペースは直前の文字を削除するように定義されています.
+     Emacs 以外でも DEL で直前の文字を削除するようにすれば解決できるでしょう.
+     このためには
+     
+       stty erase '^?'
+  
+     と実行します.
+  
+  2. バックスペース・キーの方がキーボードの便利な位置にあるとか,
+     デリート・キーがないとかの理由で
+     バックスペース・キーで直前の文字を削除することに固執する場合,
+     バックスペース・キーにデリート・キーのように振る舞わせることもできます.
+     ひとつの方法はバックスペース・キーとデリート・キーを
+     取り替えてしまうことです:
+     
+       (swap-keys ?\C-h ?\C-?)
+  
+     swap-keys の実装は質問 61 を参照してください.
+  
+     もうひとつの方法はヘルプ機能を "C-x h" にバインドすることです:
+     
+       (global-set-key "\C-h" 'delete-backward-char)
+       (global-set-key "\C-xh" 'help-command) ; override mark-whole-buffer
+  
+     注意: この方法は独自の backward-character-deletion コマンドや
+     help コマンドを持つメジャー・モードやマイナー・モードでは
+     うまく機能しません.
+     例えば C モードや Lisp モードはこれに該当します.
+     すべてのモードでもうまく働くようにすることはかなり面倒です.     
+  
+63: PC 端末で DEL を入力するにはどうしたらよいのですか?
+  
+  名前を忘れてしまったのですが, 誰かが書いていました:
+  
+    ほとんどの PC にはバックスペースやデリート・キーがない
+    欠陥キーボードしかつながっていないが,
+    "バックスペース" キーで C-h (バックスペース) か DEL が生成されるかは
+    端末エミュレータに依存する.
+    よくできたエミュレータならどちらを生成させるかを選択できるだろう.
+    そうじゃないときも,
+    ひと通りシフト・キーやコントロール・キーを押しながら
+    テンキーパッドの "バックスペース", "削除" キーなどを押してみて
+    C-? が入力できないか試してみるのも無駄ではないかもしれない.    
+  
+  これが面倒なら, デリート・キーと他のキーを取替えてしまうこともできます.
+  質問 62 を読んでください.
+  
+64: "コンポーズ" キーを "メタ" キーとして使うことができますか?
+  
+  VT220 のようなダム端末ではできません.
+  VT220 クローンにはできるものもあるようです.
+  X サーバの動く端末では "xmodmap" というプログラムを使うとできます.
+  
+65: 矢印キーが働くようにするには, どうしたらいいですか?
+  
+  Emacs は起動時には矢印キーは一切関知しません
+  (X 上で起動しているときは別です. 質問 53 参照).
+  起動時の初期化のプロセスで,
+  端末に特有の初期化ファイルをロードします
+  (環境変数 TERM からどの初期化ファイルをロードするかが決められ,
+  そのファイルが存在したらロードします).
+  この初期化ファイルが矢印キーを有効にします.
+  
+  働かない理由にはいくつか考えられます:
+  
+  1. 端末の初期化ファイルが存在しない.
+  
+    lisp/term ディレクトリを捜してください. 
+    環境変数 TERM に設定されている端末タイプが xxx-yy-z とすると,
+    Emacs は lisp/term ディレクトリから xxx-yy-z.el, xxx-yy.el そして xxx.el 
+    という順で初期化ファイルを捜し, 最初に見つかったものをロードします.
+  
+    もしいずれもなかったら,
+    誰かに頼んであなたの端末の初期化ファイルを作ってもらうか,
+    自分の .emacs で解決してみましょう.
+    例えば, 
+    あなたの端末の矢印キーが次のような文字列を生成するとします:
+  
+       Up:    ESC [ A
+       Down:  ESC [ B
+       Right: ESC [ C
+       Left:  ESC [ D
+  
+    このとき次のように .emacs で適当なコマンドをバインドできます:
+  
+       (setq term-setup-hook
+             (function
+              (lambda ()
+                (cond ((string-match "\\`xyzzy" (or (getenv "TERM") ""))
+                       ;; First, must unmap the binding for M-[
+                       (or (keymapp (lookup-key global-map "\e["))
+                           (define-key global-map "\e[" nil))
+                       ;; Enable terminal type xyzzy's arrow keys:
+                       (define-key global-map "\e[A" 'previous-line)
+                       (define-key global-map "\e[B" 'next-line)
+                       (define-key global-map "\e[C" 'forward-char)
+                       (define-key global-map "\e[D" 'backward-char))
+                      ((string-match "\\`abcde" (or (getenv "TERM") ""))
+                       ;; Do something different for terminal type abcde
+                       ;; .....
+                       ))))))
+  
+    `cond' の場合分けで別の端末を加えることもできます.
+    註: この設定を有効にするには Emacs を再起動する必要があります.
+  
+  端末の初期化ファイルがある場合も次の二つの場合は問題が残ります.
+  
+  2. 端末の矢印キーがコントロール文字を生成する場合.
+  
+     Emacs は C-^ と C-\ 以外のコントロール文字にはすべてコマンドを
+     バインドしているので,
+     この場合はあきらめるしかないでしょう.
+     頑張ればバインディングをうまく調整して変更できるかもしれませんが.
+  
+  3. 端末の矢印キーが "ESC [" で始まる文字列を生成する場合.
+  
+     ANSI 規格ではこの文字列が採用されているにも関わらず,
+     Emacs と一緒に配布されているどの端末設定ファイルも
+     デフォルトでこの文字列にコマンドをバインドしていません.
+     (ファンクション・キーが "ESC [" という文字列で始まる文字列を
+     生成する場合も同様です.)
+     これは M-[ を backward-paragraph コマンドにバインドすることが
+     より重要であると考えられていたからでしょう.
+     これは Emacs 19 版では改善されるようです.
+  
+     いくつかの端末設定ファイルでは `enable-arrow-keys' というコマンドが
+     定義されていて,
+     この問題に対応することができます.
+     .emacs で次のように実行するとよいでしょう:
+  
+       (setq term-setup-hook
+	     (function
+	      (lambda ()
+		(if (fboundp 'enable-arrow-keys) (enable-arrow-keys)))))
+  
+     これを lips/default.el に書く場合は
+  
+       ;; don't override a user's term-setup-hook
+       (or term-setup-hook
+	   (setq term-setup-hook
+		 (function
+		  (lambda ()
+		    (and (fboundp 'enable-arrow-keys)
+			 ;; don't override a user key mapping
+			 (eq 'backward-paragraph (lookup-key esc-map "["))
+			 (enable-arrow-keys))))))
+  
+     のようにして各ユーザの .emacs での設定を上書きしない配慮が必要です.
+  
+     端末のタイプが `sun' のときは,
+     .emacs に次のように書く必要があります
+     (上に追加するか, または入れ換えます):
+                                                                             +
+       (setq sun-esc-bracket t)                                              +
+  
+     端末のタイプが `xterm' のときは,
+     xterm.el は特に何もしていないのでこの解答の 1 で述べたようにします.
+  
+66: モディファイヤ・キーとファンクション・キーを組み合わせて使いたいのですが, どうしたらいいですか?
+  
+  Emacs を emacstool (または xvetool?) で使うか, 
+  もしくは x-rebind-key のちゃんと動くバージョン (質問 53 参照) を
+  持っていない限り
+  Emacs 単独ではできません.
+  
+  emacstool では, 
+  モディファイヤ・キーとファンクション・キーを組み合わせて押したとき,
+  ファンクション・キー単独で押したときとは別の文字列が生成されます.
+  詳しくは etc/emacstool.1 を読んでください.
+  異なる文字列が生成されるので,
+  文字列に対して異なったコマンドをバインドすることができます.
+  
+  Emacs を xterm のようなターミナル・エミュレータから起動している場合は,
+  変換テーブルを変更してモディファイヤ・キーと
+  ファンクション・キーが押されたときに異なるコードを
+  生成するようにすることができます.
+  例えば, X のリソースで次のように設定します:
+  
+    XTerm.VT100.Translations: #override \
+      Shift<KeyPress>F1: string(0x1b) string("[xyzzy")
+  
+  これで Shift-F1 が "ESC [ xyzzy" という文字列を生成します.
+  こうすると通常の方法でバインドすることができます.
+  
+67: xterm ウィンドウでメタ・キーが働かないのですが, 何故ですか?
+  
+  次の方法を順次試してみて下さい:
+  
+  * X11R4 ではメタ・キーの状態を確認して下さい.
+    "xev" というプログラムを使うと
+    メタ・キーがどのような keysym を生成するかが分かりますが,
+    これが Meta_L または Meta_R でなければなりません.
+    もしそうでないときは, xmodmap を使って修正してください.
+  
+  * xterm が使っている仮想端末ドライバが 8-bit 文字を透過するか確認して下さい.
+    "stty -a" または "stty everything" と実行したときに
+    "cs8" というフラグが設定されていなくてはなりません.
+    もし "cs7" が設定されているときは
+    "stty cs8 -istrip" または "stty pass8" と実行して下さい.
+  
+  * xterm から rlogin を使って別のマシンの Emacs を使っているときは
+    8-bit 文字を透過させるために rlogin に "-8" オプションを指定する
+    必要があるかもしれません.
+  
+  * Ultrix 上で Emacs が稼働している場合は
+    (setq-input-mode t nil) を評価すると良いかもしれません.
+  
+  * もし上に挙げたすべてがうまくいかないときは,
+    xterm で M-W を入力したときに "ESC W" を生成させることができます.
+    これは Emacs が内部で M-W をハンドリングしているのと同じ方法です.
+    X11R4 では次のようにリソースを設定してください:
+  
+      XTerm.VT100.EightBitInput: false
+  
+    (こうすると 8-bit 文字の入力方法が変更されます.)
+  
+    古い版の xterm では次のようなトランスレーションを登録して下さい:
+  
+      XTerm.VT100.Translations: #override \
+        Meta<KeyPress>: string(0x1b) insert()
+  
+    "Meta" は "Alt" でも構いません.
+  
+68: HP-UX 8.0 で ExtendChar キーがメタ・キーのように働かないのは何故ですか?
+  
+  これは X11R4 における国際化機能の拡張を HP が採り入れているからです.
+  Emacs はメタ・キーの状態によらず
+  XLookupString が同じ値を返すことを仮定していますが,
+  この拡張の採用によりこの仮定が正しくなくなったからです.
+  Emacs が修正されるまで,
+  X サーバを起動した後,
+  できるなら xterm を起動する前に
+  次のように実行するととりあえず解決できます:
+  
+    xmodmap -e 'remove mod1 = Mode_switch'
+  
+  註: こうすると特殊な keysym がシステム全体で使えなくなります.
+  ですから, これらの keysym を使いたいときはこの方法は使えません.
+  
+69: Emacs で WordStar のキー配列をエミュレートするパッケージはありますか?
+  
+  Emacs Lisp アーカイブの `wordstart' パッケージを捜してください
+  (質問 18 参照).
+
+
+Building/Installing/Porting Emacs and Machine/OS-Specific Bugs:
+  
+70: SunOS 4.1 で "Fatal error (6).Abort" というメッセージと共に Emacs がクラッシュするのは何故でしょうか?
+  
+  Emacs 18.57 のリリースと共にこの質問は無くなると期待したのですが,
+  まだ 18.55 を使っている人がいるんですね.
+  
+  これは SunOS 4.1 が提供している "localtime" ルーチンのバグです.
+  tzsetwall から呼び出されるプライベート関数が
+  localtime が確保した 8 byte のメモリ領域を越えて値を 0 に設定しようとし,
+  GNU の malloc のメモリ・プールを破壊します.
+  malloc がこれを検出すると abort します.
+  
+  18.57 からは,
+  このクラッシュが起らないように
+  "#define SYSTEM_MALLOC"
+  が SunOS 4.1 の設定ファイルに付け加えられています.
+  
+  なお SunOS 4.1.1 でも,
+  ライブラリの localtime.o は変更されておらず,
+  すなわちこのバグは直っていません.
+  Sun ではこのバグに気づいており,
+  Sun が発表したドキュメントには
+  Emacs を "#define SYSTEM_MALLOC" を追加してコンパイルするように
+  記述されています.
+  このバグは Sun の /usr/etc/rpc.mountd にも影響するようです.
+  
+  anonymous FTP で修正された localtime.o を取り寄せて
+  根本的にこのバグを直すことができます:
+  (titan.rice.edu:incoming/localtime.tar.Z) 
+  {ただしこのファイルは現在公開されてないかもしれません.}
+  この新しい localtime.o を /usr/lib/libc{.a,.so.*} にインストールしてください.
+  方法は `ar' コマンドのマニュアルと
+  /usr/lib/shlib.etc ディレクトリの README を読んでください.
+  
+  GNU の malloc が 8 byte を確保するように要求されたときも
+  16 byte を確保するように変更する,
+  Eirik Fuller <eirik@theory.tn.cornell.edu> によるパッチがあります.
+  このパッチを当てると Sun のバグによらず abort しません.
+  
+  もうこの質問を繰り返すのは止めましょう! :-) :-)
+  
+71: Sun3 で Emacs を作っていると, "f68881_used undefined" というエラーが出るのですが何故ですか?
+  
+  Barry A. Warsaw <warsaw@cme.nist.gov> は次のように言っています:
+  
+    temacs を構築するために "ld" でリンクするコードのうち
+    いくつかのものは -f68881 オプションを指定して
+    コンパイルしておかなないといけないんだ.
+    このエラーは -f68881 オプションを指定して構築された X のライブラリを
+    リンクするときに発生するので,
+    -fswitch と -fsoft オプションを指定して 
+    68881 に依存しないように X のライブラリを構築し直すか,
+    または
+    temacs をリンクするときに 
+    68881 用のスタートアップ・ファイル /usr/lib/Mcrt1.o も
+    一緒にリンクしてやればいいんだ.
+    これは src/ymakefile の
+  
+      #define START_FILES crt0.o
+  
+    という行を
+  
+      #define START_FILES crt0.o /usr/lib/Mcrt1.o
+  
+    と変更すればいい.
+    ただし, スタートアップ・ファイルは必ずこの順で指定すること.
+  
+72: .Xdefaults に書いた X のリソースが無視されてしまうのは何故ですか?
+  
+  * Emacs を XBACKWARDS マクロを定義してコンパイルし直してください.
+    ある版の XGetDefault の実装にバグがあり,
+    (ヘッダ・ファイルによっては) ドキュメントと動作が異なります.
+  
+  * クラス名として `Emacs' を使っているか
+    または正しいインスタンス名を使っているか確認してください.
+    インスタンス名は通常 Emacs の実行ファイル名です
+    (すなわち argv[0] の最後の部分).
+    ただしこれはコマンドライン・オプション -rn や
+    環境変数 WM_RES_NAME で書き換えることができます.
+  
+    注意: マニュアル・ページで `emacs' を使うように解説しているのは誤りです.
+  
+    注意: 古い版のEmacs は間違ったクラス名を採用しています.
+  
+  * Emacs はコマンドライン・オプション -xrm での設定は適切に無視します.
+  
+  * Emacs は X11R5 で提供された
+    スクリーン特有のリソースをまだハンドリングできません.
+  
+  * Emacs は 1-bit ディスプレイ (すなわちモノクロ・ディスプレイ) で
+    稼動しているとき, カラーの設定を無視するというバグがあります.
+  
+73: OpenWindows をインストールした環境で X を使う Emacs を構築できますか?
+  
+  ヘッダ・ファイル <X11/X10.h> をインクルードしている部分を削除してください.
+  こうすると MIT の libX11.a の代わりに OpenWindows のライブラリを
+  リンクすることができます.
+  ただし Xmenu が働くようにするためには,
+  MIT の liboldX.a ライブラリが必要です.
+  
+  ネットワークで次のような質問が出ています {解答を私に送らないでください!}
+  
+  * SunOS 4.* が稼動している Sun 4 用のコンパイル済みの liboldX.a は
+    anonymous FTP で入手できますか?
+  * xvetool を使っているとき "not a sun window" というメッセージが出るのですが
+    解決法はありますか?
+  * SunOS 4.1.1 では /usr/openwin/lib に libX11.a は
+   シェアード・ライブラリしかないのですが, どうしたらいいのですか?
+  
+73: HP-UX 8.0 で Emacs を構築するにはどうしたらいいのですか?
+  
+  Simon Leinen <simon@liasun2.epfl.ch> は
+  Emacs 18.57 が
+  HP-UX 8.0 の稼動する HP 9000 マシン (700 と 800 シリーズを含む) で
+  コンパイルできるように
+  周回型ダイナミック・リンクに対応させたり
+  欠けたインクルード・ファイルに対応したパッチを組織だてています.
+  これらのパッチは anonymous FTP で入手できます
+  (liasun3.epfl.ch:pub/gnu/emcs1857HPUX8p).
+  Both Simon と Darryl Okahata <darrylo@sr.hp.com> は
+  FTP アクセスができない人のために電子メールで発送しています.
+  最新版は 1992 年 1 月 1 日のものです.
+  ファイルの日付は間違っています.
+  
+  いくつもの機能を追加した「非公式な HP GNU Emacs」もあります.
+  ただし HP-UX 8.0 で動かすにはパッチが必要です.
+  そのためのパッチは Darryl Okahata <darrylo@sr.hp.com> が
+  電子メールで配布しています.
+  
+74: Emacs を作成中にトラブルに突き当たったらどうしたらよいのですか?
+  
+  まず第一に etc/PROBLEMS を読んでください.
+  解決法がすでに与えられているかもしれません.
+  次にこの FAQ をチェックして下さい.
+  それでも解答が見つからなかったら,
+  問題を電子メールで bug-gnu-emacs@prep.ai.mit.edu へ送ってください.
+  gnu.emacs.help には投稿しないでください.
+  また help-gnu-emacs@prep.ai.mit.edu へ電子メールを送らないでください.
+
+
+Weird/Confusing Problems
+  
+76: Emacs はなぜ 8 メガバイト以上のファイルを扱えないのですか?
+  
+  ほとんどのプラットフォームでは,
+  GNU Emacs は 24 ビットの符号付き整数 (そして 24 ビットのポインタ) を
+  内部で使っています.
+  これが Emacs の扱えるファイル・サイズの制限になっています.
+  すなわち制限は 8,388,607 バイト (2^23 - 1) になります.
+  
+  Leonard N. Zubkoff <lnz@lucid.com> は
+  次の 2 行を src/config.h に加えて Emacs をコンパイルすると
+  26 ビットの整数とポインタが扱えるようになると言っています.
+  これだと 33,554,431 バイトのファイルまで扱うことができます:
+  
+    #define VALBITS 26
+    #define GCTYPEBITS 5
+  
+  注意: この方法はいくつかのマシンで `ILLEGAL DATATYPE' エラーになります.
+  
+  David Gillespie <daveg@csvax.cs.caltech.edu> は
+  Emacs が 24 ビットの整数とポインタを採用した背景を次のように説明しています:
+  
+    Emacs はそのほとんどがリスプ方言のひとつで記述されている;
+    リスプは, 変数にどんな型の値も代入できたり,
+    関数の戻り値も任意の型でよい
+    という意味で型が自由な言語だ.
+    しかし, このためすべての値には
+    その値がどんな型なのかを記す "タグ" が必要なんだ.
+    タグには整数, リストへのポインタ, 編集バッファへのポインタなどの
+    型が記される.
+    Emacs は標準的な整数の幅である 32 ビットをデータ・オブジェクトを指すために
+    使っている. そのうち先頭の 8 ビットをこのタグのために使い,
+    残りの 24 ビットを値のために使っているんだ.
+    だから整数 (そしてポインタ) は C 言語の整数やポインタに比べて
+    制限を受けているんだ.
+  
+    Emacs はバイト指向強いマシンでの実高速度を気にして, 8 ビットのタグを
+    採用しているんだけど, 実は 6 ビットでもタグの幅は十分なのさ.
+    ストレージが許すなら,
+    (この質問の前半で紹介したように) 6-bit をタグにして
+    残りの 26-bit を整数やポインタに割り当てることもできるんだ.
+  
+77: Emacs が違うディレクトリで起動されてしまうのですが, どうしてですか?
+  
+  まず考えられるのは,
+  環境変数 PWD がカレント・ディレクトリ以外に設定されている場合です.
+  これは 2 種類のシェルを使っているときに起こり得ます.
+  "ksh" と "csh" (またはその派生バージョン) は環境変数 PWD を設定しますが,
+  "sh" は設定しません.
+  ksh から sh を起動して,
+  sh でカレント・ディレクトリを変更して,
+  sh から Emacs を起動すると,
+  PWD が間違ったカレント・ディレクトリを記憶したまま,
+  Emacs がそれを使ってしまいます.
+  詳細は etc/OPTIONS を読んでください.
+  
+  もっとも簡単な解決法は二種類のシェルを使わないことです.
+  "chsh" プログラムでデフォルトのログイン・シェルを替えることができるはずです.
+  
+78: "$" をファイル名に持つファイルを編集するにはどうする?
+  
+  ファイル名をミニバッファに入力するとき,
+  Emacs は "$" 以降の単語を環境変数として展開しようとします.
+  この働きを抑制するには, "$$" を代わりに使ってください.
+  
+79: シェル・モードでシェルのカレント・ディレクトリの追跡を失敗するのは何故?
+  
+  Emacs にはシェルがディレクトリを変更したことを知る手段がありません.
+  これは Unix の根本的な制限に起因するものです.
+  Emacs は "cd" コマンドからディレクトリを追跡しています.
+  "cd" コマンドでディレクトリを指定するときに,
+  変数を使ったり ("cd $HOME/bin") または
+  シェルのメタ・キャラクタを使ったり ("cd ../lib*") すると,
+  Emacs はシェルのカレント・ディレクトリの追跡に失敗します.
+  非常に多くの解決法や拡張法が標準のシェル・モードに対して与えられています.
+  これらの拡張シェル・モードを捜してみてください (質問 17 参照).
+  
+80: Emacs はメールを送信するときにエリアスを展開しないのですか?
+  
+  * 複数のアドレスはコンマ (,) で区切って入力する必要があります.
+    これは Emacs が RFC822 で定められている
+    次のようなアドレスの記述に対応しているからです:
+  
+      Willy Smith <wks@xpnsv.lwyrs.com>
+  
+  * Emacs は通常 ".mailrc" ファイルを一回のセッションに付き一度,
+    一番最初にメールを書き始めるときにしか読み込みません.
+    もし .mailrc を編集したときは,
+    "M-ESC (build-mail-aliases) RET" として .mailrc を再び読み込んでください.
+    (このコマンドを入力するときは丸括弧を忘れないように!)
+  
+  * Emacs は .mailrc のフォーマットにベンダが個々に追加した
+    `source' コマンドのような特別なフォーマットには対応していません.
+  
+81: load-path を変更したのですが, 反映されないのは何故?
+  
+  load-path にチルダ (~) を含むディレクトリを追加するときは,
+  チルダをホーム・ディレクトリに展開してやらないといけません.
+  次のようにするとよいでしょう:
+  
+    (setq load-path (mapcar 'expand-file-name load-path))
+  
+82: カーソルを上下に動かすと異なったカラムへずれてしまうのはどうして?
+  
+  きっと不注意に "C-x C-n" (set-goal-column) をタイプしてしまったのでしょう.
+  このコマンドはカーソルを上下に移動したときのカラムを指定します.
+  "C-u C-x C-n" で取り消すことができます.
+  
+  しばしばこの誤りを繰返してしまうなら,
+  次のようにしてキー・バインディングを取り消すか,
+  またはコマンドを無効にしてしまうこともできます:
+  
+    (define-key ctl-x-map "\C-n" nil)
+    (put 'set-goal-column 'disabled t)
+  
+83: X11R4 で "Unknown XMenu error" というメッセージと共に Emacs がハングアップしてしまうのは何故?
+  
+  たくさんの異なった X のエラーからこのエラー・メッセージが出ます.
+  ここではひとつの解決法を示します:
+  
+  X11 リリース 4 (そして OpenWidndows を含む, より最新の版) は
+  それ以前のバージョンでは許されていたある条件の X protocol を
+  エラーとして処理します.
+  このため Emacs の Xmenu のコードが働くようにするには
+  X11R4 のサーバを X11R3 のサーバと
+  バグ・コンパチブルなモードにする必要があります.
+  コマンドラインで "xset bc" と実行してください.
+  
+84: display-time コマンドがロード・アベレージを表示しなくなることがあるのですが何故?
+  
+  GNU Emacs 18.56 で, display-time のコードが変更されました.
+  それ以前の版 18.55 では "loadst" というプログラムを起動して
+  定期的に Emacs に時刻を知らせるようにしていました.
+  loadst は
+  適切な権限が与えられている場合 (またはシステムが権限を必要としない) は
+  システムのロード・アベレージも知らせていました.
+  loadst から情報が送られると Emacs はそれをモード行に表示してたのです.
+  
+  18.56 版では,
+  "wakeup" というプログラムを使うように変更されています.
+  wakeup は情報を知らせるのではなく
+  Emacs に時間がきたことを知らせるためだけに使われています.
+  このとき Emacs は適当なフィルタ関数を起動して
+  時刻や日付やロード・アベレージなどの情報を検索しています.
+  しかし,
+  ロード・アベレージを調べるには
+  たいていのシステムではカーネル・メモリを読むための適切な権限が必要です.
+  Emacs にこの権限を与えることはシステムのセキュリティに危険を与えることにも
+  なりかねないので, ロード・アベレージの表示はオプションになっています.
+  加えて,
+  loadst はこの情報を調べるためのコードを含んでいたにも関らず,
+  Emacs には含まれていません.
+  
+  18.55 版から lisp/display-time.el と etc/loadst.c を持ってきて
+  適切な変更を加えて 18.57 版でも使うとよいでしょう.
+  (IBM から法的圧力を受けた Unipress によって loadst のコードは削除された
+  という噂があります.)
+  
+  注意: Emacs を kmem の setgid ビットを設定してインストールしないでください.
+  セキュリティに危険をもたらします!!!!!!!!!!
+  
+  Emacs 18.55 またはそれ以前の版を使っているか,
+  または上の方法でこの問題を解決した人は必ず次を読んでください:
+  
+  "loadst" を使う上でもっとも起りうる問題点は
+  loadst が /dev/kmem というファイルを読めないことに起因します.
+  loadst を適切にインストールすると,
+  /dev/kmem がオーナになり setuid ビットが設定されるか,
+  /dev/kmem のグループに属し setgid ビットが設定されます.
+  いずれの場合も
+  オーナまたはグループの権限で /dev/kmem ファイルが読めるようになります.
+  
+  /dev/kmem を読んでもロード・アベレージが分からない Unix システムがあります.
+  ロード・アベレージを知るために
+  特別なシステム・コールが必要な Unix システム (例えば UMAX の inq_stats) では
+  loadst を拡張する必要があります.
+  
+85: GNUS が NNTP 経由で接続できないのですが, 原因は?
+  
+  NNTP 1.5.10 版にはバグがあり,
+  複数の要求がサーバにされたとき
+  最初のものを処理するときに残りをブロックしないので
+  処理されなくなってしまいます.
+  NNTP 1.5.11 では修正されています.
+  
+  Emacs からは次のようにすると対処できます:
+  
+    (setq nntp-maximum-request 1)
+  
+  Mike Pelletier <stealth@engin.umich.edu> による
+  NNTP 1.5.10 に対するパッチがあります.
+  これは 1.5.9 のタイム・アウトのコードを元にしたものです.
+  しかし 1.5.11 にアップグレードすることをお勧めします.
+  
+  NNTP サーバのバージョンはサーバ・マシンの NNTP ポート (通常は 119)へ
+  telnet してみると分かります
+  (`telnet server-machine 119' とします).
+  ウエルカム・メッセージにバージョン番号が含まれています.
+  `quit' と入力すると終了します.
+  
+86: ispell が時々ローカルな辞書を無視するのですが, 原因は?
+  
+  ispell のバージョンを 2.0.02 へアップグレードしてください.
+  (まだベータ・テスト版ですが 3.0 へアップグレードしてもよいでしょう.)
+  パッチは anonymous FTP で入手できます
+  (archive.cis.ohio-state.edu:/pub/gnu/ispell/patch2.Z).
+  
+  このとき ispell.el の
+  
+    (defconst ispell-version "2.0.01") ; Check against output of "ispell -v".
+  
+  という行を
+  
+    (defconst ispell-version "2.0.02") ; Check against output of "ispell -v".
+  
+  と変更する必要があります.
+  
+87: シェル・バッファから ^M を排除することはできますか?
+  
+  tcsh を使っているときは, ".cshrc" (または ".tcshrc") に
+  次の数行を加えてください.
+  
+    if ($?EMACS) then
+        if ("$EMACS" == t) then
+            if ($?tcsh) unset edit
+            stty nl
+        endif
+    endif
+  
+  または .emacs_tcsh に次の二行を加えてください:
+  
+    unset edit
+    stty nl
+  
+  もしくは, tcsh の代わりにシェル・バッファで csh が起動されるように
+  設定してください. 例えば
+  
+    (setq explicit-shell-file-name "/bin/csh")
+  
+  とするか, または .cshrc (または .tcshrc) に
+  
+    setenv ESHELL /bin/csh
+  
+  と加えてください (この環境変数を設定して起動し直すのを忘れないでね).
+  
+88: GNU Emacs はセキュリティ・ホールがありますか?
+  
+  1. `movemail' 事件 (すでに危険ではありません)
+  
+    Cliff Stoll は著書 "かっこうの卵" の第 4 章中でこの事件に触れています.
+    LBL のとあるサイトで `etc/movemail' プログラムを
+    root の setuid ビットを設定してインストールしてあったそうです.
+    `movemail' はこのように使われることを想定されていなかったので,
+    セキュリティ・ホールとなり
+    どのユーザも root の権限を持てるようになっていました.
+  
+    この事件もあって `movemail' は setuid root でインストールされても
+    セキュリティ・ホールにならないように変更されています.
+  
+    かの Internet worm もこの設定の誤りを突くようになっていた
+    という報告もあります.
+  
+  2. file-local-variable 機能 (危険ですが, 容易に対処できます.)
+  
+    Emacs には
+    ファイルの終わりに特別なフォーマットのテキストを追加すると
+    そのファイルを開いたときに局所変数の値を設定できるという機能があります.
+    この機能を使うと
+    ファイルが開かれたときに Emacs Lisp のコードを評価するようにできます.
+    明らかに, この機能を悪用するとトロイの木馬を仕掛けることができます.
+  
+    しかしながら,
+    inhibit-local-variables という変数に non-nil 値を設定しておけば,
+    Emacs はこの局所変数の設定をファイルを開いたとき本当に設定するか
+    まず確認します.
+    Emacs を構築するときに 
+    lisp/site-init.el に次の行を加えておくとよいでしょう:
+  
+       (setq inhibit-local-variables t)
+  
+    Emacs を既に構築してあるときは lisp/default.el に,
+    個人で対処するときは .emacs に記述します.
+  
+    かつて RMAIL を利用しているユーザはこの悪意の危険にさらされていたのですが,
+    Emacs 18.52 以降では修正されています.
+    しかし find-file や find-file-noselect を使っているパッケージを
+    利用するときは十分注意すべきでしょう.
+    
+89: /* boo */
+90: "Process shell exited abnormally with code 1" というメッセージはどんなときに出るのですか?
+  
+  もっともあり得るのは,
+  "env" プログラムが正しくインストールされていない場合です.
+  このプログラムはコンパイルして実行許可を与えて
+  Emacs のプログラム・ディレクトリ (普通は /usr/local/emacs/etc) に
+  インストールされていなくてはなりません.
+  このディレクトリは変数 exec-directory に設定されているので,
+  "C-h v exec-directory RET" で確かめることができます.
+  
+  その他の考え得るケースについては etc/PROBLEMS を参考にしてください.
+
+
+Configuring Emacs for Yourself
+  
+91: .emacs を正しく設定するにはどうしたらよいですか?
+  
+  マニュアルのカスタム化の節から .emacs ファイルの記述を参照してください.
+  オンラインの Info マニュアルを次のようにして参照できます:
+  
+    C-h i m emacs RET g init SPC file RET
+  
+  注意: 一般に, 
+  新しい Emacs ユーザは .emacs ファイルを持たないほうがよいでしょう.
+  マニュアルの記述とは違う振る舞いに混乱するからです.
+  help-gnu-emacs に Emacs がドキュメントどおりに動作しないと質問する
+  はめになりますよ. :-)
+  
+92: .emacs をデバッグするにはどうしたらよいですか?
+  
+  まず Emacs を "-q" コマンドライン・オプションを指定して起動してください.
+  そうして *scratch* バッファで次のように入力してください:
+  
+    (setq debug-on-error t) LFD
+    (load-file "~/.emacs") LFD
+  
+  (LFD は C-j でも入力できます.)
+  
+  もし .emacs ファイルに間違いがあると,
+  エラーが起った時点でデバッガが起動されます.
+  デバッガの使い方が分からないときは
+  代わりに (setq stack-trace-on-error t) としてください.
+  
+  注意: この方法では端末やウィンドウ・システムを初期化するための
+  コードの誤りを見つけることはできません.
+  質問 51 を参照してください.
+  
+93: XXX モードに対してデフォルトで略語モードを設定したいのですが, どうしたらよいのですか?
+  
+  .emacs ファイルに次のように付け加えてください:
+  
+    (condition-case ()
+	(read-abbrev-file nil t)
+      (file-error nil))
+  
+    (setq XXX-mode-hook
+	  (function
+	   (lambda ()
+	     (setq abbrev-mode t))))
+  
+94: Auto-Fill モードをデフォルトで設定したいのですが, どうしたらよいですか?
+  
+  Auto-Fill モードをバッファに対して設定するには,
+  "M-x auto-fill-mode" と入力します.
+  テキスト・モードに対して, Auto-Fill モードを設定するには次のようにします:
+  
+    (setq text-mode-hook 'turn-on-auto-fill)
+  
+  すべてのモードに対して設定するには次のようにします:
+  
+    (setq-default auto-fill-hook 'do-auto-fill)
+  
+95: 特定のファイルに対してメジャー・モードを設定するにはどうするのですか?
+  
+  ".YYY" という拡張子をもつファイルに対して XXX モードを設定したいときは,
+  次のようにしてください:
+  
+    (setq auto-mode-alist (cons '("\\.YYY\\'" . XXX-mode) auto-mode-alist))
+  
+  または特定のファイルを XXX モードに設定したい時は
+  ファイルの一行目のどこかに
+  
+    -*-XXX-*-
+  
+  という文字列を埋めこんでください.
+  
+96: X のリソースはどのように設定するのが正しいのですか? .Xdefaults に書けばいいんですか?
+  
+  Emacs の man マニュアルか, etc/OPTIONS ファイルを参照してください.
+  etc/XDOC の情報は既に無効なので注意してください.
+  
+97: 端末からビープ音がしないように Emacs を設定できますか?
+  
+  Martin R. Frank <martin@cc.gatech.edu> は次のように書いています:
+  
+    音響ベルではなくて視覚ベルを使うように Emacs を設定して,
+    さらに視覚ベルは何もしないように設定すればいいんだ.
+  
+    環境変数 TERMCAP に
+  
+      ... :vb=: ...
+  
+    という設定を追加して
+  
+      (setq visible-bell t)
+  
+    を評価すれば期待に沿えると思う.
+  
+  
+98: X ウィンドウ・システム上で Emacs を使っているとき, ベルの音量を調節するにはどうしたらいいのですか?
+  
+  Epoch を使っているときは
+  
+    (setq epoch::bell-volume 20)
+  
+  という式を評価してください.
+  
+  普通の GNU Emacs を使っているときは src/x11term.c の XTfeep 関数の
+  次の部分の値を 50 から -50 の範囲で調節します.
+  
+    XTfeep ()
+    {
+	    BLOCK_INPUT_DECLARE ();
+    #ifdef XDEBUG
+	    fprintf (stderr, "XTfeep\n");
+    #endif
+	    BLOCK_INPUT ();
+	    XBell (XXdisplay,50);	/* change this 50 to -50 */
+	    UNBLOCK_INPUT ();
+    }
+  
+  "xset b 0" とするとベルは鳴りません.
+  
+  "xset b BASE" とすると 
+  XBell (disp,  VAL) では BASE - (BASE*VAL)/100 + VAL というボリューム値で,
+  XBell (disp, -VAL) では BASE - (BASE*VAL)/100 というボリューム値で
+  ベルが鳴ります.
+  
+99: load-path を変更するにはどうしますか?
+  
+  一般に load-path は順次 *追加* しますが,
+  /XXX/YYY ディレクトリを追加するには次のようにします:
+  
+    (setq load-path (append load-path '("/XXX/YYY/")))
+  
+  ホーム・ディレクトリからの相対パスを指定するときは次のようにします:
+  
+    (setq load-path (append load-path (list (expand-file-name "~/YYY/"))))
+  
+100: メールやニュースにフォローアップするとき引用するテキストの行頭につけるプレフィクスを変更することはできますか?
+  
+  このためのさまざまなパッケージがあります.
+  なかでも SuperCite を使うと良いでしょう.
+  フォローアップ記事や返事に引用するテキストの書式を自由に整形できます.
+  質問 21 を参照してください.
+
+
+Emacs Lisp Programming
+  
+101: Emacs Lisp はリスプの何方言ですか?
+  
+  Emacs Lisp という方言です. (冗談を言っているわけではありません!)
+  elisp または e-lisp と呼ぶこともあります.
+  (註: "Elisp" は
+  {たぶん CCA Emacs を販売している Uniworks Inc. の} トレード・マークです.)
+  
+102: Emacs Lisp と Common Lisp は似ているのですか?
+  
+  あまり似ていません.
+  GNU Emacs Lisp は
+  大文字と小文字を区別する,
+  動的スコープを使う,
+  パッケージが用意されていない,
+  複数の戻り値を取れない,
+  読み取りマクロが用意されていない,
+  有理数, 不動小数, 多倍長整数が用意されていない,
+  などといった点で Common Lisp と異なります.
+  Common Lisp を使っているユーザのために
+  デフォルトで Emacs Lisp に用意されていない Common Lisp の関数のうち
+  いくつかは lisp/cl.el というファイルに用意されています.
+  man/cl.texinfo という Texinfo 形式のマニュアルに
+  それらの関数に関する記述があります.
+  
+103: Emacs Lisp のコードを実行するにはどうしたらよいのでしょうか?
+  
+  Emacs Lisp の "式" を実行する (正確には "評価する" という) には
+  いくつかの方法があります:
+  
+  * Emacs を起動するときに常に評価したい式は,
+    ホーム・ディレクトリの ".emacs" という名前のファイルに記述する.
+  
+  * "*scratch*" バッファで式を入力して,
+    直後に LFD (または C-j) をタイプする.
+    式を評価した結果は *scratch* バッファに挿入される.
+  
+  * Emacs-Lisp モードでは,
+    M-C-x とタイプするとポイントのある top-level の式が評価される.
+  
+  * どのバッファでも "C-x C-e" とタイプすると
+    ポイントのある直前の Lisp 式が評価されて
+    結果がミニバッファにエコーされる.
+  
+  * ファイルに記述されているすべての Lisp 式を評価するには
+    M-x load-file と入力してファイルをロードする.
+    (Lisp からファイルをロードするには "local" 関数を使う.)
+  
+  次の関数を使っても Lisp 式を評価することができます:
+  
+    load-library, eval-region, eval-current-buffer, require, autoload
+  
+104: 操作をリージョンに限定したいのですが, どうしたらよいですか?
+  
+  save-restriction の中で narrow-to-region を使ってください.
+  
+105: Emacs でテキストを反転表示させたいのですが, どうしたらよいですか?
+  
+  GNU Emacs 18.57 でもテキストを反転する方法はあるのですが,
+  いずれも C のコードにパッチを当てて Emacs を再構築する必要があります.
+  しかも処理が遅く, 
+  テキストをスクロールさせたり再描画させると消えてしまいます.
+  パッチのうちのひとつは Kenichi Handa <handa@etl.go.jp> によるものです.
+  
+  Epoch を使えばさまざまな形式でリージョンを反転することができます.
+  GNU Emacs 19 版では希望が叶うはずですが,
+  すぐ手に入れることはできないでしょう.
+  
+106: タブ文字の幅を変更したいのですが, どうしたらよいですか?
+  
+  例えば (setq default-tab-width 10) とします.
+
+
+Carrying Out Common Tasks
+  
+107: ">" をすべての行頭に挿入したいのですが, どうするのですか?
+  
+  "M-x replace-regexp RET ^ RET > RET" で実行できます.
+  ("replace-regexp" は "repl TAB r" と省略できます.)
+  
+  リージョンに制限したいときは,
+  "C-x n M-x replace-regexp RET ^ RET > RET C-x w" です.
+  
+  注意: コマンド narrow-to-region (C-x n) はデフォルトでは抑制されています.
+  なぜなら混乱の元だからです
+  ("ファイルが消えちゃった, どうしてくれよう" 的問題を引き起こすからです).
+  
+108: リージョンに含まれる文字の先頭に "_^H" を挿入して, アンダーラインを引くにはどうしたらよいのですか?
+  
+  M-x underline-region.
+  
+109: コマンドをできる限りたくさん繰り返して実行したいのですが, どうしたらよいですか?
+  
+  "C-x (" と "C-x )" でコマンドを起動するキーボード・マクロを定義して,
+  "M-0 C-x e" をタイプしてください.
+  
+  注意: コマンドがエコー・エリアに出力するメッセージは抑制されます.
+  
+110: 8-ビット文字やコントロール文字などの表示できない文字を捜したり削除するにはどうするのですか?
+  
+  バッファに表示されている例えば \237 のような一文字は
+  "C-s C-q 2 3 7" と入力すると検索できます.
+  (これは変数 search-quote-char の値が 17 (C-q) の場合です.)
+  
+  表示できない (8-bit またはコントロール) 文字すべてを検索するには
+  正規表現による検索を行います.
+  
+  すべての表示可能な文字を表す正規表現: [\t\n\r\f -~]
+  
+  すべての表示不可能な文字を表す正規表現: [^\t\n\r\f -~]
+  
+  上の例の \t, \n, \r, \f のような特殊文字を
+  isearch-forward-regexp または re-search-forward コマンドで対話的に
+  入力するには C-q を使う必要があります.
+  
+  すなわち re-search-forward コマンドで表示不可能な文字を検索するには
+  次のように入力します:
+  
+    M-x re-search-forward RET [^ TAB C-q LFD C-q RET C-q C-l SPC -~] RET
+  
+  isearch-forward-regexp コマンドを使うときには次のように入力します:
+  
+    M-C-s [^ TAB RET C-q RET C-q C-l SPC -~]
+  
+  表示不可能なすべての文字を削除するには, replace-regexp コマンドを
+  次のように使います:
+  
+    M-x replace-regexp RET [^ TAB C-q LFD C-q RET C-q C-l SPC -~] RET RET
+  
+  註:
+  
+  * iserch コマンドでは, RET で C-q LFD (C-q RET ではない) を入力できます.
+  
+  * iserch で対話的に入力するときやミニバッファに入力するときに
+    TAB は C-q TAB と入力する必要はありません.
+  
+  上のような正規表現を Emacs Lisp の式では次のように書きます:
+  
+    ;; regexp matching all printable characters:
+    "[\t\n\r\f -~]"
+  
+    ;; regexp matching all unprintable characters:
+    "[^\t\n\r\f -~]"
+  
+    ;; alternative regexps for all unprintable characters:
+    "[\C-@-\C-h\C-k\C-n-\C-_\C-?-\377]"
+    "[\000-\010\013\016-\037\177-\377]"
+  
+  ("[\000-\010\013\016-\037\177-\377]" を対話的に使うときは
+  
+    [ C-q 000 - C-q 010 C-q 013 C-q 016 - C-q 037 C-q 177 - C-q 377 ]
+  
+  と入力してください.)
+  
+111: 検索や置換のとき大文字と小文字の区別をするにはどうするのですか?
+  
+  検索のときは, 
+  変数 case-fold-search の値で大文字と小文字の区別をするかを決められます:
+  
+    (setq case-fold-search nil) ; 検索時に大文字と小文字の区別をする
+    (setq case-fold-search t)   ; 検索時に大文字と小文字の区別をしない
+  
+  同様に,
+  置換のときは変数 case-replace の値が大文字と小文字の違いを保って
+  置換を行うかを決めます.
+  
+112: 改行したときに上の行のインデント位置まで自動的にインデントさせることができますか?
+  
+  ひとつの解決策としてはバッファのメジャー・モードを
+  Indented Text モードに設定することです (M-x indented-text-mode).
+  
+  もし Auto-Fill モード (マイナー・モード, 質問 94 を参照) に設定しているなら,
+  フィル・プレフィクスを設定して特定の文字列を行頭に付加させることができます.
+  行頭に文字列を入力して
+  その直後にポイントを移し
+  "C-x ." (set-fill-prefix) を入力してください.
+  行頭からポイントまでがフィル・プレフィクスに設定されます.
+  こうするとオート・フィルが行われるときにフィル・プレフィクスが
+  行頭に付加されます.
+  また M-q (fill-paragraph) を行っても同様に行頭にフィル・プレフィクスが
+  付加されます.
+  
+  註: 異なるインデント幅の段落があるときは, 段落を移動したら
+  その都度フィル・プレフィクスを設定し直す必要があります.
+  これが面倒なら,
+  Emacs Lisp アーカイブから適当なパッケージを入手してください.
+  "fill" または "indent" といったディレクトリの紹介をまず読んでみてください.
+  
+113: 「挿入」ではなく「上書き」できますか?
+  
+  M-x overwrite-mode (マイナー・モードです).
+  
+114: 括弧の対応を捜すことができますか?
+  
+  もし右側の丸括弧 `(' (または波括弧 `{', ブラケット `[') を捜しているときは
+  左の括弧を消してもう一度挿入してください. 
+  対応する括弧へカーソルが一瞬移動します.
+  
+  M-C-f (forward-sexp) と M-C-b (backward-sexp) で
+  丸括弧で囲まれた部分をスキップして移動できます.
+  これで判る場合もあるでしょう.
+  (文法テーブルを変更して波括弧やブラケットでもできるようにすることができます.)
+  
+  次の Emacs Lisp コードを評価すると vi のように % キーで対応する括弧に
+  移動できます. 
+  しかもカーソルが丸括弧の上にないときは普通に % が挿入されます.
+  
+    ;; By an unknown contributor
+  
+    (global-set-key "%" 'match-paren)
+  
+    (defun match-paren (arg)
+      "Go to the matching parenthesis if on parenthesis otherwise insert %."
+      (interactive "p")
+      (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
+            ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+            (t (self-insert-command (or arg 1)))))
+  
+115: 上下の行が短くてもカーソルを上下に移動したときにカラム位置をそのままに移動させることはできますか?
+  
+  M-x picture-mode. (異論があるかもしれませんが, マイナー・モードです.)
+  
+116: Emacs でネットワーク・ニュースを読むことができますか?
+  
+  Emacs からネットワーク・ニュースを読むためには
+  少なくとも三つのパッケージが利用できます.
+  "rnews" は Emacs に付属しています.
+  "GNUS" または "Gnews" は別に入手する必要があります.
+  rnews は Emacs 19 版では GNUS にその座を取って代わられることになりそうです.
+  
+  rnews はローカルなニュース・スプール・ディレクトリのみアクセスできます.
+  GNUS と Gnews はローカル・ニュース・スプールに加えて
+  NNTP を使ってリモート・サーバからニュースを読むことができます.
+  
+  Gnews は `rn' と同様の形式で Rmail のように働きます.
+  GNUS は VM に似ています.
+  GNUS は CPU に負担をかけるので遅いマシンでは不満があるでしょう.
+  Gnews は GNUS よりも遅いという不満もあるようです.
+  
+  GNUS については質問 21 を参照してください.
+  
+  Gnews は  Matthew P. Wiener <weemba@libra.wistar.upenn.edu> によって
+  作成されました.
+  最新版は 1988 年 10 月 3 日に投稿された 2.0 版のようです.
+  Matthew によって 1899 年 10 月 26 日に若干の修正が投稿されていまが,
+  これ以降サポートされていないようです.
+  特に, Gnews は Emacs 18.57 で稼動しないことが報告されています.
+  Gnews のために gnu.emacs.gnews というニュース・グループが用意されています.
+  
+117: C モードで #ifdef マクロをプリプロセッサで処理したように表示させることはできますか?
+  
+  M-x hide-ifdef-mode. (マイナー・モードです.)
+  
+  このモードを使う前に (load "hideif") を評価する必要があります.
+  頻繁にこのモードを使うなら .emacs に
+  
+    (autoload 'hide-ifdef-mode "hideif" nil t)
+  
+  と書くとよいでしょう.
+  
+  {これは lisp/loaddefs.el にすでに書いてあるかもしれません}
+  
+118: vi の "." (dot) コマンドと等価なコマンドはあります?
+  
+  (vi では "." は再実行コマンドです. 前回の挿入/削除を繰返します.)
+  
+  等価なものはありません.
+  
+  "C-x ESC" (repeat-complex-command) でミニバッファから引数を取ったコマンドを
+  再実行することができます.
+  repeat-complex-command では M-p と M-n で前後のコマンドを捜すことができます.
+  
+  繰り返し実行したいときはキーボード・マクロを使うとよいでしょう.
+  
+119: 現在の行番号 (または列番号) を表示させられますか?
+  
+  Emacs 18 版では
+  現在の行 (または列) をモードラインに常に表示させる "正しい" 方法はありません.
+  Emacs は行にこだわるエディタではありません.
+  ウィンドウに表示されているバッファの行を記憶していないのです.
+  行を追跡するには C のソース・レベルで多くの変更を加える必要があります.
+  
+  Emacs 19 版ではモードラインに現在行を表示できるようになるでしょうが,
+  たぶんあまり効率的ではないでしょう.
+  
+  バッファの何行目にポイントがあるかは,
+  "M-x what-line" とすると判ります.
+  バッファが C-l でページに分割されているときは
+  "C-x l" で何ページの何行目にあるかが判ります.
+  このときは現在のページの何行目にポイントがあるかしか判りません.
+  注意: "C-x l" はポイントが行頭にあると間違った値を返します.
+  
+  行数をモード行に表示するパッケージはいろいろ作成されているので,
+  Lisp コード・ディレクトリを捜してみてください (質問 17 参照).
+  
+120: (X 上で) Emacs から自分自身をアイコン化させられますか?
+  
+  C のソースを手直しして再コンパイルするか, epoch を使うとできます.
+  Robert Forsman <thoth@reef.cis.ufl.edu> による
+  Emacs を自分自身でアイコン化するためのパッチと,
+  Matt Wette <mwette@mr-ed.jpl.nasa.gov> による
+  アイコン化して起動するためのパッチが手元にあります.
+  この二つのパッチが両立するかは判りません.
+  
+  {これらのパッチは anonymous FTP で入手することはできるんでしょうか?}
+  
+121: 正規表現は使えますか?
+  
+  GNU Emacs マニュアルに詳しく書かれています.
+  該当する節は "c-h i m emacs ret m regexps ret" とすると
+  オンラインで読むことができます.
+  
+  注意: `or' オペレータは `|' ではなく `\|' です.
+  グループ化するためのオペレータは `\(' と `\)' です.
+  また, バックスラッシュを文字列として記述するには "\\" としてください.
+  すなわち, 正規表現 xxx\(foo\|bar\) を文字列として記述するには
+  "xxx\\(foo\\|bar\\)" と書きます.
+  バックスラッシュをバックスラッシュでエスケープするのを忘れないように!
+  
+  注意: Unix の grep や sed などとは異なり,
+  文字セットがニューライン文字を含んでいなかったら
+  その補集合 ([^...]) はニューライン文字 (LFD, C-j, \n) を含みます.
+  
+122: 複数ファイルに跨る置換を行いたいのですがどうしたらいいですか?
+  
+  Emacs の "tags" 機能には tags-query-replace というコマンドがあって
+  TAGS ファイルに記載されているすべてのファイルを跨って 
+  query-replace (問い合わせ機能付き置換) ができます.
+  関連する記述はオンライン・マニュアルから 
+  "C-h i m emacs RET m tags RET m tags search RET" で引くことができます.
+  
+  他にも,
+  Martin Boyer は global-replace というパッケージを作成しています.
+  これは *compilation* バッファ ("grep" を実行すると作成される) に
+  記載されているすべてのファイルで
+  query-replace を行うことができます.
+  これは anonymous FTP で入手できます
+  (ireq-robot.hydro.qc.ca:/pub/emacs/lisp/{compile,global-replace,query}.el.Z).
+  
+123: 単語を自動的に次行に送ることができますか?
+  
+  M-x auto-fill-mode.
+  デフォルトでは最大行幅が 74 に設定されていますが,
+  これは変数 fill-column で変更できます.
+  このモードを自動的に設定する方法は質問 94 にあります.
+  
+124: Emacs に対応した, よいスペル・チェッカはありますか?
+  
+  質問 21 の Ispell を使ってみてください.
+  
+125: TeX や *roff のドキュメントにスペル・チェックをかけることができますか?
+  
+  Ispell で TeX や *roff のドキュメントにスペル・チェックをかけるときは,
+  .emacs ファイルに次のような行を加えてください.
+  `delatex' というプログラムは TeX の配布パッケージに含まれています.
+  また `deroff' は anonymous FTP で {どこかから} 入手できます.
+  Daniel Trinkle による `detex' は anonymous FTP で入手できます
+  (arthur.cs.purdue.edu: pub/trinkle/detex-2.3.tar.Z).
+  
+    ;; by David G. Grubbs <dgg@ksr.com>:
+    (setq ispell-filter-hook-args '("-w"))
+  
+    (setq TeX-mode-hook
+          (function
+           (lambda ()
+             (setq ispell-filter-hook "delatex"))))
+  
+    (setq nroff-mode-hook
+          (function
+           (lambda ()
+             (setq ispell-filter-hook "deroff"))))
+  
+  
+126: 横方向に自動的にスクロールするようにできますか?
+  
+  残念ながらできません.
+  たくさんのコマンドについて
+  実行後にスクリーンにポイントがあるかチェックするように書き直す必要があります.
+  {誰かすでにやっていますか?}

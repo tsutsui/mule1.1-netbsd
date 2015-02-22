@@ -1,0 +1,126 @@
+/* Site configuration file for Mule
+   Copyright (C) 1992 Free Software Foundation, Inc.
+
+This file is part of Mule (MULtilingual Enhancement of GNU Emacs).
+
+Mule is free software distributed in the form of patches to GNU Emacs.
+You can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 1, or (at your option)
+any later version.
+
+Mule is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GNU Emacs; see the file COPYING.  If not, write to
+the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
+
+/* 90.2.27  created for Nemacs Ver.3.3.1 by K.Handa */
+/* 92.3.6   modified for Mule Ver.0.9.0 by K.Handa <handa@etl.go.jp> */
+/* 92.5.18  modified for Mule Ver.0.9.4 by T.Shingu <shingu@cpr.canon.co.jp>
+	Now WNN4 is supported. */
+/* 92.7.8   modified for Mule Ver.0.9.5 by K.Handa <handa@etl.go.jp>
+	Support for WNN3 and WNN4V3 stopped. */
+/* 92.7.8   modified for Mule Ver.0.9.5 by Y.Kawabe <kawabe@sramhc.sra.co.jp>
+	Support for SJ3 started. */
+/* 92.7.20  modified for Mule Ver.0.9.5 by K.Akira <kon@d1.bs2.mt.nec.co.jp>
+	Support for Canna. */
+/* 92.7.31  modified for Mule Ver.0.9.5 by K.Handa <handa@etl.go.jp>
+	Convention of Mule-oriented definitions changed. See also ymakefile. */
+/* 92.8.5   modified for Mule Ver.0.9.5.1 by M.Minda <minmin@astec.co.jp>
+	More support for CANNA. */
+/* 92.5.23  modified for Mule Ver.0.9.6
+		by M.Higashida <manabu@sigmath.osaka-u.ac.jp>
+	DOS-Extender GO32 and EMX supported. */
+/* 92.11.10 modified for Mule Ver.0.9.7
+		by Juggernaut <ka-harad@ccs.mt.nec.co.jp>
+	"#define CANNA_MULE" is added. */
+/* 92.11.30 modified for Mule Ver.0.9.7 by K.Handa <handa@etl.go.jp>
+	Name changed from mule-config.h to mconfig.h-dist */
+/* 93.2.25  modified for Mule Ver.0.9.7
+		by M.Higashida <manabu@sigmath.osaka-u.ac.jp>
+	Win32 (Windows NT and Windows 3.1) supported. */
+/* 93.5.12  modified for Mule Ver.0.9.8 by T.Enami <enami@sys.ptg.sony.co.jp>
+	Support MCPATH. */
+/* 93.5.29  modified for Mule Ver.0.9.8 by Y.Niibe <gniibe@mri.co.jp>
+	define NO_X_DESTROY_DATABASE for emacs-18.59. */
+/* 93.7.5   modified for Mule Ver.0.9.8 by K.Handa <handa@etl.go.jp>
+	Slight Modification for CANNA2. */
+/* 93.9.8   modified for Mule Ver.1.1 by A.Kon <kon@d1.bs2.mt.nec.co.jp>
+	Wnn and Canna can coexist. */
+
+/* Define EGG if you want to use EGG. */
+/* Wnn4.108 should be installed to compile Mule with EGG. */
+#define EGG
+
+#ifdef EGG
+/* Please define here WNN4 or SJ3 */
+#define WNN4
+#endif
+
+#ifdef WNN4
+#define LIBWNN /usr/lib/libwnn.a
+#define INCWNN -I/usr/include/wnn
+#endif  /* not WNN4 */
+
+/* 92.7.20 by K.Akira, 92.7.31 by K.Handa */
+/* Define CANNA if you want to use CANNA. */
+/* #define CANNA */
+/* end of patch */
+
+/* 92.8.5 by M.Minda */
+#ifdef CANNA
+#define CANNA2 /* if you use Canna version 1.2 or lower, comment this. */
+/* 92.11.10 by <ka-harad@ccs.mt.nec.co.jp> */
+#define CANNA_MULE
+#ifdef CANNA2
+#define INCCANNA2 -I/usr/local/canna/include
+#define LIBCANNA2 -L/usr/local/lib -lcanna
+#else
+#define INCCANNA -I/src/X11R5/SPARC/contrib/im/Canna/include
+#define LIBCANNA /src/X11R5/SPARC/contrib/im/Canna/lib/iroha/libiroha.a
+#endif
+#endif
+
+/* 92.5.23, 93.2.25, 93.5.12 by M.Higashida */
+#if defined(MSDOS) || defined(WIN32S)
+#undef EGG
+#undef WNN4
+#undef SJ3
+#undef CANNA
+#undef CANNA2
+#endif
+
+#ifdef WIN32
+#undef EGG
+#undef WNN4
+#undef SJ3
+#undef CANNA
+#undef CANNA2
+#endif
+/* end of patch */
+
+/* 93.5.12 by T.Enami */
+/* Define USE_MCPATH if you want to use Non ASCII character in path name */
+/* #define USE_MCPATH */
+
+#ifdef USE_MCPATH
+#include "mcpath.h"
+#endif
+/* end of patch */
+
+/* Buffer size for File I/O */
+/* Default sizes are:
+	READ_BUF_SIZE = (50 * 1024)
+	WRITE_BUF_SIZE = (16 * 1024)
+*/
+/* #define READ_BUF_SIZE xxxx */
+/* #define WRITE_BUF_SIZE xxxx */
+
+/* don't destroy database for we have font-name information in it */
+#ifndef NO_X_DESTROY_DATABASE
+#define NO_X_DESTROY_DATABASE
+#endif

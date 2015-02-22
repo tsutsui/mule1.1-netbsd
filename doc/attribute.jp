@@ -1,0 +1,42 @@
+############################################################
+#        文字表示属性					   #
+############################################################
+
+1. 属性の種類
+
+現在サポートする属性は、「下線(underline)」、
+「反転(inverse; 高輝度或は強調とも言う)」、「太字(bold)」である。
+(EmacsをVT100のような通常の端末やxtermのような端末エミュレータから使う場合)
+次のtermcapエントリを、これら属性のために使用する:
+  us/ue: 下線 開始/終了
+  so/se: 反転 開始/終了
+  md/me: 太字 開始/終了
+
+
+2. 属性情報
+属性情報は、バッファ・ローカル変数'attributed-region'に、
+nil或は次の形式で保持する:
+	((0 . 0) (m_1 . a_1) ... (m_n . a_n))
+ここで、m_iは属性a_iを開始する位置を示すマーカであり、
+a_iはビット・マスクで各属性の種類を表す:
+属性のマスク値は、次の通り:
+  1 -- 下線
+  2 -- 反転
+  4 -- 太字
+
+然し、ユーザはこの変数を直接修正せずに、次の関数を使用すること。
+
+コマンド:
+## Command: attribute-on-region ATTR &optional FROM TO
+     領域内の属性 ATTR を on にする。現在のところ ATTR は `underline',
+     `inverse', `bold' が使用できる。プログラムから呼ぶ場合はさらに 2引
+     数 FROM と TO をとる。FROM が `nil' の場合には(point-min)、TO が 
+     `nil' の場合には(point-max)が用いられる。
+## Command: attribute-off-region ATTR &optional FROM TO
+     領域内の属性 ATTR を off にする。ATTR は`underline', `inverse' また
+     は `bold'。
+
+関数:
+## Function: attribute-get-attribute &optional POS
+     位置 POS の attribute range を返す。POS のデフォルト値はカレントポ
+     イント。 attribute range は、attribute type、その始点、終点のリスト。

@@ -1,0 +1,163 @@
+############################################################
+List of new features in Mule Ver.0.9.8   -- 93.6.20
+
+1. CRLF is not handled automatically.
+
+The facility of automatic detection of EOL type (LF, or
+CRLF) is deleteted because:
+	o causes hard problem in process I/O
+	o not necessary if code-priority is defined appropriately
+Instead, on defining coding-system, you can specify the EOL
+type as one of LF (Unix), CRLF (DOS), CR (Mac).
+
+2. Vietnamese support
+
+Now you can read/write files encoded in VISCII, VIQR, VSCII.
+Vietnamese inputting method is also supported by QUAIL.
+
+3. More rich support for right-to-left writing language
+
+For right-to-left characters, we have added two features:
+	o r2l-double-cursor (Emacslisp variable)
+		When cursor is in between right-to-left char
+		and left-to-right (normal) char, you can see
+		insertion points for both types of character
+		by two cursors.
+	o highlight-reverse-direction (Emacslisp variable)
+		A character whose direction is different
+		from that of the current buffer is
+		highlighted by gray-color (or background mesh).
+Both mode is on by default.  Try these while you are
+writing, for instance, Hebrew.
+
+In addition, ISO6429's escape sequence for specifying
+directionality is used on I/O.
+
+3. CCL -- Code Conversion Language
+
+Now Mule has a interpreter of CCL (simple stack language for
+code-conversion) for non-ISO2022 coding-system.  It's much
+faster than doing the same thing by Emacslisp.  CCL can also
+be used to map a character code to that of a font while
+displaying on X.
+
+4. Quail packages for Chinese get more combenient
+
+Now it works much similar as cxterm's inputting methods with
+the features of showing candidates dynamically and selecting
+candidate by ".," and digits.
+
+
+############################################################
+List of new features in Mule Ver.0.9.7.1   -- 93.1.22
+
+1. Usage of EGG (TAKANA)
+
+Although EGG can communicate with both jserver and cserver,
+using EGG for both Japanese and Chinese was not convenient
+in the previous version.  Now the environment is improved.
+But please note that the previous command set-wnn-host-name
+is changed to set-jserver-host-name and
+set-cserver-host-name.
+
+2. Thai inputting methods
+
+Quail-package of the name 'thai' is ninproved.  You can
+enter a composite character easily.  For instance, in
+quail-mode for Thai, typing CVT (where C:consonant
+V:upper-vowel, T:tone-mark) will produce a character
+something like:
+
+	  T
+	  V
+	__C__  <-- base line
+
+Though, we still have a problem in deleting only T or V.
+
+3. Automatic handling of CRLF at end of line
+
+Mule's automatic coding-system detection mechanism can now
+detect the type of end of line.  In the world of DOS, the
+end-of-line mark is the sequence of CR and LF.  When mule
+reads such a file, it detects the sequence and set an
+appropriate coding-system for the file.
+
+
+############################################################
+List of new features in Mule Ver.0.9.7   -- 92.12.26
+
+1. Composite character
+
+You can compose any characters (upto 16 chars) into one
+composite character, in that case, all the characters are
+displayed on the same column and treated as one character.
+
+But!!, for the moment, vertical split of window is not
+supported for composite character.  If you split window
+vartically while showing composite characters, I don't no
+what happens. :-(
+
+'m2ps' is also updated to support composite character.
+
+
+2. Thai character support
+
+By utilizing composite character, now you can treat Thai
+character on X window.  See doc/demo for example.
+lisp/quail-thai.el provides input method of Thai, the
+program is not yet completed.  We are waiting a contribution
+by who has knowledge of Thai writing.
+
+
+3. Right-to-left displaying
+
+Each character set has new attribute 'display-direction'.
+Although, most of character sets have 'left-to-right'
+feature, Hebrew and Arabic character sets have
+'right-to-left' feature.  Characters who have this feature
+are displayed from right to left on the screen.  See
+doc/demo and try to move cursor around Hebrew letters.
+
+But!!! (again), the support is yet quite buggy.  You may
+find many many inconveniences.
+
+
+4. Coding-system is now a symbol
+
+You may not find any change on user-interface, but emacslisp
+programers will find that handling coding-system gets much
+easier.
+
+
+############################################################
+List of new features in Mule Ver.0.9.6   -- 92.10.26
+
+1. EGG requires Wnn4.108.
+
+You need Wnn4.108 to compile Mule with '#define EGG'.
+
+
+2. TAKANA of EGG provides Chinese inputting facility.
+
+Now, TAKANA can communicate with cserver.  All setups for it
+is done in lisp/chinese.el.  To use this facility, you also
+need SiSheng font (available in fonts/ETL.tar.Z or in
+fonts/SISHENG.tar.Z).  The default setting uses the font in
+ETL.tar.Z.
+
+
+3. QUAIL system updated.
+
+You must type 'C-]' (not 'C-\') to startup quail.
+'quail-latin.el' supports Latin-2,3,4,5 inputting.
+
+
+4. Support for new machines and systems
+
+NeXT, PFU-A-Family, 386BSD, Linux, VMS, and MS-DOS are
+supported.
+
+
+5. Required PURESIZE is reduced a little.
+
+By autoloading some libraries.

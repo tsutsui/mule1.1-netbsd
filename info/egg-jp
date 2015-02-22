@@ -1,0 +1,69 @@
+Info file: egg-jp,    -*-Text-*-
+produced by texinfo-format-buffer
+from file: egg-jp.texi
+
+
+
+
+
+Indirect:
+egg-jp-1: 95
+egg-jp-2: 54612
+
+Tag table:
+(Indirect)
+Node: Top97
+Node: Overview3019
+Node: Features5544
+Node: Configuration6106
+Node: Bug Report8197
+Node: Kanji Input8768
+Node: Interactive Method9703
+Node: Transparent Mode12589
+Node: Input Mode13142
+Node: Fence Mode15072
+Node: Graphic Character18414
+Node: Conversion Mode19368
+Node: Conversion Command20996
+Node: Conversion Example24850
+Node: Menu Selection28703
+Node: Input Translation Table30062
+Node: Selecting Translation Table32176
+Node: Selecting in Fence34079
+Node: Kuten and Touten35009
+Node: Batch Method35805
+Node: JIS Input36553
+Node: Zenkaku Conversion37275
+Node: Hankaku Conversion38048
+Node: Hiragana Conversion38868
+Node: Katakana Conversion39586
+Node: RomaHira Conversion40305
+Node: RomaKan Conversion41231
+Node: Kanji Conversion42340
+Node: Reverse Conversion43297
+Node: Input in Minibuffer44703
+Node: Isearch45293
+Node: Hangul Input45921
+Node: Dictionary Management49615
+Node: Registration49932
+Node: Editing54614
+Node: Customization58145
+Node: Language Specific File58577
+Node: Initialization60285
+Node: Server60867
+Node: Dictionary64298
+Node: Input Translation69826
+Node: Key Maps74758
+Node: global-map75206
+Node: fence-mode-map75852
+Node: henkan-mode-map78894
+Node: Japanese Texinfo81818
+Node: Japanese Font82645
+Node: Japanese in Index86207
+Node: Extension to defvr87040
+Node: Sun Key map87760
+Node: Part-of-Speech89689
+Node: Concept Index93099
+Node: Functions&Variables96661
+
+End tag table

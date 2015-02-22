@@ -1,0 +1,133 @@
+Date: Wed, 8 Apr 92 18:51:54 JST
+From: gniibe@mri.co.jp (NIIBE Yutaka)
+Return-Path: <gniibe@mri.co.jp>
+To: handa@etl.go.jp
+Subject: note on indent.h, indent.c, and xdisp.c
+
+最後に僕のやった修正に関して, 覚書を送ります。
+--
+GniiBE
+================ FROM HERE ==============
+compute_motion (), display_text_string () に関する覚書  ; -*- Indented-Text -*-
+Tue Apr  7 09:35:41 1992
+Wed Apr  8 18:26:26 1992
+GniiBE <gniibe@mri.co.jp>
+
+column を元に tab の計算は行なわれる。
+
+multi width (multi column で途中で割ることのできない) character
+(漢字など)がある場合, 一行は一定の column であるとは限らない。
+
+    ----------
+    こんな場\\
+    合がある\\
+    んです。
+    ----------
+
+本家の emacs は「一行は一定の column である」と仮定している。
+この部分を修正する必要がある。
+
+struct position に tab_offset という member を追加し, そこに 
+tab_offset の値を保持することでこの修正をおこなう。
+
+ここで, tab_offset と hpos, column の間には,
+
+    tab_offset + hpos = column
+
+という関係がある。ま, 早い話しが column をいちいち計算しないで覚え
+とこっとというもんでしょう。
+
+
+        * indent.h (struct position):
+          tab_offset という member を追加した。
+
+        * indent.c (compute_motion):
+          truncate, lastpos を追加。
+	  計算の方法を変える。
+	  emacs の bug 修正。
+
+          for ()
+            {
+              (1) キャラクタがどれだけ進むか計算;
+              (2) width を超えるんだったらその処理;
+            }
+
+          の (2) の「超えちゃう」の条件を「超えちゃった」に変更す
+          る。以下のようになる。
+
+          for ()
+            {
+              (1) キャラクタがどれだけ進むか計算;
+              (2) width を超ちゃったらその処理;
+            }
+
+          (3-1) 越えちゃうで処理されたはずの処理(一つ戻す);
+          (3-2) 越えちゃうの処理;
+
+(**) pos : buffer 上の位置
+(**) (hpos, vpos) : 画面上の位置
+
+compute_motion は
+ (i) ある (hpos, vpos) まで表示するにはどの pos が対応するか
+ (ii) ある pos まで表示したらどこの (hpos, vpos) になるか
+の二通りの計算に使われる。
+
+そして, loop の終了条件は, (i) の場合 (hpos, vpos), (ii) の場合
+pos になる。
+
+それで, 
+
+----------                       (参考) ----------                         
+abcdefgh\\                              abcdefgh\\                         
+漢      ^----(a)                        333     ^---- cursor はここにくる。
+^---- (b) cursor はここにくる。            ^---- 次はここ。                
+  ^---- (c) 次はここ。                  ----------                         
+----------                         multi column character の場合。         
+multi width char. の場合。
+
+----------
+abcdefghi\
+j        ^---- (a)
+^---(b)
+ ^-----(c)
+----------
+普通の char. の場合。
+
+(i) に対して, (3-1) の処理は, (c) で行を越えたと思っているところ
+を, その前で越えていたと (b) に (hpos, vpos) を戻し, pos も一つ戻
+す処理をする。
+
+(ii) に対して, (3-2) の処理は, (a) に (hpos, vpos) があると思って
+いるのを (b) に移す。 
+
+        * indent.c (pos_tab_offset):
+          本家の pos_tab_offset は「一行は一定の column(s) である」
+          ことを仮定し, current_column で column を求めて, それで 
+          width で % とったりしている。まずいので, 書き直し。
+
+        * indent.c (vmotion):
+          pos.vpos * width という「一行は一定の column(s) である」
+          ことを仮定してある部分を修正, pos.tab_offset を用いる。
+
+        * xdisp.c (redisplay):
+
+--------          --------
+こんなa\   DEL    こんな\\
+場合       ==>    場合
+^^                ^^
+--------          --------
+
+         を処理するように, goto cancel になる条件をつける。
+
+        * xdisp.c (try_window):
+	  tab_offset の処理。
+
+	* xdisp.c (try_window_id):
+	  emacs の bug 修正。
+	  tab_offset の処理。
+
+	* xdisp.c (display_text_line):
+	  tab_offset の処理。
+	  行末の truncate, multi width char. の場合, $$ の処理。
+	  emacs の bug 修正。
+

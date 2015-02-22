@@ -1,0 +1,101 @@
+.TH M2PS 1 "1993 May 9"
+.UC 4
+.SH NAME
+m2ps -- converter from Mule code (*internal*) to PostScript
+.SH SYNOPSIS
+.B m2ps
+[
+.I options
+] <
+.I infile
+>
+.I outtile
+.br
+.SH DESCRIPTION
+.I m2ps
+runs as a filter and converts a text encoded in Mule
+internal code (called *internal*) to a PostScript program to
+print it.
+.PP
+.SH OPTIONS
+.TP
+.BI \-ps " file"
+Use
+.I file
+as a header for PostScript.
+.TP
+.BI \-dpi " num"
+Use
+.I num
+as a resulution of output device.  Default is 300.
+.TP
+.BI \-fs " num"
+Use
+.I num
+as FontScale in point.  Default is 10.
+.TP
+.BI \-lp " num"
+Use
+.I num
+as LinePitch in point.  Default is 14.
+.TP
+.BI \-ml " num"
+Use
+.I num
+as a line counts in a page.  Default is 56.
+.TP
+.BI \-tm " num"
+Use
+.I num
+as a TopMargin in point.  Default is 800.
+.TP
+.BI \-lm " num"
+Use
+.I num
+as LeftMargin in point.  Default is 30.
+.TP
+.B \-sm
+Indicate your PostScript printer has short memory.
+.TP
+.B \-bm
+Indicate your PostScript printer has large memory.  This is
+the default.
+.TP
+.BI \-fp " pathlist"
+Use
+.I pathlist
+as a comma-separated search path of BDF files.  
+.TP
+.BI \-cs " file"
+Use
+.I file
+as a path of a file CHARSETS which contains information of
+character sets and fonts.
+.PP
+.SH FONT SPECIFICATION
+.I m2ps
+search for BDF files according to a pathlist (list of
+comma-separeated directory) and filenames described in file
+CHARSETS.  Each line of this file contains information about
+one character set.  The line has 7 to 9 columns each
+separated by ':'.  The columns are: LEADING-CHAR, BYTES,
+COLUMNS, TYPE, GRAPHIC, FINAL-CHAR, DIRECTION, DOCUMENT,
+BDF-FILE, and ENCODING.  By modifying this file, you can
+specify different BDF files.  You don't have to specify
+ENCODING for 2-byte character sets such as Chinese,
+Japanese, and Korean (as for Big5, you should specify 1 for
+ETen and 2 for HKU).
+.PP
+.SH FILES
+/usr/local/emacs/etc/m2ps.ps - PostScript header file.
+
+/usr/local/emacs/etc/CHARSETS - A file which contains
+information of character sets and fonts.
+
+/usr/local/emacs/etc/demo.ps - PostScript file created by
+m2ps.  The Original file is in 'doc' directory.
+.PP
+.SH AUTHORS
+.PP
+This program was written by Ken'ichi HANDA of
+Electrotechnical Laboratory, JAPAN.

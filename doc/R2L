@@ -1,0 +1,111 @@
+How right-to-left characters are handled?
+
+1. Right-to-left character set
+
+In Mule, each character set has the attribute 'direction'.
+The value is 0 (l2r, left-to-right) or 1 (r2l,
+right-to-left).  For the moment, Mule has two r2l character
+sets, Hebrew (ISO8859-8) and ASCII-r2l (private).  The
+latter is for provide r2l space and punctuation characters.
+Consecutive r2l characters are shown from right to left on
+the screen.
+
+Here after, we denote r2l characters by capital letters and
+l2r characters by small letters in strings.  Punctuation
+charcaters (e.g. period) are all normal ASCII.  For r2l
+space and punctuations, we use a letter '_' (underscore).
+
+2. Direction of buffer
+
+Each buffer also has the attribute 'direction' (buffer local
+varibale 'display-direction').  By default, the value is nil
+(means l2r direction).  Provided that a buffer contains:
+	"this is a HEBREW word."
+if the direction is nil (l2r), what you see on your screen is:
+	+----------------------------+
+	|this is a WERBEH word.      |
+	|                            |
+	+----------------------------+
+but, if the direction is non-nil (r2l), what you see is:
+	+----------------------------+
+	|      this is a WERBEH word.|
+	|                            |
+	+----------------------------+
+So, for editing Hebrew, you'ld better set the direction to
+r2l by toggle-display-direction (C-x C-k r).
+
+3. Double cursor (X only)
+
+If the value of 'r2l-double-cursor' is non-nil, when POINT
+is in between r2l char and l2r (normal) char, two cursor are
+displayed to denote insertion points for both types of
+character.  For instance, in the above example, when you
+move POINT forward one by one, the cursor changes as
+follows:
+	|this is a WERBEH word.      |
+	        ^
+	|this is a WERBEH word.      |
+	         ^
+	|this is a WERBEH word.      |
+		  ^     ^
+	|this is a WERBEH word.      |
+	               ^
+	|this is a WERBEH word.      |
+	              ^
+	|this is a WERBEH word.      |
+		     ^
+	|this is a WERBEH word.      |
+	            ^
+	|this is a WERBEH word.      |
+	           ^
+	|this is a WERBEH word.      |
+	           ^     ^
+	|this is a WERBEH word.      |
+			  ^
+4. Highlighing characters of reverse direction
+
+If the value of 'highlight-reverse-direction' is non-nil
+(default), a character whose direction is different from
+that of the current buffer is highlighted by gray-color (or
+background mesh).
+
+5. r2l visual inputting
+
+As mentioned above, cursor motion in r2l text is rather complicated.
+Further, even with the double cursor function, you may need some time
+to learn inserting/deleting characters in an r2l text.
+
+To faciliate the manipulation of r2l texts, quail provides a set of
+functions which make cursor motion and insertion/deletion behave as
+you expect.
+
+	visually-forward-char	      
+	  Function: Move cursor visually forward by ARG chars.
+	
+	visually-backward-char	      
+	  Function: Move cursor visually backward by ARG chars.
+	
+	visually-beginning-of-line    
+	  Function: Move cursor to the visually beginning of line.
+	
+	visually-insert-char	      
+	  Function: With argument CH, call VISUALLY-INSERT-CHAR ARG times.
+	
+	visually-backward-delete-char 
+	  Function: Delete ARG chars visually before cursor.
+	
+	visually-delete-char	      
+	  Function: Delete ARG chars under cursor.
+
+ These functions behave as if the whole buffer were filled with
+characters of same direction: for example, when the buffer direction
+is l2r, visually-forward-char moves the cursor to the right (or left,
+if the buffer direction is r2l) step by step; visually-insert-char
+puts the typed character just under the cursor and moves the cursor to
+the right (left) by one column; visually-backward-delete-char removes
+the character left (right) to the cursor, etc.
+
+In quail/hebrew.el these visual functions are called via appropriate
+quail cursor motion functions.  As quail cursor motion functions are
+bound to appropriate keys, you will not be puzzled by the complicated
+cursor behaviours as long as you use the hebrew package of quail-mode.

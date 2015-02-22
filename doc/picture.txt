@@ -1,0 +1,106 @@
+############################################################
+#        Enhancement of picture mode			   #
+############################################################
+
+1. Enhancement of direction for inserting characters
+
+Mule provides new direction wnw ene wsw ese for characters
+which occupy more than one column.  Use the following keys
+to specify these directions,
+
+      (define-key picture-mode-map "\C-c~" 'picture-movement-wnw)
+      (define-key picture-mode-map "\C-c\"" 'picture-movement-ene)
+      (define-key picture-mode-map "\C-c?" 'picture-movement-wsw)
+      (define-key picture-mode-map "\C-c|" 'picture-movement-ese)
+
+Example: The difference of 'se' and 'ese' is:
+
+s    e
+ e     s
+  -	 e
+   d	   -
+    i	     d
+     r	       i
+      e	    	 r
+       c    	   e
+	t   	     c
+	 i  	       t
+	  o 		 i
+	   n		   o
+	    		     n
+
+2. New function
+
+Mule provides self-insert-after-hook for those who want to
+have their one self-insert-command.
+
+self-insert-after-hook:
+Hook to run when extended self insertion command exits.  Should take
+two arguments START and END corresponding to character position.
+
+And in picture-mode, Mule sets the function
+picture-insert-after-hook to the hook.
+picture-insert-after-hook will insert characters using new
+function picture-insert-string, which can also be called
+interactively by typing 'ctl-c k'.
+
+picture-insert-string:
+Insert STR one character by one in place of character previously
+at the cursor while moving cursor in the direction you previously specified
+with the commands picture-movement-right, picture-movement-up, etc.
+Do C-h a  picture-movement  to see those commands.
+
+
+#### Japanese text follows...
+
+1. 文字の挿入方向の拡張
+
+Emacs では picture-mode においては１文字挿入された後のカーソ
+ルの移動方向を上下左右斜めに指定できる。斜めの指定では縦方向
+横方向にそれぞれ１カラム（行）移動しすることになる。斜め指定
+の状態はモードライン上の 'nw', 'ne', 'sw', 'se' などのニーモ
+ニック表示で示される。
+
+Nemacs では日本語文字は通常のアスキー文字の２倍の文字幅を持
+つため、上記に加え２カラムと１行斜めという指定を可能にし、'wnw',
+'ene', 'wsw', 'ese' のニーモニックを増やした。またこれらを指
+定するために新たに以下のキーバインディグを定義した。
+
+      (define-key picture-mode-map "\C-c~" 'picture-movement-wnw)
+      (define-key picture-mode-map "\C-c\"" 'picture-movement-ene)
+      (define-key picture-mode-map "\C-c?" 'picture-movement-wsw)
+      (define-key picture-mode-map "\C-c|" 'picture-movement-ese)
+
+以下は 'se' と 'ese' の指定時の処理の違いの例である。
+
+s      	   e
+ e	     s
+  指	       e
+   定            指
+    時		   定
+     		     時
+
+
+2. 日本語入力のための処理
+
+Emacs の picture-mode では通常の文字は全て
+picture-self-insert というコマンドに割り付けられている。
+Nemacs では EGG 使用時にはこれらを全て
+egg-self-insert-command に割り付けることにより、EGG による日
+本語入力が可能になっている。EGG が文字列を確定した後に呼ぶ
+self-insert-after-hook には picture-insert-after-hook を割り
+付けてあり、この関数が文字列の入力処理を行なう。
+
+picture-insert-after-hook:
+Called as a hook after a string is inserted into the current buffer.
+Two arguments BEGIN and END point the head and tail of just inserted string.
+
+EGG 以外の日本語入力方式 (SKK 等) を用いる場合は、C-c k にバ
+インドされた関数 picture-insert-string を実行し、ミニバッファ
+から日本語文字列を読み込む必要がある。
+
+picture-insert-string:
+Insert STR one character by one in place of character previously
+at the cursor while moving cursor in the direction you previously specified
+with the commands picture-movement-right, picture-movement-up, etc.
+Do C-h a  picture-movement  to see those commands.

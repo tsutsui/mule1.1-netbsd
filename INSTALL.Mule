@@ -1,0 +1,128 @@
+Mule installation procedure.
+
+Choose one directory to keep the distribution and one to
+build Mule.  During the building you will need some 25Mbytes
+of temporary disk space, make sure that you have that amount
+free on the disk where you will build Mule.  Call the
+keeping directory $(distribute) and the building directory
+$(mule).
+
+If you have fetched the complete Mule tar file and extracted
+the contents, the top directory of the contents can be
+regarded as $(mule) and you can start from step 2.5.
+
+
+0. File format
+
+Most of files in the distribution of Mule are compressed by
+'gzip' (GNU's effective compressor/expander) and have
+extension '.gz'.  You need 'gzip' to expand them.
+
+Format of all patch files (diff-18.59-1.0 and further
+patches) are 'unified diff' created by GNU's diff program.
+Your patch program must understand this format.  'patch'
+program of the version 2.0.12u7 or higher works well.
+
+Both 'gzip' and 'patch' are avairalbe from 'mule/contrib'
+directory of Mule's ftp sites.  They are also avairable from
+various ftp sites.  Please check sites near you at first.
+
+
+1. Get GNU Emacs 18.59.
+
+Mule is based on GNU Emacs 18.59.  You should have complete GNU Emacs
+18.59 to install Mule.  You would better copy the complete Emacs 18.59
+to new place $(mule).
+
+
+2. Apply patches.
+
+To create Mule from the standard emacs you have to apply some patches.
+
+Change directory to $(mule) and apply patches as follows:
+	% cd $(mule)
+	% gzip -d < $(distribute)/diff-18.59-1.0.gz | patch -p1
+
+2.5. Apply whatever patches you find with version number higher than
+1.0 if any.
+	% cd $(mule)
+	% gzip -d < $(distribute)/diff-1.0-1.1.gz | patch -p1
+	% ...
+	or
+	% gzip -d < $(distribute)/patch-1.0-01.gz | patch -p1
+	% ...
+
+3. Make Mule.
+
+Make Mule system by following the same procedure of making
+GNU Emacs (by following the instruction in $(mule)/INSTALL),
+but DON'T use build-install.  At site configuration step,
+you should create your own
+	$(mule)/src/config.h from $(mule)/src/config.h-dist
+and
+	$(mule)/src/mconfig.h from $(mule)/src/mconfig.h-dist.
+You may also have to look into the file:
+	$(mule)/lisp/mule-init.el
+but don't modifiy it, instead creat
+	$(mule)/lisp/site-init.el
+and overwrite any default settings.  Don't forget loading
+necessary language specific files:
+	chinese.el, korean.el, japanese.el, european.el, thai.el,
+	viet.el
+in $(mule)/lisp/site-init.el.  If you load many of them, the
+default PURESIZE won't be enough.  Modify PURESIZE at the
+tail of src/config.h as follows:
+	#undef PURESIZE
+	#define PURESIZE xxxxxx
+
+Caution 1: The latest version of Wnn (4.108 or higher) shoule be
+	installed to use EGG (Japanese/Chinese inputting method).
+	If you can't install it, or don't need EGG, comment out the
+	line:
+		#define EGG
+	in $(mule)/src/mconfig.h.  Wnn4.108 is distributed with
+	X.V11R5 under the directory contrib/im/Xsi.  Please don't
+	forget to apply the latest patch (Patch7) of Xsi.  Wnn4.108
+	is also available in 'contrib' directory of Mule's ftp sites.
+
+Caution 2: $(mule)/Makefile is a little different from the
+	standard GNU Emacs Makefile.  It tries to byte-compile all
+	patchedq emacs lisp files, then continues an ordinary make
+	procedure.
+
+Caution 3: Mule does not like all emacslisp files compiled
+	with Nemacs.  You had better copy your contrib directory
+	(and other elisp files) and let Mule byte-recompile their
+	contents.  This is especially important if the elisp files
+	include Japanese.  All emacslisp files compiled with
+	the original GNU Emacs can be used without recompiling.
+
+Caution 4: Modifying PURESIZE value in config.h doesn't
+	work.  You should do it after "puresize.h" is
+	included (usually at the tail of config.h). 
+
+Caution 5: If you are installing Mule on MS-DOS, please read
+	dos/INSTALL.  You may also have to modify
+	${mule}/etc/Makefile to specify different BDF files.
+
+Caution 6: If you are installing Mule on VMS, please read
+	INSTALL.vms.
+
+Caution 7: Sorry for these many cautions.  :-)
+
+
+After step 3, you have executable object $(mule)/src/xemacs.
+
+
+4. Install Mule.
+
+Install Mule by following the same procedure of installing
+GNU Emacs (by following the instruction in $(mule)/INSTALL).
+
+$(mule)/Makefile has several entries for installing on
+various platforms. 
+	install:  The most common one.
+	install.sysv:  For system V.
+	install.xenix: For Xenix.
+	install.aix: For AIX.
+	install.decosf: For DEC OSF/1.

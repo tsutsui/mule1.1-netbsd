@@ -1,0 +1,411 @@
+** KEYBOARD TRANSLATION **
+
+Some quail packages, for example, Russian, Greek, Hebrew, etc.,
+completely re-map the key layout. In these cases, it is desirable to
+provide the same key layout no matter what keyboard is actually used.
+For this purpose, a variable *quail-keyboard-translate-table* is
+introduced.  It is used to absorb the differences between the various
+real keyboards and the 'ideal' standard keyboard.  Currently, 12
+predefined constants are provided.  See the following carefully and
+set the apropriate constant to *quail-keyboard-translate-table* in
+your .emacs file.  For example, if you are using SUN type4 keyboard,
+put
+
+  (setq *quail-keyboard-translate-table*
+        *quail-keyboard-translate-table-sun-type4*)
+
+in your .emacs.
+
+If you cannot find your keyboard in the following list, read "WRITING
+NEW KEYBOARD TRANSLATE TABLES" section and make yours by yourself.
+
+#1
+name: *quail-keyboard-standard-table*
+machines: vt100, etc.
+
+[unshifted]
+
+Esc 1  2  3  4  5  6  7  8  9  0  -  =  `
+     q  w  e  r  t  y  u  i  o  p  [  ]
+      a  s  d  f  g  h  j  k  l  ;  '  \
+       z  x  c  v  b  n  m  ,  .  /
+                 SPACE
+
+[shifted]
+
+Esc !  @  #  $  %  ^  &  *  (  )  _  +  ~
+     Q  W  E  R  T  Y  U  I  O  P  {  }
+      A  S  D  F  G  H  J  K  L  :  "  |
+       Z  X  C  V  B  N  M  <  >  ?
+                 SPACE
+
+#2
+name: *quail-keyboard-translate-table-sun-type3*
+machines: SUN type3 keyboard
+	  SUN type5 keyboard
+	  TAKAOKA XMiNT (AX keyboard)
+	  JCC Xstation / GloabalX (AX keyboard)
+
+[unshifted]
+
+Esc 1  2  3  4  5  6  7  8  9  0  -  =  \  `
+     q  w  e  r  t  y  u  i  o  p  [  ]
+      a  s  d  f  g  h  j  k  l  ;  '
+       z  x  c  v  b  n  m  ,  .  /
+                 SPACE
+
+[shifted]
+
+Esc !  @  #  $  %  ^  &  *  (  )  _  +  |  ~
+     Q  W  E  R  T  Y  U  I  O  P  {  }
+      A  S  D  F  G  H  J  K  L  :  "
+       Z  X  C  V  B  N  M  <  >  ?
+                 SPACE
+
+#3
+name: *quail-keyboard-translate-table-sun-type4*
+machines: SUN type4 keyboard
+
+[unshifted]
+
+                                  \
+Esc 1  2  3  4  5  6  7  8  9  0  -  =
+     q  w  e  r  t  y  u  i  o  p  [  ]
+      a  s  d  f  g  h  j  k  l  ;  '  `
+       z  x  c  v  b  n  m  ,  .  /
+                 SPACE
+
+[shifted]
+
+                                  |
+Esc !  @  #  $  %  ^  &  *  (  )  _  +
+     Q  W  E  R  T  Y  U  I  O  P  {  }
+      A  S  D  F  G  H  J  K  L  :  "  ~
+       Z  X  C  V  B  N  M  <  >  ?
+                 SPACE
+
+#4
+name: *quail-keyboard-translate-table-sony-nwp-411a*
+machines: NEWS-3470
+
+[unshifted]
+
+Esc 1  2  3  4  5  6  7  8  9  0  -  =  \
+     q  w  e  r  t  y  u  i  o  p  [  ]
+      a  s  d  f  g  h  j  k  l  ;  '  `
+       z  x  c  v  b  n  m  ,  .  /
+                 SPACE
+
+[shifted]
+
+Esc !  @  #  $  %  ^  &  *  (  )  _  +  |
+     Q  W  E  R  T  Y  U  I  O  P  {  }
+      A  S  D  F  G  H  J  K  L  :  "  ~
+       Z  X  C  V  B  N  M  <  >  ?
+                 SPACE
+
+#5
+name: *quail-keyboard-translate-table-ibm-at*
+machines: IBM AT keyboard
+
+[unshifted]
+
+ `  1  2  3  4  5  6  7  8  9  0  -  =  \
+     q  w  e  r  t  y  u  i  o  p  [  ]
+      a  s  d  f  g  h  j  k  l  ;  '
+       z  x  c  v  b  n  m  ,  .  /
+                 SPACE
+
+[shifted]
+
+ ~  !  @  #  $  %  ^  &  *  (  )  _  +  |
+     Q  W  E  R  T  Y  U  I  O  P  {  }
+      A  S  D  F  G  H  J  K  L  :  "
+       Z  X  C  V  B  N  M  <  >  ?
+                 SPACE
+
+#6
+name: *quail-keyboard-translate-table-ibm-rt/pc*
+machines: IBM RT/PC 5085 keyboard
+	  RS6000 (English keyboard)
+	  Apple Macintosh MO115 keyboard / Power Book
+	  SGI Iris Indigo
+
+[unshifted]
+
+ `  1  2  3  4  5  6  7  8  9  0  -  =
+     q  w  e  r  t  y  u  i  o  p  [  ]  \
+      a  s  d  f  g  h  j  k  l  ;  '
+       z  x  c  v  b  n  m  ,  .  /
+                 SPACE
+
+[shifted]
+
+ ~  !  @  #  $  %  ^  &  *  (  )  _  +
+     Q  W  E  R  T  Y  U  I  O  P  {  }  |
+      A  S  D  F  G  H  J  K  L  :  "
+       Z  X  C  V  B  N  M  <  >  ?
+                 SPACE
+
+#7
+name: *quail-keyboard-translate-table-decstation*
+machines: DEC DECstation3100 LK201 keyboard (vt100 mode)
+	  DEC DECstation3100 LK401-AJ keyboard (vt100 mode)
+
+[unshifted]
+
+    1  2  3  4  5  6  7  8  9  0  -  =
+     q  w  e  r  t  y  u  i  o  p  [  ]
+      a  s  d  f  g  h  j  k  l  ;  '  \
+     `  z  x  c  v  b  n  m  ,  .  /
+                 SPACE
+
+[shifted]
+
+    !  @  #  $  %  ^  &  *  (  )  _  +
+     Q  W  E  R  T  Y  U  I  O  P  {  }
+      A  S  D  F  G  H  J  K  L  :  "  |
+    ~  Z  X  C  V  B  N  M  <  >  ?
+                 SPACE
+
+#8
+name: *quail-keyboard-translate-table-dynabook*
+machines: TOSHIBA Dynabook386/20 keyboard
+
+[unshifted]
+
+    1  2  3  4  5  6  7  8  9  0  -  =
+     q  w  e  r  t  y  u  i  o  p  [  ]
+      a  s  d  f  g  h  j  k  l  ;  '
+       z  x  c  v  b  n  m  ,  .  /
+           \     SPACE       `
+
+[shifted]
+
+    !  @  #  $  %  ^  &  *  (  )  _  +
+     Q  W  E  R  T  Y  U  I  O  P  {  }
+      A  S  D  F  G  H  J  K  L  :  "
+       Z  X  C  V  B  N  M  <  >  ?
+           |     SPACE       ~
+
+#9
+name: *quail-keyboard-translate-table-mac-mo110*
+machines: Apple Macintosh MO110 keyboard
+
+[unshifted]
+
+ `  1  2  3  4  5  6  7  8  9  0  -  =
+     q  w  e  r  t  y  u  i  o  p  [  ]
+      a  s  d  f  g  h  j  k  l  ;  '
+       z  x  c  v  b  n  m  ,  .  /
+                 SPACE          \
+
+[shifted]
+
+ ~  !  @  #  $  %  ^  &  *  (  )  _  +
+     Q  W  E  R  T  Y  U  I  O  P  {  }
+      A  S  D  F  G  H  J  K  L  :  "
+       Z  X  C  V  B  N  M  <  >  ?
+                 SPACE          |
+
+
+#10
+name: *quail-keyboard-translate-table-mac-mo116*
+machines: Apple Macintosh MO116 keyboard
+
+[unshifted]
+
+Esc 1  2  3  4  5  6  7  8  9  0  -  =
+     q  w  e  r  t  y  u  i  o  p  [  ]
+      a  s  d  f  g  h  j  k  l  ;  '
+       z  x  c  v  b  n  m  ,  .  /
+           `     SPACE       \
+
+[shifted]
+
+Esc !  @  #  $  %  ^  &  *  (  )  _  +
+     Q  W  E  R  T  Y  U  I  O  P  {  }
+      A  S  D  F  G  H  J  K  L  :  "
+       Z  X  C  V  B  N  M  <  >  ?
+           ~     SPACE       |
+
+#11
+name: *quail-keyboard-translate-table-jis*
+machines: NEC PC-9801 keyboard
+	  NEC EWS4800/220, /260
+	  EPSON PC-286 keyboard
+
+[unshifted]
+
+Esc 1  2  3  4  5  6  7  8  9  0  -  ^  \
+     q  w  e  r  t  y  u  i  o  p  @  [
+      a  s  d  f  g  h  j  k  l  ;  :  ]
+       z  x  c  v  b  n  m  ,  .  /
+                 SPACE
+
+[shifted]
+
+Esc !  "  #  $  %  &  '  (  )  0  =  `  |
+     Q  W  E  R  T  Y  U  I  O  P  ~  {
+      A  S  D  F  G  H  J  K  L  +  *  }
+       Z  X  C  V  B  N  M  <  >  ?  _
+                 SPACE
+
+#12
+name: *quail-keyboard-translate-table-fujitsu-sigma-230*
+machines: Fujitsu Sigma 230
+
+[unshifted]
+
+Esc 1  2  3  4  5  6  7  8  9  0  -  ^  \
+     q  w  e  r  t  y  u  i  o  p  @  [
+      a  s  d  f  g  h  j  k  l  ;  :  ]
+       z  x  c  v  b  n  m  ,  .  /
+                 SPACE
+
+[shifted]
+
+Esc !  "  #  $  %  &  '  (  )  0  =  ~  |
+     Q  W  E  R  T  Y  U  I  O  P  `  {
+      A  S  D  F  G  H  J  K  L  +  *  }
+       Z  X  C  V  B  N  M  <  >  ?  _
+                 SPACE
+
+
+
+** WRITING NEW KEYBOARD TRANSLATE TABLES **
+
+*quail-keyboard-translate-table* consists of two parts.  One is a
+string and the other is an a-list.  The string part, which is the
+'car' (or 'nth 0') of this variable, describes the 'normalised' layout
+of your keyboard.  (The meaning of 'normalised' will soon be given.)
+The a-list part, which is the 'cadr' (or 'nth 1') of the variable
+describes the 'unusually' located keys and their position.
+
+Let's take IBM AT keyboard as an example.  It looks like this:
+
+[AT unshifted]
+
+ `  1  2  3  4  5  6  7  8  9  0  -  =  \
+     q  w  e  r  t  y  u  i  o  p  [  ]
+      a  s  d  f  g  h  j  k  l  ;  '
+       z  x  c  v  b  n  m  ,  .  /
+                 SPACE
+
+[AT shifted]
+
+ ~  !  @  #  $  %  ^  &  *  (  )  _  +  |
+     Q  W  E  R  T  Y  U  I  O  P  {  }
+      A  S  D  F  G  H  J  K  L  :  "
+       Z  X  C  V  B  N  M  <  >  ?
+                 SPACE
+
+First, normalise the layout of the keyboard.  'To normalise' means 'to
+move some keys so that the number of columns and the number of rows
+will match those of *quail-keyboard-standard-table*'.
+
+*quail-keyboard-standard-table* looks like this:
+
+[STANDARD unshifted]
+
+    1  2  3  4  5  6  7  8  9  0  -  =  `
+     q  w  e  r  t  y  u  i  o  p  [  ]
+      a  s  d  f  g  h  j  k  l  ;  '  \
+       z  x  c  v  b  n  m  ,  .  /
+                 SPACE
+
+[STANDARD shifted]
+
+    !  @  #  $  %  ^  &  *  (  )  _  +  ~
+     Q  W  E  R  T  Y  U  I  O  P  {  }
+      A  S  D  F  G  H  J  K  L  :  "  |
+       Z  X  C  V  B  N  M  <  >  ?
+                 SPACE
+
+Note that *quail-keyboard-standard-table* has no keys left to the 1!
+key.  It has;
+
+ 1) 13 keys at the top row, and
+ 2) 12 keys at the 2nd row, and
+ 3) 12 keys at the 3rd row, and
+ 4) 10 keys at the 4th row, and
+ 5) 1 space bar at the bottom.
+
+To normalise the AT keyboard, it is necessary to move the `~ key to
+the right end of the 3rd row.
+
+[AT normalised unshifted]
+
+    1  2  3  4  5  6  7  8  9  0  -  =  \
+     q  w  e  r  t  y  u  i  o  p  [  ]
+      a  s  d  f  g  h  j  k  l  ;  '  `
+       z  x  c  v  b  n  m  ,  .  /
+                 SPACE
+
+[AT normalised shifted]
+
+    !  @  #  $  %  ^  &  *  (  )  _  +  |
+     Q  W  E  R  T  Y  U  I  O  P  {  }
+      A  S  D  F  G  H  J  K  L  :  "  ~
+       Z  X  C  V  B  N  M  <  >  ?
+                 SPACE
+
+Now describe this layout by a string from left to right, up to down,
+unshifted to shifted.  Unshifted space should be appended at the end
+of the string.  There's no shifted space.  The resulting string looks
+like this:
+
+"1234567890-=\\qwertyuiop[]asdfghjkl;'`zxcvbnm,./!@#$%^&*()_+|QWERTYUIOP{}ASDFGHJKL:\"~ZXCVBNM<>? "
+
+Note that '"' (double quote) and '\' (backslash) must be escaped by a
+'\'.  This string will be the 'car' of *quail-keyboard-translate-table*.
+
+Next, specify the real location of the moved characters.  In our
+example only one KEY (`~) is moved, but this causes two CHARACTERs to
+be moved.
+
+The location should be given by a vector of the form:
+
+  [ x-position  y-position  shift-or-not ]
+
+For the keys in the first row, x-position means the offset from the 1!
+key.  For example, the x-position of '2' is 1, that of '3' is 2, and
+that of '=' is 11.  That of '1' itself is 0.  In IBM AT keyboard, '`'
+and '~' locate to the left of the 1! key, so their x-position will
+be -1.
+
+For the keys in the 2nd, the 3rd, and the bottom row, their x-position
+will be the offset from 'q', 'a', and 'z', respectively.
+
+The y-position is the offset from the top row (i.e. the row which
+contains 1234...).  So the y-position of '5' is 0, 't' is 1, 'g' is 2,
+and 'b' is 3.  Keys above the top row will have a negative y-position.
+
+The third element shift-or-not is 0 if not shifted, and 1 if shifted.
+
+So, the real location of '`' in the AT keyboard will be [-1 0 0] and
+that of '~' will be [-1 0 1].  These two locations will be coded into
+an a-list together with the characters they are presenting:
+
+  '((?` [-1 0 0]) (?~ [-1 0 1]))
+
+Now we have both the string part and the a-list part.  So the
+*quail-keyboard-translate-table* for IBM AT keyboard will be as
+follows.  
+
+'("1234567890-=\\qwertyuiop[]asdfghjkl;'`zxcvbnm,./!@#$%^&*()_+|QWERTYUIOP{}ASDFGHJKL:\"~ZXCVBNM<>?" ((?` [-1 0 0]) (?~ [-1 0 1])))
+
+When you put these beasts in your .emacs, it would be better to divide
+the string part according to the rows so that you can check easily.
+
+(setq *quail-keyboard-translate-table* '("\
+1234567890-=\\\
+qwertyuiop[]\
+asdfghjkl;'`\
+zxcvbnm,./\
+!@#$%^&*()_+|\
+QWERTYUIOP{}\
+ASDFGHJKL:\"~\
+ZXCVBNM<>?\
+ "
+  ((?` [-1 0 0]) (?~ [-1 0 1]))))

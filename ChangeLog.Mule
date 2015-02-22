@@ -1,0 +1,1921 @@
+;;; -*-indented-text-*-
+
+Tue Mar  8 14:47:36 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/quail.el, lisp/quail/etzy.el, lisp/quail/zozy.el:
+      *quail-mode-tit-map* is created for etzy and zozy packages.
+      zozy package is modified for the new version of ZOZY.tit.
+
+Tue Mar  8 14:24:56 JST 1994	Mitsuharu YAMAMOTO<mituharu@is.s.u-tokyo.ac.jp>
+    * lisp/ccl.el: Several bug fixed.
+
+Tue Mar  8 14:13:42 JST 1994	Kiyoji ISHII <kiyoji@sm.sony.co.jp>
+    * lisp/sj3-client.el: Updated.
+
+Tue Mar  8 14:10:52 JST 1994	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/mule.el (call-process, start-process):
+      new function code-convert-process-arguments.
+      call-process, start-process: call it.
+      start-process, open-network-stream: if *-hook to determine
+      coding-system returns non cons object, supress further actions.
+
+Tue Mar  8 13:14:08 JST 1994	MORISHITA
+    * src/m-next.h: Updated.
+
+Tue Mar  8 11:21:56 JST 1994	Shuji NARAZAKI <narazaki@csce.kyushu-u.ac.jp>
+    * lisp/mule.el (insert-file-contents, write-region):
+      Bug in handling post-read-conversion/pre-write-conversion fixed.
+
+Tue Mar  8 10:17:50 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
+    * etc/m2ps.c (find_encoding): Bug fixed.
+
+Thu Feb 24 10:50:44 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/x11term.h, src/x11term.c, src/x11fns.c:
+      Now you can use x-set-font and x-set-linespace .emacs.
+
+Wed Feb 23 22:29:43 JST 1994	MASUDA <masuda@nanzan-u.ac.jp>
+    * src/s-netbsd.h: NETBSD support.
+
+Wed Feb 23 20:57:24 JST 1994	Akira Kon <kon@d1.bs2.mt.nec.co.jp>
+    * lisp/dired.el (dired-readin): `ls' is called with locale set to C.
+
+Wed Feb 23 16:48:25 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el, lisp/mule-util.el, src/codeconv.[ch]:
+      Big change of coding-system handling.
+    * src/category.c: describe-category displays multilingual text.
+    * src/syntax.c: describe-syntax displays multilingual text.
+
+Tue Jan 18 21:31:55 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule-conf.el: Modified for Laint-7 (Greek).
+
+Mon Dec 20 10:37:08 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/macros.el (macro-char-quote):
+      Double quote in macro string is also converted appropriately.
+
+Wed Dec  1 11:21:33 JST 1993	Hisashi MINAMINO <minamino@sra.co.jp>
+    * lisp/mule.el: Definition of *iso-2022-lock* corrected.
+
+Mon Nov 22 12:18:40 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/ccl.c (ccl_interpreter): Bug in interpreting CCLexch fixed.
+
+Mon Nov 15 22:29:04 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/codeconv.c (Sb2m, Sm2b): Added for Big5 handling.
+      lisp/keyboard.el: Support for Big5 direct inputting.
+
+Tue Oct 26 10:24:02 JST 1993	Ichiro Hirakura <hirakura@uxp.bs2.mt.nec.co.jp>
+    * src/mcpath/include/sys/stat.h, src/mcpath.h, src/mcpath.c,
+      src/s-ewsux5r4.h, src/unexelf.c: Modified for SVR4.
+
+Mon Oct 18 22:04:51 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/chinese.el (hz2gb-region):
+      Don't signal error even if text is ill-formated.
+
+Mon Oct 18 19:27:01 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/mule.h (CHARtoSTR, STRtoCHAR):  Modified for private char.
+
+Sat Oct 16 16:25:57 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * etc/server.c: `#define __const' for Linux.
+
+Sat Sep 25 15:10:00 JST 1993	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * src/emacs.c, src/wnn4fns.c, lisp/wnn4-egg.el:
+      wnn_exit() is obsolete now.
+
+Mon Sep 13 11:14:35 JST 1993	Hiroyuki YASUDA <ysd@sm.sony.co.jp>
+    * lisp/picture.el (picture-insert-rectangle): Bug fixed.
+
+Fri Sep 10 16:02:37 JST 1993	Hiroyuki YASUDA <ysd@sm.sony.co.jp>
+			    and Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/picture.el (picture-clear-column, picture-backward-clear-column):
+      Bugs fixed.
+
+Wed Sep  8 21:29:35 JST 1993	Toshiki ATSUSHIBA <toshiki@jit.dec-j.co.jp>
+    * etc/makedoc.com, INSTALL.vms: Updated for OpenVMS VAX.
+
+Wed Sep  8 15:20:27 JST 1993	A.Kon <kon@d1.bs2.mt.nec.co.jp>
+    * src/ymakefile, src/mconfig.h-dist, src/emacs.c:
+      Wnn and Canna can coexist.
+
+Mon Aug 30 13:30:48 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/codeconv.c (g2i): 'cntl' should not be reset at EOL.
+
+Fri Aug 13 19:56:44 JST 1993	Kenji NAGAHASHI <nag@flab.fujitsu.co.jp>
+    * lisp/simple.el (count-lines): Changed to that of Emacs 19.
+
+Fri Aug 13 19:41:26 JST 1993	Yoshikatsu KAWABE <kawabe@sra.co.jp>
+    * src/ymakefile: Add dependecy of ${etcdir}env for ${etcdir}charset.
+
+Fri Aug 13 19:37:17 JST 1993	Toshiki ATSUSHIBA <toshiki@jit.dec-j.co.jp>
+    * src/wnn4fns.c (Fwnn_word_toroku): Add argument declaration.
+
+Thu Aug 12 12:00:00 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * The first patch for Ver.1.0.
+
+Thu Aug 12 10:12:35 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/regex.h: "#define GENERATE_CHARSETM" because trex generate it.
+    * lisp/mule.el (make-coding-system), src/codeconv.h, src/codeconv.c:
+      New flag NO-ISO6429 non-nil means don't use ISO6429's specification.
+    * lisp/european.el: New coding-systems *iso-8859-?* for MIME.
+    * oldXMenu/XMenu.h: Include ../src/config.h.
+    * oldXMenu/Makefile: AR = ar cq
+
+Thu Aug 12 10:11:32 JST 1993	Satoru TOMURA <tomura@etl.go.jp>
+    * lisp/trex.el: If can_be_null, regexp-compile return nil of fastmap.
+
+Thu Aug  5 14:57:11 JST 1993	Nobuyosi KAMEI <zic@tci.toshiba.co.jp>
+    * doc/ISO2022.jp:  Translated from doc/ISO2022.
+
+Tue Aug  3 16:23:49 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/jisx0201.el: Not to define regexp of Japanese word in this file.
+    * lisp/worddef.el: JISX0201-Kana is concerned.
+    * lisp/japanese.el: Category of lc-jp2 is set to "C".
+    * lisp/mule-conf.el: Syntax setting for lc-kana ('w') and lc-jp2 ('e').
+    * lisp/quail/hangul3.el: Macro 'qd' added.
+    * src/s-irix3-3.h: MAIL_USE_FLOCK defined.
+
+Tue Aug  3 13:24:11 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/regex.c (re_match_2): Needs "goto fail;" before "dynamic_wordbeg:".
+
+Tue Aug  3 13:02:48 JST 1993	Rei FUKUI <fukuirei@tansei.cc.u-tokyo.ac.jp>
+    * src/s-386bsd.h: #define LIBS_DEBUG and #define HAVE_CLOCK
+
+Mon Aug  2 14:08:39 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * Mule Ver.1.0 (KIRITSUBO) released.
+
+Thu Jul 29 14:34:17 JST 1993	Yoshikatsu KAWABE <kawabe@sramhc.sra.co.jp>
+    * lisp/chinese.el: SJ3 can't handle Chinese.
+
+Thu Jul 29 10:30:55 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el: *iso-2022-jp* is defined in the same way as *junet*.
+    * lisp/mule-conf.el, lisp/loadup.el, lisp/quail/q-*.el,
+      etc/FAQ-Mule, etc/FAQ-Mule.jp, doc/*.txt,
+      man/canna-jp.texi, man/egg-jp.texi, mule-jp.texi, texi-jp.tex:
+      src/ymakefile:  File names get shorter.
+
+Wed Jul 28 19:52:30 JST 1993	Hideki TSUIKI <tsuiki@sfc.keio.ac.jp>
+    * lisp/quail-hangul.el: Help message updated.
+
+Wed Jul 28 13:46:34 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/dispnew.c:
+      When screen->enable[n] == 1, cmp_char_table should not be freed.
+
+Tue Jul 27 21:30:59 JST 1993	Shinji KOMEDA <komeda@ics.es.osaka-u.ac.jp>
+    * src/s-linux.h: Modified to avoid wchar_t problem.
+
+Tue Jul 27 15:42:48 JST 1993	Takanori SANETO <sanewo@pdp.crl.sony.co.jp>
+    * etc/Makefile: No need of ${LOADLIBS} for bdf.o.
+    * src/x11term.c: Avoid warning of GCC.
+
+Tue Jul 27 15:37:43 JST 1993  Koaunghi Un <zraun01@hpserv.zdv.uni-tuebingen.de>
+    * lisp/quail-hangul.el: Several maps are corrected/added.
+
+Tue Jul 27 14:40:18 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/ymakefile: $(MULE_LIB) should be at the first of $(LIBES).
+    * src/category.h: Modified for 64bit architecture machine.
+
+Mon Jul 26 14:11:37 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * The sixth patch for Mule Ver.0.9.8.
+
+Mon Jul 26 13:50:05 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/mule-config.el: Add syntax for Japanese parenthesis.
+
+Mon Jul 26 13:05:12 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/ccl.c: enum ccl_code is changed from xxx to CCLxxx.
+    * src/sysdep.c: Define HAVE_CLOCK for USG and VMS.
+
+Sat Jul 24 14:06:11 JST 1993	Toshiki ATSUSHIBA <toshiki@jit.dec-j.co.jp>
+    * src/lisp.h, etc.: Modified for 64bit architecture.
+    * src/s-decosf.h, etc.: Support DEC OSF-1.
+    * src/mule-bytecomp.com: To compile worddef.el on VMS.
+
+Fri Jul 23 21:43:12 JST 1993	Noritoshi DEMIZU <nori-d@is.aist-nara.ac.jp>
+    * lisp/mule-init.el: For "anno" called by mh-e, *junet* is set.
+
+Fri Jul 23 11:44:30 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el:
+      Alternative key definitions are done (spell-word, insert-parentheses).
+    * lisp/keyboard.el (set-keyboard-coding-system-iso2022):
+      Alternative key definitions are done in mule.el.
+
+Wed Jul 21 18:08:31 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/mule.h, src/mule.c, src/codeconv.h, src/codeconv.c:
+      Add '#ifdef emacs' for standalone code conversion library.
+
+Wed Jul 21 14:37:36 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/codeconv.c (g2i): CC_SELECTIVE should not be reset.
+
+Mon Jul 19 14:55:40 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/regex.c (re_match_2): charsetm(_not) should do FETCHn.
+    * src/search.c (set_pattern): bug of calling bcopy() fixed.
+
+Mon Jul 19 10:11:48 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * The fifth patch for Mule Ver.0.9.8.
+
+Mon Jul 19 09:45:48 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/sysdep.c: #ifdef MISSING_CLOCK -> #ifndef HAVE_CLOCK.
+
+Mon Jul 19 09:39:36 JST 1993	Lars HUTTAR <huttar@hp750.itg.ti.com>
+    * etc/mule.xbm: Icon bitmap. 
+
+Sat Jul 17 20:32:06 JST 1993	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/eggrc-v41: Updated for Wnn 4.109.
+
+Sat Jul 17 16:36:42 JST 1993	Kiyotaka SAKAI <ksakai@mtl.t.u-tokyo.ac.jp>
+    * src/s-hpux8.h, src/s-hpux9.h:  Updated.
+
+Sat Jul 17 15:47:32 JST 1993	Shinji KOMEDA <komeda@ics.es.osaka-u.ac.jp>
+    * src/s-linux.h: ORDINARY_LINK is defined for libc.4.4 or greater.
+    * src/process.c (create_process): Modified for Linux.
+
+Sat Jul 17 15:38:26 JST 1993  Koaunghi Un <zraun01@hpserv.zdv.uni-tuebingen.de>
+    * etc/Makefile: For Linux, /bin/sed -> sed.
+    * src/s-linux.h: HAVE_SYSVIPC and LIB_X11_LIB is defined.
+
+Sat Jul 17 15:33:35 JST 1993	Kazuo HIROKAWA <hirokawa@rics.co.jp>
+    * lisp/mule-util.el	(find-process-coding-system-rsh,
+    			 find-process-coding-system-env):
+      Should call find-process-coding-system by 'apply'.
+    * lisp/mule.el (call-process-region): DISPLAY argument handled correctly.
+
+Fri Jul 16 17:10:47 JST 1993	Tutomu HIROSE <muri@dink.foretune.co.jp>
+    * lisp/chinese.el (hz2gb-region):
+      Hz code ending with \n without ~} is handled.
+    * lisp/mule-config.el: Set syntax 'word' for JISX0201 (lc-kana).
+
+Fri Jul 16 16:19:47 JST 1993	Kenji WAKAMIYA <wkenji@flab.fujitsu.co.jp>
+    * lisp/mule-util.el (find-charset-region, find-charset-string): Added.
+
+Fri Jul 16 15:44:48 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/x11term.c (x_term_init): ASCII default font should be concerned.
+
+Fri Jul 16 15:04:39 JST 1993	Satoru TOMURA <tomura@etl.go.jp>
+    * lisp/mule.el, lisp/bytecomp.el:
+      byte-compile-special -> byte-hunk-handler for bytecomp-2.0x.
+
+Thu Jul 16 00:00:00 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * The fourth patch for Mule Ver.0.9.8.
+
+Thu Jul 15 22:01:46 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/x11term.c (MCNewFont): Don't call XFreeFont() for not-opened font.
+
+Thu Jul 15 21:03:33 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/mule.c (Fdefine_word_pattern): Memory allocation bug fixed.
+
+Thu Jul 15 17:50:00 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * The third patch for Mule Ver.0.9.8. 
+
+Thu Jul 15 17:08:48 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/x11term.c (x_term_init):  Consult resource for ASCII font.
+
+Wed Jul 14 20:54:45 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el, lisp/japapnese.el, lisp/worddef.el, lisp/mule-inst.el,
+      lisp/loaddefs.el, src/ymakefile, src/puresize.h:
+      'trex' is not loaded on dumping but loaded when compiling worddef.el
+    * lisp/bytecomp.el: Special top level form is handled.
+
+Wed Jul 14 20:54:12 JST 1993	Satoru TOMURA <tomura@etl.go.jp>
+    * lisp/trex.el: Substitution for regexp.el
+
+Tue Jul 13 20:18:30 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/mule.c, src/regex.h, src/regex.c, src/syntax.h, src/syntax.h,
+      src/category.h, src/category.c, src/search.c:
+      Regexp code except0, except1, range, range_a.
+      Format of wordbuf changed.
+      Support fastmap for pre-compiled regexp.
+      syntax_table_version introduced.
+      category_table_version introduced.
+
+Mon Jul 12 17:10:57 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/mule.el (save-protected-local-variables):  Modified.
+
+Thu Jul  8 17:30:02 JST 1993	Toshiki ATSUSHIBA <toshiki@jit.dec-j.co.jp>
+    * src/alloc.c, src/buffer.c, src/keymap.c, src/window.c, src/x11term.c:
+      Patch for systems whose size of 'int' is not size of 'Lisp_Object'.
+
+Thu Jul  8 16:26:50 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/emacs.c, src/funs.c, src/m-next.h: Patch for NeXT.
+    * src/m-NeXT.h, src/unexNeXT.c:  Deleted.
+
+Thu Jul  8 14:38:17 JST 1993	Masato MASUYA <masu@bi.a.u-tokyo.ac.jp>
+    * src/s-hpux9.h: #define hpux9 is added.
+    * src/sysdep.c: Only for HPUX9, HAVE_RANDOM is commented out.
+
+Thu Jul  8 14:14:39 JST 1993	Naoto TAKAHASHI <ntakahas@etlnao.etl.go.jp>
+    * src/s-hpux9.h: Created.
+    * src/sysdep.c: For HPUX, HAVE_RANDOM is commented out.
+
+Thu Jul  8 13:47:15 JST 1993	Toshiki ATSUSHIBA <toshiki@jit.dec-j.co.jp>
+    * src/alloc.c (make_string): Original bug fixed.
+    * src/eval.c: Function type declaration of call4().
+    * src/keyboard.c:
+      Function type declaration of recursive_edit_1() and Fthis_command_keys().
+    * src/process.c: Function type declaration of status_convert().
+    * src/undo.c: Function type declaration of Fundo_boundary
+
+Thu Jul  8 12:43:54 JST 1993	DEMIZU Noritoshi <nori-d@is.aist-nara.ac.jp>
+    * lisp/mule.el: insert-file-contents-access-hook is added.
+
+Thu Jul  8 11:23:48 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el (write-region):
+      Udpate modtime when pre-write-conversion exists.
+    * src/fileio.c (Fupdate_visited_file_modtime): Created.
+
+Wed Jul  7 14:57:48 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/keymap.c, src/keyboard.c, src/buffer.h, src/buffer.c:
+      frontmap is introcuded.
+    * src/codeconv.c (g2i): CODE_ASCII_EOL and CC_END are handled correctly.
+
+Mon Jul  5 14:38:18 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/mconfig.h-dist: Slight Modification for CANNA2.
+
+Wed Jun 30 18:34:29 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el: *iso-2022-ss2-7* uses short-form.
+    * src/x11term.c, src/x11fns.c: Bug in handling XXcurrentfont fixed.
+
+Tue Jun 29 21:46:25 JST 1993	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * src/wnn4fns.c (wnn-server-set-rev):  Updated.
+
+Mon Jun 28 22:13:33 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/buffer.c (init_buffer_once):
+      confliction of display_direction and file_translation_mode resolved.
+    * src/x11term.c (XT_CalcForFont): Don't free X_DEFAULT_FONT.
+
+Mon Jun 28 13:03:23 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/codeconv.c (code_detect): SS2 is not allowed in *ctext*.
+
+Mon Jun 28 09:32:13 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * The second patch for Mule Ver.0.9.8. 
+
+Sun Jun 27 17:20:49 JST 1993	Nobuyosi KAMEI <zic@tci.toshiba.co.jp>
+    * lisp/japanese.el: Define sentence/paragraph for Japanese.
+
+Sun Jun 27 16:33:05 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/codeconv.c (i2g): Handle invalid esc sequence in a better way.
+    * etc/Makefile (m2ps):
+      m2ps depends on config.h and mule.h, compiled with ${LOADLIBS}.
+
+Fri Jun 25 20:46:40 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/mule.el:  Add (provide 'mule).
+
+Fri Jun 25 13:10:24 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/x11term.c: Set fonts[lc].encoding from Vx_default_encoding.
+    * src/ymakefile, etc/Makefile: Name change: charsets -> charset
+
+Thu Jun 24 14:30:50 JST 1993	Hiroshi KURIBAYASHI <kuri@nff.ncl.omron.co.jp>
+    * src/m-juna2M.h, src/m-luna88k.h, src/m-unios-b.h:
+      Update and LUNA-II support.
+
+Thu Jun 24 13:16:15 JST 1993	Noritoshi DEMIZU <nori-d@is.aist-nara.ac.jp>
+    * src/x11term.c: Bugs in calling xmalloc fixed.
+
+Mon Jun 21 20:37:03 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/dispextern.h, src/dispnew.c:
+      Composite chars are stored in cmp_char_table.
+    * src/fileio.c, src/process.c, src/callproc.c:
+      Fsi_xxxx() is defined before Fxxxx().
+
+Mon Jun 21 17:37:59 JST 1993	Dana Chee <dana@thumper.bellcore.com>
+    * src/x11term.c: Original bug of x-set-*-color fixed.
+
+Sun Jun 20 17:09:11 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * The first patch for Mule Ver.0.9.8. 
+
+Sat Jun 19 11:57:39 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/codeconv.c (Fcode_convert_region): Doesn't alter point if possible.
+    * src/codeconv.c, lisp/mule-util.el:
+      code-convert-string is now written in emacslisp.
+
+Sat Jun 19 10:54:10 JST 1993	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/egg.el: egg:*in-fence-mode* should be buffer local.
+
+Fri Jun 18 15:53:54 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/alloc.c: NSTATICS increased.
+
+Thu Jun 17 10:15:01 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule-init.el: Don't specify coding-system for shell.
+    * lisp/mule-util.el, src/mule.c (charwidth, strwidth, Fstring_width):
+      'string-width' is written in C.
+    * src/doprnt.c (doprnt): Handle "%ns" appropriately.
+
+Thu Jun 17 09:35:47 JST 1993	Toshiki ATSUSHIBA <toshiki@jit.dec-j.co.jp>
+    * src/ymakefile: dabbrev.elc is in MULE_ELC_PATCHED.
+    * INSTALL.vms, etc/makedoc.com, src/compile.com, src/mule-bytecomp.com,
+      src/sysdep.c, src/temacs.opt, src/vms-pp.com, src/vms-pp.trans:
+      Updated for VMS.
+
+Wed Jun 16 14:31:34 JST 1993	Toshiki ATSUSHIBA <toshiki@jit.dec-j.co.jp>
+    * src/codeconv.c (encode):  Call encode_code() only when code is detected.
+
+Wed Jun 16 14:27:40 JST 1993	Hiroo SHIRASAKI<sirasaki@rd.ecip.osaka-u.ac.jp>
+    * lisp/sj3-client.el (sj3-bunsetu-yomi-equal): Typo fixed.
+
+Tue Jun 15 13:13:58 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/mule.el (write-region):  Temporary buffer should be killed.
+    * src/ccl.c (POPPOPPUSH1): Macro definition changed.
+    * src/sysdep.c (clock): Support clock() for those who don't have it.
+
+Mon Jun 14 23:00:00 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * Mule Ver.0.9.8 beta test starts.
+
+Sat Jun 12 20:02:38 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/regex.c (re_search_2) Bug in jumping GAP fixed.
+
+Sat Jun  5 18:25:51 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/regex.c: Cope with private charset.
+    * src/syntax.c (describe_syntax_1): Shows deeper syntax.
+    * src/category.c (insert_character_description):
+      Produces prettier description.
+
+Fri Jun  4 21:51:45 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/isearch.el:
+      'isearch-read-char' is introduced for the future facility.
+
+Fri Jun  4 13:22:55 JST 1993	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/egg.el (its-defrule**): length is called instead of chars-in-string.
+
+Fri Jun  4 13:17:57 JST 1993	Manabu HIGASHIDA <manabu@sigmath.osaka-u.ac.jp>
+    * dos, nt:  Support for DOS and Windows-NT.
+
+Fri Jun  4 13:04:14 JST 1993	Ken Shibata <shibata@sgi.co.jp>
+    * src/process.c, src/unexelf.c,
+      src/m-iris4d.h, src/s-irix4-0.h, src/s-irix5-0.h:
+      Updated for IRIS.
+    * etc/m2ps: Modified for ANSI-C.
+
+Wed Jun  2 15:34:53 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/mule.h, src/mule.c, src/codeconv.h, src/codeconv.c:
+      Arrays lc94[],... are changed to two dimentional array lc_table,
+      indexed by type and final character.
+      ISO6429 support for right-to-left characters.
+
+Tue Jun  1 15:17:32 JST 1993	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/wnn4-egg.el, lisp/eggrc-v41, src/wnn4fns.c: Updated.
+
+Tue Jun  1 15:17:01 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el (insert-file-contents, write-region):
+      Handles pre-write-conversion and post-read-conversion,
+    * lisp/mule.el (call-process-region):  Returns 'status'
+
+Sat May 29 00:34:13 JST 1993  NIIBE Yutaka  <gniibe@mri.co.jp>
+    * define NO_X_DESTROY_DATABASE in mconfig.h-dist.
+      We have font information in the database, so we must not free
+      the information.
+    * src/s-sol2.h: define bzero, bcopy, bcmp and BSTRING
+    * etc/m2ps.c: include src/config.h
+    * etc/emacsclient.c: use getcwd instead of getwd,
+	  when BSD is not defined.
+
+Sat May 29 13:42:48 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/x11term.c (MCDrawText):  Bug in handling composite char fixed.
+
+Thu May 27 16:45:26 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/mule.h (STRtoCHAR, CHARtoSTR): New macros.
+    * src/editfns.c, src/lread.c, src/regex.c, src/category.c, src/cmds.c,
+      src/doprnt.c, src/print.c, src/keymap.c, src/syntax.c:
+      Use the above macros instead of char_to_string()/string_to_char().
+    * src/mule.c (Fmake_character),
+      src/editfns.c (mchar_to_string, string_to_mchar):
+      Handle incomplete char (e.g. leading-char only) correctly.
+    * Makefile:	SED is defined just as 'sed'
+
+Wed May 26 21:45:33 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/viet.el, lisp/quail-viet.el, lisp/mule-config.h:
+      Vietnamese support.
+
+Tue May 25 14:49:23 JST 1993	Toshiki ATSUSHIBA <toshiki@jit.dec-j.co.jp>
+    * lisp/mule.el (load): Modified for case insensitive system.
+
+Mon May 24 22:11:21 JST 1993	Manabu HIGASHIDA <manabu@sigmath.osaka-u.ac.jp>
+    * lisp/fill.el (fill-region-as-paragraph):  Use string-width.
+
+Mon May 24 13:58:16 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule-config.el:
+      Change syntax from "_" (part of symbol) to "." (punctuation).
+    * src/codeconv.c (code_detect):  Bug in Big5 handling fixed.
+
+Sat May 22 14:38:59 1993  Yutaka NIIBE <gniibe@mri.co.jp>
+
+    * src/{dispextern.h,dispnew.c,indent.c,mule.c,mule.h,
+           x11term.c,xdisp.c}: r2l, private char-set, composite char
+      full support. double cursor.
+
+Sun May 16 14:52:06 JST 1993	Yutaka NIIBE <gniibe@mri.co.jp>
+    * INSTALL.Mule: Document fixed.
+
+Fri May 14 16:08:17 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el (make-coding-system), src/codeconv.c:
+      Support three types of EOL, LF, CRLF, and CR.
+    * lisp/mule.el (make-coding-system),
+      lisp/mule-util.el (describe-coding-system),
+      src/ccl.c, src/codeconv.c, src/emacs.c (main):
+      CCL support.
+
+Wed May 12 15:21:09 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/regex.c (re_match_2):  Bug in notwordbound handling fixed.
+    * lisp/quail.el: Big change for more convenient user interface.
+    * lisp/quail-*.el (all chinese packages): Show candidates dynamically.
+
+Wed May 12 09:59:50 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/mcpath.h, src/mcpath.c, src/mconfig.h-dist, src/ymakefile,
+      src/mcpath/include/sys/stat.h, src/mcpath/include/sys/stat_gcc2.h:
+      Support MCPATH.
+
+Tue May 11 17:46:54 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/fileio.c (e_write): Estimate more efficient conv-buf size.
+
+Tue May 11 15:50:17 JST 1993	Nobuyosi KAMEI <zic@tci.toshiba.co.jp>
+				Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/dabbrev.el: Support multilingual characters.
+
+Fri May  7 10:33:51 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/x11term.c (MCNewFont): Take priority of specified 'encoding'.
+    * etc/bdf.c (bdf_load_font): Bug fixed in handling private char-set.
+    * etc/Makefile, etc/bdf.c, etc/bdf.h, etc/m2ps.c, etc/m2ps.1-dist:
+      Support right-to-left character (Hebrew) and Big5.
+    * lisp/mule-util.el (list-character-set):
+      Output format changed (direction added).
+
+Thu May  6 22:13:41 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/process.c (Fset_process_coding_system): CODE_ASCII_EOT --> CC_END.
+    * src/codeconv.h, src/codeconv.c, src/fileio.c:
+      \r to \n conversion for selective_display is done in decode().
+
+Tue May  4 12:00:50 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/regex.c (re_compile_pattern):
+      Original bug for handling deep nesting fixed.
+
+Tue May  4 11:54:18 JST 1993	Yuuji HIROSE <yuuji@ae.keio.ac.jp>
+    * src/puresize.h: Comment for CANNA corrected.
+
+Tue May  4 11:05:27 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+		    and MUGITANI Kunio <a50350@sakura.kudpc.kyoto-u.ac.jp>
+    * lisp/kinsoku.el, lisp/japanese.el, lisp/chinese.el:
+      Kinsoku for GB and BIG5 added.
+
+Tue May  4 09:42:11 JST 1993	Shinji KOMEDA <komeda@ics.es.osaka-u.ac.jp>
+    * src/m-linux.h, src/s-linux.h, src/sysdep.c,
+      etc/emacsclient.c, etc/server.c: Linux support updated.
+    * src/puresize.h: PURESIZE increased for SJ3 with EGG.
+
+Sun May  2 11:19:48 JST 1993	Per Hammarlund <perham@nada.kth.se>
+    * lisp/mule.el (load):
+      Make sure that elc files are read without code conversion.
+
+Sun May  2 11:04:18 JST 1993	Takahiro MAEBASHI <maebashi@mcs.meitetsu.co.jp>
+    * src/s-386bsd.h: Modification for XFree86.
+
+Sun May  2 10:56:41 JST 1993
+			Tomotake FURUHATA <furuhata@fujita3.iis.u-tokyo.ac.jp>
+    * src/s-aix3-2.h, etc/MACHINES: Comment for AIX 3.2.3E (AIX windows 1.2.3).
+
+Fre Apr 30 19:43:15 JST 1993	Naoto TAKAHASHI <ntakahas@etl.go.jp>
+    * lisp/quail.el: Visually mode is supported.
+
+Fri Apr 30 22:20:22 JST 1993	Yoshikatsu KAWABE <kawabe@sramhc.sra.co.jp>
+    * src/x11fns.c (Fx_set_font): Should not do free (XXcurrentfont).
+
+Thu Apr 29 17:10:17 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/qail.el (quail-mode): Avoid entering quail-mode recursively.
+    * src/mule.h, src/mule.c, src/x11term.c,
+      lisp/mule.el, lisp/mule-init.el: CNS11643 support.
+    * src/x11term.c: Bugs fixed in handling font.
+
+Thu Apr 29 13:27:25 JST 1993	Nobuyuki HIKICHI <hikichi@sra.co.jp>
+    * man/texinfo-jp.tex: Bug in singleindexer fixed.
+
+Fri Apr 23 11:39:49 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/codeconv.c (b2g): Bug fixed.
+
+Mon Apr 19 15:39:58 JST 1993	Toshiki ATSUSHIBA <toshiki@jit.dec.com>
+    * src/fileio.c (e_write): On VMS, write buffer should end with '\n'.
+
+Fri Apr 16 13:10:22 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/fileio.c (Finsert_file_contents, Fwrite_region),
+      src/callproc.c (Fcall_process),
+      src/process.c (Fstart_process, Fopen_network_stream):
+      All xxxx and si:xxxx functions are defined by C, and xxxx are simply
+      overridden in mule.el.
+    * lisp/mule.el (insert-file-contents, write-region):
+      Does not accept 'query as CODE argument.
+    * lisp/mule.el (get-code-mnemonic): Return ?? for invalid coding-system.
+    * lisp/mule.el (set-file-coding-sytem-for-read): New function.
+
+Sat Apr 10 17:00:52 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/x11term.c, src/x11fns.c:
+      Shape of bold characters are controlled by x-horizontal-bold-style.
+      Handling of cursor color is improved.
+    * src/dispextern.h, src/xdisp.c, src/term.c, src/x11term.c:
+      Highlight anti-direction characters.
+    * lisp/mule-config.el, lisp/mule-init.el: New charset lc-ascr2l.
+
+Thu Apr  8 22:36:21 JST 1993	Yutaka NIIBE <gniibe@mri.co.jp>
+    * src/indent.c (compute_motion): Bug fixed.
+
+Tue Apr  6 21:29:00 JST 1993	Takanori SANETO <sanewo@pdp.crl.sony.co.jp>
+    * lisp/wnn-client.el (wnn-bunsetu-yomi-equal),
+      lisp/sj3-client.el (sj3-bunsetu-yomi-equal): Bug fixed.
+
+Tue Apr  6 21:07:11 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/regex.c (re_compile_fastmap): Bug fixed in creating fastmap.
+
+Fri Mar 26 11:07:36 JST 1993	Seo Young Jin <frog@math1.kaist.ac.kr>
+    * lisp/quail-hangle.el: In hangle3 package, one entry is corrected.
+
+Tue Mar 23 21:47:39 JST 1993	Ken-ichi Sakaeda <saka@pfu.fujitsu.co.jp>
+    * src/m-pfa50.h: Updated.
+
+Tue Mar 23 14:05:58 JST 1993	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/mule.el (make-coding-system): Document corrected.
+
+Tue Mar 23 11:20:38 JST 1993	Kiyoji ISHII <kiyoji@sm.sony.co.jp>
+    * lisp/sj3-egg.el, lisp/sj3-client.el:
+      DicEd is changed, edit-dict-item->edit-dict.
+
+Mon Mar 22 22:01:50 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/codeconv.c (designate):
+      short-form can't be used for G1..3 designation. */
+
+Mon Mar 19 13:09:18 JST 1992	Toshiki ATSUSHIBA <toshiki@jit.dec.com>
+    * emacs.com, mule.com, etc/makedoc.com, src/sysdep.c, src/vms-pp.c,
+      src/vms-pp.com, src/vms-pp.trans: Updated or created for VAX/VMS.
+
+Thu Mar 18 12:38:51 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/callint.c (interactive): Document updated.
+    * src/x11term.c:
+      No need for including <X11/Xatom.h> here, it's included in x11term.h.
+
+Wed Mar 17 16:57:22 JST 1993	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/dired.el (dired-find-file, dired-find-file-other-window):
+      Handling of prefix augument updated.
+
+Mon Mar 15 14:40:59 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * etc/bdf.c: For AIX, now we don't need "#pragma alloca".
+    * lisp/mule.el (insert-file-contents):
+      Accepts optional third arg CODING-SYSTEM.
+    * lisp/mule.el (load):
+      Call insert-file-contents instead of si:insert-file-contents.
+    * lisp/bytecomp.el (byte-compile-file):
+      Call write-region instead of si:write-region.
+
+Mon Mar 15 10:08:03 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/egg.el (egg-self-insert-command):
+      Simulates the original more perfectly.
+
+Sun Mar 14 12:45:03 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/dispnew.c (preserve_other_columns):
+      We don't have to care about cmp_chars.
+
+Wed Mar 10 21:44:14 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/sunterm.c: InitWindow() should be declared as static at first.
+
+Wed Mar 10 20:14:17 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/keyboard.el (self-insert-iso and self-insert-sjis-japanese2):
+      self-insert-internal is used to concern overwrite-mode.
+
+Wed Mar 10 17:47:31 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/dispnew.c (store_composite_char):
+      Should return a pointer with MSBs reset.
+
+Tue Mar  9 09:44:40 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el (insert-file-contents):
+      insert-file-contents-error-hook should be given error info.
+      Now it's hook function's responsibility to set file-coding-system
+      of the buffer.
+    * lisp/mule.el (load):
+      default-major-mode should not be bound while loading.
+
+Thu Mar  4 17:59:35 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/codeconv.c (g2s, g2b): Bug fixed.
+
+Thu Mar  4 11:04:39 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/x11term.c (MCDrawText): Check the count of composed chars.
+    * src/codeconv.c (code_detect): <CRLF> sequence is detected correctly.
+    * src/codeconv.h: Macro CC_INVALID is introduced for SJIS and BIG5.
+
+Sun Feb 28 18:09:02 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule-util.el (describe-coding-system):
+      Shows info about initial designation.
+    * src/indent.c (compute_motion):
+      The line continuation in minibuffer is handled correctly.
+
+Tue Feb 16 10:52:04 JST 1993	Yoshikatsu KAWABE <kawabe@sramhc.sra.co.jp>
+    * lisp/keyboard.el (set-keyboard-coding-system-iso2022): Bug fix.
+
+Mon Feb 15 10:57:55 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule-util.el (decompose-region): Bug fix.
+    * lisp/mule-util.el (decompose-string): New function.
+    * lisp/thai.el, lisp/quail-thai.el: Completely re-written.
+
+Fri Feb 12 11:01:05 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/lread.c (read1, read_escape):
+      Private chars and composite chars	are handled correctly.
+    * src/category.c (char_category, check_category_at, modify_category_entry):
+      src/syntax.c (char_syntax, char_syntax_at, modify_syntax_entry):
+      Handle private chars correctly.
+
+Thu Feb 11 16:41:07 JST 1993	Seiichi TATSUKAWA <tatsu_s@ch.hp.com>
+    * lisp/mule-inst.el: version.el is loaded for bytecompe 2.05.
+
+Wed Feb 10 17:17:48 JST 1993	Nobuyosi KAMEI <zic@tci.toshiba.co.jp>
+    * lisp/simple.el (what-cursor-position): ctl-hexa is concerned.
+    * man/mule-jp.texinfo, doc/NeXT.jp: Typo fixed.
+    * lisp/sendmail.el (mail-do-fcc): Avoid LOCALE problem.
+
+Wed Feb 10 11:34:29 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/mule.el (call-process-region): Delete temp file only if necessary.
+    * lisp/mule-init.el, lisp/loadup.el: Used purebytes is shown in loadup.el.
+
+Wed Feb 10 11:33:46 JST 1993	Akira KON <kon@d1.bs2.mt.nec.co.jp>
+    * src/canna.c: Updated.
+
+Wed Feb 10 11:22:18 JST 1993	Ichiro Hirakura <hirakura@uxp.bs2.mt.nec.co.jp>
+    * etc/Makefile: In 'm2ps', argument for cc is corrected.
+    * etc/bdf.c (bdf_fopen): Declaration of 'path' is changed.
+
+Wed Feb 10 11:22:00 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/Makefile, etc/Makefile: 'distclean' should clean all.
+    * src/codeconv.h (CONV_BUF_SIZE): Macro to get buffer size for conversion.
+    * src/codeconv.c, src/process.c, src/callproc.c, src/term.c:
+      Arguments of get_conversion_buffer() changed.
+    * src/fileio.c (Finsert_file_contents): Macro CONV_BUF_SIZE is used.
+    * src/ymakefile: sendmail.elc is in MULE_ELC_PATCHED.
+
+Sun Jan 24 14:17:12 JST 1993	Seigo YASUTOME <yasutome@ics.osaka-u.ac.jp>
+    * lisp/european.el, lisp/chinese.el:
+      Cope with new spec of make-coding-system.
+
+Sun Jan 24 00:00:00 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * Mule Ver.0.9.7.1 beta test starts.
+
+Fri Jan 22 21:50:54 JST 1993	Ichiro Hirakura <hirakura@uxp.bs2.mt.nec.co.jp>
+    * etc/MACHINES:
+
+Fri Jan 22 21:50:08 JST 1993	Ken Shibata <shibata@sgi.co.jp>
+    * lisp/its-han-kata.el, lisp/jisx0201: Updated.
+
+Thu Jan 21 16:29:58 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/fileio.c: (Finsert_file_contents): GAP is enlarged dynamically.
+    * lisp/quail.el: Function specified in quail-map is handled correctly.
+    * lisp/quail-thai.el: New quail-package for Thai.
+    * lisp/thai.el: New language specific file for Thai.
+
+Sun Jan 17 15:50:56 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule-util.el	(compose-string): Handles partially precomposed string.
+
+Fri Jan 15 14:24:40 JST 1993	Yoshiyuki AKIBA <akiba@cbs.canon.co.jp>
+    * src/emacs.c, src/fns.c, src/unexNeXT.c, src/lisp.h, src/m-NeXT.h:
+      Patch for NeXT is updated.
+
+Wed Jan 13 16:31:02 JST 1993	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * src/wnn4fns.c, lisp/wnn4-egg.el, lisp/eggrc-v41: Updated.
+
+Wed Jan 13 16:24:09 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/mule.c (Fcharacter_set):
+      The array char_description[] should be index by lc&0x7F.
+
+Wed Jan 13 15:38:14 JST 1993
+			Tomotake FURUHATA <furuhata@fujita3.iis.u-tokyo.ac.jp>
+    * etc/bdf.c: Modified for AIX.
+
+Wed Jan 13 15:29:07 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/keyboard.el (keyboard-designate-94-GL, keyboard-designate-94n-GL):
+      Code changed for new coding-system format.
+    * src/dispextern.h: MTRX_CMPCHAR should consern DATA_SEQ_BITS.
+    * src/minibuf.c (scmp): Bug fixed.
+
+Tue Jan  5 20:51:14 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/codeconv.c: Check validity of coding-system more rigidly.
+    * lisp/mule-util.el:
+      Bugs caused by the change of type of coding-system fixed.
+
+Tue Jan  5 14:46:09 JST 1993	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/editfns.c (Fstring_to_char): Assure Lisp_Int type.
+
+Sun Jan  3 15:13:11 JST 1993	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/japanese.el: Bug in setting *euc-code-category* fixed.
+    * lisp/mule-util.el (charset-doc):
+      Cope with the change of return value of 'character-set'.
+
+Thu Dec 31 17:26:49 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/its-zenkaku.el: Mode indicator of "zenkaku-upcase" fixed.
+
+Thu Dec 31 17:00:40 JST 1992	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/mule.el (make-coding-system): Document fixed.
+    * lisp/mule-util.el (charset-doc): Bug fixed.
+    * lisp/keyboard.el (set-keyboard-coding-system-iso2022): Bug fixed.
+
+Thu Dec 31 16:28:59 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/codeconv.h, src/codeconv.c: Bug in handling ISO2022 fixed.
+    * src/x11term.c: Bug in handling XXfontsize fixed.
+
+Thu Dec 28 22:35:14 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * Mule Ver.0.9.7 beta test starts.
+
+Sat Dec 26 16:12:37 JST 1992	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/egg-jsymbol.el: JIS Hojo Kanji support.
+
+Fri Dec 25 15:41:50 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/codeconv.h, src/codeconv.c, lisp/mule.el, lisp/mule-util.el:
+      Now, coding-system is a symbol.
+    * src/editfnc.c (Fsref, Fsset): Can also be used for vector.
+
+Tue Dec 22 10:46:04 JST 1992	Manabu HIGASHIDA <manabu@sigmath.osaka-u.ac.jp>
+    * src/lread.c (Floadablep): Fsubstitute_in_file_name() is called.
+    * src/syntax.c (Fmodify_syntax_entery): Argument number corrected.
+
+Sun Dec 20 16:01:00 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/process.c (read_process_output): Bug fixed.
+    * src/regex.c (valid_mc_p): Concern the case of char_bytes is 0.
+    * lisp/mule-util.el (cancel-undo-boundary): Created.
+    * lisp/egg.el (egg-self-insert-command):
+      Call cancel-undo-boundary to simulate original.
+
+Thu Dec 17 14:40:28 JST 1992	Yutaka NIIBE <gniibe@mri.co.jp>
+    * src/mule.h, src/mule.c, src/buffer.h, src/buffer.c, src/xdisp.c,
+      src/indent.h, src/indent.c, src/window.c, src/dispnew.c,
+      lisp/mule.el, lisp/mule-config.el:
+      Modified for right-to-left displaying.
+
+Wed Dec 16 20:59:06 JST 1992	Manabu HIGASHIDA <manabu@sigmath.osaka-u.ac.jp>
+    * lisp/mule.el (load): Temporaly buffer should have fundamental-mode.
+
+Wed Dec 16 20:42:18 JST 1992	A.Furuta <furuta@sra.co.jp>
+    * src/x11fns.c (Fx_get_compound_text): Accepts "STRING" type.
+
+Wed Dec 16 20:36:33 JST 1992	Wolfgang S. Rupprecht <wolfgang@wsrcc.COM>
+    * lisp/statup.el (normal-top-level):
+      Treatment of an shell variable PWD was changed.
+
+Tue Dec 15 16:31:29 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * etc/bdf.h, etc/bdf.c, etc/m2ps.c, etc/m2ps.ps:
+      Support composite character.
+    * src/sunterm.c:  Modified to cope with new etc/bdf.c.
+    * src/fileio.c(Finsert_file_contents):
+      Get no conversion buffer for *internal*.
+    * lisp/quail.el (quail-non-quail-command):  Sets this-command.
+    * lisp/mule-init.el, lisp/japanese.el, lisp/chinese.el:
+      Setting term-setup-hook is done in mule-init.el now.
+    * codeconv.c: Many bug fixes in ISO2022 handling.
+
+Thu Dec 10 20:09:05 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/x11term.c, src/x11fns.c (Fx_set_linespace):
+      Above and below linespaces can be specified independently.
+      Font manipulation methods changed.
+
+Fri Dec  4 20:23:15 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/mule.el (load):  Should signal error on syntax error.
+
+Mon Nov 30 16:09:39 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/cmds.c (self_insert_internal): Bug in overwrite-mode fixed.
+    * src/term.c (linecode_conversion):
+      Only the first char of composite character is displayed.
+    * src/x11term.c (CursorToggle): Bug fixed.
+
+Mon Nov 30 16:06:24 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/config.h-dist, src/Makefile, src/ymakefile, src/mconfig.h-dist:
+      Name change mule-config.h -> mconfig.h-dist.
+
+Wed Nov 25 21:25:26 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/x11term.c (MCDrawText), src/x11fns.c (Fx_set_linespace):
+      Bug in handling linespace fixed.
+
+Wed Nov 25 21:23:19 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * etc/m2ps.c, etc/bdf.c, etc/bdf.h, etc/Makefile,
+      src/ymakefile, src/sunterm.c, src/vgaterm.c:
+      Now bdf.o is used both by 'mule' and 'm2ps'.
+
+Mon Nov 23 16:34:25 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/ymakefile: Modified to load lisp/mule-inst.el.
+    * lisp/mule-inst.el:
+      Original mule-bytecomp.el and dump-charsets (in mult-util.el)
+      is merged into this file.
+    * lisp/mule-bytecomp.el: Deleted.
+    * lisp/mule-util.el: Function dump-charsets is deleted.
+
+Fri Nov 20 16:00:42 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/fileio.c (Fwrite_region, e_write): Don't generate redundant code.
+
+Thu Nov 19 17:06:29 JST 1992	Akitoshi MORISHIMA <ohm@astem.or.jp>
+				Shin'ichi MUKAIGAWA <shin@nff.ncl.omron.co.jp>
+				Hiroshi KURIBAYASHI <kuri@nff.ncl.omron.co.jp>
+    * etc/MACHINES, src/m-luna88k.h, src/m-luna68k, src/m-unios-b.h,
+      src/s-bsd-4.4.h, src/crt0.c:
+      Created or modified to support OMRON's machines.
+
+Thu Nov 19 13:41:28 JST 1992	Ken SHIBATA <shibata@sgi.co.jp>
+    * etc/m2ps.c: Modification for ANSI-C.
+    * src/s-irix4-0.h, src/unexmips.c, etc/MACHINES: Support SGI 310 COMPILER.
+
+Thu Nov 19 13:39:31 JST 1992	Takashi MATSUZAWA <mzw_t@hpujisa.yhp.co.jp>
+    * etc/m2ps.c, etc/bdf.h, etc/bdf.c, etc/m2ps.ps:
+      Redefinable font should not cashed by PS.
+      Support for non-spacing characters.
+      Don't send unnecessary bitmap.
+
+Thu Nov 19 13:21:11 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/editfns.c (Fgoto_char):
+      Calls clip_to_bounds() before validate_position().
+    * lisp/mule.el (write-region): Don't set file-coding-system.
+
+Thu Nov 19 11:29:16 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/loaddef.el: attribute-on-off-region is an autoloaded function.
+
+Fri Nov 13 10:08:08 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/dispextern.h, src/dispnew.c, src/indent.c, src/minibuf.c,
+      src/mule.c, src/mule.h, src/x11term.c, src/xdisp.c, src/editfns.c,
+      src/insdel.c, src/codeconv.h, src/codeconv.c:
+      Changed for supporting composite characetr.
+
+Thu Nov 12 10:00:00 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/regex.h, src/regex.c, src/search.c:
+      Big change in handling CHARSET and CHARSET_M.
+
+Tue Nov 10 10:00:00 JST 1992	Juggernaut <ka-harad@ccs.mt.nec.co.jp>
+    * src/mule-config.h: "#define CANNA_MULE" is added.
+
+Fri Nov  6 16:47:13 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/quail-*.el: (require 'quail) is inserted.
+
+Fri Nov  6 16:37:21 JST 1992	Seigo YASUTOME <yasutome@ics.osaka-u.ac.jp>
+    * etc/mule.1-dist: .BI \-fs "size"  ==> .BI \-fs " size"
+
+Wed Nov  4 21:58:06 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el (regexp-search-forward): Deleted.
+
+Wed Nov  4 23:00:00 JST 1992	Manabu HIGASHIDA <manabu@sigmath.osaka-u.ac.jp>
+    * lisp/egg.el: read-hiragana-string sets minibuffer-preprompt correctly.
+
+Fri Oct 30 15:46:32 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * Mule Ver.0.9.6 beta test starts.
+
+Fri Oct 30 15:46:32 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/buffer.c (validate_position): Should check (pos < ZV) always.
+
+Fri Oct 30 14:44:43 JST 1992	Takanori SANETO <sanewo@pdp.crl.sony.co.jp>
+    * lisp/egg.el (its:temp-echo-area-contents): Typo fixed.
+
+Fri Oct 30 14:43:20 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * etc/Makefile, etc/bdf.c, etc/bdf.h: Name change bdfstaff->bdf
+    * etc/m2ps.c, src/sunterm.c, src/vgaterm.c, src/ymakefile:
+      Name change bdfstaff->bdf.
+
+Fri Oct 30 14:42:29 JST 1992	Tomotake FURUHATA <furuhata@vnet.ibm.com>
+    * src/process.c (process_send_signal): Change for AIX.
+
+Mon Oct 26 14:18:25 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/quail.el:
+      Default key binding for quail-mode and quail-exit-mode -> C-].
+    * lisp/japanese.el:  Add several default settings.
+
+Mon Oct 26 12:53:44 JST 1992	Takanori SANETO <sanewo@pdp.crl.sony.co.jp>
+    * lisp/egg.el, lisp/quail.el, lisp/regex.el: Typo fixed.
+    * src/cmds.c (self_insert_internal): Declaration of str[3] changed.
+    * src/ymakefile: Macro MULE_LIB_EXT is used for LIBWNN.
+
+Sat Oct 24 15:25:36 JST 1992	Manabu HIGASHIDA <manabu@sigmath.osaka-u.ac.jp>
+    * support.dos/*,
+      src/dosfns.h, src/dosfns.c, src/m-dos386.h, src/s-dos386.h, src/vgaterm.c
+      Created for DOS support.  In addition, many other C files modified.
+
+Thu Oct 22 11:10:36 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/buffer.c (validate_position): Should not set pos out of range.
+    * src/codeconv.c (g2i), src/codeconv.h: Handle Locking-Shift correctly.
+    * lisp/mule-util.el (define-xxx-coding-system): Accepts single code.
+
+Mon Oct 19 13:09:18 JST 1992	Toshiki ATSUSHIBA <toshiki@jit.dec.com>
+    * src/compile.com, src/link.com, src/link.opt, src/malloc.c:
+      Modified for VAX VMS.
+    * src/wnn4fns.c (Fwnn_word_info): Slight change to suppress warning.
+
+Sun Oct 18 17:51:56 JST 1992	Makoto TAKASHIMA <takasima@hpujjp0.yhp.co.jp>
+    * src/term.c (insert_chars):
+      Collapsed when 'start' argument is nil.  Fixed.
+
+Sun Oct 18 14:09:58 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/loadup.el:
+      'attribute' and 'kinsoku' is autoloaded.
+      'keyboard' and 'mule-util' are loaded here.
+    * lisp/x-mouse.el: 'attribute' is autoloaded.  Use x-cut-text-attribute.
+    * lisp/japanese.el, lisp/chinese.el: Set term-setup-hook.
+    * lisp/loaddefs.el: Autoload specification for 'attribute' and 'kinsoku'.
+    * lisp/egg.el:
+      Data for special-symbol-input are moved to egg-jsymbol.el.
+      Autoload of busyu.el is moved from japanese.el.
+    * lisp/egg-jsymbol.el: Created.
+    * src/dispextern.h: MTRX_COMPOSE should not directly shift str[n].
+
+Fri Oct 16 21:54:49 JST 1992	Manabu HIGASHIDA <manabu@sigmath.osaka-u.ac.jp>
+    * lisp/loaddefs.el: DOS uses _emacs instead of .emacs.
+    * lisp/loadup.el:
+      DOS specific loadup files.
+      DOS does not support Snarf-dcumentation, aliases of filename.
+    * lisp/demacs.el, lisp/dos-fns.el, lisp/fepctrl.el: Created for DOS.
+
+Fri Oct 16 20:48:28 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/loaddefs.el: Several defvar added.
+    * lisp/compile.el:
+      Modified for a system which does not have subprocesses.
+      'grep' refers variable 'null-filename'.
+    * lisp/files.el (backup-buffer): Refers variable 'backup-filename'.
+    * lisp/files.el (list-directory): Refers variable 'shell-command-option'.
+    * lisp/novice.el (enable-command, disable-command),
+      lisp/startup.el (command-line),
+      lisp/saveconf.el (save-context, recover-context):
+      Refers variable user-init-filename.
+
+Sun Oct 11 14:32:14 JST 1992	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+				Hiroshi KURIBAYASHI <kuri@nff.ncl.omron.co.jp>
+    * src/ymakefile, src/wnn4fnc.c,
+      lisp/wnn4-egg.el, lisp/eggrc-v41:  Modified to support cserver.
+    * lisp/its-pinyin.el: Created to support cserver.
+
+Sat Oct 10 22:12:13 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule-config.el:  Setting private character sets.
+    * lisp/chinese.el: Modified for EGG with cserver.
+    * src/x11term.h: Back to the original code.
+    * src/x11term.c (x_term_init), src/x11fns.c:
+      Change for setting default fonts by EmacsLisp.
+      Encoding can be set by command line arg and X's resouce.
+    * src/x11fns.c: x-default-fonts and x-default-encoding are defined.
+		    New function Fx_set_linespace().
+    * lisp/mule.el:
+      Staffs of private character set are moved from mule-util.el.
+      x-default-fonts and x-default-encoding are declared.
+    * lisp/mule-util.el: New function set-x-default-fonts.
+    * lisp/mule-init.el: Setting default fonts.
+    * src/ymakefile, src/sunterm.c: sunterm.c uses bdfstaff.
+    * etc/Makefile: font.scf is not used now, and bdfstaff and m2ps are added.
+    * etc/bdfstaff.c, etc/m2ps.c, etc/m2ps.ps, etc/m2ps.1-dist: created.
+    * etc/mule.1: renamed as mule.1-dist.
+    * Makefile: Creates etc/mule.1 and etc/m2ps.1 from etc/xxxx.1-dist.
+
+Sat Oct 10 21:03:19 JST 1992	Tomoyuki SAKAKIBARA <tomo@dolphin.axis.co.jp>
+    * src/x11term.c: Pointer returned by XrmGetResource() should not be freed.
+
+Thu Oct  8 20:52:16 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/quail.el: (message ...) should show '%' correctly.
+
+Sun Oct  4 16:58:52 JST 1992	Manabu HIGASHIDA <manabu@sigmath.osaka-u.ac.jp>
+    * src/fileio.c (e_write): mccode is a pointer.
+
+Fri Oct  2 14:31:02 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/codeconv (Fcode_detect_region):  Recovers mc-flag on error.
+    * lisp/simple.el (kill-forward-chars, kill-backward-chars):
+      Cope with mult-byte chars.
+
+Fri Oct  2 14:21:33 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/term.c (linecode_conversion): Designate ASCII only at the tail.
+
+Thu Oct  1 12:51:59 JST 1992	Yoshiyuki AKIBA <akiba@cbs.canon.co.jp>
+    * src/sysdep.c (chile_setup_tty): Modfied for NeXT.
+
+Wed Sep 30 20:42:45 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/xdisp.c (Fupdate_mode_lines): Returns nil.
+    * lisp/mule.el, lisp/mule-util.el (list-coding-system):
+      Variable file-coding-system-for-read-not-found is deleted.
+    * src/process.c (create_process): out_state should be set.
+    * src/x11term.c: Entries in default_fonts are augmented.
+
+Wed Sep 30 17:06:09 JST 1992	Takahiro MAEBASHI <maebashi@mcs.meitetsu.co.jp>
+    * man/mule-jp.texinfo, man/egg-jp.texinfo: Updated.
+
+Wed Sep 30 16:51:09 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * man/texinfo-jp.tex:
+      For unknown reason, \newif\ifNTTOLD should be before \ifNTT.
+
+Wed Sep 30 13:37:16 JST 1992	Kazufumi MITANI <mit@huie.hokudai.ac.jp>
+    * lisp/busyu.el (busyu-input, kakusuu-input): bugs in kakusuu check fixed.
+
+Wed Sep 30 10:10:32 JST 1992	Mikifumi SHIKIDA <shikida@cs.titech.ac.jp>
+    * src/x11term.c: lineSpace related bugs are fixed.
+
+Tue Sep 29 13:30:31 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule-util.el(what-coding-system):
+      Modified according to the suggestion by T.Enami.
+    * lisp/quail-hangul.el: "p" is mapped to one of hangul vowel.
+
+Mon Sep 28 16:16:24 JST 1992	Akira KON <kon@d1.bs2.mt.nec.co.jp>
+    * src/canna.c: Updated.
+
+Thu Sep 24 21:57:34 JST 1992	Ken SHIBATA <shibata@sgi.co.jp>
+    * lisp/its-han-kata.el, lisp/jisx0201.el: Created.
+
+Wed Sep 23 15:20:31 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el (insert-file-contents, write-region):
+      Treatment of file-coding-system changed.
+    * lisp/mule-util.el (write-file, append-to-file):
+      file-coding-system is set after writing.
+
+Sun Sep 20 14:48:34 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/minibuf.c (scmp, Fminibuffer_complete_word):
+      Support non Ascii completion.
+    * lisp/busyu.el (busyu-input):  Unnecessary mapcar avoided.
+
+Fri Sep 18 16:49:26 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * etc/MACHINES: Support for PFU A-series, 386BSD, and Linux.
+    * lisp/busyu.el: All tables are defined directly (not by macro).
+
+Fri Sep 18 16:48:16 JST 1992	Rick SLADKEY <jrs@world.std.com>
+    * src/s-linux.h, src/m-linux.h, src/process.c, src/sysdep.c, src/unexec.c:
+      Patch for Linux 0.96c pl2 and gcc 2.2.2.
+
+Fri Sep 18 13:02:53 JST 1992	Bill SOMMERFELD <sommerfeld@apollo.hp.com>
+    * src/process.c: Patch for 386BSD.
+      To get subprocesses to have their controlling terminals set correctly.
+
+Fri Sep 18 13:02:05 JST 1992	Chris FLATTERS <cflatter@nrao.edu>
+    * src/m-386bsd.h, src/s-386bsd.h: Support for 386BSD. 
+
+Fri Sep 18 11:26:18 JST 1992	Kenichi SAKAEDA <saka@pfu.fujitsu.co.jp>
+    * src/emacs.c, src/process.c, src/unexec.c, src/m-pfa50.h:
+      Modified or created for PFU A-series.
+
+Wed Sep 16 21:35:53 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/editfns.c (Fsubst_char_in_region): Gets slightly efficient.
+
+Mon Sep 14 11:37:32 JST 1992	Y. KAWABE <kawabe@sra.co.jp>
+    * lisp/files.el (recover-file):
+      The coding-system of auto-saved file is *internal*.
+    * src/codeconv.c (code_detect, i2g):
+      Invalid escape sequence is handled correctly.
+
+Sun Sep 13 14:02:47 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/attribute.el, src/mule.c: Use redisplay-region.
+    * src/x11term.c: User can specify inter-line space by dots.
+    * lisp/term/x-win.el: Now mule accepts -lsp arguments.
+    * lisp/mule-util.el	(unused-private-character-set,
+			 new-private-character-set created): Created.
+
+Thu Sep 10 20:47:18 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/simple.el (do-auto-fill): Bug fixed.
+
+Tue Sep  8 21:04:31 JST 1992	Naoto TAKAHASHI <ntakahas@etl.go.jp>
+    * lisp/quail-latin.el: Document of latin-2 package changed.
+
+Tue Sep  8 17:33:52 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/lisp.h, src/mule.h, src/mule.c, src/dispextern.h
+      src/indent.c (current_column, Fmove_to_column, compute_motion),
+      src/xdisp.c (display_string, display_text_line),
+      src/x11term.c, src/editfns.c, src/codeconv.h, src/codeconv.c,
+      src/fileio.c, src/process.c, src/callproc.c, src/term.c
+      lisp/mule.el, lisp/mule-util.el
+      Big change in all these files to support private char-sets.
+    * src/x11fns.c (Fx_set_font): Non ASCII font can be set now.
+    * INSTALL.Mule: Improved according to the suggestion by Dan Jacobson
+							<danj1@ihspa.att.com>.
+    * lisp/keyboard.el:
+      ESC , ? and ESC - ? are used only when keyboard-allow-latin-input is t.
+    * Makefile: /bin/sed is defined by macro SED.
+    * src/Makefile: CPP is defined as original.
+
+Fri Aug 26 00:00:00 JST 1992	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/picture.el (picture-insert-string): Does nothing if string is NULL.
+
+Fri Aug 24 00:00:00 JST 1992	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/busyu.el (busyu-input): Bug fixed.
+
+Fri Aug 21 17:13:21 JST 1992	Katsumi NOZOE <nozoe@telcom.oki.co.jp>
+    * src/syntax.c (Fsyntax_code_spec): Smax is coerced to 'int'.
+
+Wed Aug 19 13:36:47 JST 1992	Takashi MATSUZAWA <mzw_t@hpujisa.yhp.co.jp>
+    * lisp/wnn4-egg.el (get-wnn-lang-name): prefer wnn-lang-name.
+
+Wed Aug 19 13:36:22 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/egg.el (menu:select-from-menu): Calls string-width.
+
+Wed Aug 12 20:16:35 JST 1992	Shinji KOBAYASHI <koba@keisu-s.t.u-tokyo.ac.jp>
+    * lisp/quail-hangul.el: Prompt of "hangul" package corrected.
+    * doc/demo: Hangul part corrected.
+
+Tue Aug 11 14:49:52 JST 1992	Yutaka NIIBE <gniibe@mri.co.jp>
+    * src/ymakefile: There should be no dependency in target .el.elc:.
+
+Tue Aug 11 14:46:16 JST 1992	Hiroshi OOTA <oota@lsi.tmg.nec.co.jp>
+    * src/regex.c (re_compile_pattern): p1 is coerced to (unsigned char *).
+
+Mon Aug 10 16:15:45 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/ymakefile: keyboard.elc is appended to MULE_ELC_BASE.
+
+Fri Aug  7 13:25:16 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/keyboard.el:
+      In esc-dol-map, ',' should be assigned esc-dol-comma-prefix.
+    * lisp/quail.el (quail-init-state): Should work even in read-only buffer.
+
+Fri Aug  7 13:15:56 JST 1992	Dan JACOBSON <danj1@ihspa.att.com>
+    * lisp/quail.el: Spell mistakes corrected.
+    * lisp/chinese.el: Dont' load "quail-py-b5" twice!
+    * doc/demo: Updated.
+
+Thu Aug  6 22:09:35 JST 1992	Shinji KOBAYASHI <koba@keisu-s.t.u-tokyo.ac.jp>
+    * etc/Makefile: font.scf is removed in targets 'clean' and 'distclean'.
+
+Thu Aug  6 19:28:12 JST 1992	Shuji NARAZAKI <narazaki@nttslb.NTT.JP>
+    * src/regex.c (re_match_2): notcategoryspec is processed correctly.
+
+Thu Aug  6 15:22:09 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule-init.el: mule-util should be loaded at first.
+
+Wed Aug  5 21:05:55 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * Mule Ver.0.9.5.1 beta test starts.
+
+Wed Aug  5 20:21:30 JST 1992	Koichi SHIMOZONO <simozono@csce.kyushu-u.ac.jp>
+    * lisp/keyboard.el (set-keyboard-coding-system): Simple mis-type corrected.
+
+Wed Aug  5 20:20:12 JST 1992	Naoto TAKAHASHI <ntakahas@etl.go.jp>
+    * lisp/greek.el: New rule for terminal sigma added.
+    * lisp/quail-tcode-qwerty: Bug fixed.
+
+Wed Aug  5 15:49:02 JST 1992	Y.KAWABE <kawabe@sra.co.jp>
+    * lisp/attribute.el (attribute-reduce): Variable 'attr' should be local.
+
+Wed Aug  5 14:45:18 JST 1992	Ken SHIBATA <shibata@sgi.co.jp>
+    * lisp/attribute.el	(attribute-record-region-modified):
+      It should not alter buffer-modified-p.
+
+Wed Aug  5 13:25:14 JST 1992	Y.KAWABE <kawabe@sra.co.jp>
+    * src/x11term.c, src/x11fns.c: Bug fix about SELECTION.
+
+Wed Aug  5 10:48:11 JST 1992	Satoru TOMURA <tomura@etl.go.jp>
+    * lisp/mule-util.el (string-width): Modified not to consume cons cells.
+
+Wed Aug  5 10:47:27 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule-util.el (string-memq): Accepts list of characters.
+    * lisp/wnn4-egg.el (henkan-kakutei-first-char): Bug fixed.
+
+Fri Jul 31 20:47:31 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * Mule Ver.0.9.5 beta test starts.
+
+Fri Jul 31 11:51:10 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule-util.el (string-memq): Added.
+    * lisp/japanese.el: If using CANNA, canna.el[c] is loaded.
+    * src/mule-config.h, src/ymakefile:
+      Convention of Mule-oriented definitions changed.
+
+Thu Jul 30 22:06:45 JST 1992  Ichiro Hirakura <hir@necbs6.uxp.bs2.mt.nec.co.jp>
+    * src/alloc.c: CANNA requires bigger NSTATICS.
+    * src/x11term.c (MCSetFont): Cope with -fnjp2 argument.
+
+Thu Jul 30 20:58:43 JST 1992	Kiyoji ISHII <kiyoji@sm.sony.co.jp>
+    * lisp/sj3-egg.el, lisp/sj3-client.el: Bug fixed.
+
+Thu Jul 30 14:19:04 JST 1992	Y.KAWABE <kawabe@sra.co.jp>
+    * src/x11fns.c (DEFATOM): Macro DEFATOM has 3 arguments now.
+
+Thu Jul 30 12:57:28 JST 1992 Hiroshi OGATA <mj1015@capricorn.cse.kyutech.ac.jp>
+    * lisp/ymakefile: MULE_ELC_PATCHED is augmented.
+
+Thu Jul 30 12:54:51 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/ymakefile: Support CANNA.
+    * src/editfnc.c (Fsubst_char_in_region):
+      Returns quickly if FROMCHAR = TOCHAR.
+
+Wed Jul 29 17:34:27 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule-util.el (find-file-coding-system-from-filename):
+      Check of code is fixed.
+    * lisp/mule-util.el:
+      Correct initial value is set to file-coding-system-alist.
+    * lisp/quail.el (quail-mode):
+      quail-related variables are declared as buffer-local in it.
+
+Mon Jul 27 16:12:33 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * info/dir: Modified to include menu of mule-jp, egg-jp, and canna-jp.
+    * etc/FAQ.jp: Filename is changed from FAQ.jis.
+    * lisp/mule-bytecomp.el: purify-flag is set to nil.
+    * lisp/x-mouse.el (x-cut-text): Sets attribute just on cut text.
+
+Mon Jul 27 16:10:32 JST 1992	Akira KON <kon@d1.bs2.mt.nec.co.jp>
+    * man/canna-jp.texinfo: Created.
+    * info/canna-jp: Created
+
+Mon Jul 27 16:09:16 JST 1992	Takahiro MAEBASHI <maebashi@mcs.meitetsu.co.jp>
+    * man/mule-jp.texinfo, man/egg-jp.texinfo: Updated and created.
+    * info/mule-jp, info/egg-jp: Updated and created.
+    * etc/FAQ.Mule.jp: Updated.
+
+Fri Jul 24 10:39:18 JST 1992	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/busyu.el (busyu-input, kakusuu-input): Completely modified.
+
+Tue Jul 21 17:46:24 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/s-irix4-0.h: Modified according to the Patch by
+		       rutt@paradise.asd.SGi.COM (John C. Ruttenberg)
+
+Mon Jul 20 22:51:09 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el (mode-line-format): If mc-flag is nil, '-' is shown.
+
+Mon Jul 20 19:17:28 JST 1992	Akira KON <kon@d1.bs2.mt.nec.co.jp>
+    * src/mule-config.h: Modified for supporting CANNA.
+    * src/canna.c, lisp/canna.el: Created for CANNA.
+    * doc/README.canna: Brief documentation about CANNA.
+
+Sat Jul 18 16:09:44 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/macros.el (macro-char-quote, insert-kbd-macro):
+      Macro string is converted to the corresponding ASCII string.
+
+Sat Jul 18 15:13:47 JST 1992	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/wnn4-egg.el: Updated.
+
+Sat Jul 18 11:51:26 JST 1992	Yutaka NIIBE <gniibe@mri.co.jp>
+    * src/xdisp.c (display_string, display_text_line):
+      Bugs of mode-line displaying fixed.
+    * src/x11term.c (xDefaultsValueTable): fonthwb -> fonthbw.
+
+Sat Jul 18 11:25:49 JST 1992	Ken SHIBATA <shibata@dragon.nsg.sgi.com>
+    * src/unexmips.c: The previous patch is surrounded by #ifdef IRIS.
+
+Fri Jul 17 21:18:29 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/regex.h, src/search.c:
+      Vforward_word_regexp and Vbackward_word_regexp are added.
+    * src/syntax.c (Fforward_word):
+      Tries re-search if 'word' is defined as a regular expression.
+    * lisp/regexp.el (regexp-compile-word):
+      Added to avoid a bug in regexp-compile.
+
+Wed Jul 15 10:05:11 JST 1992	Yoichi HIROSE <yoichi@s5g.ksp.fujixerox.co.jp>
+			    and Ken'ichi HANDA <handa@etl.go.jp>
+    * src/process.c (send_process): The buffer to be sent is pointed by 'buf'.
+
+Wed Jul 15 10:05:11 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el (call-process-region): Document modified.
+    * lisp/japanese.el: A variable japanese-word-regexp introduced.
+    * src/syntax.h, src/syntax.c: Sextword is appended in syntaxcode.
+    * src/regex.c (re_match_2): Sextword is handled.
+    * lisp/mule-config.h: Syntax of Japanese characters is Sextword.
+    * src/syntax.c (Fsyntax_spec_code, Fsyntax_code_spec): Added.
+
+Wed Jul 15 10:03:47 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/mule-util.el: find-process-coding-system is called by 'apply'.
+    * lisp/mule-util.el (find-process-coding-system):
+      BUFFER arg 0 is handled correctly.
+
+Tue Jul 14 10:56:50 JST 1992	Toshiyuki ITO <toshi@his.cpl.melco.co.jp>
+    * lisp/egg.el, lisp/wnn4-egg.el: Attribute bold can be used.
+    * src/buffer.c,src/codeconv.c,lisp/egg.el,lisp/mule.el,lisp/wnn4-egg.el:
+      Unnecessary '*' in comments of variables deleted.
+
+Mon Jul 13 22:34:27 JST 1992	Naoto TAKAHASHI <ntakahas@etl.go.jp>
+    * lisp/quail-greek.el: Created for Greek character (ISO8859-7) input.
+    * doc/demo: Augmented.
+
+Mon Jul 13 09:52:40 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el (load): Message is "LOADING..." when loading a .el file.
+    * lisp/picture.el (picture-insert-string):
+      Bug of horizontal left move in picture-insert-string fixed.
+
+Fri Jul 10 11:19:18 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el (*predefined-category*): Several definitions changed.
+    * lisp/wnn4-egg.el (henkan-kakutei-first-char): Added.
+    * lisp/european.el: Latin character input is supported by quail.
+    * lisp/korean.el: Hangul character input is supported by quail.
+    * lisp/chinese.el: Quail is required.
+    * src/eval.c (init_eval_once): max_lisp_eval_depth is set to 300.
+    * src/codeconv (code_detect):  Checks ISO2022 variant deeply.
+    * src/codeconv (g2i):
+      Generates appropriate code for *euc-code-category*
+      even if the buffer contents various multilingual characters.
+
+Fri Jul 10 10:46:11 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/category.c (insert_character_description): 'char str[5]' is correct.
+    * src/regex.c (re_match_2): mc_charset can't be optimized in loop.
+    * src/search.c (compile_pattern):
+      Set bufp->buffer to 0 for forcing	re_compile_pattern()
+      to alloc (not realloc) it.
+    * src/search.c (set_pattern): 'last_regexp' is set to Qnil.
+
+Thu Jul  9 21:55:54 JST 1992	Kenichi SAKAEDA <saka@pfu.fujitsu.co.jp>
+    * mule/mule-init.el: Setting for MH is changed again.
+
+Wed Jul  8 21:48:15 JST 1992	Ken SHIBATA <shibata@dragon.nsg.sgi.com>
+    * src/unexmips.c (unexec): Modified according to the patch by
+			       scotth@hoshi.corp.sgi.com (Scott Henry).
+
+Wed Jul  8 21:00:35 JST 1992	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/wnn4-egg.el, lisp/eggrc-v41: Updated.
+    * lisp/busyu.el: Created for busyu-input and kakusuu-input of Japanese.
+    * lisp/egg.el:
+      busyu-input and kakusuu-input are added in *symbol-input-menu*.
+
+Wed Jul  8 17:22:07 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/ymakefile, src/mule.c, src/mule-config.h, lisp/loadup.el:
+      Stop supporting WNN3, WNN3V4.
+    * lisp/japanese.el:
+      busyu-input and kakusuu-input are declared as autoload function.
+    * man/texinfo-jp.tex:
+      To detect type of jTeX and its version, the method
+      posted by Takafumi SAKURAI <sakurai@math.metro-u.ac.jp> is used.
+
+Wed Jul  8 17:19:33 JST 1992	Y.KAWABE <kawabe@sra.co.jp>
+    * lisp/sj3-egg.el:
+      Checking environment variable SJ3SERV to decide host of server.
+      Not to load sj3fns.el.
+    * src/ymakefile, src/mule.c, src/mule-config.h, lisp/loadup.el:
+      Support sj3-egg.
+    * lisp/egg.el (menu:select-from-menu, special-symbol-input):
+      Keeps the position selected last.
+
+Wed Jul  8 17:17:27 JST 1992	Kiyoji ISHII <kiyoji@sm.sony.co.jp>
+    * lisp/sj3-egg.el, lisp/sj3-client.el:
+      Created to support using SJ3 from EGG.
+
+Tue Jul  7 16:30:00 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/attribute.el:
+      Support for reading/writing files with attribute information.
+
+Mon Jul  6 21:26:40 JST 1992	Y.KAWABE <kawabe@sra.co.jp>
+    * lisp/its-hira.el:	New rules added.
+
+Fri Jul  3 16:06:21 JST 1992	Naoto TAKAHASHI <ntakahas@etl.go.jp>
+    * lisp/quail-latin.el: Created for Latin-X (ISO8859-12349) character input.
+    * lisp/quail-cyrillic.el: Created for Cyrillic character (ISO8859-5) input.
+
+Thu Jul  2 15:44:34 JST 1992	M.MURAKAMI <murakami@acrl.msr.mei.co.jp
+    * src/xdisp.c (display_text_line): 'len + startp' -> 'endp'.
+
+Thu Jul  2 15:22:37 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/bytecomp.el (byte-compile-file): Calls si:write-region.
+    * lisp/keyboard.el (set-keyboard-coding-system): Accepts *noconv* and nil.
+    * lisp/quail.el: Almost full rewrite.
+    * lisp/quail-*.el: Modified to cope with new facility of quail system.
+    * lisp/prolog.el: Replaced with the version I posted to news.
+    * src/mule.c (char_width): Cope with binary characters.
+    * src/editfns.c (Fsref): Cope with binary characters.
+    * lisp/mule-util.el (string-width): Created.
+    * lisp/mule-util.el (string-to-char-list): Moved here from mule.el
+    * lisp/mule-util.el (delete-text-in-column):
+      Nil of FROM or TO argument means the current column.
+    * lisp/egg.el (egg:quit-mode):
+      Overwrite-mode is supported correctly.
+      egg:*overwrite-mode-deleted-chars* is not used now.
+
+Wed Jul  1 13:15:09 JST 1992	Satoru TOMURA <tomura@etl.go.jp>
+    * man/texinfo.tex (xrdef): Bub fixed.
+
+Tue Jun 30 13:48:35 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+				Takayuki NAKAGAWA <nakagawa@is.titech.ac.jp>
+    * lisp/man.el (nuke-nroff-bs):
+      Attributes of underline and boldface are used for showing manual.
+
+Tue Jun 30 10:22:43 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/keyboard.el: Check auto-fill-hook after each insert.
+    * lisp/fill.el (fill-region-as-paragraph):
+      Bug of extra space at end of paragraph fixed.
+
+Sat Jun 27 15:21:00 JST 1992	Akira TANAKA <aries@isl.melco.co.jp>
+    * src/x11term.c: 'work' in MCSetFontSize() is declared outside.
+
+Fri Jun 26 20:34:40 JST 1992  Toshihiko SHIMOKAWA <toshi@isl.rdc.toshiba.co.jp>
+    * etc/Makefile: font.scf is created by calling "./bdftoscf".
+
+Fri Jun 26 19:28:22 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/egg.el (dump-its-mode-map): Gets obsolete.
+    * etc/bdftoscf.c: BDF files are specified in etc/Makefile.
+    * etc/Makefile: Specify BDF files by macro BDF_FILES. Latin 1-5 supported.
+    * src/mule.h: #undef SS2 and #undef SS3 is inserted for SunOS 4.1 JLE.
+
+Fri Jun 26 17:05:32 JST 1992	Mikifumi SHIKIDA <shikida@cs.titech.ac.jp>
+    * lisp/egg.el (*hankaku-alist* and *zenkaku-alist*): ` is registered.
+    * lisp/mule-util.el (list-coding-system): Spell in comment corrected.
+
+Fri Jun 26 16:35:00 JST 1992	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/dired.el (dired-find-file, dired-find-file-other-window): 
+      Prefix augument means file-coding-system is set interactively.
+
+Wed Jun 24 13:16:41 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/attribute.el	(attribute-on-off-region):
+      Signals error if buffer-read-only is t.
+    * src/editfns.c (Fformat): Bug about integer argument of minus value fixed.
+    * src/doprnt.c (doprnt): Local variable 'i' is initialized.
+    * lisp/mule.el (load): It 'eval's a file contents in the current buffer.
+
+Wed Jun 24 11:30:13 JST 1992	Yoshiyuki AKIBA <akiba@cbs.canon.co.jp>
+    * src/m-NeXT.h, src/unexNeXT.c: Created for NeXT.
+    * src/lisp.h, src/emacs.c, src/fileio.c, src/fns.c: Patched for NeXT.
+    * doc/NeXT: Document about the patch for NeXT.
+
+Wed Jun 24 11:19:25 JST 1992	Kenichi SAKAEDA <saka@pfu.fujitsu.co.jp>
+    * src/keymap.c (Fglobal_set_key, Flocal_set_key):
+      Call Fdefine_key() with optional arg NON-META nil.
+    * lisp/keyboard.el (set-keyboard-coding-system-iso2022):
+      define-key is called with NONMETA arg t.
+
+Wed Jun 17 10:57:42 JST 1992	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/egg.el (make-jis-second-level-code-alist): Bug fixed.
+
+Sun Jun 14 16:08:29 JST 1992	Y.KAWABE <kawabe@sra.co.jp>
+    * src/x11fns.c (Fx_store_compound_text): Calls XFlush() at the end.
+
+Sun Jun 14 15:15:19 JST 1992	Takahiro MAEBASHI <maebashi@mcs.meitetsu.co.jp>
+    * etc/FAQ.Mule.jp: Donated.  Written in Japanese.
+
+Sun Jun 14 14:55:50 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/fileio.c: Default value of READ_BUF_SIZE is reduced to 50K.
+    * src/fileio.c: (Finsert_file_contents):
+      Checks maximum buffer size before inserting code-converted text.
+
+Sun Jun 14 14:09:36 JST 1992	T.Enami <enami@sys.ptg.sony.co.jp>
+    * lisp/egg.el (menu:select-from-menu): Replaced with new version.
+
+Fri May 29 09:14:31 JST 1992	Toshiyuki ITO <toshi@his.cpl.melco.co.jp>
+    * lisp/mule-init.el: Setting for MH is changed again.
+
+Thu May 28 13:00:00 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * Mule Ver.0.9.4 beta test starts.
+
+Thu May 28 11:38:35 JST 1992	Satoru TOMURA <tomura@etl.go.jp>
+    * man/texinfo.tex: Reads language specific file (e.g. texinfo-jp.tex).
+    * man/texinfo-jp.tex: Created.
+
+Thu May 28 11:37:04 JST 1992	Takahiro MAEBASHI <maebashi@mcs.meitetsu.co.jp>
+    * man/mule-jp.texinfo: Created.
+    * info/mule-jp: Created.
+
+Thu May 28 09:39:52 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/european.el: Big change for introducing Latin mode (minor mode).
+    * src/fileio.c (Finsert_file_contents): Uses local buffer for reading.
+    * man/texindex.c: Modified to handle Japanese EUC code.
+    * info/dir: Entry for mule-jp is added.
+
+Thu May 28 08:41:51 JST 1992	Takahiro MAEBASHI <maebashi@mcs.meitetsu.co.jp>
+    * lisp/mule.el (set-display-coding-system): Calls redraw-display.
+
+Mon May 25 13:09:14 JST 1992	Seigo YASUTOME <yasutome@may.ics.osaka-u.ac.jp>
+    * lisp/korean.el: *its:*standard-modes* => its:*standard-modes*
+
+Fri May 22 22:57:52 JST 1992	Manabu HIGASHIDA <manabu@sigmath.osaka-u.ac.jp>
+    * lisp/mule.el (read-coding-system):
+      Call completing-read with REQUIRE-MATCH t.
+
+Thu May 21 20:20:47 JST 1992	Manabu HIGASHIDA <manabu@sigmath.osaka-u.ac.jp>
+    * etc/FAQ.jis: etc/FAQ is translated to Japanese.
+
+Thu May 21 20:19:21 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/config.h-dist: Define HAVE_X_SELECTION allows you to use selection.
+
+Thu May 21 17:58:04 JST 1992	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * lisp/wnn4-egg.el (set-egg-henkan-mode-format): Bug fix.
+    * lisp/wnn4-egg.el (egg:set-bunsetu-attribute: Now works with dai-bunsetsu.
+
+Thu May 21 17:35:04 JST 1992	Y.KAWABE <kawabe@sra.co.jp>
+    * src/x11term.c (internal_socket_read)
+      Selection event is handled if HAVE_X_SELECTION is defined.
+    * src/x11fns.c (Fx_store_compound_text, Fx_get_compound_text): Added.
+    * lisp/x-mouse.el (x-store-text, x-get-text): Added for selection of X.
+    * lisp/x-mouse.el (x-paste-text): Call x-get-text (not x-get-cut-buffer).
+
+Thu May 21 17:31:27 JST 1992	Yoshiyuki AKIBA <akiba@cbs.canon.co.jp>
+    * src/term.c (set_attribute): Fixed so as to copy termcap entry by tputs().
+
+Wed May 20 15:40:25 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/codeconv.c (code_detect): Checks a character following ESC.
+
+Tue May 19 21:12:51 JST 1992	Toshiaki SHINGU <shingu@cpr.canon.co.jp>
+    * src/wnn4fns.c, lisp/wnn4-egg.el, lisp/eggrc-v41:
+      Created for supporting Wnn4 non-compatible library by TAKANA.
+    * lisp/loadup.el: If WNN4 is defined, load wnn4-egg, else load wnn4v3-egg.
+    * lisp/eggrc-v4: Heading is changed.
+    * src/ymakefile, src/mule-config.h:
+      Modified for supporting Wnn4 non-compatible library.
+    * lisp/egg.el, lisp/wnn4-egg.el, lisp/wnn4v3-egg.el:
+      lisp/wnn-egg.el is divided into egg.el and wnn*-egg.el.
+
+Mon May 18 21:17:02 JST 1992	Yutaka NIIBE <gniibe@mri.co.jp>
+    * lisp/mule.el (set-keyboard-coding-system): Typemis is fixed.
+
+Mon May 18 14:27:53 JST 1992	Manabu HIGASHIDA <manabu@sigmath.osaka-u.ac.jp>
+    * src/xdisp.c (decode_mode_spec): Non-subprocess systems are concerned.
+    * lisp/mule.el (si:start-process, si:open-network-stream):
+      Non-subprocess systems are concerned.
+    * lisp/mule-util.el (list-coding-system-briefly, list-coding-system):
+      Non-subprocess systems are concerned.
+
+Mon May 18 13:44:30 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule-config.el: Syntax for Latin-1 characters are defined.
+    * lisp/mule-util.el (convert-mbox-coding-system): Bug fixed.
+
+Sat May 16 10:04:22 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/regexp.el: Name of *regexp-code-buffer* preceded by space.
+
+Fri May 15 19:33:00 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/sunterm.c (SCdelete_chars): updateline (0) => SCupdateline (0)
+    * src/puresize.h: PURESIZE is increased.
+
+Fri May 15 11:39:21 JST 1992	Manabu HIGASHIDA <manabu@sigmath.osaka-u.ac.jp>
+    * lisp/mule-init.el:
+      set-keyboard-coding-system is called after (load keyboard).
+
+Mon May 11 14:44:51 JST 1992	Naoto TAKAHASHI <ntakahas@etl.go.jp>
+    * doc/demo: list corrected and augmented.
+    * lisp/european.el: ltn-attribute-list is augmented.
+
+Tue May  5 17:23:27 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/quail.el (quail-indexed-candidate):
+      Numeric key should be handled as a quail-self-insert-command
+      at a certain situation.
+
+Fri May  1 11:19:01 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/loadup.el: mule-config.el is loaded just after mule.el.
+    * lisp/mule-config.el: Created for configuring mule.
+    * lisp/korean.el: modification of standard-syntax-table is deleted.
+    * lisp/kinsoku.el: Check of English word is modified.
+
+Thu Apr 30 17:14:28 JST 1992	Masayuki KUWADA <kuwada@soliton.ee.uec.ac.jp>
+    * lisp/mule-util.el (find-process-coding-system):
+      Accepts buffer as BUFFER arg.
+    * lisp/texinfmt.el (texinfo-index,texinfo-format-defun-1,texinfo-subindex):
+      Bug with duplicated menu in Info fixed.
+
+Thu Apr 30 16:57:19 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/syntax.h (SYNTAX_AT): Now this macro requires two arguments.
+    * src/syntax.c (char_syntax_at): Requires two arguments.
+    * src/syntax.c (Fchar_syntax_at): Supply two arguments to SYNTAX_AT().
+    * src/regex.c (re_match_2): Supply two arguments to SYNTAX_AT().
+    * src/sysdep_c (child_setup_tty): LPASS8 is set in child process.
+
+Thu Apr 30 10:53:03 JST 1992	Yutaka NIIBE  <gniibe@mri.co.jp>
+    * src/indent.c (Fmove_to_column):
+      This function now handles invalid multi-byte chars correctly.
+    * src/xdisp.c (display_string): current_buffer => XBUFFER(w->buffer)
+
+Thu Apr 30 10:07:51 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+p				Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el: call-process-hook returns cons.
+		    call-process-region-hook is deleted.
+    * lisp/mule.el (call-process-hook): convert args according to coding-system.
+    * lisp/mule-util.el (default-call-process-hook): returns cons.
+    * lisp/mule-util.el (default-call-process-region-hook): deleted.
+
+Mon Apr 27 15:31:49 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/fill.el: Unnecessary comments are deleted.
+    * lisp/fill.el (fill-region-as-paragraph), lisp/simple.el (do-auto-fill):
+      we might have gone back too much by (re-search-backward ...).
+    * src/callproc.c: (Fcall_process): 'state' is set before calling encode().
+    * src/codeconv.c: (i2g): Handles SS2 and SS3 correctly.
+
+Mon Apr 27 15:27:15 JST 1992	Y.KAWABE <kawabe@sra.co.jp>
+    * src/x11term.c: default_encoding[] is declared as static.
+
+Mon Apr 27 15:14:01 JST 1992	Katsumi NOZOE <nozoe@telcom.oki.co.jp> and
+				A.Furuta <furuta@sra.co.jp>
+    * lisp/mule-init.el: Setting coding-system for MH.
+
+Fri Apr 18 00:00:00 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * Mule Ver.0.9.3 beta test starts.
+
+Fri Apr 17 09:31:33 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/editfns.c: Cope with a new function insert_from_string().
+    * src/insdel.c: Cope with a new function insert_from_string().
+    * lisp/mule.el (make-coding-system): Cope with new coding-system form.
+    * lisp/mule-util.el (describe-coding-system):
+      Cope with new coding-system form.
+    * src/codeconv.c (g2i): Cope with new coding-system form.
+    * src/fileio.c (e_write): Always ASCII to GL at end of file.
+    * src/process.c (send_process): Always ASCII to GL at end of file.
+
+Thu Apr 16 10:02:23 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/x11term.c (internal_socket_read): real ESC code => \033 (octal)
+
+Wed Apr 15 09:47:04 JST 1992	Yutaka NIIBE <gniibe@mri.co.jp>
+    * lisp/quail.el: Fix mistype -- handing => handling.
+
+Wed Apr 15 09:45:32 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/fill.el (fill-region-as-paragraph): Bug fixed.
+
+Wed Apr 15 09:43:51 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/fileio.c (Finsert_file_contents): Stop unnecessary make_gap.
+    * lisp/wnn-egg.el (notify-internal): Call 'message' with correct arg.
+    * lisp/simple.el (what-cursor-position): Show multi-byte char as is.
+
+Mon Apr 13 22:11:43 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/keyboard.el (set-keyboard-coding-system):
+      calls check-coding-system to check code.
+    * lisp/keyboard.el:
+      Big change for handling more ISO2022.
+      Macro current-g? is changed variables _current-g?_.
+
+Tue Apr 13 16:16:20 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/keyboard.el (set-keyboard-coding-system-iso2022):
+      Argument to define-key is fixed.
+
+Tue Apr 13 12:12:00 JST 1992	Makoto ISHISONE <ishisone@sra.co.jp>
+    * lisp/keyboard.el: glabal-maps are changed to local-maps.
+
+Sat Apr 11 21:05:37 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/wnn-egg.el (egg:select-window-hook):
+      egg:*input-mode* is set to t when exit from minibuffer.
+
+Fri Apr 10 13:15:15 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/buffer.c (Ferase_buffer): attributed-region is set to nil.
+    * src/regex.h (re_pattern_buffer): New member mc_flag added.
+    * src/regex.c (re_compile_pattern): mc_flag is set.
+    * src/regex.c (re_compile_fastmap):
+      fastmap is created for mc_charset and syntaxspec.
+
+Fri Apr 10 09:47:46 JST 1992	Makoto ISHISONE <ishisone@sra.co.jp>
+    * src/x11term.c (x_term_init, XT_CallForFont, XInitWindow):
+      Big change to decide appropriate fontsize for font.  The priority is:
+      1. Command line option -fs.
+      2. Resource 'fontsize'.
+      3. Size of font specified by option -font or resource 'font'.
+      4. Default value of 16
+      5. If all fails, open font without changing the specified name.
+
+Thu Apr  9 16:40:55 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/buffer.h (struct buffer): ctl_hexa is added for hexadecimap display.
+    * src/buffer.c: ctl_hexa is added to several places.
+    * src/xdisp.c (display_text_line, display_string): ctl_hexa is handled.
+    * src/syntax.c (char_syntax_at): Bug fixed.
+
+Wed Apr  8 22:26:34 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/codeconv.c (g2i): 'graphic' set to CC_IN_GL when CODE_ASCII_EOT.
+    * src/codeconv.c (Fcode_convert_region): mc-flag recovered anytime.
+
+Wed Apr  8 15:23:11 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/minibuf.c (read_minibuf): initial and prompt are also gc-protected.
+    * src/callint.c (Fcall_interactively): 'string' should be safe from gc.
+    * src/regex.c (re_search_2): 'startp' increased when 'startpos' increased.
+
+Tue Apr  7 17:40:10 JST 1992	Masayuki KUWADA <kuwada@soliton.ee.uec.ac.jp>
+    * etc/bdftoscf.c: <ctype.h> is included.
+
+Tue Apr  7 16:42:31 JST 1992	Per Hammarlund <perham@nada.kth.se>
+    * lisp/mule.el (insert-file-contents-pre-hook):  Document revised.
+
+Tue Apr  7 16:35:52 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/Makefile: zmakefile are now not created.
+    * src/ymakefile: .elc files newly created or patched are byte-compiled.
+    * lisp/mule-bytecomp: .elc files are given by command line arguments.
+    * src/codeconv.c (Fcheck_code): Checks coding-system more severely.
+
+Mon Apr  6 10:28:55 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * Mule Ver.0.9.2 beta test starts.
+
+Mon Apr  6 09:54:55 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/quail.el:
+      The facility to show candidates improved gracefully.
+      Candidates can be selected by directly supplying index number.
+
+Fri Apr  3 20:15:04 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/codeconv.c (Vcode_priority): New lisp variable.
+    * src/codeconv.c (update_code_priority): Added.
+    * src/codeconv.c (Fcode_detect_region): Now non-interactive.
+    * src/codeconv.c (code_detect):
+      Does more precise check.
+      Call update_code_priority() if necessary.
+      Argument 'prio' is changed to a simple 1/0 flag.
+    * src/codeconv.c (Fset_code_priority, Fget_code_priority): Deleted.
+
+Fri Apr  3 20:12:55 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/wnn-egg.el (egg:select-window-hook):
+      Set egg:*mode-on* and egg:*in-fence-mode* of minibuffer to nil.
+
+Wed Apr  1 21:57:06 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/cmds.c (self_insert_internal):  Bug of overwrite-mode fixed.
+    * src/search.c (skip_chars): Multi-byte char handling fixed.
+    * src/regex.c (re_search_2): Variable startpos follows character boundary.
+    * src/cmds.c (Fforward_byte, Fbackward_byte): Added.
+    * lisp/quail.el (quail-mode, quail-exit-mode):
+      Attribute changed from inverse to underline.
+
+Wed Apr  1 21:26:54 JST 1992	Yutaka NIIBE <gniibe@mri.co.jp>
+    * src/indent.c (compute_motion, pos_tab_offset, vmotion):
+      Calculation of tab_offset is fixed.
+    * src/xdisp.c (redisplay, try_window, try_window_id, display_text_line):
+      Calculation of tab_offset is fixed.
+
+Tue Mar 31 17:39:38 JST 1992	Masayuki KUWADA <kuwada@soliton.ee.uec.ac.jp>
+    * lisp/bytecomp.el (byte-compile-file):
+      Compiled file should be written out without code-conversion.
+
+Tue Mar 31 09:59:31 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/sunterm.h: Created for adding Sun console feature.
+    * src/sunterm.c: Created for adding Sun console feature.
+    * src/config.h-dist: Sun console feature added.
+    * src/emacs.c: Sun console feature added.
+    * src/ymakefile: Sun console feature added.
+    * etc/bdftoscf.c:  Created for adding Sun console feature.
+    * etc/Makefile: Sun console feature added.
+    * etc/mule.1: Description about Sun console feature added.
+
+Sat Mar 28 14:40:11 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/xdisp.c (display_text_line):  prev_pos is initialized. */
+
+Fri Mar 27 15:27:37 JST 1992	Yutaka NIIBE <gniibe@mri.co.jp>
+    * src/indent.c (compute_motion): 'continue;' is inserted.
+
+Fri Mar 27 15:27:05 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/regex.c (re_compile_pattern): Bug fixed for mc_charset.
+
+Thu Mar 26 16:52:22 JST 1992	Takayuki NAKAGAWA <nakagawa@is.titech.ac.jp>
+    * lisp/files.el (hack-local-variables): Variable prefixlen is removed.
+    * lisp/fill.el (fill-region-as-paragraph): Multi-byte char handling fixed.
+
+Thu Mar 26 14:03:22 JST 1992	Masayuki Kuwada <kuwada@soliton.ee.uec.ac.jp>
+    * lisp/rmail.el (rmail-expunge): Multi-byte char handling fixed.
+    * lisp/rmail.el (rmail-reply): "Re:" in subject is handled correctly.
+    * lisp/replace.el (occur): Multi-byte char handling fixed.
+    * lisp/fill.el (fill-region-as-paragraph): Multi-byte char handling fixed.
+
+Wed Mar 25 20:31:08 JST 1992	Katsumi NOZOE <nozoe@telcom.oki.co.jp>
+    * src/Makefile (xmakefile, zmakefile): dependency of mule-config.h
+
+Wed Mar 25 14:03:34 JST 1992	Nobuyuki HIKICHI <hikichi@sra.co.jp>
+    * src/emacs.c (main): DISPLAY environment var is set.
+
+Wed Mar 25 13:20:02 JST 1992	Takayuki NAKAGAWA <nakagawa@is.titech.ac.jp>
+    * src/mule.c (Fnew_character_set): More severe error check.
+
+Wed Mar 25 12:51:03 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/ymakefile:
+      Place of defining WNNLIB... is moved.
+      Define MULE_OBJ in case EGG is not defined.
+      emacs.c depends on mule-config.h.
+    * src/wnnfnc.c: Make wchar_t to be defined surely.
+    * src/x11term.c (MCDrawText): clear sticking-out char of bold face.
+
+Tue Mar 24 20:36:43 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/codeconv.c (Fcode_convert_region and Fcode_convert_string):
+      First argument to encode() is fixed.
+      Fcode_convert_region is changed to non-interactive.
+    * lisp/mule-util.el (code-convert): The function is added.
+
+Tue Mar 24 15:17:12 JST 1992	Y.KAWABE <kawabe@sramhc.sra.co.jp>
+    * lisp/keyboard.el (self-insert-sjis-japanese):
+      Change global-map to global-map-sjis.
+
+Tue Mar 24 14:17:11 JST 1992	Daigo SEKITA <sekita@asdsb.sra.co.jp>
+    * lisp/mule-util.el (default-open-network-stream-hook):
+      Order of arguments fixed.
+
+Tue Mar 24 14:07:53 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/process.c (send_process): Argument of encode_code fixed.
+
+Mon Mar 23 23:00:00 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * Mule Ver.0.9.1 beta test starts.
+
+Mon Mar 23 22:10:19 JST 1992	Tomoyuki SAKAKIBARA <tomo@axis.co.jp>
+    * src/x11term.c (MCSetFontSize): static char work[256];
+    * src/ymakefile: wnnfns.c and alloc.c depends on mule-config.h, data.o not.
+
+Mon Mar 23 20:22:13 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/codeconv.c (g2i): lcg0 is set to LCASCII when CODE_ASCII_EOT.
+    * lisp/mule-init.el: coding-system for "nntp" is set to *junet*
+
+Mon Mar 23 14:12:38 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/wnn-egg.el, lisp/its-*.el:
+      define-its-mode -> its-define-mode, defrule -> its-defrule
+    * src/keyboard.c (Fexecute_extended_command):
+      Set this_command_keys correctly.
+    * src/keymap.c (Fdefine_key): optional arg nonmeta is added.
+
+Sun Mar 22 22:04:14 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/xdisp.c (display_text_line, display_string):
+      Changed for handling invalid multi-byte character correctly.
+    * lisp/quail.el: "\C-p" is maped to quail-prev-candidate.
+
+Sun Mar 22 18:25:59 JST 1992	Yutaka NIIBE <gniibe@mri.co.jp> and
+				Ken'ichi HANDA <handa@etl.go.jp>
+    * src/indent.c (current_column, compute_motion):
+      Changed for handling multi-column character.
+
+Sat Mar 21 14:45:14 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/mule.h: Definition of LC_P is changed.
+    * src/mule.c: Declarations of char_... are changed.
+	
+Sat Mar 21 12:39:59 JST 1992	Takayuki NAKAGAWA <nakagawa@is.titech.ac.jp>
+    * src/mule.c (Fcharacter_set): Argument of last Fcons is fixed.
+    * src/mule.c (Fnew_character_set): Cheking of leading char fixed.
+
+Thu Mar 19 22:36:38 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * src/dispnew.c (update_line): Handle insertion of multi-column char.
+
+Thu Mar 19 21:51:54 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/term.c (linecode_conversion): skip heading invalid *src.
+
+Thu Mar 19 17:49:16 JST 1992	Y.KAWABE <kawabe@sramhc.sra.co.jp>
+    * lisp/keyboard.el (set-keyboard-coding-system):
+      This function can be called interactively.
+
+Thu Mar 19 14:51:16 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * src/x11term.c (many places): Handles color of cursor correctly.
+
+Wed Mar 18 10:19:12 JST 1992	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * lisp/mule.el (load): loadablep is called with 'nosuffix' argument.
+
+Tue Mar 17 21:51:39 JST 1992	Yasunobu KASAI
+					 <y-kasai@mypcb1.sag.hitachi-sk.co.jp>
+    * src/Makefile: 'if' command is preceded by '-' to ignore error.
+
+Tue Mar 17 20:06:35 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * Makefile: Replace 'emacs' to 'mule' at several places.
+    * etc/mule.1: -fnjltn3... => -fnltn3
+    * lisp/its-hankaku.el: Change prompt " a a" => "aa", " a A" => "AA"
+    * lisp/its-kata.el: Change prompt " aア" => "ア"
+    * lisp/its-zenkaku.el: Change Prompt " aａ" => "ａ"
+    * lisp/mule.el: Definition of mule-keymap moved from mule-util.
+    * lisp/mule.el (write-region): coding-sytem query on interactive call.
+    * lisp/mule-util.el: Definition of mule-keymap moved to mule.
+    * list/wnn-egg.el: (define-key global-map... => (define-key mule-keymap...
+
+Tue Mar 17 12:00:00 JST 1992	Ken'ichi HANDA <handa@etl.go.jp>
+    * Mule Ver.0.9.0 beta test starts.
+
+Local variables:
+fill-column: 75
+End:

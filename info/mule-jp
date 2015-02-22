@@ -1,0 +1,81 @@
+Info file: mule-jp,    -*-Text-*-
+produced by texinfo-format-buffer
+from file: mule-jp.texi
+
+
+
+
+Indirect:
+mule-jp-1: 96
+mule-jp-2: 50861
+mule-jp-3: 102533
+
+Tag table:
+(Indirect)
+Node: Top98
+Node: Overview2141
+Node: Characteristic3356
+Node: Multilingual4480
+Node: For Japanese4792
+Node: For Chinese6075
+Node: For Korean7332
+Node: For European7766
+Node: For Thai8597
+Node: Documents9410
+Node: Bug report11331
+Node: Invocation12286
+Node: Options14078
+Node: Init File17254
+Node: Multilingual Char20277
+Node: Character Set21930
+Node: Coding System23603
+Node: Internal26858
+Node: In Buffers27258
+Node: In Lisp Object30650
+Node: MS Kanji31708
+Node: ISO202232489
+Node: JUNET40290
+Node: EUC42154
+Node: Compound Text43724
+Node: Korean Mail44580
+Node: Big545314
+Node: Buffers47454
+Node: Set Coding System50863
+Node: Key Input55504
+Node: Display58346
+Node: File I/O61036
+Node: File Input65244
+Node: File Output70361
+Node: Process73236
+Node: More Process75930
+Node: Auto Conversion78339
+Node: Summary for Char80839
+Node: Features84704
+Node: Functions85061
+Node: Features for Text85987
+Node: Syntax87170
+Node: char-syntax88325
+Node: char-category90071
+Node: Regular Expression93397
+Node: Regular Expression Compiler94047
+Node: Extended Pattern96115
+Node: Clause96909
+Node: Search98699
+Node: Filling&Justifying99693
+Node: Filling100020
+Node: Justifying102535
+Node: Enhancement103064
+Node: Picture Mode103505
+Node: Direction103959
+Node: Input in Picture Mode105458
+Node: Rectangles106847
+Node: Abbreviations108359
+Node: Mule Lisp108737
+Node: Marker108983
+Node: Attribute110192
+Node: Command List111300
+Node: Concept Index112994
+Node: Command Index116842
+Node: Variable Index119399
+
+End tag table

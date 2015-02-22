@@ -1,0 +1,2196 @@
+*- Indented-Text -*-
+
+Frequently Asked Questions and Answers list for Mule.  1993년 11월 15
+일판
+
+----------------------------------------------------------------------
+	 
+이 FAQ의 목적은, Mule에 관해서 자주 나오는 질문과 그 답을 참조하기 쉽
+게하기 위하여 정리한 것입니다.
+	
+내용은 가능한 한 확인을 하고 있습니다만, 틀린 곳을 발견하신 분은 알려 
+주시면 고맙겠습니다. 또한, 새로운 추가항목 등도 환영합니다.
+
+최신의 FAQ를 입수하는 방법은, 질문의 A-14에 쓰여져 있습니다.
+
+이 FAQ의 작성에 있어서, 대단히 많은 분으로부터 조언을 받았습니다.  협
+력해 주신 분들에게 감사를 드립니다.
+
+-- Takahiro Maebashi <maebashi@mcs.meitetsu.co.jp>
+
+--- translated by Dosam HWANG <hwang@forest.kuee.kyoto-u.ac.jp>
+----------------------------------------------------------------------
+
+이 FAQ를 Mule에서 보고 있는 경우는, "M-2 C-x $"라고 입력하는 것에 의해
+질문만을 빼낼 수 있습니다. 답도 보고 싶은 경우에는 "C-x $"라고 타이프
+하면 원래대로 돌아갑니다.
+
+질문번호 X-XX 에 검색하고 싶을 때는, "M-C-s ^X-XX:" 라고 입력하여 주세
+요.  만약 찾지 못했다면, 이어서 "C-r"라고 타이프해 보세요. 질문을 찾았
+으면 ESC를 타이프하면 검색모드로부터 벗어납니다.
+
+78열째의 '+' 마크는 이전판(1993년 8월12일판)에 행이 추가된 것을 나타내
+고 있습니다. 마찬가지로 '-' 마크는 행이 삭제된 것을, '!' 마크는 삽입이
+나 삭제등 무엇인가 변경이 있는 것을 나타내고 있습니다.
+
+----------------------------------------------------------------------
+
+
+일반적인 정보
+
+A-1: Mule 이란 무엇입니까?
+  
+  Mule 은 GNU Emacs (Ver.18)를 복수의 언어에 대응할 수 있도록 강화한
+  에디터입니다.
+
+  Mule 에는 이하와 같은 특징이 있습니다.
+   * Mule 은 ASCII 문자(7비트)와 ISO Latin-1 의 문자(8비트)뿐만 아니라,
+     일본어, 중국어, 한국어등의 문자코드(16비트)도 다룰 수 있습니다.
+     그리고 Mule 의 텍스트 버퍼는 이들의 언어의 문장을 하나의 버퍼에
+     혼재하여 보지할 수 있습니다.
+   * 화일 입출력, 스크린 표시, 키보드 입력, 프로세스간 통신 각각에
+     대해서 독립적으로 문자코드계를 설정할 수 있습니다.
+   * 다국어 모드가 아닌 경우에는, 오리지널 GNU Emacs 와 거의 같이
+     사용할 수 있습니다.
+  
+A-2: Mule 은 어디에서 입수할 수 있습니까?
+  
+  Mule 은, 아래의 사이트로부터 anonymous ftp 로 입수할 수 있습니다.
+  
+  	etlport.etl.go.jp [192.31.197.99]: /pub/mule
+  	sh.wide.ad.jp [133.4.11.11]: /JAPAN/mule
+  	ftp.mei.co.jp [132.182.49.2]:/public/free/gnu/emacs/Mule
+  	ftp.funet.fi [128.214.6.100]:/pub/gnu/emacs/mule
+  
+  해외로부터 액세스할 경우는 sh.wide.ad.jp 를 사용하여 주세요.
+  
+  여기에는 Mule 배포키트의 완전한 형태의 tar 화일과, GNU Emacs 18.59
+  에 대한 차분화일의 2종류가 있습니다. GNU Emacs 를 갖고 계신 분은
+  가능한 차분화일을 사용하여 주세요. 이 외에도 각종 폰트, ELISP
+  라이브러리 등이 있습니다.
+  
+A-3: Mule 의 최신 버젼은 몇입니까?
+  
+  Mule 의 현재의 버젼은 1.0 (키리쯔보) pathchlevel 01이고, GNU Emacs	      !
+  18.59를 베이스로 하고 있습니다. 					      !
+  
+A-4: Mule 을 사용하면 무엇이 좋습니까? 혹은 Nemacs 를 사용한 쪽이
+ 좋은 경우는 있습니까? 있다면, 어떠한 경우입니까 ?
+  
+  Mule 을 사용하는 이점은 몇가지 있습니다.
+   * 영어만이 아니라 일본어, 중국어, 한국어 그 외 다수의 언어를 다룰
+     수 있습니다. 게다가 이들을 혼재해서 사용할 수 있습니다.
+   * 버퍼 중의 영역에 표시에 관한 속성을 갖게 할 수 있습니다.
+     Nemacs 와 달리, 통상의 단말에서도 (단말이 지원하고 있으면)표시속
+     성의 기능을 사용할 수 있습니다.
+   * 영어와 일본어 만을 사용할 경우에도, Nemacs 에 부속된 "타마고(달걀)
+     "보다도 변환효율이 좋은 일본어 입력시스템 "타까나판 타마고"를 이
+     용할 수 있습니다.
+   * Nemacs 는 GNU Emacs 18.55 base 입니다만 Mule 은 Emacs 18.59 base
+     입니다:)
+   * 강력한 regular expression compiler 가 부속되어 있습니다.
+  
+  반대로, Mule 은 Nemacs 보다도 상당히 복잡하고 큰 프로그램이기 때문에,
+  계산기자원이 부족한 환경에서, 일본어 밖에 사용하지 않는 것이라면
+  Nemacs 를 사용하는 편이 좋은 경우도 있습니다.
+  
+  또한, Mule 과 Nemacs 는 호환성이 없기 때문에, 과거에 Nemacs 용으로
+  개발된 어프리케이숀은 Mule 에서는 잘 돌아가지 않는 것도 있습니다.
+  
+A-5: Nemacs 는 없어지게 되는가?
+  
+  답은 물론 "아니요" 라고, 말하고 싶습니다만, 금후는 지원되지 않습니다.
+  Nemacs 의 최후 버젼은 3.3.2 가 됩니다.
+  
+A-6: Mule 은 장래 GNU Emacs 에 통합되는 것입니까?
+  
+  GNU Emacs 의 작자인 R.M.Stallman 은, 다국어를 지원하는 경우에는
+  Unicode 를 메인으로 사용하는 것을 강력히 주장하고 있습니다. Mule 에
+  서 Unicode 가 사용될 수 있도록 되면 Mule 을 GNU Emacs 와 통합한다는
+  것이 됩니다만, 현재 Mule 에서 Unicode 는 지원되고 있지 않습니다.
+  
+A-7: Mule 의 특징을 Epoch (or Nepoch) 에 도입할 계획은 있습니까?
+  
+  현재는 Mule 의 특징을 Epoch 에 도입할 계획은 없습니다.
+  
+A-8: Demacs 에 Mule 의 특징을 넣을 계획은 있습니까?
+  
+  Mule Ver.0.9.6 이후의 것에는 Demacs 가 포함되어 있습니다.
+  인스톨 메뉴얼 INSTALL.dos 을 참조하세요.
+  
+A-9: GNU Emacs Ver.19 를 베이스로 한 Mule 을 만들 계획은 있습니까?
+  
+  장래는 GNU Emacs 19 를 베이스로 한 Mule 이 만들어지고, GNU Emacs 과
+  Mule 이 통합될 예정이지만, 현재는 그것이 언제 될 지는 모릅니다.
+  
+A-10: Mule 의 메일링 리스트가 있습니까?
+  
+  현재, 영어를 사용하는 논의를 위해서는 아래의 2개의 메일링 리스트가 
+  있습니다.
+  
+  mule@etl.go.jp
+     통상의 사용언어는 영어
+  mule-vn@etl.go.jp
+     베트남어의 취급에 관한 메일링 리스트, 통상의 사용언어는 영어
+  
+  그 외, 각 프랫폼에서의 테스트용으로 아래의 것이 있습니다.
+  
+  mule-jp@etl.go.jp
+     통상의 사용언어는 일본어
+  
+  일본어로의 통상의 논의에는 뉴스 (fj.editor.mule) 를 사용하세요.
+  
+A-11: Mule 의 버그레포트는, 어디에 하면 됩니까?
+  
+  일본어로의 Mule 의 버그레포트 혹은 수정의 제안등은, 뉴스
+  (fj.editor.mule) 에서 해 주세요. 이 뉴스를 읽을 수 없는 분만 	   	      !
+  mule@etl.go.jp 에 영어로 보내주세요.
+										
+A-12: Mule 에는 일본어(영어/한국어/중국어)의 메뉴얼이 붙어 있습니까?
+  
+    Mule 에 관한 메뉴얼, 도큐먼트류는 크게 나누면, 			      !
+									      !
+      * 온라인메뉴얼 							      !
+      * texinfo 메뉴얼 							      !
+      * FAQ								      !
+      * 튜토리얼 							      !
+      *	doc 디렉토리 아래의 문서 					      !
+									      !
+    와 같은 종류가 있습니다.						      !
+    * 온라인메뉴얼 							      !
+									      !
+      man 형식의 온라인메뉴얼은 영어로 된 것이 있습니다. 통상은 시스 	      !
+      템관리자가, man 명령어로 참조할 수 있도록 준비되어 있다고 생각합 	      !
+      니다만, 만약 준비되어 있지 않은 경우는 $MULE/etc/mule.1 에 있으 	      !
+      므로, 이것을 메뉴얼의 디렉토리에 복사하여 이용하여 주세요. 	      !
+									      !
+    * texinfo 메뉴얼 							      !
+									      !
+      texinfo 형식의 메뉴얼은, 일본어로 된 것이 준비되어 있습니다. Mule	      !
+      에서는 M-x info 로 Info 메뉴얼리더를 기동하고, Mule 의 노드를 	      !
+      선택하면 읽을 수 있습니다. $MULE/man/mule-jp.texi 를 일본어 	      !
+      TeX 로 처리하면, 종이에 인쇄할 수 있는 도큐먼트를 만들 수 있습니다.     !
+
+    * FAQ								      !
+
+      지금 당신이 읽고 있는 것입니다. 영어판, 일본어판, 한국어판이	      !
+      $Mule/etc/FAQ-Mule{,.jp,.kr} 에 있습니다.				      !
+
+    * 튜토리얼 								      +
+									      +
+      튜토리얼은 일본어로 된 것이 있습니다. Mule 에서 C-h T (M-x	      +
+      help-with-tutorial-for-mule) 로 읽을 수 있습니다.			      +
+									      +
+    * doc 디렉토리 아래의 문서						      +
+									      +
+      $MULE/doc 에는 Mule 의 기능별 성명과 용어설명등의 도큐먼트가	      +
+      있습니다. 주로 영어 혹은 일본어로 쓰여져 있지만, 다른 언어로	      +
+      쓰여져 있는 것도 있습니다. $MULE/doc/viet 에는 베트남어로		      +
+      쓰여진 문서가 정리되어 있습니다.					      +
+
+A-13: Mule 하는 이름의 유래는?
+  
+  UNIX용어 유래/읽기 사전으로부터 인용:-)
+  
+    [Mule] (UNIX명령어) <뮬>
+    "MUltiLingual Enhancement to GNU Emacs"의 약칭. MULE 이란 노새라는
+    것으로, 외고집, 옹고집이라는 의미도 있고, GNU 의 동물 시리즈에 대
+    응하고 있으며, gawk 와 같이 반대의 의미를 부친다라고 하는 것에도 대
+    응하고 있다.
+    (참조:Demacs, Emacs, gawk, Nemacs)
+  
+  이 이름은, Hironobu Suzuki <hironobu@sra.co.jp> 씨의 발안에 의하고
+  있습니다.
+
+A-14: 이 도큐먼트(Mule FAQ list)의 최신판은 어디에서 입수할 수 있습니
+ 까?
+  
+  Mule FAQ 에는 영어판, 일본어판, 한국어판이 있습니다. 화일로서 배 	      !
+  포되는 경우에는, 각각 FAQ-Mule(영어판), FAQ-Mule.jp(일본어판),	      !
+  FAQ-Mule.kr(한국어판) 이라는 화일명으로 되어 있습니다. 이 중, 일본	      !
+  어판이 원본이고, 그 외는 갱신이 늦어진 것도 있습니다. 		      !
+  
+  Mule FAQ 는, 아래의 방법에 의하여 입수할 수 있습니다.
+  
+  * 네트워크 뉴스로부터. 뉴스그룹 fj.editor.mule 에는, 비정기적으로
+    Mule FAQ 가 알려지고 있습니다.
+  
+  * anonymouns FTP 로 입수한다. 아래의 장소에서 anonymouns FTP 로 입수
+    할 수 있습니다.
+  
+    etlport.etl.go.jp: /pub/mule/READMEDIR
+    sh.wide.ad.jp: /JAPAN/mule/READMEDIR
+  
+  * Mule 의 배포용 화일 중. 그 Mule 이 릴리즈된 때의 최신의
+    FAQ가, etc/FAQ-Mule{,.jp,.kr} 로서 Mule 의 배포세트 내에 포함되어 	      !
+    있습니다. 								      !
+
+
+구축 및 인스톨
+
+B-1: Emacs 에 Mule 의 패치를 붙이고, 새롭게 늘어난 lisp 화일을 Emacs
+ 또는 Nemacs 에서 바이트컴파일하려고 하였지만 잘 되지 않습니다.
+ 왜 그런가요?
+  
+  Mule 의 lisp 화일 내에는 Mule 에서만 바이트컴파일할 수 있는 것
+  이 다수 포함되어 있습니다. 그래서 Mule 을 구축할 때에는, 도중에
+  자동적으로 새롭게 늘어난 (혹은 패치가 붙여진) lisp 화일을 바이트컴파
+  일합니다. Emacs 에 패치를 붙였을 때와 같이 수동으로 바이트컴파일할
+  필요는 없습니다.
+  
+B-2: X Window System 에서 작동하는 Mule 을 만드는데는 어떻게 하면 됩니
+ 까?
+  
+  $MULE/src/config.h 내에 HAVE_X_WINDOWS 라는 마크로를 define 하면 됩
+  니다. 그리고, HAVE_X_SELECTION 을 정의하는 것에 의해 X 의 SELECTION
+  을 사용한 cut&paste 를 사용할 수 있도록 됩니다.
+  
+  단, Mule 은 스태틱링크로 구축되기때문에, 스태틱링크용의 libX11.a가
+  필요합니다. 스태틱링크용의 라이브러리가 없는 경우는, X 를 구축할 때
+  에
+  
+    #define ForceNormalLib YES
+  
+  를 추가하여 스태틱링크용의 libX11.a 를 만들 필요가 있습니다.
+  
+B-3: Sun 의 콘솔에서 작동하는 Mule 을 만드는데는 어떻게 하면 됩니까?
+  
+  $MULE/src/config.h 내에 HAVE_SUN_CONSOLE 을 define 합니다.
+  
+  이 경우는 pixrect 라이브러리를 이용하기 때문에, SunView_Programmers
+  가 인스톨되어 있을 필요가 있습니다. Solaris 2.0 이후의 OS 는
+  pixrect 라이브러리를 지원하고 있지 않기 때문에 이 기능은 이용할 수
+  없습니다. SunOS 4.x 에서도 Sun 기계를 구입했을 때에 프리인스톨되어
+  있는 SunOS 내에는 SunView_Programmers 는 포함되어 있지 않기 때문에
+  미리 인스톨해야 합니다.
+  
+B-4: "Pure Lisp storage exhausted" 라는 메세지가 나오고 컴파일이
+ 중지되어 버립니다만.
+  
+  Ken'ichi Handa <handa@etl.go.jp> 씨는 다음과 같이 기술하고 있습니다.
+  
+    이것은 puresize.h 내의 PURESIZE 의 값이 너무 작기 때문입니다.
+    시스템에 따라서는 이 값을 늘릴 필요가 있는 것 같습니다. 그리고,
+    대부분의 언어환경 설정화일 (e.g. japanese.el, chinese.el) 을
+    site-init.el 에서 로드할 경우도 늘릴 필요가 있습니다. 우선
+    배 정도로 해서 잘 되면, temacs 가 mule-init.el 를 로드한 후에 표시
+    하는 Pure Bytes Used XXXXX 를 참조하여 그것보다 조금 큰 값정도로 
+    설정하여 고쳐서 다시 메이크, 라고하는 수단이 필요합니다.
+  
+  주의할 것은, src/config.h 내에도 PURESIZE 의 정의가 있습니다만,
+  Mule 에서는 src/puresize.h 에서 재정의되기 때문에, config.h 의
+  PURESIZE 를 변경하더라도 의미가 없다라는 것입니다. 어설피 Emacs 에
+  익숙되어 있으면 "아둔해지기" 때문에 조심하세요.
+  
+B-5: "Undefined Symbol: __des_crypt" 라는 메세지가 나오고 컴파일이
+ 정지되어 버립니다만.
+  
+  Masato Minda <minmin@astec.co.jp> 씨는 다음과 같이 이야기하고 있습니
+  다.
+  
+    이것은, SunOS 의 JLE1.1.1 에서 static 링크하면 나오지 않았던가?
+  
+    해결법
+        JLE 의 패치를 붙인다 (patch ID 는 잊어버렸습니다)
+        JLE1.1.1 rev B 이후로 한다.
+        JLE 를 안한다 :-)
+  
+    시도하여 본 것은 아니지만, 빈 _des_crypt 함수 만들고, 함께
+    링크하더라도 잘 되지 않을 까?
+  
+B-6: Mule 의 컴파일은 정상으로 되었습니다만, 일본어를 잘 입력할 수
+ 없습니다.
+  
+  Mule 에서는, 인스톨할 때에, site-init.el 에서 사용하고 싶은 언어의
+  specific 화일을 지정하여 로드하도록 되어 있습니다. 디폴트로는
+  site-init.el 는 존재하고 있지 않습니다.
+  
+  일본어를 사용하고 싶으면, lisp/site-init.el 에 (load "japanese") 라
+  는 행을 쓰고 Mule 을 사용하여 보세요.
+
+
+다국어의 취급에 대하여
+
+C-1: 일본어는 어떻게 하면 입력할 수 있습니까?
+  
+  일본어 입력시스템으로서는, 아래의 것이 마련되어 있습니다.
+  
+     * 타마고(EGG)…타까나버젼
+     * sj3-egg
+     * 칸나(Canna)
+  
+  어느것이나 네트워크 가나한자변환서버를 이용하고 로마자 한자변환방식
+  의 일본어입력을 제공하고 있습니다. 상세한 것에 대해서는, 각 시스템의
+  메뉴얼을 참조하세요. 이들의 일본어 입력시스템은, Mule 을 구축할 때에
+  각각 시스템을 사용하도록 설정해야 합니다.
+  
+     * quail 에 의한 T-CODE 입력
+  
+  이것은 가나한자변환서버를 사용하지 않는 입력법입니다.
+  lisp/quail-tcode.el을 로드한 후, C-] 로 ASCII 와 T-CODE 모드가 토글
+  됩니다.
+  (주:quail-tcode.el 는 곧 삭제되고 tc-mule.el 로 치환됩니다)
+  
+  일본어입력에는 "SKK"를 이용할 수도 있습니다. "SKK"는 Mule을 구축할
+  때에 특별한 설정은 아무것도 하지 않아도 사용할 수 있습니다. "SKK"
+  는 Mule 내에서만 사용방법도 가능하고, 사전서버를 이용하는 사용방법
+  도 가능합니다.
+  
+C-2: "타마고"란 무엇입니까?
+  
+  "타마고"는, Wnn 의 네트워크 변환서버(jserver/cserver)를 이용하여
+  일본어 혹은 중국어의 입력환경을 제공하는 시스템입니다. "타마고"를
+  영역하여 EGG 라고 부르기도 합니다.
+  
+  "타마고"는 크게 나누면 입력문자변환계(로마자 가나변환부), 가나한
+  자/pinyin->Hanzi변환부, 그리고 일본어 편집기능으로 이루어져
+  있습니다. 입력문자변환계는 히라가나.가따가나.pinyin만이 아니라,
+  중국어나 다른 언어입력에도 이용됩니다.
+  
+C-3: "타까나"란 무엇입니까?
+
+  Toshiaki SHINGU <shingu@cpr.canon.co.jp> 씨는, 다음과 같이 이야기하
+ 고 있습니다.
+
+    "타마고"의 Wnn V4 라이브러리 판입니다. "타마고요(타마고여)/
+    까시꼬꾸(영리하게)/나-레(되어라)"
+    의 머리문자로부터 명명되었습니다. 종래의 "타마고"에 덧붙여서,
+
+      대문절/소문절 변환
+      역변환(한자 --> 가나)
+      V4 jserver 가 갖는 품사(인명 등)에서의 사전등록
+      단어를 사전으로부터 삭제하지 않고 유효/무효로 할 수 있다
+      단어의 빈도 설정
+      사전에 코멘트를 설정한다
+
+    가 가능합니다.
+
+  "타까나"는 "타마고"와는 별개의 것이 아니라, "타마고"를 강화한 것이라
+  고 말할 수 있습니다. 금후, "타마고"는 "타까나 버젼"에 집약되어, 이전
+  의 Wnn V3 및 Wnn V4 의 V3 호환 라이브러리에 대응한 것은 지원되지 않습
+  니다.
+  
+C-4: sj3-egg란 무엇입니까?
+  
+  X11R5 의 contrib 에 포함되어 있는 sj3serv 와 통신하는 "타마고"입니다.
+  변환효율이 대단히 좋다고 하는 특징을 갖고 있습니다.
+  
+C-5: 칸나(Canna) 란 무엇입니까?
+  
+  서버…크라이언트 방식의 가나한자 변환시스템입니다. Mule 에서는,
+  "타마고"와 거의 같은 사용자 인터페이스로 "칸나"의 변환서버를 이용한
+  가나한자 변환시스템을 이용할 수 있습니다.
+  
+C-6: "SKK"란 무엇입니까?
+  
+  Masahiko Sato <masahiko@sato.riec.tohoku.ac.jp> 씨는, 다음과 같이
+  기술하고 있습니다.
+  
+  'SKK"는 Mule 을 위하여 고속으로 효율적인 일본어 입력환경을 제공하는
+  시스템이고, 특히 사용자가 의도한 문장 그대로의 형태로 용이하게 입력
+  할 수 있는 시스템입니다. "SKK"는 문법적인 해석을 전혀 하지 않고 변환
+  을 하기 때문에 고속의 변환이 가능하고, 사용자가 오꾸리가나의 개시위치
+  를 지정하는 것에 의해 의도를 전달하기 때문에 효율적인 변환이 가능하도
+  록 되어 있습니다. 또한 사전등록할 때에 품사에 대한 정보를 줄 필요도 
+  없기 때문에, 사용자 사전을 간단하게 강화할 수 있습니다. "SKK"의 사용
+  방법은 튜토리얼 프로그램에 의해 단시간에 습득할 수 있습니다.
+  
+C-7: 중국어를 입력하기 위해서는?
+  
+  중국어를 입력하는 데에도, "타마고"시스템을 사용합니다. "타마고"는
+  cWnn 의 cserver 와 통신하는 것에 의해서, 편리한 중국어(GB)입력방법을
+  제공합니다. M-x load-library RET chinese RET 으로서, PinYin 모드를
+  선택하면, pinyin로 입력할 수 있도록 됩니다.
+  
+  또한, Mule 은 quail-system 도 제공하고 있습니다. 이 시스템은
+  `cxterm/dict/tit' 에 있는 모든 입력변환테이블을 지원하고 있습니다.
+  
+C-8: 한국어를 입력하기 위해서는?
+  
+  한국어문자의 입력용르로, quail-hangul.el 이 제공되어 있습니다. 이 시
+  스템의 사용방법은, 'doc/QUAIL' 을 참조하세요.
+  
+C-9: ISO 8859 문자를 입력하는데는?
+  
+  Mule 에서는 Latin-1 (ISO8859-1)으로부터 Latin-5 (ISO8859-9)까지의 문
+  자세트도 지원하고 있습니다. 통상의 ASCII 키보드에서 이들의 문자를 입
+  력하는데는 역시 quail-system 을 사용합니다.
+  
+  ISO 8859 에서 정해져 있는 문자를 입력하기 위해서, 아래에 열거한 5개
+  의 화일이 마련되어 있습니다.
+
+  * quail-latin.el : 라틴 알파벳을 사용하는 모든 언어 (타이프가 느린
+                     사람용)
+  
+    초심자를 위한 화일입니다. 대부분의 기호첨부문자는, 2문자의 합성으
+    로 입력하도록 되어 있습니다. 예를들면 ^[.A^[Ni (accute accent 첨부
+    의 e)는 e 의 ^[*B뒤에 ' (single quote) 를 치는 것으로 입력할 수 
+    있습니다.
+    
+    언어                패키지명
+    ----------------------------------
+    덴마크어 	        danish
+    에스페란토          esperanto
+    핀란드어 	        finnish
+    프랑스어		french
+    독일어		german
+    아이스랜드어	icelandic
+    이태리어		italian
+    노르웨이어          norwegian
+    스페인어		spanish
+    스웨덴어 	        swedish
+    터어키어		turkish
+    영어(또는아메리카어)british
+    ISO 8859-1		latin-1
+    ISO 8859-2		latin-2
+    ISO 8859-3		latin-3
+    ISO 8859-4		latin-4
+    ISO 8859-9		latin-5
+
+  
+  * quail-ltn.el : 라틴 알파벳을 사용하는 모든 언어 (타이프가 빠른 사
+                   람용)
+  
+    quail-latin.el 의 입력방법은 답답하다라고 하는 사람을 위한 화일입
+    니다. "타이핑수는 적을 수록 좋다"라는 철학에 기초해서 만들어져 있
+    습니다. 각 언어에서 고유문자의 대부분은 어딘가의 키에 할당되어 있
+    기 때문에, 한번 배열을 외워버리면 고속으로 타이핑이 가능합니다.
+  
+  
+    언어                패키지명
+    ----------------------------------
+    덴마크어 	        dnsh
+    핀란드어 	        fnnsh
+    프랑스어		frnch, azerty
+    독일어		grmn
+    아이스랜드어	iclndc
+    이태리어		itln
+    노르웨이어 	        nrwgn
+    스페인어		spnsh
+    스웨덴어 	        swdsh
+
+  
+  * quail-cyrillic.el : 시릴 문자를 사용하는 모든 언어
+  
+    언어	        패키지명        주석
+    -------------------------------------------------------
+    러시아어		jcuken		표준러시아어 배열
+			jis-russian	jcuken 과 같음
+					단, JIS 인코딩
+    마케도니아 	        macedonian      JUS.I.K1.004
+    세르비아어		serbian		JUS.I.K1.005
+    byelorussian 	byelorussian	JUS.I.K1 닮게 만듬
+    우크라이나어	ukrainian	JUS.I.K1 닮게 만듬
+    ISO 8859-5          yawerty		라틴 문자로의 전사
+  
+  
+  * quail-greek.el : 그리스 문자용
+  
+    언어		패키지명	주석
+    -------------------------------------------------------
+    그리스어		greek
+			jis-greek	greek 와 같음
+					단, JIS 인코딩
+  
+  
+  * quail-hebrew.el : 히브리 문자용
+  
+    언어		패키지명
+    --------------------------------
+    히브리어		hebrew
+  
+  
+  목적의 패키지가 표함되어 있는 화일을 로드한 후, C-] 을 치는 것으로
+  quail-minor-mode 와 통상의 모드 간을 오고 갈 수 있도록 됩니다.
+  특정 언어용 패키지를 선택하는데는, quail-minor-mode 내에서
+  M-s 라고 치든가, (quail-use-package "패키지 이름")을 평가하여 주세요.
+  또한 M-z 로 간단한 도움말 화면이 나옵니다.
+  
+  예:
+  
+  1) 독일어 초심자가 독일어를 입력해야 할 때
+     
+     (load "quail-latin")
+     (quail-use-package "german")
+     
+     위의 2행을 .emacs 에 넣어 주세요.
+     
+  2) 프랑스어용의 azerty 배열을 사용하고 싶을 때
+     
+     (load "quail-ltn")
+     (quail-use-package "azerty")
+     
+     를 .emacs 에 넣어 주세요.
+  
+C-10: Latin-1 문자를 캐릭터단말에 표시하는데는?
+  
+  TAKAHASHI Naoto <ntakahas@etl.go.jp> 씨는 다음과 같이 기술하고 있습	      !
+  니다.									      !
+  
+    캐릭터 단말상에서 사용하고 있는 Mule 에 Latin-1 문자를 표시시키는
+    데는 display-coding-system 에 *ctext* 를 세트합니다. 이것은,
+    .emacs 내에
+  
+      (setq display-coding-system *ctext*)
+  
+    라고 써 두는 것으로 실현할 수 있습니다. 또는 Mule 기동후에 M-x
+    set-display-coding-system 라고 타이프하고, Display-coding-system:
+    라는 프롬트에 대해서 *ctext* 라고 답하는 것으로도 됩니다.
+  
+    또한, X-window 를 사용하고 있는 경우에도, Mule 을 -nw 옵숀부착으로
+    기동한 경우은 같은 절차가 필요합니다.
+  
+    어떤 경우에도, 사용하고 있는 캐릭터단말, 혹은 단말에뮤레터가
+    Latin-1 캐릭터에 대응하고 있어야 합니다.
+  
+C-11: 세상에는 문장을 오른쪽에서 왼쪽으로 쓰는 언어도 있습니다만,
+  Mule 은 그러한 언어에 대응할 수 있습니까?
+
+  현재 히브리어가 지원되고 있습니다. 입력방법으로서는
+  quail-hebrew 가 사용가능합니다. 또한 highlight-reverse-direction,
+  r2l-double-cursor 등의 도큐먼트를 참조하세요. 아랍어,페르시아어 등에
+  대해서도 지원할 예정입니다.
+  
+C-12: 일본어(or 한국어/중국어)의 입력에서 형태는 알고 있지만, 읽기를
+ 모를 때 어떻게 입력합니까?
+  
+  일본어의 경우, "타마고"에서는 부수입력(M-x busyu-input)와 획수입력
+  (M-x kakusuu-input)을 지원하고 있습니다. 이 기능을 사용하는 것에 의
+  해, 미니버퍼의 메뉴로부터 부수 혹은 획수를 지정하여 한자를 입력할
+  수 있습니다.
+  
+C-13: Mule 과 관련하고 있는 코드계는 어떤 것이 있습니까? 어떤 때에
+ 그것과 관련합니까?
+  
+  Mule 은 아래에 나타내는 코드계를 지원하고 있습니다.
+  
+   * Mule 의 버퍼에서 사용되고 있는 내부코드
+   * MS 한자코드/Shift JIS (일본어만)
+   * ISO2022 에 기인한 것(JIS [JUNET], EUC, CTEXT 를 포함한다)
+   * Big5(중국어만)
+  
+  Mule 에서는, 이들의 코드계를, 화일입출력, 키입력, 화면표시,
+  프로세스간 통신 각각에 대하여 독립적으로 지정할 수 있습니다.
+  
+C-14: *Buffer List* 에 표시되는 버퍼 사이즈와, 세이브했을 때에
+  생긴 화일의 사이즈가 크게 다릅니다만, 왜 그렇습니까?
+  
+  Mule 에서는, 문자의 내부표현으로서 각 문자세트마다 리딩캐릭터라는
+  것을 배정하고, ASCII 이외의 문자는 모두 리딩케릭터를 머리에
+  붙인 것을 내부코드로서 하고 있습니다. 따라서 Latin-1 등의 8비트
+  문자는 내부에서는 2바이트로 되고, 한자등의 16비트문자는 내부에서는
+  3바이트로 됩니다. 내부표현대로 세이브하면 버퍼의 사이즈와 화일의
+  사이즈는 일치합니다만, 다른 인코딩법으로 세이브하면 양자는 맞지
+  않는 경우가 있습니다.
+  
+C-15: kterm 에서, 마우스에 의한 cut & paste 를 할 수 없습니까?
+  
+  Mule 을 kterm 에서 기동하고 있는 경우, Mule 의
+  keyboard-coding-system 이, kterm 의 한자모드와 맞지 않는 경우,
+  paste 할 수 없습니다. kterm 의 한자모드와 Mule 의 keyboard-
+  coding-system 을 맞추어서 행하여 주세요.
+  
+C-16: kinput2 으로부터 한자를 입력할 수 있습니까?
+  
+  kterm 에서 Mule을 작동시키는 것으로, kinput2 으로부터 입력할 수 있습
+  니다. 단, 그 때는, Mule 의 keyboard-coding-system 을 kterm 의 한자모
+  드와 맞도록 설정할 필요가 있습니다.
+  
+C-17: (setq keyboard-coding-system *euc-japan*) 라고 설정하였습니다만,
+ ㄶ아무래도 잘 작동하여 주지 않습니다만?
+  
+  setq 로, keyboard-coding-system 에 값을 바인드해서는 안됩니다.
+  반드시 set-keyboard-coding-system 함수를 사용하도록 하세요. 다른
+  display-coding-system 나 file-coding-system 등도 같습니다.
+  
+C-18: set-keyboard-coding-system 에서 *autoconv*, *big5-hku*,
+  *big5-eten*, *internal* 의 설정을 할 수 없습니다만?
+  
+  이것은 Mule 의 설계시방(specification)입니다.
+  
+C-19: EUC 에서 일본, 한국, 중국, EC 등 각국어를 동시에 표시할수 있도록
+ 하고 싶습니다만?
+  
+  각국어의 EUC 는, 각각 완전히 같은 코드계이기 때문에 혼재시키는 것은
+  불가능합니다. 다국어를 동시에 표시시킬 필요가 있으면, Mule 에서
+   *junet* 혹은 *ctext* 의 코드를 사용하도록 하세요.
+  
+C-20: Mule에서 사용하고 있는 코드계의 도큐먼트는 있습니까?
+  
+  도큐먼트는, ISO 2022 입니다. JIS 라면 JIS X0202입니다. Mule 의
+  texinfo 메뉴얼이나 $MULE/doc/ISO2022 에도 간단한 설명이 있습니다.
+  
+C-21: 인크리멘털 서치 중에 한자를 입력하기 위해서는?
+  
+  인크리멘털 서치(isearch) 중에 문자열을 입력하는데는, C-k 를 입
+  력합니다. 이 모드에서는 미니버퍼 중에 문자열을 입력할 수 있기 때문에,
+  C-\ 로 일본어/중국어를 입력할 수 있습니다. 문자열 입력이 끝나면,
+  RET 키를 치세요. Mule 은 isearch 를 재개합니다.
+  (주:이 항은 곧 변경할 예정)
+  
+C-22: Mule 에서 사용할 수 있는 다양한 언어용의 폰트는 어디에서 입수합
+ 니까?
+  
+  아래의 장소로부터 anonymous FTP 로 입수할 수 있습니다.
+  
+    etlport.etl.go.jp: /pub/mule/fonts
+    sh.wide.ad.jp: /JAPAN/mule/fonts
+  
+  여기에는, 아래와 같은 폰트화일이 포함되어 있습니다.
+  
+    BIG5.tar.gz
+     -- Big5 encoding 16x15dots font for Chinese
+    Chinese.tar.gz
+     -- 16x16 and 24x24 GB fonts for Chinese
+    CYRILLIC.tar.gz
+     -- KOI encoding fonts for Cyrillic characters
+    ETL.tar.gz
+     -- 14dots, 16dots, and 24dots fonts for ISO8859-1,2,3,4,5,7,8,9 	      !
+        12x24dots fonts for SiSheng
+        12x29dots fonts for Thai
+        12x24dots fonts for Vietnamese
+    Japanese.tar.gz
+     -- 14x14, 16x16, 24x24 JIS fonts for Japanese
+    Korean.tar.gz
+     -- 16x16 and 24x24 Korean fonts
+  
+  또한, GB font 는 X11R5 에 contribute 되어 있는 cxterm 에도 포함되어
+  배포되고 있습니다.
+        X.V11R5/contrib/client/cxterm/fonts
+  라는 디렉토리 내를 보세요. 이하의 폰트가 있을 것입니다.
+        cclib16fs.bdf 16x16 Fang Song style, GB encoding
+        cclib16st.bdf 16x16 Song style, GB encoding
+        cclib24st.bdf 24x24 Song style, GB encoding
+        hku-ch16.bdf 16x16 Fang Song style, BIG5 encoding
+  
+C-23: 뉴스그룹 alt.chinese.text[.big5] 를 중국어로 읽을 수 있습니까?
+  
+  alt.chinese.text 에서는, ~{ 와 ~} 를 'ESC $ A' (중국어의 G0 로의
+  designate) 와 'ESC ( B' (ASCII 의 G0 로의 designate) 의 대신에 사용
+  하고 있습니다. 이것은 Hz encoding 라고 불리고 있습니다. Mule 에서는,	      !
+  chinese.el 을 로드한 후, GNUS 와 gnusutil.el 를 이용하는 것에 의해,	      !
+  이 뉴스그룹을 보통 중국어로 읽는 것이 가능합니다. GNUS 를 기동하기 	      !
+  전에 gnusutil.el 를 로드하세요. gnusutil.el 는, Mule 의 ftp 디렉토리	      !
+  의 contrib/lisp 내에 있습니다(Mule 의 배포화일 내에는 포함되어 있지	      !
+  않습니다). 								      !
+  
+C-24: quail-help 에서 표시되는 문자와 실제로 입력되는 문자가 다릅니다
+ 만, 이것은 버그입니까?
+  
+  변수 *quail-keyboard-translate-table* 이 옳게 세트 되어 있는가
+  확인하세요. 이 변수가 디폴트로 되어 있으면, vt100 와 같은 배열의
+  키보드가 사용되고 있는 것이라고 가정하고 그 용도의 배열표시를 행합니
+  다. 특히 JIS 키보드를 사용하고 있는 경우는 .emacs 내에
+  
+        (setq *quail-keyboard-translate-table*
+              *quail-keyboard-translate-table-jis*)
+  
+  를 넣어둘 필요가 있습니다.
+  상세한 것은 doc/keyboard-translation.text 를 보세요.
+  
+C-25: 반각 가따가나(JIS X0201가따가나) 를 입력하기 위해서는?
+  
+  Ken Shibata <shibata@sgi.co.jp> 씨는 아래와 같이 기술하고 있습니다.
+  
+    Mule 에는, 반각 가따가나(JIS X0201가따가나)의 입력을 위해서
+    jisx0201.el, its/han-kata.el 의 2개의 emacs lisp 가 마련되어 있습 	      !
+    니다. jisx0201.el 에서는 펜스모드에서 이미 입력된 전각의 가따가나,
+    히라가나를 일괄변환하는 fence-hankaku-katakana(펜스모드 내에 M-x)
+    가, its/han-kata.el 에는 로마자 반각 가따가나 변환을 행하기 위한 	      !
+    its:select-hankaku-katakana(통상의 모드에서 C-x C-k x, 펜스모드에
+    서 M-C-x)가 포함되어 있습니다.
+  
+    게다가, jisx0201.el 에는 일괄변환인 hankaku-katakana-region,
+    zenkaku-katakana-region(paragraph,sentence,word 도 있습니다)가
+    포함되어 있습니다. its/han-kata.el 는 jisx0201.el 를 로드하기 때문 	      !
+    에, 필요에 따라서 어느쪽인가를 .emacs 에 로드하세요. 단, 이 lisp
+    를 로드하는데는 상당한 시간이 걸리기 때문에, 빈번히 반각가따가나를
+    입력하는 사람은 site-init.el 로 로드하도록 하여 다시 컴파일을 하여
+    두면 좋겠지요.
+  
+    입력의 순서를 정리합니다.
+  
+    1)펜스모드에서 이미 입력한 가따가나를 반각으로 하는데는 M-x
+      반각가따가나를 전각히라가나(가따가나)로 되돌리는 것은 M-h (M-k)
+  
+    2)통상의 모드에서 로마자 반각가따가나 모드로 바꾸는 것은 C-x C-k x
+      로마자 전각히라가나 모드로 되돌리는 것은 C-x C-k h
+  
+    3)펜스모드에서 로마자 반각가따가나 모드로 바꾸는 것은 M-C-x
+      로마자 전각히라가나 모드로 되돌리는 것은 M-C-h
+      (사족입니다만, bobcat.el 등으로, bs 와 del 을 교환하여 Meta를 ㆂ
+      ESC 키로 입력하고 있는 사람은 M-C-h 는 ESC DEL 로 됩니다.)
+  
+C-26: Mule 에서 만든 텍스트를 인쇄하는데는?
+  
+  Mule 의 etc 디렉토리에 포함되어 있는 m2ps 라는 프로그램을 사용하면,
+  다국어를 포함한 화일을 포스트스크립프린트로 인쇄할 수 있는 형식으로
+  변환할 수 있습니다. 단, m2ps 는 Mule 의 *internal* 이라는 코드계로
+  인코드된 화일만을 다룹니다.
+  
+  m2ps 는, X 의 BDF 화일을 폰트로서 사용하고, 문자 부분을 비트맵으로
+  전개하여 프린터에 보냅니다. 따라서 프린터에 폰트가 없더라도 다국어
+  텍스트를 인쇄할 수 있습니다. m2ps 에는 온라인메뉴얼 (m2ps.1)가
+  붙어 있으므로, 상세한 것은 그것을 참조하세요.
+
+C-27: Mule + Egg 를 사용하고 있을 때 "nn"으로 "ㆃ"가 입력되도록
+ 하는데는 어떻게 하면 좋습니까?
+  
+  .emacs 내에
+  
+        (setq enable-double-n-syntax t)
+  
+  라는 1행을 넣으면 OK 입니다.
+									      +
+C-28: 일본어.중국어.한글등의 2바이트코드를 포함한 화일명을		      +
+  잘 처리할 수 없습니다만.						      +
+									      +
+  ASCII 이외의 문자를 포함한 화일명으로 옳게 처리하기 위해서는 		      +
+  src/mconfig.h 내에서 USE MCPATH 가 정의되어 있을 필요가 있습니다. 	      +
+  이 화일의 최후 근방에 /* #define USE MCPATH */ 라는 행이 있으므로,	      +
+  이 코멘트를 지우고나서 Mule 을 다시 컴파일하세요. 또, 사용하는 화일	      +
+  명의 코드계를 지정할 필요가 있습니다. site-init.el 에 다음과 같은	      +
+  코드를 추가하면 됩니다(*autoconv* 는 사용할 수 없습니다).		      +
+									      +
+    ;;; 예: 패스명에, 한국어 EUC 를 사용한다				      +
+    (if (fboundp 'set-pathname-coding-system)				      +
+        (set-pathname-coding-system *euc-korea*))			      +
+
+Nemacs/Emacs 와의 호환성
+
+D-1: Mule 은, Nemacs/Emacs 의 상위호환이 아닙니까?
+  
+  Mule 은, GNU Emacs 를 베이스로 만들어져 있습니다만, emacs lisp의 레
+  벨에서 보면, 적지만 호환성이 없는 부분도 있습니다. 또한, Nemacs
+  와는 상당히 다른 것으로 되어 있습니다.
+  
+  Mule 와 Nemacs/Emacs 와의 emacs lisp 의 비호환성에 대해서, Enami
+  Tsugutomo <enami@sys.ptg.sony.co.jp> 씨는 다음의 점을 지적하고 있습
+  니다.
+  
+    * Nemacs 혹은 Mule 에서만 존재하는 함수/변수에 의한 비호환성.
+    * Mule 에서 Multilingual 화를 위해서 설계시방이 변경(인수의 추가
+      등)된 것에 의한 비호환성.
+    * Nemacs 와 Mule 에서 ascii 이외 문자의 내부표현이 틀린 것에 기인
+      하는 byte compile 후의 file 의 비호환성. (단 byte code 의 호환성
+      은 있습니다(그렇죠?:))
+    * base로 하고 있는 emacs 버젼의 차이에 의한 비호환성
+      (current-column뿐인가?)。
+  
+D-2: 사랑해야 할 ange-ftp 를 로드하면 M-! (shell-command) 가 작동하지
+ 않는 것은 무슨 이유입니까?
+  
+  ange-ftp 를 로드하면 대부분의 함수가 치환됩니다만, 그 중에 Mule
+  에서 인수의 지정이 변경되어 있는 write-region 과 
+insert-file-contents
+  가 포함되어 있습니다.
+  
+  명령어 shell-command 는 write-region 과 insert-file-contents 를
+  Mule 에서 추가된 인수를 사용하여 호출하고 있습니다만, ange-ftp 가
+  치환한 write-region 는 이 인수를 해석할 수 없기 때문에 에러가 발생하
+  고, shell-command 의 실행이 실패하고 있는 것입니다.
+  
+  해결법을 Masayuki Kuwada <kuwada@soliton.ee.uec.ac.jp> 씨는 다음과
+  같이 기술하고 있습니다:
+  
+    ange-ftp.el 의 ange-ftp-write-region 와
+    ange-ftp-insert-file-contents 의 정의부분의 인수의 최후에
+    &rest coding-system 를 추가하고, 이하의 수정을 하면 동작합니다.
+    (Emacs, Nemacs 와의 공유도 가능합니다).
+									      !
+    [주의] 이하의 수정은 ange-ftp 의 버젼 				      !
+    RCS: $Header: ange-ftp.el, v 4.20 92/08/14 17:04:34 ange EXp $ 	      !
+    에 대한 것입니다. ange-ftp 의 버젼에 따라서는 인수가 다른 경우가	      !
+    있기 때문에, 이하의 수정예를 참고하여 수정하여 주세요.		      !
+									      !
+    함수 ange-ftp-write-region 의 내부에 ange-ftp-real-write-region 이	      !
+    2군데에서 사용되고 있습니다만, 그것들을 각각 다음과 같이 변경합니다.      !
+    (ange-ftp-real-write-region start end temp nil visit)
+                         |
+	                 V
+    (apply 'ange-ftp-real-write-region start end temp nil
+	   visit coding-system)
+  
+    (ange-ftp-real-write-region start end filename append visit)
+			 |
+			 V	
+    (apply 'ange-ftp-real-write-region start end filename append
+           visit coding-system)
+  
+    또한, 함수 ange-ftp-insert-file-contents 의 내부에
+    ange-ftp-real-insert-file-contents 가 2군데에서 사용되고 있습니다
+    만, 그것들을 각각 다음과 같이 변경합니다.
+    (ange-ftp-real-insert-file-contents temp visit)
+			 |
+	                 V
+    (apply 'ange-ftp-real-insert-file-contents
+           temp visit
+           coding-system)
+  
+    (ange-ftp-real-insert-file-contents filename visit)
+			˛
+    (apply 'ange-ftp-real-insert-file-contents
+           filename visit coding-system)
+  
+D-3: Nemacs 와 Mule 에서 .emacs 을 공유할 수 있습니까?
+  
+  Mule 는 Nemacs 와 호환성이 없습니다. 그래서 Nemacs 용의 .emacs 를
+  그대로 사용하면 Mule 에서는 에러가 될 경우가 있습니다.
+  
+  그러나 아래와 같이 Mule 에서 실행하는 부분과 Nemacs 에서 실행하는
+  부분을 잘라서 나누면 공유하는 것이 가능합니다.
+  
+      (if (boundp 'MULE)
+        (Mule 의 경우에 실행하는 부분))
+      (if (boundp 'NEMACS)
+        (Nemacs 의 경우에 실행하는 부분))
+  
+  Mule 의 texinfo 메뉴얼에, Mule 과 Nemacs 에서 공유가능한 .emacs 의
+  샘플이 있으므로 참고로 하세요.
+  
+  단, byte-compile 할 경우는 공유할수 없는 것도 있습니다. 이 점에
+  대하여 Enami Tsugutomo <enami@sys.ptg.sony.co.jp> 씨는 다음과 같이
+  기술하고 있습니다.
+  
+    ~/.emacs 를 Nemacs 와 Mule 과 공유할 수 있도록 하더라도, 만약 byte
+    compile 하려면 별도의 (byte compile된)화일로 하지 않으면 안됩니다.
+  
+    즉 한자의 문자열등이 들어 있으면, (Nemacs 와 Mule 에서 ascii 이외
+    문자의 내부표현이 다른 것에 기인하는, byte compile 후의 file 의 비
+    호환성에 의해) byte compile 은 적더라도 다시 하지 않으면 안된다
+    는 것입니다:)。
+  
+D-4: Nemacs 에서는 잘 동작하고 있었는데, Mule 로 하면 "Symbol's
+ function definition is void: define-program-kanji-code" 라고 메세지가
+ 나오고 잘 동작되지 않습니다. 어떻게 하면 좋습니까?
+  
+  Atsushi Furuta <furuta@srarc2.sra.co.jp> 씨는, 다음과 같이
+  기술하고 있습니다.
+  
+    define-program-kanji-code 는 Nemacs 에만 있는 함수입니다. 따라서,
+    그대로는 Mule에서 작동되지 않습니다. define-program-coding-system
+    라는 함수가, 대역을 하여 줍니다. 예를 들면, 다음과 같이 바꾸어 씁
+    니다.
+   
+        (define-program-kanji-code nil ".*inc.*" 2)
+                |
+                V
+        (define-program-coding-system nil ".*inc.*" *junet*)
+  
+    똑같이, "kanji-code"를 포함한 변수/함수를 찾을 수 없는 경우,
+    "kanji-code" 를 "coding-system" 으로 치환한 변수/함수가 Mule 에
+    있는 경우가 있습니다. 또한, "kanji-flag" 라는 변수는, "mc-flag" 라
+    는 변수가, 대역을 하고 있습니다.
+
+  그리고, Mule 에서 Nemacs 용으로 쓰여진 코드를 작동하도록 하기 위한	      +
+  패키지도 있습니다. Ken'ichi Handa <handa@etl.go.jp> 씨는 다음과	      +
+  같이 기술하고 있습니다.						      +
+									      +
+    From: handa@etlken.etl.go.jp (Kenichi Handa)			      +
+    Newsgroups: fj.editor.mule,fj.editor.emacs				      +
+    Subject: nemacs -> mule						      +
+    Message-ID: <HANDA.93Oct15215300@etlken.etl.go.jp>			      +
+    Date: 15 Oct 93 21:53:00 GMT					      +
+    									      +
+    Nemacs 로부터 Mule 로의 이행을 용이하게 하기 위하여 메일링리스트 	      +
+    에 있는 분들의 협력하에 이하와 같은 단순한 패키지를 만들었습니다.	      +
+   									      +
+    이하의 2개의 .el 화일을 로드패스의 어딘가에 넣어두면, 		      +
+    .emacs 에 Nemacs 용의 코드를 넣어 두는 분은, .emacs 를 이하와	      +
+    같이 수정함으로써 Nemacs 용의 설정과 같은 것을 Mule에서도		      +
+    할 수 있습니다. 실지로 해보세요.					      +
+    	(load-library "nemacs-pre")					      +
+    	... 원래의 .emacs 의 코드 					      +
+    	(load-library "nemacs-post")					      +
+    물론 이렇게 수정하더라도 Nemacs 의 사용에는 지장이 없습니다.  	      +
+    									      +
+    아직 완전한 것이 아니기 때문에, 			 		      +
+    	"나는 Nemasc 용의 이러한 설정을 하고 있지만, Mule 에서 	 	      +
+    	는 어떻게 하면 좋습니까?"					      +
+    라는 질문을 기다리고 있습니다.					      +
+  									      +
+  그리고, nemacs-pre.el 과 nemacs-post.el 는 		 		      +
+  etlport.etl.go.jp:/pub/mule/contrib/lisp 로부터 FTP 로 입수할 수 있	      +
+  습니다. 								      +
+  
+D-5: GNU Emacs, Nemacs 용에 쓰여진 Emacs lisp 프로그램 중, Mule
+ 에서 작동하는 것과 작동하지 않는 것을 가르쳐 주세요.
+  
+  * 무변경으로 Mule 에서 동작하는 것
+  이름          버젼            비고
+  auctex	6.1d, 7.1p
+  cmutex	2.03
+  GNUS          3.13, 3.14.1,
+		3.15		GNU Emacs 19.x 에 묶음.
+				함수명, 변수명이 모두 소문자로 통일되
+                                어 있으므로 hook 를 설정하고 있는 경우
+				는 그 hook 를 수정할 필요가 있다.
+  ispell        2.1?            ispell 3.0.5 에 대하여 있는 것
+  mh-e          3.8
+  SKK           6.7 이후        6.7 보다 오래된 것은 불가
+  Supercite     2.3             일본어 대응으로 사용하는데는 질문 E-3 를 참조
+  vm		5.32, 5.33
+  
+  * Mule 전문 혹은 Mule 용으로 수정된 버젼이 있는 것
+  이름          버젼            비고
+  boiled-egg    3.10            mule/contrib 에 수록
+  canna
+  EGG           3.05            Mule 표준장비
+  diclookup                     mule/contrib 에 수록
+  guess-coding                  mule/contrib 에 수록
+  keisen                        마스이판,mule/contrib 에 수록
+  keisen                        미에대학판
+  mh-search                     mule/contrib 에 수록
+  sj3-egg       1.6
+  jam-zcat      1.42
+  
+  * Mule 에서는 작동하지 않는 것
+  이름          버젼            비고
+  ange-ftp      4.20            단, 패치를 붙이면 작동한다 (D-2 참조)
+  x-sb-mouse    1.4(92-05-23)   단, 패치를 붙이면 작동한다
+
+
+메일 & 뉴스
+
+E-1: mail 모드로 했을 때, 자동적으로 코드계를 JIS 로 하는데는?
+  
+  RMAIL 이나 VM 을 사용하고 있는 분은 mail-mode-hook 를 이용하고, mail
+  모드로 되었을 때에 코드계를 JIS 로 설정합니다.
+  
+    (setq mail-mode-hook
+          '(lambda ()
+             (cond ((boundp 'NEMACS)
+                    (setq kanji-fileio-code 2))
+                   ((boundp 'MULE)
+                    (set-file-coding-system *junet*)))))
+  
+  MH-E 를 사용하고 있는 분은 mh-letter-mode-hook 를 이용하고,
+  mh-letter 모드가 되었을 때에 코드계를 JIS 로 설정합니다.
+  
+    (SETQ MH-LETTER-MODE-HOOK
+          '(LAMBDA ()
+             (COND ((BOUNDP 'NEMACS)
+                    (SETQ KANJI-FILEIO-CODE 2))
+                   ((BOUNDP 'MULE)
+                    (SET-FILE-CODING-SYSTEM *JUNET*)))))
+  
+  이상의 코드를 .EMACS 에 넣어 두면 좋겠지요.
+  
+  MULE 에서는 MULE-INIT.EL 에 필요한 설정이 되어 있으므로, 통상은
+  이들의 설정은 불필요합니다.
+  
+E-2: 메일이나 뉴스를 쓰고 있을 때에 C-c C-y 라고 하면 인용마크가
+ "   " 로 되어 버립니다. 이것을 "> "로 바꾸려면 어떻게 하면 좋습니까?
+  
+  Supercite 를 사용하면 인용부호가 "> "로 되도록 설정할 수 있습니다.	      !
+  Supercite 에는 많은 기능이 있고, 인용마크를 다양하게 카스터마이즈할	      !
+  수 있습니다. 상세한 것은 질문 E-3 ~ E-5 를 보세요.			      !
+									      !
+E-3: Supercite 를 사용하여, 인용부호 이름등을 포함시키려면 어떻게 하면	      !
+ 됩니까?								      !
+									      !
+  이하의 설정으로 작동될 것입니다. 이 설정은 ksakai@mtl.t.u-tokyo.ac.jp	      !
+  씨에 따릅니다. 무엇을 사용하는 가에 따라서, 필요없는 행은 생략할 수 	      !
+  있겠지요. 또한, 제일 밑의 3행은 취향에 따라서 바꾸면 좋을 것입니다(이	      !
+  것에 대한 상세한 설명은 Supercite 의 도큐먼트를 보세요).		      !
+    									      !
+    ;; sc								      !
+    (autoload 'sc-cite-original "supercite" "Supercite 3.1" t)	 	      !
+    (autoload 'sc-submit-bug-report "supercite" "Supercite 3.1" t)	      !
+    (autoload 'sc-perform-overloads "sc-oloads" "Supercite 3.1" t)	      !
+    (setq mail-citation-hook 'sc-cite-original)				      !
+    (setq mail-yank-hooks 'sc-cite-original) ; for all but MH-E	
+    (setq mh-yank-hooks 'sc-cite-original) ; for MH-E (3.7이상) 	      !
+    (setq news-reply-mode-hook 'sc-perform-overloads) ; for RNEWS,GNEWS,GNUS  !
+    (setq mail-setup-hook 'sc-perform-overloads) ; for RMAIL,PCMAIL,GNUS      !
+    (setq gnews-ready-hook 'sc-perform-overloads) ; for GNEWS	 	      !
+  
+    (setq sc-electric-references-p nil)
+    (setq sc-preferred-header-style 1)					      !
+    (setq sc-citation-leader "")
+  
+E-4: Supercite 를 일본어대응으로 사용하는데는? 				      !
+  
+  영어만 사용하는 것이라면, E-3 에서 행한 설정만으로 충분하지만, 일본	      !
+  어를 사용하는 경우, 개인의 설정(sc-cite-regexp 의 설정)을 바꿀 필요	      !
+  가 있습니다. 								      !
+  
+  Yoichi HIROSE <yoichi@esasd.ksp.fujixerox.co.jp> 씨는 다음과 같이
+  기술하고 있습니다.
+  
+    Nemacs 에서 일본어를 사용하고 있었던 경우, 일본어에 매치하기 위하
+    여 사용하고 있던 케티고리가 Mule 에서 바꾸어져 버리고 있기 때문에,
+    작동하지 않게(작동하는 경우도 있나?) 되어 버립니다. 즉, 전부터
+    캐티고리를 사용하여 정규표현을 지정하고 있지 않았던 경우는
+    관계 없습니다.
+    아래의 정규표현을 보시면 알 것이라고 생각합니다만, NEMACS 에서는
+    마구 길게 되어 있습니다만, MULE 에서는 상당히 짧습니다.
+    상세한 것은 info 의 char-category 를 보면 알 수 있다고 생각합니다.
+  
+    이런 이유로, Mule 에서 sc 를 일본어에 대응시켜서 사용하고 싶으면
+    sc-cite-regexp 에 아래와 같은 변경이 필요합니다.
+  
+    sc-cite-regexp 설정예:
+    (if (boundp 'MULE)
+        (setq sc-cite-regexp "\\s *\\([a-zA-Z0-9_]\\|\\cj\\)*>+\\s *")
+      (setq sc-cite-regexp "\\s
+*\\([a-zA-Z0-9_]\\|\\cc\\|\\cC\\|\\ch\\|\\cH\\|\\ck\\|\\cK\\|\\ca\\|\\cg\\|\\cr\\|\\cu\\)*>+\\s *"))
+
+E-5: Supercite 를 사용하여, 인용부호가 자동적으로 "> " 로 되도록 설정	      +
+ 하는데는 어떻게 하면 됩니까? 						      +
+  									      +
+  E-3(+E-4) 의 설정에 덧붙여서, 다음 행을 덧붙이면 됩니다.  		      +
+  									      +
+    (setq sc-nested-citation-p t)					      +
+  									      +
+  단 이 설정을 행하면, 이름 등을 인용부호에 포함시킬 수 없게 되기 	      +
+  때문에, 주의하세요.  						 	      +
+  									      +
+E-6: Supercite 에서, 디폴트로 준비되어 있는 인용부호 이외의 것을 디폴트       +
+ 로서 사용할 수 있도록 하는데는 어떻게 하면 됩니까?			      +
+  									      +
+  이 목적을 위하여, 히로세@후지제록스 				 	      +
+  (yoichi@s5g.ksp.fujixerox.co.jp)씨가 작성한 sc-register-2.3.1 이 	      +
+  있습니다. 사용하기 위해서는 sc-register 을 인스톨하여 다음 설정을 덧	      +
+  붙이면 됩니다.  							      +
+  									      +
+    (setq sc-load-hook '(lambda () (require 'sc-register)))		      +
+    (setq sc-preferred-attribution 'registeredname)			      +
+  									      +
+  일본어를 인용부호에 포함시키고 싶은 경우 등, 보완을 사용하여 후보를 	      +
+  선택하는 것이 귀찮은 경우에는, 특히 편리하지요.  			      +
+  									      +
+  단, Supercite 3.0 이후에서는 sc-register 는 사용할 수 없습니다. 장래 	      +
+  의 Supercite 에는 sc-register 의 기능이 처음부터 넣어진다고 합니다.	      +
+
+
+화면표시 							 	      +
+									      +
+F-1: X 상에서 Mule 을 사용하고 있으면, 폰트의 일부가 빠져서 표시되기도 하고,  +
+ 폰트가 흐트러져서 지저분하게 되기도 합니다.  			 	      +
+  									      +
+  TAKAHASHI Naoto <ntakahas@etl.go.jp> 씨와 Ken'ichi Handa		      +
+  <handa@etl.go.jp> 씨는 다음과 같이 쓰고 있습니다.  		 	      +
+  									      +
+    Mule 은 ASCII 폰트의 폭에 맞추어서 윈도우를 만듭니다. 폰트 	 	      +
+    의 일부가 빠지는 것은, 그 폰트와 ASCII 폰트의 폭이 맞지 않 		      +
+    기 때문입니다. 일본어.중국어.한글의 경우는 횡폭이 ASCII 폰트 	      +
+    의 정확히 2배가 아니면 안됩니다. 그리고, 그 이외의 폰트는 횡폭이 	      +
+    ASCII 폰트와 같지 않으면 안됩니다.					      +
+    									      +
+    폰트가 흐트러져 지저분하게 되는 것은 X 의 자동스케일링기능 때문이	      +
+    겠지요. 지정된 폰트가 XLFD 형식에 따르고 있고, 동시에 실제로는 존	      +
+    재하지 않는 경우, X의 서버는 자지가 알고 있는 폰트를 적당히 확대	      +
+    축소하여 사용합니다. 예를 들면,					      +
+          "-*-fixed-medium-r-*--*-*-*-*-*-*-jisx0208.1983-*"		      +
+    라는 지정은 XLFD 에 따르고 있으므로 자동스케일링되도록 되는 것 	      +
+    같습니다. 이것에 대하여 mule-init.el 에 있는 지정:			      +
+          "-*-fixed-medium-r-*--*-*-jisx0208.1983-*"			      +
+    는 XLFD 에 따르고 있지 않으므로(컬럼수가 적다)자동스케일링은 	      +
+    되지 않는 것입니다. 이상은 단순한 경험에 근거한 것입니다.  	 	      +
+  									      +
+F-2: (x-set-bell t) 로서 visible-bell 로 하였더니, 화면 프럿시가 	      +
+ 일어나는 위치가 화면중앙, 범위가 화면의 크기 약 1/4로 한정되는 것 같         +
+ 은데, 이것은 시방입니까?						      +
+  									      +
+  시방입니다. GNU Emacs 18.58 부터, 이와 같이 변경되었습니다.  	 	      +
+
+
+*- Indented-Text -*-
+
+Frequently Asked Questions and Answers list for Mule.  1993년 11월 15
+일판
+
+----------------------------------------------------------------------
+	 
+이 FAQ의 목적은, Mule에 관해서 자주 나오는 질문과 그 답을 참조하기 쉽
+게하기 위하여 정리한 것입니다.
+	
+내용은 가능한 한 확인을 하고 있습니다만, 틀린 곳을 발견하신 분은 알려 
+주시면 고맙겠습니다. 또한, 새로운 추가항목 등도 환영합니다.
+
+최신의 FAQ를 입수하는 방법은, 질문의 A-14에 쓰여져 있습니다.
+
+이 FAQ의 작성에 있어서, 대단히 많은 분으로부터 조언을 받았습니다.  협
+력해 주신 분들에게 감사를 드립니다.
+
+-- Takahiro Maebashi <maebashi@mcs.meitetsu.co.jp>
+
+--- translated by Dosam HWANG <hwang@forest.kuee.kyoto-u.ac.jp>
+----------------------------------------------------------------------
+
+이 FAQ를 Mule에서 보고 있는 경우는, "M-2 C-x $"라고 입력하는 것에 의해
+질문만을 빼낼 수 있습니다. 답도 보고 싶은 경우에는 "C-x $"라고 타이프
+하면 원래대로 돌아갑니다.
+
+질문번호 X-XX 에 검색하고 싶을 때는, "M-C-s ^X-XX:" 라고 입력하여 주세
+요.  만약 찾지 못했다면, 이어서 "C-r"라고 타이프해 보세요. 질문을 찾았
+으면 ESC를 타이프하면 검색모드로부터 벗어납니다.
+
+78열째의 '+' 마크는 이전판(1993년 8월12일판)에 행이 추가된 것을 나타내
+고 있습니다. 마찬가지로 '-' 마크는 행이 삭제된 것을, '!' 마크는 삽입이
+나 삭제등 무엇인가 변경이 있는 것을 나타내고 있습니다.
+
+----------------------------------------------------------------------
+
+
+일반적인 정보
+
+A-1: Mule 이란 무엇입니까?
+  
+  Mule 은 GNU Emacs (Ver.18)를 복수의 언어에 대응할 수 있도록 강화한
+  에디터입니다.
+
+  Mule 에는 이하와 같은 특징이 있습니다.
+   * Mule 은 ASCII 문자(7비트)와 ISO Latin-1 의 문자(8비트)뿐만 아니라,
+     일본어, 중국어, 한국어등의 문자코드(16비트)도 다룰 수 있습니다.
+     그리고 Mule 의 텍스트 버퍼는 이들의 언어의 문장을 하나의 버퍼에
+     혼재하여 보지할 수 있습니다.
+   * 화일 입출력, 스크린 표시, 키보드 입력, 프로세스간 통신 각각에
+     대해서 독립적으로 문자코드계를 설정할 수 있습니다.
+   * 다국어 모드가 아닌 경우에는, 오리지널 GNU Emacs 와 거의 같이
+     사용할 수 있습니다.
+  
+A-2: Mule 은 어디에서 입수할 수 있습니까?
+  
+  Mule 은, 아래의 사이트로부터 anonymous ftp 로 입수할 수 있습니다.
+  
+  	etlport.etl.go.jp [192.31.197.99]: /pub/mule
+  	sh.wide.ad.jp [133.4.11.11]: /JAPAN/mule
+  	ftp.mei.co.jp [132.182.49.2]:/public/free/gnu/emacs/Mule
+  	ftp.funet.fi [128.214.6.100]:/pub/gnu/emacs/mule
+  
+  해외로부터 액세스할 경우는 sh.wide.ad.jp 를 사용하여 주세요.
+  
+  여기에는 Mule 배포키트의 완전한 형태의 tar 화일과, GNU Emacs 18.59
+  에 대한 차분화일의 2종류가 있습니다. GNU Emacs 를 갖고 계신 분은
+  가능한 차분화일을 사용하여 주세요. 이 외에도 각종 폰트, ELISP
+  라이브러리 등이 있습니다.
+  
+A-3: Mule 의 최신 버젼은 몇입니까?
+  
+  Mule 의 현재의 버젼은 1.0 (키리쯔보) pathchlevel 01이고, GNU Emacs	      !
+  18.59를 베이스로 하고 있습니다. 					      !
+  
+A-4: Mule 을 사용하면 무엇이 좋습니까? 혹은 Nemacs 를 사용한 쪽이
+ 좋은 경우는 있습니까? 있다면, 어떠한 경우입니까 ?
+  
+  Mule 을 사용하는 이점은 몇가지 있습니다.
+   * 영어만이 아니라 일본어, 중국어, 한국어 그 외 다수의 언어를 다룰
+     수 있습니다. 게다가 이들을 혼재해서 사용할 수 있습니다.
+   * 버퍼 중의 영역에 표시에 관한 속성을 갖게 할 수 있습니다.
+     Nemacs 와 달리, 통상의 단말에서도 (단말이 지원하고 있으면)표시속
+     성의 기능을 사용할 수 있습니다.
+   * 영어와 일본어 만을 사용할 경우에도, Nemacs 에 부속된 "타마고(달걀)
+     "보다도 변환효율이 좋은 일본어 입력시스템 "타까나판 타마고"를 이
+     용할 수 있습니다.
+   * Nemacs 는 GNU Emacs 18.55 base 입니다만 Mule 은 Emacs 18.59 base
+     입니다:)
+   * 강력한 regular expression compiler 가 부속되어 있습니다.
+  
+  반대로, Mule 은 Nemacs 보다도 상당히 복잡하고 큰 프로그램이기 때문에,
+  계산기자원이 부족한 환경에서, 일본어 밖에 사용하지 않는 것이라면
+  Nemacs 를 사용하는 편이 좋은 경우도 있습니다.
+  
+  또한, Mule 과 Nemacs 는 호환성이 없기 때문에, 과거에 Nemacs 용으로
+  개발된 어프리케이숀은 Mule 에서는 잘 돌아가지 않는 것도 있습니다.
+  
+A-5: Nemacs 는 없어지게 되는가?
+  
+  답은 물론 "아니요" 라고, 말하고 싶습니다만, 금후는 지원되지 않습니다.
+  Nemacs 의 최후 버젼은 3.3.2 가 됩니다.
+  
+A-6: Mule 은 장래 GNU Emacs 에 통합되는 것입니까?
+  
+  GNU Emacs 의 작자인 R.M.Stallman 은, 다국어를 지원하는 경우에는
+  Unicode 를 메인으로 사용하는 것을 강력히 주장하고 있습니다. Mule 에
+  서 Unicode 가 사용될 수 있도록 되면 Mule 을 GNU Emacs 와 통합한다는
+  것이 됩니다만, 현재 Mule 에서 Unicode 는 지원되고 있지 않습니다.
+  
+A-7: Mule 의 특징을 Epoch (or Nepoch) 에 도입할 계획은 있습니까?
+  
+  현재는 Mule 의 특징을 Epoch 에 도입할 계획은 없습니다.
+  
+A-8: Demacs 에 Mule 의 특징을 넣을 계획은 있습니까?
+  
+  Mule Ver.0.9.6 이후의 것에는 Demacs 가 포함되어 있습니다.
+  인스톨 메뉴얼 INSTALL.dos 을 참조하세요.
+  
+A-9: GNU Emacs Ver.19 를 베이스로 한 Mule 을 만들 계획은 있습니까?
+  
+  장래는 GNU Emacs 19 를 베이스로 한 Mule 이 만들어지고, GNU Emacs 과
+  Mule 이 통합될 예정이지만, 현재는 그것이 언제 될 지는 모릅니다.
+  
+A-10: Mule 의 메일링 리스트가 있습니까?
+  
+  현재, 영어를 사용하는 논의를 위해서는 아래의 2개의 메일링 리스트가 
+  있습니다.
+  
+  mule@etl.go.jp
+     통상의 사용언어는 영어
+  mule-vn@etl.go.jp
+     베트남어의 취급에 관한 메일링 리스트, 통상의 사용언어는 영어
+  
+  그 외, 각 프랫폼에서의 테스트용으로 아래의 것이 있습니다.
+  
+  mule-jp@etl.go.jp
+     통상의 사용언어는 일본어
+  
+  일본어로의 통상의 논의에는 뉴스 (fj.editor.mule) 를 사용하세요.
+  
+A-11: Mule 의 버그레포트는, 어디에 하면 됩니까?
+  
+  일본어로의 Mule 의 버그레포트 혹은 수정의 제안등은, 뉴스
+  (fj.editor.mule) 에서 해 주세요. 이 뉴스를 읽을 수 없는 분만 	   	      !
+  mule@etl.go.jp 에 영어로 보내주세요.
+										
+A-12: Mule 에는 일본어(영어/한국어/중국어)의 메뉴얼이 붙어 있습니까?
+  
+    Mule 에 관한 메뉴얼, 도큐먼트류는 크게 나누면, 			      !
+									      !
+      * 온라인메뉴얼 							      !
+      * texinfo 메뉴얼 							      !
+      * FAQ								      !
+      * 튜토리얼 							      !
+      *	doc 디렉토리 아래의 문서 					      !
+									      !
+    와 같은 종류가 있습니다.						      !
+    * 온라인메뉴얼 							      !
+									      !
+      man 형식의 온라인메뉴얼은 영어로 된 것이 있습니다. 통상은 시스 	      !
+      템관리자가, man 명령어로 참조할 수 있도록 준비되어 있다고 생각합 	      !
+      니다만, 만약 준비되어 있지 않은 경우는 $MULE/etc/mule.1 에 있으 	      !
+      므로, 이것을 메뉴얼의 디렉토리에 복사하여 이용하여 주세요. 	      !
+									      !
+    * texinfo 메뉴얼 							      !
+									      !
+      texinfo 형식의 메뉴얼은, 일본어로 된 것이 준비되어 있습니다. Mule	      !
+      에서는 M-x info 로 Info 메뉴얼리더를 기동하고, Mule 의 노드를 	      !
+      선택하면 읽을 수 있습니다. $MULE/man/mule-jp.texi 를 일본어 	      !
+      TeX 로 처리하면, 종이에 인쇄할 수 있는 도큐먼트를 만들 수 있습니다.     !
+
+    * FAQ								      !
+
+      지금 당신이 읽고 있는 것입니다. 영어판, 일본어판, 한국어판이	      !
+      $Mule/etc/FAQ-Mule{,.jp,.kr} 에 있습니다.				      !
+
+    * 튜토리얼 								      +
+									      +
+      튜토리얼은 일본어로 된 것이 있습니다. Mule 에서 C-h T (M-x	      +
+      help-with-tutorial-for-mule) 로 읽을 수 있습니다.			      +
+									      +
+    * doc 디렉토리 아래의 문서						      +
+									      +
+      $MULE/doc 에는 Mule 의 기능별 성명과 용어설명등의 도큐먼트가	      +
+      있습니다. 주로 영어 혹은 일본어로 쓰여져 있지만, 다른 언어로	      +
+      쓰여져 있는 것도 있습니다. $MULE/doc/viet 에는 베트남어로		      +
+      쓰여진 문서가 정리되어 있습니다.					      +
+
+A-13: Mule 하는 이름의 유래는?
+  
+  UNIX용어 유래/읽기 사전으로부터 인용:-)
+  
+    [Mule] (UNIX명령어) <뮬>
+    "MUltiLingual Enhancement to GNU Emacs"의 약칭. MULE 이란 노새라는
+    것으로, 외고집, 옹고집이라는 의미도 있고, GNU 의 동물 시리즈에 대
+    응하고 있으며, gawk 와 같이 반대의 의미를 부친다라고 하는 것에도 대
+    응하고 있다.
+    (참조:Demacs, Emacs, gawk, Nemacs)
+  
+  이 이름은, Hironobu Suzuki <hironobu@sra.co.jp> 씨의 발안에 의하고
+  있습니다.
+
+A-14: 이 도큐먼트(Mule FAQ list)의 최신판은 어디에서 입수할 수 있습니
+ 까?
+  
+  Mule FAQ 에는 영어판, 일본어판, 한국어판이 있습니다. 화일로서 배 	      !
+  포되는 경우에는, 각각 FAQ-Mule(영어판), FAQ-Mule.jp(일본어판),	      !
+  FAQ-Mule.kr(한국어판) 이라는 화일명으로 되어 있습니다. 이 중, 일본	      !
+  어판이 원본이고, 그 외는 갱신이 늦어진 것도 있습니다. 		      !
+  
+  Mule FAQ 는, 아래의 방법에 의하여 입수할 수 있습니다.
+  
+  * 네트워크 뉴스로부터. 뉴스그룹 fj.editor.mule 에는, 비정기적으로
+    Mule FAQ 가 알려지고 있습니다.
+  
+  * anonymouns FTP 로 입수한다. 아래의 장소에서 anonymouns FTP 로 입수
+    할 수 있습니다.
+  
+    etlport.etl.go.jp: /pub/mule/READMEDIR
+    sh.wide.ad.jp: /JAPAN/mule/READMEDIR
+  
+  * Mule 의 배포용 화일 중. 그 Mule 이 릴리즈된 때의 최신의
+    FAQ가, etc/FAQ-Mule{,.jp,.kr} 로서 Mule 의 배포세트 내에 포함되어 	      !
+    있습니다. 								      !
+
+
+구축 및 인스톨
+
+B-1: Emacs 에 Mule 의 패치를 붙이고, 새롭게 늘어난 lisp 화일을 Emacs
+ 또는 Nemacs 에서 바이트컴파일하려고 하였지만 잘 되지 않습니다.
+ 왜 그런가요?
+  
+  Mule 의 lisp 화일 내에는 Mule 에서만 바이트컴파일할 수 있는 것
+  이 다수 포함되어 있습니다. 그래서 Mule 을 구축할 때에는, 도중에
+  자동적으로 새롭게 늘어난 (혹은 패치가 붙여진) lisp 화일을 바이트컴파
+  일합니다. Emacs 에 패치를 붙였을 때와 같이 수동으로 바이트컴파일할
+  필요는 없습니다.
+  
+B-2: X Window System 에서 작동하는 Mule 을 만드는데는 어떻게 하면 됩니
+ 까?
+  
+  $MULE/src/config.h 내에 HAVE_X_WINDOWS 라는 마크로를 define 하면 됩
+  니다. 그리고, HAVE_X_SELECTION 을 정의하는 것에 의해 X 의 SELECTION
+  을 사용한 cut&paste 를 사용할 수 있도록 됩니다.
+  
+  단, Mule 은 스태틱링크로 구축되기때문에, 스태틱링크용의 libX11.a가
+  필요합니다. 스태틱링크용의 라이브러리가 없는 경우는, X 를 구축할 때
+  에
+  
+    #define ForceNormalLib YES
+  
+  를 추가하여 스태틱링크용의 libX11.a 를 만들 필요가 있습니다.
+  
+B-3: Sun 의 콘솔에서 작동하는 Mule 을 만드는데는 어떻게 하면 됩니까?
+  
+  $MULE/src/config.h 내에 HAVE_SUN_CONSOLE 을 define 합니다.
+  
+  이 경우는 pixrect 라이브러리를 이용하기 때문에, SunView_Programmers
+  가 인스톨되어 있을 필요가 있습니다. Solaris 2.0 이후의 OS 는
+  pixrect 라이브러리를 지원하고 있지 않기 때문에 이 기능은 이용할 수
+  없습니다. SunOS 4.x 에서도 Sun 기계를 구입했을 때에 프리인스톨되어
+  있는 SunOS 내에는 SunView_Programmers 는 포함되어 있지 않기 때문에
+  미리 인스톨해야 합니다.
+  
+B-4: "Pure Lisp storage exhausted" 라는 메세지가 나오고 컴파일이
+ 중지되어 버립니다만.
+  
+  Ken'ichi Handa <handa@etl.go.jp> 씨는 다음과 같이 기술하고 있습니다.
+  
+    이것은 puresize.h 내의 PURESIZE 의 값이 너무 작기 때문입니다.
+    시스템에 따라서는 이 값을 늘릴 필요가 있는 것 같습니다. 그리고,
+    대부분의 언어환경 설정화일 (e.g. japanese.el, chinese.el) 을
+    site-init.el 에서 로드할 경우도 늘릴 필요가 있습니다. 우선
+    배 정도로 해서 잘 되면, temacs 가 mule-init.el 를 로드한 후에 표시
+    하는 Pure Bytes Used XXXXX 를 참조하여 그것보다 조금 큰 값정도로 
+    설정하여 고쳐서 다시 메이크, 라고하는 수단이 필요합니다.
+  
+  주의할 것은, src/config.h 내에도 PURESIZE 의 정의가 있습니다만,
+  Mule 에서는 src/puresize.h 에서 재정의되기 때문에, config.h 의
+  PURESIZE 를 변경하더라도 의미가 없다라는 것입니다. 어설피 Emacs 에
+  익숙되어 있으면 "아둔해지기" 때문에 조심하세요.
+  
+B-5: "Undefined Symbol: __des_crypt" 라는 메세지가 나오고 컴파일이
+ 정지되어 버립니다만.
+  
+  Masato Minda <minmin@astec.co.jp> 씨는 다음과 같이 이야기하고 있습니
+  다.
+  
+    이것은, SunOS 의 JLE1.1.1 에서 static 링크하면 나오지 않았던가?
+  
+    해결법
+        JLE 의 패치를 붙인다 (patch ID 는 잊어버렸습니다)
+        JLE1.1.1 rev B 이후로 한다.
+        JLE 를 안한다 :-)
+  
+    시도하여 본 것은 아니지만, 빈 _des_crypt 함수 만들고, 함께
+    링크하더라도 잘 되지 않을 까?
+  
+B-6: Mule 의 컴파일은 정상으로 되었습니다만, 일본어를 잘 입력할 수
+ 없습니다.
+  
+  Mule 에서는, 인스톨할 때에, site-init.el 에서 사용하고 싶은 언어의
+  specific 화일을 지정하여 로드하도록 되어 있습니다. 디폴트로는
+  site-init.el 는 존재하고 있지 않습니다.
+  
+  일본어를 사용하고 싶으면, lisp/site-init.el 에 (load "japanese") 라
+  는 행을 쓰고 Mule 을 사용하여 보세요.
+
+
+다국어의 취급에 대하여
+
+C-1: 일본어는 어떻게 하면 입력할 수 있습니까?
+  
+  일본어 입력시스템으로서는, 아래의 것이 마련되어 있습니다.
+  
+     * 타마고(EGG)…타까나버젼
+     * sj3-egg
+     * 칸나(Canna)
+  
+  어느것이나 네트워크 가나한자변환서버를 이용하고 로마자 한자변환방식
+  의 일본어입력을 제공하고 있습니다. 상세한 것에 대해서는, 각 시스템의
+  메뉴얼을 참조하세요. 이들의 일본어 입력시스템은, Mule 을 구축할 때에
+  각각 시스템을 사용하도록 설정해야 합니다.
+  
+     * quail 에 의한 T-CODE 입력
+  
+  이것은 가나한자변환서버를 사용하지 않는 입력법입니다.
+  lisp/quail-tcode.el을 로드한 후, C-] 로 ASCII 와 T-CODE 모드가 토글
+  됩니다.
+  (주:quail-tcode.el 는 곧 삭제되고 tc-mule.el 로 치환됩니다)
+  
+  일본어입력에는 "SKK"를 이용할 수도 있습니다. "SKK"는 Mule을 구축할
+  때에 특별한 설정은 아무것도 하지 않아도 사용할 수 있습니다. "SKK"
+  는 Mule 내에서만 사용방법도 가능하고, 사전서버를 이용하는 사용방법
+  도 가능합니다.
+  
+C-2: "타마고"란 무엇입니까?
+  
+  "타마고"는, Wnn 의 네트워크 변환서버(jserver/cserver)를 이용하여
+  일본어 혹은 중국어의 입력환경을 제공하는 시스템입니다. "타마고"를
+  영역하여 EGG 라고 부르기도 합니다.
+  
+  "타마고"는 크게 나누면 입력문자변환계(로마자 가나변환부), 가나한
+  자/pinyin->Hanzi변환부, 그리고 일본어 편집기능으로 이루어져
+  있습니다. 입력문자변환계는 히라가나.가따가나.pinyin만이 아니라,
+  중국어나 다른 언어입력에도 이용됩니다.
+  
+C-3: "타까나"란 무엇입니까?
+
+  Toshiaki SHINGU <shingu@cpr.canon.co.jp> 씨는, 다음과 같이 이야기하
+ 고 있습니다.
+
+    "타마고"의 Wnn V4 라이브러리 판입니다. "타마고요(타마고여)/
+    까시꼬꾸(영리하게)/나-레(되어라)"
+    의 머리문자로부터 명명되었습니다. 종래의 "타마고"에 덧붙여서,
+
+      대문절/소문절 변환
+      역변환(한자 --> 가나)
+      V4 jserver 가 갖는 품사(인명 등)에서의 사전등록
+      단어를 사전으로부터 삭제하지 않고 유효/무효로 할 수 있다
+      단어의 빈도 설정
+      사전에 코멘트를 설정한다
+
+    가 가능합니다.
+
+  "타까나"는 "타마고"와는 별개의 것이 아니라, "타마고"를 강화한 것이라
+  고 말할 수 있습니다. 금후, "타마고"는 "타까나 버젼"에 집약되어, 이전
+  의 Wnn V3 및 Wnn V4 의 V3 호환 라이브러리에 대응한 것은 지원되지 않습
+  니다.
+  
+C-4: sj3-egg란 무엇입니까?
+  
+  X11R5 의 contrib 에 포함되어 있는 sj3serv 와 통신하는 "타마고"입니다.
+  변환효율이 대단히 좋다고 하는 특징을 갖고 있습니다.
+  
+C-5: 칸나(Canna) 란 무엇입니까?
+  
+  서버…크라이언트 방식의 가나한자 변환시스템입니다. Mule 에서는,
+  "타마고"와 거의 같은 사용자 인터페이스로 "칸나"의 변환서버를 이용한
+  가나한자 변환시스템을 이용할 수 있습니다.
+  
+C-6: "SKK"란 무엇입니까?
+  
+  Masahiko Sato <masahiko@sato.riec.tohoku.ac.jp> 씨는, 다음과 같이
+  기술하고 있습니다.
+  
+  'SKK"는 Mule 을 위하여 고속으로 효율적인 일본어 입력환경을 제공하는
+  시스템이고, 특히 사용자가 의도한 문장 그대로의 형태로 용이하게 입력
+  할 수 있는 시스템입니다. "SKK"는 문법적인 해석을 전혀 하지 않고 변환
+  을 하기 때문에 고속의 변환이 가능하고, 사용자가 오꾸리가나의 개시위치
+  를 지정하는 것에 의해 의도를 전달하기 때문에 효율적인 변환이 가능하도
+  록 되어 있습니다. 또한 사전등록할 때에 품사에 대한 정보를 줄 필요도 
+  없기 때문에, 사용자 사전을 간단하게 강화할 수 있습니다. "SKK"의 사용
+  방법은 튜토리얼 프로그램에 의해 단시간에 습득할 수 있습니다.
+  
+C-7: 중국어를 입력하기 위해서는?
+  
+  중국어를 입력하는 데에도, "타마고"시스템을 사용합니다. "타마고"는
+  cWnn 의 cserver 와 통신하는 것에 의해서, 편리한 중국어(GB)입력방법을
+  제공합니다. M-x load-library RET chinese RET 으로서, PinYin 모드를
+  선택하면, pinyin로 입력할 수 있도록 됩니다.
+  
+  또한, Mule 은 quail-system 도 제공하고 있습니다. 이 시스템은
+  `cxterm/dict/tit' 에 있는 모든 입력변환테이블을 지원하고 있습니다.
+  
+C-8: 한국어를 입력하기 위해서는?
+  
+  한국어문자의 입력용르로, quail-hangul.el 이 제공되어 있습니다. 이 시
+  스템의 사용방법은, 'doc/QUAIL' 을 참조하세요.
+  
+C-9: ISO 8859 문자를 입력하는데는?
+  
+  Mule 에서는 Latin-1 (ISO8859-1)으로부터 Latin-5 (ISO8859-9)까지의 문
+  자세트도 지원하고 있습니다. 통상의 ASCII 키보드에서 이들의 문자를 입
+  력하는데는 역시 quail-system 을 사용합니다.
+  
+  ISO 8859 에서 정해져 있는 문자를 입력하기 위해서, 아래에 열거한 5개
+  의 화일이 마련되어 있습니다.
+
+  * quail-latin.el : 라틴 알파벳을 사용하는 모든 언어 (타이프가 느린
+                     사람용)
+  
+    초심자를 위한 화일입니다. 대부분의 기호첨부문자는, 2문자의 합성으
+    로 입력하도록 되어 있습니다. 예를들면 ^[.A^[Ni (accute accent 첨부
+    의 e)는 e 의 ^[*B뒤에 ' (single quote) 를 치는 것으로 입력할 수 
+    있습니다.
+    
+    언어                패키지명
+    ----------------------------------
+    덴마크어 	        danish
+    에스페란토          esperanto
+    핀란드어 	        finnish
+    프랑스어		french
+    독일어		german
+    아이스랜드어	icelandic
+    이태리어		italian
+    노르웨이어          norwegian
+    스페인어		spanish
+    스웨덴어 	        swedish
+    터어키어		turkish
+    영어(또는아메리카어)british
+    ISO 8859-1		latin-1
+    ISO 8859-2		latin-2
+    ISO 8859-3		latin-3
+    ISO 8859-4		latin-4
+    ISO 8859-9		latin-5
+
+  
+  * quail-ltn.el : 라틴 알파벳을 사용하는 모든 언어 (타이프가 빠른 사
+                   람용)
+  
+    quail-latin.el 의 입력방법은 답답하다라고 하는 사람을 위한 화일입
+    니다. "타이핑수는 적을 수록 좋다"라는 철학에 기초해서 만들어져 있
+    습니다. 각 언어에서 고유문자의 대부분은 어딘가의 키에 할당되어 있
+    기 때문에, 한번 배열을 외워버리면 고속으로 타이핑이 가능합니다.
+  
+  
+    언어                패키지명
+    ----------------------------------
+    덴마크어 	        dnsh
+    핀란드어 	        fnnsh
+    프랑스어		frnch, azerty
+    독일어		grmn
+    아이스랜드어	iclndc
+    이태리어		itln
+    노르웨이어 	        nrwgn
+    스페인어		spnsh
+    스웨덴어 	        swdsh
+
+  
+  * quail-cyrillic.el : 시릴 문자를 사용하는 모든 언어
+  
+    언어	        패키지명        주석
+    -------------------------------------------------------
+    러시아어		jcuken		표준러시아어 배열
+			jis-russian	jcuken 과 같음
+					단, JIS 인코딩
+    마케도니아 	        macedonian      JUS.I.K1.004
+    세르비아어		serbian		JUS.I.K1.005
+    byelorussian 	byelorussian	JUS.I.K1 닮게 만듬
+    우크라이나어	ukrainian	JUS.I.K1 닮게 만듬
+    ISO 8859-5          yawerty		라틴 문자로의 전사
+  
+  
+  * quail-greek.el : 그리스 문자용
+  
+    언어		패키지명	주석
+    -------------------------------------------------------
+    그리스어		greek
+			jis-greek	greek 와 같음
+					단, JIS 인코딩
+  
+  
+  * quail-hebrew.el : 히브리 문자용
+  
+    언어		패키지명
+    --------------------------------
+    히브리어		hebrew
+  
+  
+  목적의 패키지가 표함되어 있는 화일을 로드한 후, C-] 을 치는 것으로
+  quail-minor-mode 와 통상의 모드 간을 오고 갈 수 있도록 됩니다.
+  특정 언어용 패키지를 선택하는데는, quail-minor-mode 내에서
+  M-s 라고 치든가, (quail-use-package "패키지 이름")을 평가하여 주세요.
+  또한 M-z 로 간단한 도움말 화면이 나옵니다.
+  
+  예:
+  
+  1) 독일어 초심자가 독일어를 입력해야 할 때
+     
+     (load "quail-latin")
+     (quail-use-package "german")
+     
+     위의 2행을 .emacs 에 넣어 주세요.
+     
+  2) 프랑스어용의 azerty 배열을 사용하고 싶을 때
+     
+     (load "quail-ltn")
+     (quail-use-package "azerty")
+     
+     를 .emacs 에 넣어 주세요.
+  
+C-10: Latin-1 문자를 캐릭터단말에 표시하는데는?
+  
+  TAKAHASHI Naoto <ntakahas@etl.go.jp> 씨는 다음과 같이 기술하고 있습	      !
+  니다.									      !
+  
+    캐릭터 단말상에서 사용하고 있는 Mule 에 Latin-1 문자를 표시시키는
+    데는 display-coding-system 에 *ctext* 를 세트합니다. 이것은,
+    .emacs 내에
+  
+      (setq display-coding-system *ctext*)
+  
+    라고 써 두는 것으로 실현할 수 있습니다. 또는 Mule 기동후에 M-x
+    set-display-coding-system 라고 타이프하고, Display-coding-system:
+    라는 프롬트에 대해서 *ctext* 라고 답하는 것으로도 됩니다.
+  
+    또한, X-window 를 사용하고 있는 경우에도, Mule 을 -nw 옵숀부착으로
+    기동한 경우은 같은 절차가 필요합니다.
+  
+    어떤 경우에도, 사용하고 있는 캐릭터단말, 혹은 단말에뮤레터가
+    Latin-1 캐릭터에 대응하고 있어야 합니다.
+  
+C-11: 세상에는 문장을 오른쪽에서 왼쪽으로 쓰는 언어도 있습니다만,
+  Mule 은 그러한 언어에 대응할 수 있습니까?
+
+  현재 히브리어가 지원되고 있습니다. 입력방법으로서는
+  quail-hebrew 가 사용가능합니다. 또한 highlight-reverse-direction,
+  r2l-double-cursor 등의 도큐먼트를 참조하세요. 아랍어,페르시아어 등에
+  대해서도 지원할 예정입니다.
+  
+C-12: 일본어(or 한국어/중국어)의 입력에서 형태는 알고 있지만, 읽기를
+ 모를 때 어떻게 입력합니까?
+  
+  일본어의 경우, "타마고"에서는 부수입력(M-x busyu-input)와 획수입력
+  (M-x kakusuu-input)을 지원하고 있습니다. 이 기능을 사용하는 것에 의
+  해, 미니버퍼의 메뉴로부터 부수 혹은 획수를 지정하여 한자를 입력할
+  수 있습니다.
+  
+C-13: Mule 과 관련하고 있는 코드계는 어떤 것이 있습니까? 어떤 때에
+ 그것과 관련합니까?
+  
+  Mule 은 아래에 나타내는 코드계를 지원하고 있습니다.
+  
+   * Mule 의 버퍼에서 사용되고 있는 내부코드
+   * MS 한자코드/Shift JIS (일본어만)
+   * ISO2022 에 기인한 것(JIS [JUNET], EUC, CTEXT 를 포함한다)
+   * Big5(중국어만)
+  
+  Mule 에서는, 이들의 코드계를, 화일입출력, 키입력, 화면표시,
+  프로세스간 통신 각각에 대하여 독립적으로 지정할 수 있습니다.
+  
+C-14: *Buffer List* 에 표시되는 버퍼 사이즈와, 세이브했을 때에
+  생긴 화일의 사이즈가 크게 다릅니다만, 왜 그렇습니까?
+  
+  Mule 에서는, 문자의 내부표현으로서 각 문자세트마다 리딩캐릭터라는
+  것을 배정하고, ASCII 이외의 문자는 모두 리딩케릭터를 머리에
+  붙인 것을 내부코드로서 하고 있습니다. 따라서 Latin-1 등의 8비트
+  문자는 내부에서는 2바이트로 되고, 한자등의 16비트문자는 내부에서는
+  3바이트로 됩니다. 내부표현대로 세이브하면 버퍼의 사이즈와 화일의
+  사이즈는 일치합니다만, 다른 인코딩법으로 세이브하면 양자는 맞지
+  않는 경우가 있습니다.
+  
+C-15: kterm 에서, 마우스에 의한 cut & paste 를 할 수 없습니까?
+  
+  Mule 을 kterm 에서 기동하고 있는 경우, Mule 의
+  keyboard-coding-system 이, kterm 의 한자모드와 맞지 않는 경우,
+  paste 할 수 없습니다. kterm 의 한자모드와 Mule 의 keyboard-
+  coding-system 을 맞추어서 행하여 주세요.
+  
+C-16: kinput2 으로부터 한자를 입력할 수 있습니까?
+  
+  kterm 에서 Mule을 작동시키는 것으로, kinput2 으로부터 입력할 수 있습
+  니다. 단, 그 때는, Mule 의 keyboard-coding-system 을 kterm 의 한자모
+  드와 맞도록 설정할 필요가 있습니다.
+  
+C-17: (setq keyboard-coding-system *euc-japan*) 라고 설정하였습니다만,
+ ㄶ아무래도 잘 작동하여 주지 않습니다만?
+  
+  setq 로, keyboard-coding-system 에 값을 바인드해서는 안됩니다.
+  반드시 set-keyboard-coding-system 함수를 사용하도록 하세요. 다른
+  display-coding-system 나 file-coding-system 등도 같습니다.
+  
+C-18: set-keyboard-coding-system 에서 *autoconv*, *big5-hku*,
+  *big5-eten*, *internal* 의 설정을 할 수 없습니다만?
+  
+  이것은 Mule 의 설계시방(specification)입니다.
+  
+C-19: EUC 에서 일본, 한국, 중국, EC 등 각국어를 동시에 표시할수 있도록
+ 하고 싶습니다만?
+  
+  각국어의 EUC 는, 각각 완전히 같은 코드계이기 때문에 혼재시키는 것은
+  불가능합니다. 다국어를 동시에 표시시킬 필요가 있으면, Mule 에서
+   *junet* 혹은 *ctext* 의 코드를 사용하도록 하세요.
+  
+C-20: Mule에서 사용하고 있는 코드계의 도큐먼트는 있습니까?
+  
+  도큐먼트는, ISO 2022 입니다. JIS 라면 JIS X0202입니다. Mule 의
+  texinfo 메뉴얼이나 $MULE/doc/ISO2022 에도 간단한 설명이 있습니다.
+  
+C-21: 인크리멘털 서치 중에 한자를 입력하기 위해서는?
+  
+  인크리멘털 서치(isearch) 중에 문자열을 입력하는데는, C-k 를 입
+  력합니다. 이 모드에서는 미니버퍼 중에 문자열을 입력할 수 있기 때문에,
+  C-\ 로 일본어/중국어를 입력할 수 있습니다. 문자열 입력이 끝나면,
+  RET 키를 치세요. Mule 은 isearch 를 재개합니다.
+  (주:이 항은 곧 변경할 예정)
+  
+C-22: Mule 에서 사용할 수 있는 다양한 언어용의 폰트는 어디에서 입수합
+ 니까?
+  
+  아래의 장소로부터 anonymous FTP 로 입수할 수 있습니다.
+  
+    etlport.etl.go.jp: /pub/mule/fonts
+    sh.wide.ad.jp: /JAPAN/mule/fonts
+  
+  여기에는, 아래와 같은 폰트화일이 포함되어 있습니다.
+  
+    BIG5.tar.gz
+     -- Big5 encoding 16x15dots font for Chinese
+    Chinese.tar.gz
+     -- 16x16 and 24x24 GB fonts for Chinese
+    CYRILLIC.tar.gz
+     -- KOI encoding fonts for Cyrillic characters
+    ETL.tar.gz
+     -- 14dots, 16dots, and 24dots fonts for ISO8859-1,2,3,4,5,7,8,9 	      !
+        12x24dots fonts for SiSheng
+        12x29dots fonts for Thai
+        12x24dots fonts for Vietnamese
+    Japanese.tar.gz
+     -- 14x14, 16x16, 24x24 JIS fonts for Japanese
+    Korean.tar.gz
+     -- 16x16 and 24x24 Korean fonts
+  
+  또한, GB font 는 X11R5 에 contribute 되어 있는 cxterm 에도 포함되어
+  배포되고 있습니다.
+        X.V11R5/contrib/client/cxterm/fonts
+  라는 디렉토리 내를 보세요. 이하의 폰트가 있을 것입니다.
+        cclib16fs.bdf 16x16 Fang Song style, GB encoding
+        cclib16st.bdf 16x16 Song style, GB encoding
+        cclib24st.bdf 24x24 Song style, GB encoding
+        hku-ch16.bdf 16x16 Fang Song style, BIG5 encoding
+  
+C-23: 뉴스그룹 alt.chinese.text[.big5] 를 중국어로 읽을 수 있습니까?
+  
+  alt.chinese.text 에서는, ~{ 와 ~} 를 'ESC $ A' (중국어의 G0 로의
+  designate) 와 'ESC ( B' (ASCII 의 G0 로의 designate) 의 대신에 사용
+  하고 있습니다. 이것은 Hz encoding 라고 불리고 있습니다. Mule 에서는,	      !
+  chinese.el 을 로드한 후, GNUS 와 gnusutil.el 를 이용하는 것에 의해,	      !
+  이 뉴스그룹을 보통 중국어로 읽는 것이 가능합니다. GNUS 를 기동하기 	      !
+  전에 gnusutil.el 를 로드하세요. gnusutil.el 는, Mule 의 ftp 디렉토리	      !
+  의 contrib/lisp 내에 있습니다(Mule 의 배포화일 내에는 포함되어 있지	      !
+  않습니다). 								      !
+  
+C-24: quail-help 에서 표시되는 문자와 실제로 입력되는 문자가 다릅니다
+ 만, 이것은 버그입니까?
+  
+  변수 *quail-keyboard-translate-table* 이 옳게 세트 되어 있는가
+  확인하세요. 이 변수가 디폴트로 되어 있으면, vt100 와 같은 배열의
+  키보드가 사용되고 있는 것이라고 가정하고 그 용도의 배열표시를 행합니
+  다. 특히 JIS 키보드를 사용하고 있는 경우는 .emacs 내에
+  
+        (setq *quail-keyboard-translate-table*
+              *quail-keyboard-translate-table-jis*)
+  
+  를 넣어둘 필요가 있습니다.
+  상세한 것은 doc/keyboard-translation.text 를 보세요.
+  
+C-25: 반각 가따가나(JIS X0201가따가나) 를 입력하기 위해서는?
+  
+  Ken Shibata <shibata@sgi.co.jp> 씨는 아래와 같이 기술하고 있습니다.
+  
+    Mule 에는, 반각 가따가나(JIS X0201가따가나)의 입력을 위해서
+    jisx0201.el, its/han-kata.el 의 2개의 emacs lisp 가 마련되어 있습 	      !
+    니다. jisx0201.el 에서는 펜스모드에서 이미 입력된 전각의 가따가나,
+    히라가나를 일괄변환하는 fence-hankaku-katakana(펜스모드 내에 M-x)
+    가, its/han-kata.el 에는 로마자 반각 가따가나 변환을 행하기 위한 	      !
+    its:select-hankaku-katakana(통상의 모드에서 C-x C-k x, 펜스모드에
+    서 M-C-x)가 포함되어 있습니다.
+  
+    게다가, jisx0201.el 에는 일괄변환인 hankaku-katakana-region,
+    zenkaku-katakana-region(paragraph,sentence,word 도 있습니다)가
+    포함되어 있습니다. its/han-kata.el 는 jisx0201.el 를 로드하기 때문 	      !
+    에, 필요에 따라서 어느쪽인가를 .emacs 에 로드하세요. 단, 이 lisp
+    를 로드하는데는 상당한 시간이 걸리기 때문에, 빈번히 반각가따가나를
+    입력하는 사람은 site-init.el 로 로드하도록 하여 다시 컴파일을 하여
+    두면 좋겠지요.
+  
+    입력의 순서를 정리합니다.
+  
+    1)펜스모드에서 이미 입력한 가따가나를 반각으로 하는데는 M-x
+      반각가따가나를 전각히라가나(가따가나)로 되돌리는 것은 M-h (M-k)
+  
+    2)통상의 모드에서 로마자 반각가따가나 모드로 바꾸는 것은 C-x C-k x
+      로마자 전각히라가나 모드로 되돌리는 것은 C-x C-k h
+  
+    3)펜스모드에서 로마자 반각가따가나 모드로 바꾸는 것은 M-C-x
+      로마자 전각히라가나 모드로 되돌리는 것은 M-C-h
+      (사족입니다만, bobcat.el 등으로, bs 와 del 을 교환하여 Meta를 ㆂ
+      ESC 키로 입력하고 있는 사람은 M-C-h 는 ESC DEL 로 됩니다.)
+  
+C-26: Mule 에서 만든 텍스트를 인쇄하는데는?
+  
+  Mule 의 etc 디렉토리에 포함되어 있는 m2ps 라는 프로그램을 사용하면,
+  다국어를 포함한 화일을 포스트스크립프린트로 인쇄할 수 있는 형식으로
+  변환할 수 있습니다. 단, m2ps 는 Mule 의 *internal* 이라는 코드계로
+  인코드된 화일만을 다룹니다.
+  
+  m2ps 는, X 의 BDF 화일을 폰트로서 사용하고, 문자 부분을 비트맵으로
+  전개하여 프린터에 보냅니다. 따라서 프린터에 폰트가 없더라도 다국어
+  텍스트를 인쇄할 수 있습니다. m2ps 에는 온라인메뉴얼 (m2ps.1)가
+  붙어 있으므로, 상세한 것은 그것을 참조하세요.
+
+C-27: Mule + Egg 를 사용하고 있을 때 "nn"으로 "ㆃ"가 입력되도록
+ 하는데는 어떻게 하면 좋습니까?
+  
+  .emacs 내에
+  
+        (setq enable-double-n-syntax t)
+  
+  라는 1행을 넣으면 OK 입니다.
+									      +
+C-28: 일본어.중국어.한글등의 2바이트코드를 포함한 화일명을		      +
+  잘 처리할 수 없습니다만.						      +
+									      +
+  ASCII 이외의 문자를 포함한 화일명으로 옳게 처리하기 위해서는 		      +
+  src/mconfig.h 내에서 USE MCPATH 가 정의되어 있을 필요가 있습니다. 	      +
+  이 화일의 최후 근방에 /* #define USE MCPATH */ 라는 행이 있으므로,	      +
+  이 코멘트를 지우고나서 Mule 을 다시 컴파일하세요. 또, 사용하는 화일	      +
+  명의 코드계를 지정할 필요가 있습니다. site-init.el 에 다음과 같은	      +
+  코드를 추가하면 됩니다(*autoconv* 는 사용할 수 없습니다).		      +
+									      +
+    ;;; 예: 패스명에, 한국어 EUC 를 사용한다				      +
+    (if (fboundp 'set-pathname-coding-system)				      +
+        (set-pathname-coding-system *euc-korea*))			      +
+
+Nemacs/Emacs 와의 호환성
+
+D-1: Mule 은, Nemacs/Emacs 의 상위호환이 아닙니까?
+  
+  Mule 은, GNU Emacs 를 베이스로 만들어져 있습니다만, emacs lisp의 레
+  벨에서 보면, 적지만 호환성이 없는 부분도 있습니다. 또한, Nemacs
+  와는 상당히 다른 것으로 되어 있습니다.
+  
+  Mule 와 Nemacs/Emacs 와의 emacs lisp 의 비호환성에 대해서, Enami
+  Tsugutomo <enami@sys.ptg.sony.co.jp> 씨는 다음의 점을 지적하고 있습
+  니다.
+  
+    * Nemacs 혹은 Mule 에서만 존재하는 함수/변수에 의한 비호환성.
+    * Mule 에서 Multilingual 화를 위해서 설계시방이 변경(인수의 추가
+      등)된 것에 의한 비호환성.
+    * Nemacs 와 Mule 에서 ascii 이외 문자의 내부표현이 틀린 것에 기인
+      하는 byte compile 후의 file 의 비호환성. (단 byte code 의 호환성
+      은 있습니다(그렇죠?:))
+    * base로 하고 있는 emacs 버젼의 차이에 의한 비호환성
+      (current-column뿐인가?)。
+  
+D-2: 사랑해야 할 ange-ftp 를 로드하면 M-! (shell-command) 가 작동하지
+ 않는 것은 무슨 이유입니까?
+  
+  ange-ftp 를 로드하면 대부분의 함수가 치환됩니다만, 그 중에 Mule
+  에서 인수의 지정이 변경되어 있는 write-region 과 
+insert-file-contents
+  가 포함되어 있습니다.
+  
+  명령어 shell-command 는 write-region 과 insert-file-contents 를
+  Mule 에서 추가된 인수를 사용하여 호출하고 있습니다만, ange-ftp 가
+  치환한 write-region 는 이 인수를 해석할 수 없기 때문에 에러가 발생하
+  고, shell-command 의 실행이 실패하고 있는 것입니다.
+  
+  해결법을 Masayuki Kuwada <kuwada@soliton.ee.uec.ac.jp> 씨는 다음과
+  같이 기술하고 있습니다:
+  
+    ange-ftp.el 의 ange-ftp-write-region 와
+    ange-ftp-insert-file-contents 의 정의부분의 인수의 최후에
+    &rest coding-system 를 추가하고, 이하의 수정을 하면 동작합니다.
+    (Emacs, Nemacs 와의 공유도 가능합니다).
+									      !
+    [주의] 이하의 수정은 ange-ftp 의 버젼 				      !
+    RCS: $Header: ange-ftp.el, v 4.20 92/08/14 17:04:34 ange EXp $ 	      !
+    에 대한 것입니다. ange-ftp 의 버젼에 따라서는 인수가 다른 경우가	      !
+    있기 때문에, 이하의 수정예를 참고하여 수정하여 주세요.		      !
+									      !
+    함수 ange-ftp-write-region 의 내부에 ange-ftp-real-write-region 이	      !
+    2군데에서 사용되고 있습니다만, 그것들을 각각 다음과 같이 변경합니다.      !
+    (ange-ftp-real-write-region start end temp nil visit)
+                         |
+	                 V
+    (apply 'ange-ftp-real-write-region start end temp nil
+	   visit coding-system)
+  
+    (ange-ftp-real-write-region start end filename append visit)
+			 |
+			 V	
+    (apply 'ange-ftp-real-write-region start end filename append
+           visit coding-system)
+  
+    또한, 함수 ange-ftp-insert-file-contents 의 내부에
+    ange-ftp-real-insert-file-contents 가 2군데에서 사용되고 있습니다
+    만, 그것들을 각각 다음과 같이 변경합니다.
+    (ange-ftp-real-insert-file-contents temp visit)
+			 |
+	                 V
+    (apply 'ange-ftp-real-insert-file-contents
+           temp visit
+           coding-system)
+  
+    (ange-ftp-real-insert-file-contents filename visit)
+			˛
+    (apply 'ange-ftp-real-insert-file-contents
+           filename visit coding-system)
+  
+D-3: Nemacs 와 Mule 에서 .emacs 을 공유할 수 있습니까?
+  
+  Mule 는 Nemacs 와 호환성이 없습니다. 그래서 Nemacs 용의 .emacs 를
+  그대로 사용하면 Mule 에서는 에러가 될 경우가 있습니다.
+  
+  그러나 아래와 같이 Mule 에서 실행하는 부분과 Nemacs 에서 실행하는
+  부분을 잘라서 나누면 공유하는 것이 가능합니다.
+  
+      (if (boundp 'MULE)
+        (Mule 의 경우에 실행하는 부분))
+      (if (boundp 'NEMACS)
+        (Nemacs 의 경우에 실행하는 부분))
+  
+  Mule 의 texinfo 메뉴얼에, Mule 과 Nemacs 에서 공유가능한 .emacs 의
+  샘플이 있으므로 참고로 하세요.
+  
+  단, byte-compile 할 경우는 공유할수 없는 것도 있습니다. 이 점에
+  대하여 Enami Tsugutomo <enami@sys.ptg.sony.co.jp> 씨는 다음과 같이
+  기술하고 있습니다.
+  
+    ~/.emacs 를 Nemacs 와 Mule 과 공유할 수 있도록 하더라도, 만약 byte
+    compile 하려면 별도의 (byte compile된)화일로 하지 않으면 안됩니다.
+  
+    즉 한자의 문자열등이 들어 있으면, (Nemacs 와 Mule 에서 ascii 이외
+    문자의 내부표현이 다른 것에 기인하는, byte compile 후의 file 의 비
+    호환성에 의해) byte compile 은 적더라도 다시 하지 않으면 안된다
+    는 것입니다:)。
+  
+D-4: Nemacs 에서는 잘 동작하고 있었는데, Mule 로 하면 "Symbol's
+ function definition is void: define-program-kanji-code" 라고 메세지가
+ 나오고 잘 동작되지 않습니다. 어떻게 하면 좋습니까?
+  
+  Atsushi Furuta <furuta@srarc2.sra.co.jp> 씨는, 다음과 같이
+  기술하고 있습니다.
+  
+    define-program-kanji-code 는 Nemacs 에만 있는 함수입니다. 따라서,
+    그대로는 Mule에서 작동되지 않습니다. define-program-coding-system
+    라는 함수가, 대역을 하여 줍니다. 예를 들면, 다음과 같이 바꾸어 씁
+    니다.
+   
+        (define-program-kanji-code nil ".*inc.*" 2)
+                |
+                V
+        (define-program-coding-system nil ".*inc.*" *junet*)
+  
+    똑같이, "kanji-code"를 포함한 변수/함수를 찾을 수 없는 경우,
+    "kanji-code" 를 "coding-system" 으로 치환한 변수/함수가 Mule 에
+    있는 경우가 있습니다. 또한, "kanji-flag" 라는 변수는, "mc-flag" 라
+    는 변수가, 대역을 하고 있습니다.
+
+  그리고, Mule 에서 Nemacs 용으로 쓰여진 코드를 작동하도록 하기 위한	      +
+  패키지도 있습니다. Ken'ichi Handa <handa@etl.go.jp> 씨는 다음과	      +
+  같이 기술하고 있습니다.						      +
+									      +
+    From: handa@etlken.etl.go.jp (Kenichi Handa)			      +
+    Newsgroups: fj.editor.mule,fj.editor.emacs				      +
+    Subject: nemacs -> mule						      +
+    Message-ID: <HANDA.93Oct15215300@etlken.etl.go.jp>			      +
+    Date: 15 Oct 93 21:53:00 GMT					      +
+    									      +
+    Nemacs 로부터 Mule 로의 이행을 용이하게 하기 위하여 메일링리스트 	      +
+    에 있는 분들의 협력하에 이하와 같은 단순한 패키지를 만들었습니다.	      +
+   									      +
+    이하의 2개의 .el 화일을 로드패스의 어딘가에 넣어두면, 		      +
+    .emacs 에 Nemacs 용의 코드를 넣어 두는 분은, .emacs 를 이하와	      +
+    같이 수정함으로써 Nemacs 용의 설정과 같은 것을 Mule에서도		      +
+    할 수 있습니다. 실지로 해보세요.					      +
+    	(load-library "nemacs-pre")					      +
+    	... 원래의 .emacs 의 코드 					      +
+    	(load-library "nemacs-post")					      +
+    물론 이렇게 수정하더라도 Nemacs 의 사용에는 지장이 없습니다.  	      +
+    									      +
+    아직 완전한 것이 아니기 때문에, 			 		      +
+    	"나는 Nemasc 용의 이러한 설정을 하고 있지만, Mule 에서 	 	      +
+    	는 어떻게 하면 좋습니까?"					      +
+    라는 질문을 기다리고 있습니다.					      +
+  									      +
+  그리고, nemacs-pre.el 과 nemacs-post.el 는 		 		      +
+  etlport.etl.go.jp:/pub/mule/contrib/lisp 로부터 FTP 로 입수할 수 있	      +
+  습니다. 								      +
+  
+D-5: GNU Emacs, Nemacs 용에 쓰여진 Emacs lisp 프로그램 중, Mule
+ 에서 작동하는 것과 작동하지 않는 것을 가르쳐 주세요.
+  
+  * 무변경으로 Mule 에서 동작하는 것
+  이름          버젼            비고
+  auctex	6.1d, 7.1p
+  cmutex	2.03
+  GNUS          3.13, 3.14.1,
+		3.15		GNU Emacs 19.x 에 묶음.
+				함수명, 변수명이 모두 소문자로 통일되
+                                어 있으므로 hook 를 설정하고 있는 경우
+				는 그 hook 를 수정할 필요가 있다.
+  ispell        2.1?            ispell 3.0.5 에 대하여 있는 것
+  mh-e          3.8
+  SKK           6.7 이후        6.7 보다 오래된 것은 불가
+  Supercite     2.3             일본어 대응으로 사용하는데는 질문 E-3 를 참조
+  vm		5.32, 5.33
+  
+  * Mule 전문 혹은 Mule 용으로 수정된 버젼이 있는 것
+  이름          버젼            비고
+  boiled-egg    3.10            mule/contrib 에 수록
+  canna
+  EGG           3.05            Mule 표준장비
+  diclookup                     mule/contrib 에 수록
+  guess-coding                  mule/contrib 에 수록
+  keisen                        마스이판,mule/contrib 에 수록
+  keisen                        미에대학판
+  mh-search                     mule/contrib 에 수록
+  sj3-egg       1.6
+  jam-zcat      1.42
+  
+  * Mule 에서는 작동하지 않는 것
+  이름          버젼            비고
+  ange-ftp      4.20            단, 패치를 붙이면 작동한다 (D-2 참조)
+  x-sb-mouse    1.4(92-05-23)   단, 패치를 붙이면 작동한다
+
+
+메일 & 뉴스
+
+E-1: mail 모드로 했을 때, 자동적으로 코드계를 JIS 로 하는데는?
+  
+  RMAIL 이나 VM 을 사용하고 있는 분은 mail-mode-hook 를 이용하고, mail
+  모드로 되었을 때에 코드계를 JIS 로 설정합니다.
+  
+    (setq mail-mode-hook
+          '(lambda ()
+             (cond ((boundp 'NEMACS)
+                    (setq kanji-fileio-code 2))
+                   ((boundp 'MULE)
+                    (set-file-coding-system *junet*)))))
+  
+  MH-E 를 사용하고 있는 분은 mh-letter-mode-hook 를 이용하고,
+  mh-letter 모드가 되었을 때에 코드계를 JIS 로 설정합니다.
+  
+    (SETQ MH-LETTER-MODE-HOOK
+          '(LAMBDA ()
+             (COND ((BOUNDP 'NEMACS)
+                    (SETQ KANJI-FILEIO-CODE 2))
+                   ((BOUNDP 'MULE)
+                    (SET-FILE-CODING-SYSTEM *JUNET*)))))
+  
+  이상의 코드를 .EMACS 에 넣어 두면 좋겠지요.
+  
+  MULE 에서는 MULE-INIT.EL 에 필요한 설정이 되어 있으므로, 통상은
+  이들의 설정은 불필요합니다.
+  
+E-2: 메일이나 뉴스를 쓰고 있을 때에 C-c C-y 라고 하면 인용마크가
+ "   " 로 되어 버립니다. 이것을 "> "로 바꾸려면 어떻게 하면 좋습니까?
+  
+  Supercite 를 사용하면 인용부호가 "> "로 되도록 설정할 수 있습니다.	      !
+  Supercite 에는 많은 기능이 있고, 인용마크를 다양하게 카스터마이즈할	      !
+  수 있습니다. 상세한 것은 질문 E-3 ~ E-5 를 보세요.			      !
+									      !
+E-3: Supercite 를 사용하여, 인용부호 이름등을 포함시키려면 어떻게 하면	      !
+ 됩니까?								      !
+									      !
+  이하의 설정으로 작동될 것입니다. 이 설정은 ksakai@mtl.t.u-tokyo.ac.jp	      !
+  씨에 따릅니다. 무엇을 사용하는 가에 따라서, 필요없는 행은 생략할 수 	      !
+  있겠지요. 또한, 제일 밑의 3행은 취향에 따라서 바꾸면 좋을 것입니다(이	      !
+  것에 대한 상세한 설명은 Supercite 의 도큐먼트를 보세요).		      !
+    									      !
+    ;; sc								      !
+    (autoload 'sc-cite-original "supercite" "Supercite 3.1" t)	 	      !
+    (autoload 'sc-submit-bug-report "supercite" "Supercite 3.1" t)	      !
+    (autoload 'sc-perform-overloads "sc-oloads" "Supercite 3.1" t)	      !
+    (setq mail-citation-hook 'sc-cite-original)				      !
+    (setq mail-yank-hooks 'sc-cite-original) ; for all but MH-E	
+    (setq mh-yank-hooks 'sc-cite-original) ; for MH-E (3.7이상) 	      !
+    (setq news-reply-mode-hook 'sc-perform-overloads) ; for RNEWS,GNEWS,GNUS  !
+    (setq mail-setup-hook 'sc-perform-overloads) ; for RMAIL,PCMAIL,GNUS      !
+    (setq gnews-ready-hook 'sc-perform-overloads) ; for GNEWS	 	      !
+  
+    (setq sc-electric-references-p nil)
+    (setq sc-preferred-header-style 1)					      !
+    (setq sc-citation-leader "")
+  
+E-4: Supercite 를 일본어대응으로 사용하는데는? 				      !
+  
+  영어만 사용하는 것이라면, E-3 에서 행한 설정만으로 충분하지만, 일본	      !
+  어를 사용하는 경우, 개인의 설정(sc-cite-regexp 의 설정)을 바꿀 필요	      !
+  가 있습니다. 								      !
+  
+  Yoichi HIROSE <yoichi@esasd.ksp.fujixerox.co.jp> 씨는 다음과 같이
+  기술하고 있습니다.
+  
+    Nemacs 에서 일본어를 사용하고 있었던 경우, 일본어에 매치하기 위하
+    여 사용하고 있던 케티고리가 Mule 에서 바꾸어져 버리고 있기 때문에,
+    작동하지 않게(작동하는 경우도 있나?) 되어 버립니다. 즉, 전부터
+    캐티고리를 사용하여 정규표현을 지정하고 있지 않았던 경우는
+    관계 없습니다.
+    아래의 정규표현을 보시면 알 것이라고 생각합니다만, NEMACS 에서는
+    마구 길게 되어 있습니다만, MULE 에서는 상당히 짧습니다.
+    상세한 것은 info 의 char-category 를 보면 알 수 있다고 생각합니다.
+  
+    이런 이유로, Mule 에서 sc 를 일본어에 대응시켜서 사용하고 싶으면
+    sc-cite-regexp 에 아래와 같은 변경이 필요합니다.
+  
+    sc-cite-regexp 설정예:
+    (if (boundp 'MULE)
+        (setq sc-cite-regexp "\\s *\\([a-zA-Z0-9_]\\|\\cj\\)*>+\\s *")
+      (setq sc-cite-regexp "\\s
+*\\([a-zA-Z0-9_]\\|\\cc\\|\\cC\\|\\ch\\|\\cH\\|\\ck\\|\\cK\\|\\ca\\|\\cg\\|\\cr\\|\\cu\\)*>+\\s *"))
+
+E-5: Supercite 를 사용하여, 인용부호가 자동적으로 "> " 로 되도록 설정	      +
+ 하는데는 어떻게 하면 됩니까? 						      +
+  									      +
+  E-3(+E-4) 의 설정에 덧붙여서, 다음 행을 덧붙이면 됩니다.  		      +
+  									      +
+    (setq sc-nested-citation-p t)					      +
+  									      +
+  단 이 설정을 행하면, 이름 등을 인용부호에 포함시킬 수 없게 되기 	      +
+  때문에, 주의하세요.  						 	      +
+  									      +
+E-6: Supercite 에서, 디폴트로 준비되어 있는 인용부호 이외의 것을 디폴트       +
+ 로서 사용할 수 있도록 하는데는 어떻게 하면 됩니까?			      +
+  									      +
+  이 목적을 위하여, 히로세@후지제록스 				 	      +
+  (yoichi@s5g.ksp.fujixerox.co.jp)씨가 작성한 sc-register-2.3.1 이 	      +
+  있습니다. 사용하기 위해서는 sc-register 을 인스톨하여 다음 설정을 덧	      +
+  붙이면 됩니다.  							      +
+  									      +
+    (setq sc-load-hook '(lambda () (require 'sc-register)))		      +
+    (setq sc-preferred-attribution 'registeredname)			      +
+  									      +
+  일본어를 인용부호에 포함시키고 싶은 경우 등, 보완을 사용하여 후보를 	      +
+  선택하는 것이 귀찮은 경우에는, 특히 편리하지요.  			      +
+  									      +
+  단, Supercite 3.0 이후에서는 sc-register 는 사용할 수 없습니다. 장래 	      +
+  의 Supercite 에는 sc-register 의 기능이 처음부터 넣어진다고 합니다.	      +
+
+
+화면표시 							 	      +
+									      +
+F-1: X 상에서 Mule 을 사용하고 있으면, 폰트의 일부가 빠져서 표시되기도 하고,  +
+ 폰트가 흐트러져서 지저분하게 되기도 합니다.  			 	      +
+  									      +
+  TAKAHASHI Naoto <ntakahas@etl.go.jp> 씨와 Ken'ichi Handa		      +
+  <handa@etl.go.jp> 씨는 다음과 같이 쓰고 있습니다.  		 	      +
+  									      +
+    Mule 은 ASCII 폰트의 폭에 맞추어서 윈도우를 만듭니다. 폰트 	 	      +
+    의 일부가 빠지는 것은, 그 폰트와 ASCII 폰트의 폭이 맞지 않 		      +
+    기 때문입니다. 일본어.중국어.한글의 경우는 횡폭이 ASCII 폰트 	      +
+    의 정확히 2배가 아니면 안됩니다. 그리고, 그 이외의 폰트는 횡폭이 	      +
+    ASCII 폰트와 같지 않으면 안됩니다.					      +
+    									      +
+    폰트가 흐트러져 지저분하게 되는 것은 X 의 자동스케일링기능 때문이	      +
+    겠지요. 지정된 폰트가 XLFD 형식에 따르고 있고, 동시에 실제로는 존	      +
+    재하지 않는 경우, X의 서버는 자지가 알고 있는 폰트를 적당히 확대	      +
+    축소하여 사용합니다. 예를 들면,					      +
+          "-*-fixed-medium-r-*--*-*-*-*-*-*-jisx0208.1983-*"		      +
+    라는 지정은 XLFD 에 따르고 있으므로 자동스케일링되도록 되는 것 	      +
+    같습니다. 이것에 대하여 mule-init.el 에 있는 지정:			      +
+          "-*-fixed-medium-r-*--*-*-jisx0208.1983-*"			      +
+    는 XLFD 에 따르고 있지 않으므로(컬럼수가 적다)자동스케일링은 	      +
+    되지 않는 것입니다. 이상은 단순한 경험에 근거한 것입니다.  	 	      +
+  									      +
+F-2: (x-set-bell t) 로서 visible-bell 로 하였더니, 화면 프럿시가 	      +
+ 일어나는 위치가 화면중앙, 범위가 화면의 크기 약 1/4로 한정되는 것 같         +
+ 은데, 이것은 시방입니까?						      +
+  									      +
+  시방입니다. GNU Emacs 18.58 부터, 이와 같이 변경되었습니다.  	 	      +
+
+

@@ -1,0 +1,914 @@
+This is an article posted to Mule mailing-list by Yoshiyuki Akiba.
+It describes what changes were necessary to install Mule on NeXT.
+Since the current Mule has already been patched for NeXT,
+all you have to do is (in config.h):
+#include <s-bsd4-3.h>
+#include <m-NeXT.h>
+
+============================================================
+Date: Fri, 12 Jun 92 10:22:51 JST
+From: akiba@cbs.canon.co.jp (Yoshiyuki Akiba)
+Return-Path: <akiba@cbs.canon.co.jp>
+To: mule@etl.go.jp
+In-Reply-To: Yoshiyuki Akiba's message of Thu, 4 Jun 92 10:00:35 JST <9206040100.AA17372@scarab.cbs.canon.co.jp>
+Subject: Patch for NeXT (Re: GNUS cause SEGV on NeXT)
+
+
+*おしまいにNeXT用のパッチ(shar形式)がついています*
+
+>>>>> akiba@cbs.canon.co.jp (Yoshiyuki Akiba) writes:
+akiba> 今週はちょっと、時間がとれませんが、来週中には本件の対策も含
+akiba> めてNeXT用パッチキットをお届けできると思います。 
+
+NeXT上でGNUSを起動するとsegmentation faultを起こす原因が
+わかりました。以下に調べた結果をまとめておきます。おしま
+いに、muleをNeXT上で動かすためのパッチをつけておきます。 
+
+キヤノン株式会社
+コンピュータ応用システム技術開発センター
+秋葉喜之 akiba@cbs.canon.co.jp
+
+-----
+[GNUSが動かなかったわけ]
+
+GNUSがsegmentation faultを起こす原因はdumpしたあとのmule
+(xemacs)がdump前(temacs)と異なるゾーンを使用してたためで
+した。 
+
+[ゾーンとは]
+
+NeXTはメモリ割当をゾーンという単位で管理します。
+NXCreateZone()でゾーンを作り、NXZoneMalloc()でゾーンから
+メモリブロックを割り当てます。関連の深いオブジェクトを同
+一のゾーンにまとめることでページフォールトを減らすなどパ
+フォーマンスの向上に利用できます。 
+	malloc(size)
+は、おおよそ
+	NXZoneMalloc(NXDefaultMallocZone(),size)
+と等価です。 
+
+malloc()はNXDefaultMallocZone()からメモリブロックを獲得
+します。空きブロックはゾーンごとに大きさとブロックへのポ
+インタが保存されています。 
+
+realloc()の際に後続に十分な大きさの空きブロックがある場
+合、この空きブロックを使って指定されたブロックを拡張しま
+す。空きブロックの大きさを変更した場合ゾーンごとに管理さ
+れている空きブロックの情報を更新しようとします。dump前に
+できた空きブロックを、dump後にrealloc()が使おうとした場
+合、本来属しているゾーンと異なるゾーンの空きブロック情報
+を更新することになって今回のような症状が起きます。 
+
+そこで、NXCreateZone()でemacs用のzoneを作って、dump前後
+で同じゾーンを使うようにしました。 
+
+dump直前のNXDefaultMallocZone()をdump後にリストアできる
+と良いのですが、crt0.oの部分にある初期化部分で新たなゾー
+ンが作られているので、リストアできるとしてもcrt0を作り直
+すことになって面倒なので、今回の方法をとりました。 
+
+*パッチの使い方*
+
+1. m-NeXT.h,unexNeXT.cをソースのディレクトリに移動
+2. patch-for-NeXTでパッチをあてる
+3. s-bsd4-3.h,m-NeXT.hをつかってmakeする。
+
+以下に、パッチによる修正の主な点をあげておきます。
+
+1) NeXTで動くようにした:-)
+
+unexNeXT.cでMach-Oフォーマットでdumpできるようにした
+
+2) malloc,realloc,freeをNXZone{Mallo,Realloc,Free}で置き換えた
+
+malloc関数群の使用するゾーンをdump後にリストアできないた
+め専用のゾーンを使用するようにした 
+
+3) load-averageが正しい値を返すようにした
+
+processor_set_info()でロードアベレージを取り出せるのでこ
+れを使用した(kmemグループのパーミッションの必要なし)。
+m-NeXT.hでLOAD_AVE_MACHをundefすれば従来通り方法でロード
+アベレージを/dev/kmemから読みだそうとする。 
+
+3)など、どうでもいいことですが、作ってみました。
+LOAD_AVE_CVT()も一応(おそらく:-)正しい定義にしてあります。
+
+#!/bin/sh
+# This is a shell archive (produced by shar 3.49)
+# To extract the files from this archive, save it to a file, remove
+# everything above the "!/bin/sh" line above, and type "sh file_name".
+#
+# made 06/09/1992 00:49 UTC by akiba@scarab
+# Source directory /clients/UnderConstruction/mule-0.9.4/src
+#
+# existing files will NOT be overwritten unless -c is specified
+#
+# This shar contains:
+# length  mode       name
+# ------ ---------- ------------------------------------------
+#   2819 -rw-r--r-- m-NeXT.h
+#   8482 -rw-r--r-- unexNeXT.c
+#   5202 -rw-r--r-- patch-for-NeXT
+#
+# ============= m-NeXT.h ==============
+if test -f 'm-NeXT.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping m-NeXT.h (File already exists)'
+else
+echo 'x - extracting m-NeXT.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'm-NeXT.h' &&
+/* Configuration file for the NeXT machine. */
+/*    Copyright (C) 1985, 1986 Free Software Foundation, Inc.
+X
+This file is part of GNU Emacs.
+X
+GNU Emacs is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY.  No author or distributor
+accepts responsibility to anyone for the consequences of using it
+or for whether it serves any particular purpose or works at all,
+unless he says so in writing.  Refer to the GNU Emacs General Public
+License for full details.
+X
+Everyone is granted permission to copy, modify and redistribute
+GNU Emacs, but only under the conditions described in the
+GNU Emacs General Public License.   A copy of this license is
+supposed to have been given to you along with GNU Emacs so you
+can know your rights and responsibilities.  It should be in a
+file named COPYING.  Among other things, the copyright notice
+and this notice must be preserved on all copies.  */
+X
+X
+/* The following three symbols give information on
+X the size of various data types.  */
+X
+#define SHORTBITS 16		/* Number of bits in a short */
+X
+#define INTBITS 32		/* Number of bits in an int */
+X
+#define LONGBITS 32		/* Number of bits in a long */
+X
+/* 68000 has lowest-numbered byte as most significant */
+X
+#define BIG_ENDIAN
+X
+/* Define how to take a char and sign-extend into an int.
+X   On machines where char is signed, this is a no-op.  */
+X
+#define SIGN_EXTEND_CHAR(c) (c)
+X
+/* Say this machine is a 68000 */
+X
+#ifndef m68000
+#define m68000
+#endif
+X
+/* Use type int rather than a union, to represent Lisp_Object */
+X
+#define NO_UNION_TYPE
+X
+/* XINT must explicitly sign-extend */
+X
+#define EXPLICIT_SIGN_EXTEND
+X
+#define LIB_STANDARD -lsys_s
+X
+/* define LOAD_AVE_MACH, load average to be obtained from other than kmem */
+X
+#define LOAD_AVE_MACH
+X
+/* Data type of load average, as read out of kmem.  */
+X
+#define LOAD_AVE_TYPE long
+X
+/* Convert that into an integer that is 100 for a load average of 1.0  */
+#define	LSCALE	1000		/* defined in <sys/kernel.h> */
+#define LOAD_AVE_CVT(x) (int) (((double) (x)) * 100.0 / LSCALE)
+X
+/* KERNEL_FILE conflicts with some system header files */
+#undef	KERNEL_FILE
+#define	KERN_FILE "/mach"
+X
+#define environ _environ
+X
+#define NO_REMAP
+#define UNEXEC unexNeXT.o
+X
+/* not used in unexNeXT.c */
+#define TEXT_START 0 /* wrong: but nobody uses it anyway */
+#define TEXT_END get_etext()
+#define DATA_END get_edata()
+X
+#define HAVE_ALLOCA
+X
+#define SYSTEM_MALLOC
+X
+/* shoud be in s-mach.h */
+#define LD_SWITCH_SYSTEM -X -noseglinkedit
+#define C_SWITCH_SYSTEM -bsd
+X
+/* not to be included in ymakefile */
+#ifdef emacs
+#include <zone.h>
+extern NXZone *emacszone;
+#define malloc(size) NXZoneMalloc(emacszone,size)
+#define	realloc(ptr,size) NXZoneRealloc(emacszone,ptr,size)
+#define free(ptr) NXZoneFree(emacszone,ptr)
+#endif
+X
+/* quick hack */
+#define	READ_BUF_SIZE (1024*128)
+#define ZONESIZE 128
+SHAR_EOF
+chmod 0644 m-NeXT.h ||
+echo 'restore of m-NeXT.h failed'
+Wc_c="`wc -c < 'm-NeXT.h'`"
+test 2819 -eq "$Wc_c" ||
+	echo 'm-NeXT.h: original size 2819, current size' "$Wc_c"
+fi
+# ============= unexNeXT.c ==============
+if test -f 'unexNeXT.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping unexNeXT.c (File already exists)'
+else
+echo 'x - extracting unexNeXT.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'unexNeXT.c' &&
+/*
+X * unexec for the NeXT Mach environment.
+X *
+X * Bradley Taylor (btaylor@NeXT.COM) 
+X * February 28, 1990
+X */
+#ifdef NeXT
+X
+#undef __STRICT_BSD__
+X
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <mach.h>
+#include <sys/loader.h>
+#include <sys/file.h>
+#include <sys/stat.h>
+#include <libc.h>
+X
+X
+extern struct section *getsectbyname(char *, char *);
+X
+/*
+X * Kludge: we don't expect any program data beyond VM_HIGHDATA
+X * What is really needed is a way to find out from malloc() which
+X * pages it vm_allocated and write only those out into the data segment.
+X *
+X * This kludge may break when we stop using fixed virtual address
+X * shared libraries. Actually, emacs will probably continue working, but be 
+X * much larger on disk than it needs to be (because non-malloced data will
+X * be in the file).
+X */
+static const unsigned VM_HIGHDATA = 0x2000000;
+X
+typedef struct region_t {
+X	vm_address_t address;
+X	vm_size_t size;
+X	vm_prot_t protection;
+X	vm_prot_t max_protection;
+X	vm_inherit_t inheritance;
+X	boolean_t shared;
+X	port_t object_name;
+X	vm_offset_t offset;
+} region_t;
+X
+X
+static void
+grow(
+X     struct load_command ***the_commands,
+X     unsigned *the_commands_len
+X     )
+{
+X	if (*the_commands == NULL) {
+X		*the_commands_len = 1;
+X		*the_commands = malloc(sizeof(*the_commands));
+X	} else {
+X		(*the_commands_len)++;
+X		*the_commands = realloc(*the_commands, 
+X					(*the_commands_len *
+X					 sizeof(**the_commands)));
+X	}
+}
+X
+X
+static void
+save_command(
+X	     struct load_command *command,
+X	     struct load_command ***the_commands,
+X	     unsigned *the_commands_len
+X	     )
+{
+X	struct load_command **tmp;
+X
+X	grow(the_commands, the_commands_len);
+X	tmp = &(*the_commands)[*the_commands_len - 1];
+X	*tmp = malloc(command->cmdsize);
+X	bcopy(command, *tmp, command->cmdsize);
+}
+X
+static void
+fatal_unexec(char *format, ...)
+{
+X	va_list ap;
+X
+X	va_start(ap, format);
+X	fprintf(stderr, "unexec: ");
+X	vfprintf(stderr, format, ap);
+X	fprintf(stderr, "\n");
+X	va_end(ap);
+}
+X
+static int
+read_macho(
+X	   int fd,
+X	   struct mach_header *the_header,
+X	   struct load_command ***the_commands,
+X	   unsigned *the_commands_len
+X	   )
+{
+X	struct load_command command;
+X	struct load_command *buf;
+X	int i;
+X	int size;
+X
+X	if (read(fd, the_header, sizeof(*the_header)) != sizeof(*the_header)) {
+X		fatal_unexec("cannot read macho header");
+X		return (0);
+X	}
+X	for (i = 0; i < the_header->ncmds; i++) {
+X		if (read(fd, &command, sizeof(struct load_command)) != 
+X		    sizeof(struct load_command)) {
+X		  	fatal_unexec("cannot read macho load command header");
+X			return (0);
+X		}
+X		size = command.cmdsize - sizeof(struct load_command);
+X		if (size < 0) {
+X		  	fatal_unexec("bogus load command size");
+X			return (0);
+X		}
+X		buf = malloc(command.cmdsize);
+X		buf->cmd = command.cmd;
+X		buf->cmdsize = command.cmdsize;
+X		if (read(fd, ((char *)buf + 
+X			      sizeof(struct load_command)), 
+X			 size) != size) {
+X		  	fatal_unexec("cannot read load command data");
+X			return (0);
+X		}
+X		save_command(buf, the_commands, the_commands_len);
+X	}
+X	return (1);
+}
+X
+static int
+filldatagap(
+X	    vm_address_t start_address,
+X	    vm_size_t *size,
+X	    vm_address_t end_address
+X	    )
+{
+X	vm_address_t address;
+X	vm_size_t gapsize;
+X
+X	address = (start_address + *size);
+X	gapsize = end_address - address;
+X	*size += gapsize;
+X	if (vm_allocate(task_self(), &address, gapsize,
+X			FALSE) != KERN_SUCCESS) {
+X		fatal_unexec("cannot vm_allocate");
+X	        return (0);
+X	}
+X	return (1);
+}
+X
+static int
+get_data_region(
+X		vm_address_t *address,
+X		vm_size_t *size
+X		)
+{
+X	region_t region;
+X	kern_return_t ret;
+X	struct section *sect;
+X
+X	sect = getsectbyname(SEG_DATA, SECT_DATA);
+X	region.address = 0;
+X	*address = 0;
+X	for (;;) {
+X		ret = vm_region(task_self(), 
+X				&region.address, 
+X				&region.size, 
+X				&region.protection, 
+X				&region.max_protection, 
+X				&region.inheritance,
+X				&region.shared, 
+X				&region.object_name, 
+X				&region.offset);
+X		if (ret != KERN_SUCCESS || region.address >= VM_HIGHDATA) {
+X			break;
+X		}
+X		if (*address != 0) {
+X			if (region.address > *address + *size) {
+X				if (!filldatagap(*address, size, 
+X						 region.address)) {
+X					return (0);
+X				}
+X			} 
+X			*size += region.size;
+X		} else {
+X			if (region.address == sect->addr) {
+X				*address = region.address;
+X				*size = region.size;
+X			} 
+X		}
+X		region.address += region.size;
+X	}
+X	return (1);
+}
+X
+static char *
+my_malloc(
+X	  vm_size_t size
+X	  )
+{
+X	vm_address_t address;
+X
+X	if (vm_allocate(task_self(), &address, size, TRUE) != KERN_SUCCESS) {
+X		return (NULL);
+X	}
+X	return ((char *)address);
+}
+X
+static void
+my_free(
+X	char *buf,
+X	vm_size_t size
+X	)
+{
+X	vm_deallocate(task_self(), (vm_address_t)buf, size);
+}
+X
+static int
+unexec_doit(
+X	    int infd,
+X	    int outfd
+X	    )
+{
+X	int i;
+X	struct load_command **the_commands = NULL;
+X	unsigned the_commands_len;
+X	struct mach_header the_header;
+X	int fgrowth;
+X	int fdatastart;
+X	int fdatasize;
+X	int size;
+X	struct stat st;
+X	char *buf;
+X	vm_address_t data_address;
+X	vm_size_t data_size;
+X
+X	struct segment_command *segment;
+X
+X	if (!read_macho(infd, &the_header, &the_commands, &the_commands_len)) {
+X		return (0);
+X	}
+X
+X
+X	{
+X	  extern int malloc_cookie;
+X	  malloc_cookie = malloc_freezedry();
+X	}
+X	if (!get_data_region(&data_address, &data_size)) {
+X		return (0);
+X	}
+X
+X
+X	/*
+X	 * DO NOT USE MALLOC IN THIS SECTION
+X	 */
+X	{
+X		/*
+X		 * Fix offsets
+X		 */
+X		for (i = 0; i < the_commands_len; i++) {
+X			switch (the_commands[i]->cmd) {
+X			case LC_SEGMENT:
+X				segment = ((struct segment_command *)
+X					   the_commands[i]);
+X				if (strcmp(segment->segname, SEG_DATA) == 0) {
+X					fdatastart = segment->fileoff;
+X					fdatasize = segment->filesize;
+X					fgrowth = (data_size - 
+X						   segment->filesize);
+X					segment->vmsize = data_size;
+X					segment->filesize = data_size;
+X				}
+X				break;
+X			case LC_SYMTAB:
+X				((struct symtab_command *)
+X				 the_commands[i])->symoff += fgrowth;
+X				((struct symtab_command *)
+X				 the_commands[i])->stroff += fgrowth;
+X				break;
+X			case LC_SYMSEG:
+X				((struct symseg_command *)
+X				 the_commands[i])->offset += fgrowth;
+X				break;
+X			default:
+X				break;
+X			}
+X		}
+X		
+X		/*
+X		 * Write header
+X		 */
+X		if (write(outfd, &the_header, 
+X			  sizeof(the_header)) != sizeof(the_header)) {
+X			fatal_unexec("cannot write output file");
+X			return (0);
+X		}
+X		
+X		/*
+X		 * Write commands
+X		 */
+X		for (i = 0; i < the_commands_len; i++) {
+X			if (write(outfd, the_commands[i], 
+X				  the_commands[i]->cmdsize) != 
+X			    the_commands[i]->cmdsize) {
+X			  	fatal_unexec("cannot write output file");
+X				return (0);
+X			}
+X		}
+X		
+X		/*
+X		 * Write original text
+X		 */
+X		if (lseek(infd, the_header.sizeofcmds + sizeof(the_header), 
+X			  L_SET) < 0) {
+X		  	fatal_unexec("cannot seek input file");
+X			return (0);
+X		}
+X		size = fdatastart - (sizeof(the_header) + 
+X				     the_header.sizeofcmds);
+X		buf = my_malloc(size);
+X		if (read(infd, buf, size) != size) {
+X			my_free(buf, size);
+X		  	fatal_unexec("cannot read input file");
+X		}
+X		if (write(outfd, buf, size) != size) {
+X			my_free(buf, size);
+X			fatal_unexec("cannot write output file");
+X			return (0);
+X		}
+X		my_free(buf, size);
+X		
+X		
+X		/*
+X		 * Write new data
+X		 */
+X		if (write(outfd, (char *)data_address, 
+X			  data_size) != data_size) {
+X			fatal_unexec("cannot write output file");
+X			return (0);
+X		}
+X		
+X	}
+X
+X	/*
+X	 * OKAY TO USE MALLOC NOW
+X	 */
+X
+X	/*
+X	 * Write rest of file
+X	 */
+X	fstat(infd, &st);
+X	if (lseek(infd, fdatasize, L_INCR) < 0) {
+X		fatal_unexec("cannot seek input file");
+X		return (0);
+X	}
+X	size = st.st_size - lseek(infd, 0, L_INCR);
+X
+X	buf = malloc(size);
+X	if (read(infd, buf, size) != size) {
+X		free(buf);
+X		fatal_unexec("cannot read input file");
+X		return (0);
+X	}
+X	if (write(outfd, buf, size) != size) {
+X		free(buf);
+X		fatal_unexec("cannot write output file");
+X		return (0);
+X	}
+X	free(buf);
+X	return (1);
+}
+X
+void
+unexec(
+X       char *outfile,
+X       char *infile
+X       )
+{
+X	int infd;
+X	int outfd;
+X	char tmpbuf[L_tmpnam];
+X	char *tmpfile;
+X
+X	infd = open(infile, O_RDONLY, 0);
+X	if (infd < 0) {
+X	  	fatal_unexec("cannot open input file `%s'", infile);
+X		exit(1);
+X	}
+X	
+X	tmpnam(tmpbuf);
+X	tmpfile = rindex(tmpbuf, '/');
+X	if (tmpfile == NULL) {
+X		tmpfile = tmpbuf;
+X	} else {
+X		tmpfile++;
+X	}
+X	outfd = open(tmpfile, O_WRONLY|O_TRUNC|O_CREAT, 0755);
+X	if (outfd < 0) {
+X		close(infd);
+X		fatal_unexec("cannot open tmp file `%s'", tmpfile);
+X		exit(1);
+X	}
+X	if (!unexec_doit(infd, outfd)) {
+X		close(infd);
+X		close(outfd);
+X		unlink(tmpfile);
+X		exit(1);
+X	}
+X	close(infd);
+X	close(outfd);
+X	if (rename(tmpfile, outfile) < 0) {
+X		unlink(tmpfile);
+X		fatal_unexec("cannot rename `%s' to `%s'", tmpfile, outfile);
+X		exit(1);
+X	}
+}
+#endif
+X
+SHAR_EOF
+chmod 0644 unexNeXT.c ||
+echo 'restore of unexNeXT.c failed'
+Wc_c="`wc -c < 'unexNeXT.c'`"
+test 8482 -eq "$Wc_c" ||
+	echo 'unexNeXT.c: original size 8482, current size' "$Wc_c"
+fi
+# ============= patch-for-NeXT ==============
+if test -f 'patch-for-NeXT' -a X"$1" != X"-c"; then
+	echo 'x - skipping patch-for-NeXT (File already exists)'
+else
+echo 'x - extracting patch-for-NeXT (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'patch-for-NeXT' &&
+diff -rc tmp/mule-0.9.4/src/emacs.c mule-0.9.4/src/emacs.c
+*** tmp/mule-0.9.4/src/emacs.c	Thu May 28 16:34:57 1992
+--- mule-0.9.4/src/emacs.c	Tue Jun  9 09:05:54 1992
+***************
+*** 229,234 ****
+--- 229,240 ----
+X  #endif /* LINK_CRTL_SHARE */
+X  #endif /* VMS */
+X  
++ #ifdef NeXT
++ #include <mach.h>
++ int malloc_cookie;
++ NXZone *emacszone;
++ #endif
++ 
+X  /* ARGSUSED */
+X  main (argc, argv, envp)
+X       int argc;
+***************
+*** 238,243 ****
+--- 244,260 ----
+X    int skip_args = 0;
+X    extern int errno;
+X    extern void malloc_warning ();
++ 
++ #ifdef NeXT
++   if (initialized) {
++     if (malloc_jumpstart(malloc_cookie) != 0)
++       fatal("malloc jumpstart failed!\n");
++   } else {
++     emacszone = NXCreateZone(ZONESIZE*vm_page_size,vm_page_size,1);
++     if(emacszone == NX_NOZONE)
++       fatal("can't create emacs zone.\n");
++   }
++ #endif
+X  
+X  /* Map in shared memory, if we are using that.  */
+X  #ifdef HAVE_SHM
+diff -rc tmp/mule-0.9.4/src/fileio.c mule-0.9.4/src/fileio.c
+*** tmp/mule-0.9.4/src/fileio.c	Thu May 28 16:34:58 1992
+--- mule-0.9.4/src/fileio.c	Mon Jun  8 18:48:52 1992
+***************
+*** 1586,1592 ****
+--- 1586,1594 ----
+X    close (XFASTINT (fd));
+X  }
+X  
++ #ifndef READ_BUF_SIZE
+X  #define READ_BUF_SIZE 1048576	/* 92.5.28 by K.Handa */
++ #endif
+X  
+X  DEFUN ("insert-file-contents", Finsert_file_contents, Sinsert_file_contents,
+X    1, 3, 0,
+diff -rc tmp/mule-0.9.4/src/fns.c mule-0.9.4/src/fns.c
+*** tmp/mule-0.9.4/src/fns.c	Thu May 28 16:29:46 1992
+--- mule-0.9.4/src/fns.c	Tue Jun  9 09:03:05 1992
+***************
+*** 1118,1123 ****
+--- 1118,1126 ----
+X      }
+X  }
+X  
++ #ifdef LOAD_AVE_MACH
++ #include <mach.h>
++ #else
+X  /* Avoid static vars inside a function since in HPUX they dump as pure.  */
+X  #ifdef DGUX
+X  static struct dg_sys_info_load_info load_info;  /* what-a-mouthful! */
+***************
+*** 1136,1141 ****
+--- 1139,1145 ----
+X  #define initialized ldav_initialized
+X  #define nl ldav_nl
+X  #endif /* Not DGUX */
++ #endif /* not LOAD_AVE_MACH */
+X  
+X  DEFUN ("load-average", Fload_average, Sload_average, 0, 0, 0,
+X    "Return the current 1 minute, 5 minute and 15 minute load averages\n\
+***************
+*** 1143,1148 ****
+--- 1147,1177 ----
+X  and then turned into integers).")
+X    ()
+X  {
++ #ifdef	LOAD_AVE_MACH
++    kern_return_t                    error;
++    host_t                           host;
++    unsigned int                     info_count;
++    struct processor_set_basic_info  info;
++    processor_set_t                  default_set;
++    
++    int load_ave = 0;
++ /* int mach_fac = 0; mach factor(not used)*/
++ 
++    error=processor_set_default(host_self(), &default_set);
++    if (error==KERN_SUCCESS){
++ 	info_count=PROCESSOR_SET_BASIC_INFO_COUNT;
++ 	error=processor_set_info(default_set, PROCESSOR_SET_BASIC_INFO,
++ 	   &host, (processor_set_info_t)&info, &info_count);
++ 	if (error == KERN_SUCCESS) {
++ 	   load_ave = (int)((float)info.load_average * 100.0 / LOAD_SCALE);
++ /*	   mach_fac = (int)((float)info.mach_factor  * 100.0 / LOAD_SCALE); */
++ 	}
++    }
++ 
++    return Fcons (make_number (load_ave),
++ 		Fcons (make_number (load_ave),
++ 		       Fcons (make_number (load_ave), Qnil)));
++ #else /* not LOAD_AVE_MACH */
+X  #ifdef DGUX
+X    /* perhaps there should be a "sys_load_avg" call in sysdep.c?! - DJB */
+X    load_info.one_minute     = 0.0;	/* just in case there is an error */
+***************
+*** 1225,1237 ****
+X        strcpy (nl[0].n_name, LDAV_SYMBOL);
+X        nl[1].n_zeroes = 0;
+X  #else /* NLIST_STRUCT */
+! #ifdef convex
+X        nl[0].n_un.n_name = LDAV_SYMBOL;
+X        nl[1].n_un.n_name = 0;
+! #else /* not convex */
+X        nl[0].n_name = LDAV_SYMBOL;
+X        nl[1].n_name = 0;
+! #endif /* not convex */
+X  #endif /* NLIST_STRUCT */
+X  
+X  #ifdef IRIS_4D
+--- 1254,1266 ----
+X        strcpy (nl[0].n_name, LDAV_SYMBOL);
+X        nl[1].n_zeroes = 0;
+X  #else /* NLIST_STRUCT */
+! #if defined(convex) || defined(NeXT)
+X        nl[0].n_un.n_name = LDAV_SYMBOL;
+X        nl[1].n_un.n_name = 0;
+! #else /* not convex, not NeXT */
+X        nl[0].n_name = LDAV_SYMBOL;
+X        nl[1].n_name = 0;
+! #endif /* not convex, not NeXT */
+X  #endif /* NLIST_STRUCT */
+X  
+X  #ifdef IRIS_4D
+***************
+*** 1242,1248 ****
+--- 1271,1281 ----
+X  	    nl[0].n_value &= 0x7fffffff;
+X  	}
+X  #else
++ #ifdef KERN_FILE
++       nlist (KERN_FILE, nl);
++ #else
+X        nlist (KERNEL_FILE, nl);
++ #endif
+X  #endif /* IRIS */
+X  
+X  #ifdef FIXUP_KERNEL_SYMBOL_ADDR
+***************
+*** 1288,1293 ****
+--- 1321,1327 ----
+X  			      Qnil)));
+X  #endif /* LOAD_AVE_TYPE */
+X  #endif /* not DGUX */
++ #endif /* not LOAD_AVE_MACH */
+X  }
+X  
+X  #undef channel
+diff -rc tmp/mule-0.9.4/src/lisp.h mule-0.9.4/src/lisp.h
+*** tmp/mule-0.9.4/src/lisp.h	Thu May 28 16:29:53 1992
+--- mule-0.9.4/src/lisp.h	Tue Jun  9 09:08:30 1992
+***************
+*** 1007,1013 ****
+X  
+X  extern void debugger ();
+X  
+! extern char *malloc (), *realloc (), *getenv (), *ctime (), *getwd ();
+X  extern long *xmalloc (), *xrealloc ();
+X  
+X  #ifdef MAINTAIN_ENVIRONMENT
+--- 1007,1016 ----
+X  
+X  extern void debugger ();
+X  
+! #ifndef malloc
+! extern char *malloc (), *realloc ();
+! #endif
+! extern char *getenv (), *ctime (), *getwd ();
+X  extern long *xmalloc (), *xrealloc ();
+X  
+X  #ifdef MAINTAIN_ENVIRONMENT
+SHAR_EOF
+chmod 0644 patch-for-NeXT ||
+echo 'restore of patch-for-NeXT failed'
+Wc_c="`wc -c < 'patch-for-NeXT'`"
+test 5202 -eq "$Wc_c" ||
+	echo 'patch-for-NeXT: original size 5202, current size' "$Wc_c"
+fi
+exit 0
+
+--
+キヤノン株式会社
+コンピュータ応用システム技術開発センター
+秋葉喜之 akiba@cbs.canon.co.jp
+
+============================================================
+Date: Mon, 15 Jun 92 10:20:23 JST
+From: akiba@cbs.canon.co.jp (Yoshiyuki Akiba)
+Return-Path: <akiba@cbs.canon.co.jp>
+To: mule@etl.go.jp
+In-Reply-To: Yoshiyuki Akiba's message of Fri, 12 Jun 92 10:22:51 JST <9206120122.AA19043@scarab.cbs.canon.co.jp>
+Subject: Re: Patch for NeXT
+
+
+*jserverもNeXT上で動かしたい方に*
+
+jserverもNeXT上で動かすことができますが、killするときに 
+PANIC を起こします。原因は、使用していないソケットを
+shutdown()しているためです。次のパッチで回避できます。 
+
+(Wnn 4.03の時のパッチなので、そのままではあたらないかも
+知れませんが量が少ないのでこれで勘弁して下さい。:-)
+
+diff -rcN Wnn/jserver/de.c wnn/jserver/de.c
+*** Wnn/jserver/de.c	Fri Aug 30 15:52:39 1991
+--- wnn/jserver/de.c	Fri Aug 30 17:26:14 1991
+***************
+*** 459,465 ****
+      shutdown(sock_d_in, 2);
+      close(sock_d_in);
+  
+!     for (fd = nofile; fd >= 0; fd--) {
+  	shutdown(fd, 2);
+  	close(fd);
+      }
+--- 470,477 ----
+      shutdown(sock_d_in, 2);
+      close(sock_d_in);
+  
+!     for (fd = nofile-1; fd >= 0; fd--) {
+!       if( (fd!=sock_d_in)&&(fd!=sock_d_un)&&sock_tst(all_socks, fd) )
+  	shutdown(fd, 2);
+  	close(fd);
+      }
+--
+キヤノン株式会社
+コンピュータ応用システム技術開発センター
+秋葉喜之 akiba@cbs.canon.co.jp
+

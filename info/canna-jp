@@ -1,0 +1,906 @@
+Info file: canna-jp,    -*-Text-*-
+produced by texinfo-format-buffer
+from file: canna-jp.texinfo
+
+
+
+
+File: canna-jp  Node: Top, Prev: (dir), Up: (dir), Next: 概説
+
+『かんな/emacs』へようこそ。
+
+この info ファイルはスペースキーと`n'だけで全て通して読むことができるよ
+うになっています。スペースキーを押し、ページスクロールした時に、もうそれ
+以上スクロールできず、ベルがなる様な場合には`n'を押して下さい。次のセク
+ションに進むことができます。
+
+もちろんtexinfoの機能を使って目的の部分だけをツリー上のメニューからたどっ
+て読むこともできます。
+
+是非スペースキーと`n'を使って一度全体を通して読んでみて下さい。
+
+* Menu:
+
+* Intro: 概説.		『かんな/emacs』とは？
+* Init: 初期設定.	『かんな/emacs』で日本語入力するための準備
+* Input: 漢字入力.	日本語入力のしかた
+* Others: その他.	その他特殊なことについて
+* Plus one: おまけ.	おまけ
+
+* Index: 索引.		索引
+
+
+File: canna-jp  Node: 概説, Prev: Top, Up: Top, Next: 特徴
+
+『かんな／ｅｍａｃｓ』とは？
+****************************
+
+『かんな/emacs』とは日本語入力システム『かんな』を組み込んだNemacsまたは
+Muleのことであり、日本語を入力するための機能を追加したNemacsまたはMuleで
+す。かな漢字変換はかな漢字変換サーバであるcannaserverと接続して行います。
+この意味では「『かんな/emacs』はcannaserverのクライアントである」と言え
+ます。 
+
+『かんな』と言う名前は「かな漢字変換」の「かな」(仮名)の古い読
+み方である『かんな』によっています。『かんな』を英語で表記する場
+合はCannaとつづります。
+
+* Menu:
+
+* Features: 特徴.	『かんな/emacs』の特徴
+* Config: 物件.		『かんな/emacs』を構成する物件
+
+
+File: canna-jp  Node: 特徴, Prev: 概説, Up: 概説, Next: 物件
+
+『かんな/emacs』の特徴
+======================
+
+『かんな/emacs』は次のような特徴を持っています。
+
+  1. 『たまご』のようなユーザインタフェース
+
+     『たまご』のようなユーザインタフェースがいいなら『たまご』を使えば良いと
+     思われるでしょう。『かんな』のユーザインタフェースは『たまご』のものと良
+     く似ているのですが、『かんな』が『たまご』と比べて大きく異なる点は、
+     「『かんな』はemacs以外の環境でも使える」という事です。『かんな』はほと
+     んど同じユーザインタフェースをTTY上のフロントエンド(can)、Ｘウィンドウ上
+     のフロントエンド(kinput2)、Ｘウィンドウ上でAthena Widgetを用いて作成した
+     プログラム、等の形で提供しています。
+
+     すなわち、UNIXのほとんどすべての環境で『かんな』のユーザインタフェースが
+     使えるのです。
+
+     『かんな/emacs』は『かんな』ユーザインタフェースを提供するプログラムの１
+     つとして準備されています。『かんな』を用いて日本語入力を行うプログラムは
+     共通のカスタマイズファイルによってカスタマイズが行えるのはもとより、ほぼ
+     共通のかな漢字変換操作を提供します。
+
+  2. 逐次自動変換方式
+
+     Nemacs または Mule で逐次自動変換をサポートしたのはおそらく『かんな』が
+     初めてでしょう。将来的には一太郎に見られるフル再変換処理を Nemacs または 
+     Mule との組み合わせでやりたいところです。 
+
+  3. カスタマイズ機能
+
+     機能のキーに対する割り当てや、ローマ字かな変換規則などがカスタマイズで
+     きます。
+
+     また、このとき用いるカスタマイズファイルは『かんな』の他のアプリケーショ
+     ンで日本語入力を伴うものと共有されます。
+
+  4. サーバクライアント方式。
+
+     どのマシンで使うときも常に同一マシン上の同一の辞書を使えます。
+
+  5. 日本語入力のための付加機能
+
+     入力した文字の字種変換によりローマ字やカタカナに変換する機能、入力した英
+     単語のCASE(大文字、小文字)を変更する機能、英単語のスペルを入力しカタカナ
+     語に変換する機能、
+     記号入力機能、部首入力機能、１
+     ６進コード入力機能、かな漢字変換中に特定の文節の読みを修正し変換し直す機
+     能、接続するサーバを変更する機能、単語登録削除機能、辞書マウントアンマウ
+     ント機能等をユーザインタフェースの一端として提供します。
+
+  6. 再変換機能
+
+     間違って確定キーを押してしまっても一歩前になら戻れます。
+
+
+File: canna-jp  Node: 物件, Prev: 特徴, Up: 概説, Next: 初期設定
+
+『かんな/emacs』を構成する物件
+==============================
+
+『かんな/emacs』を構成する物件は次の通りです。
+
+  1. emacs (『かんな/emacs』本体)
+
+     『かんな』ライブラリを組み込んだemacsです。いくつかの『かんな』ライブラ
+     リ関数がemacs-lispから呼び出せるようにしてあります。『かんな/emacs』は日
+     本語入力システム『かんな』がインストールされている環境で動作します。
+
+     ベースとなっているemacsのバージョンは18.55(Nemacs)または18.58(Mule)で、
+     nemacsのバージョンは3.3.2、Muleのバージョンは0.9.5になっています。 
+
+  2. /usr/local/{emacs,mule}/etc/DOC-18.5[58].××
+
+     上記emacsに対応するドキュメントファイルです。
+
+  3. /usr/local/{emacs,mule}/lisp/canna.{el,elc}
+
+     emacsのキー入力を横取りして日本語入力にしてしまうプログラムです。
+     lispで書かれたソース(`canna.el')とコンパイルされたオブジェクト 
+     (`canna.elc')があります。
+
+上記４つのファイルをemacsの18.55または18.58、nemacsの3.3.2またはmuleの
+0.9.5が走っている環境に持ってくれば『かんな/emacs』が使えることになりま
+す。 
+
+
+File: canna-jp  Node: 初期設定, Prev: 物件, Up: Top, Next: 漢字入力
+
+『かんな／ｅｍａｃｓ』で日本語入力するための準備
+************************************************
+
+『かんな/emacs』で日本語を入力するためには、`.emacs'ファイルにある程度の
+記述を加えなければなりません。基本的には次の記述を加えることになります。
+
+     (if (and (boundp 'CANNA) CANNA) ; 『かんな/emacs』であることを確認して
+        ;; 『かんな/emacs』 の場合だけ以下を実行します。
+        (progn
+         (load-library "canna")
+         (canna) ))
+
+上記の設定をすると、『かんな/emacs』を利用するためのlispプログラムをロー
+ドし、『かんな』の初期化を行います。
+
+これ以外にも`.emacs'に記述しておくと便利な機能がありますが、それらについ
+ては追って説明いたします。
+
+『かんな/emacs』がインストールされている状態で、`.emacs'に上記の記述が存
+在すれば、『かんな/emacs』で日本語が入力できるようになります。
+
+
+File: canna-jp  Node: 漢字入力, Prev: 初期設定, Up: Top, Next: その他
+
+日本語の入力のしかた
+********************
+
+日本語入力モードになるには、`C-o'かXFERを押します。 `.canna'ファイルで、
+
+     (global-unbind-key-function 'japanese-mode)
+     (global-set-key "\C-e" 'japanese-mode)
+
+のように指定するとemacsでも自動的に`C-e'がモード切り替えのキーになります。
+ただし、XFERは相変わらずモード切り替えキーとして有効です。
+
+     (global-unbind-key-function 'japanese-mode)
+     (global-set-key "\Nfer" 'japanese-mode)
+
+のようにしても、『かんな/emacs』ではXFERがモード切り替えキーとして機能す
+るままであり、しかもNFERがモード切り替えキーになることはありません。
+`C-e'を指定したときとNFERを指定したときの違いは、 `C-e'が１バイトキーな
+のに対し、NFERがエスケープシーケンスで構成されることです。エスケープシー
+ケンスで構成されるキーに対する機能の割り当ては「ファンクションキーへの機
+能の割り当て」の項を参照して下さい。
+
+このように、若干の例外はあるのですが、日本語の入力のしかたは『かんな』を
+使った他のアプリケーションなどの場合と同じです。日本語の入力の方法の詳細
+については、『かんな』に付属のドキュメントを参照して下さい。
+
+※注
+
+『かんな/emacs』では、他のアプリケーションでの日本語入力と違い、ある制限
+があります。それは、エスケープシーケンスを発生するキーに対して簡単には機
+能を割り当てられないことです。→「ファンクションキーへの機能の割り当て」
+
+
+File: canna-jp  Node: その他, Prev: 漢字入力, Up: Top, Next: Func key
+
+その他特殊なことについて
+************************
+
+* Menu:
+
+* Empty status: Empty status.   未入力状態について
+* Function Keys: Func key.	ファンクションキーへの機能の割り当て
+* Undo: アンドゥ.		アンドゥ
+* Region: 再変換.	 	リージョンの再変換.
+* Style: スタイル.		未確定文字列のスタイル
+* Specifying server::		かな漢字変換サーバの指定
+* Specifying customization::	カスタマイズファイルの指定
+* Functions::			『かんな/emacs』で使える機能
+* Summary: まとめ.		まとめ
+
+
+File: canna-jp  Node: Empty status, Prev: その他, Up: その他, Next: Func key
+
+未入力状態について
+==================
+
+ここでは、アルファベット入力状態や、日本語入力状態でも入力中の文字列が
+存在しない状態を「未入力状態」と呼びます。
+
+『かんな/emacs』における未入力状態のとりあつかいは、通常の『かんな』ア
+プリケーションプログラムにおける未入力状態と若干異なります。これは『か
+んな/emacs』におけるキーの取り扱いとして以下の方針を採用しているためで
+す。
+
+『かんな/emacs』では『かんな』起動時にカスタマイズファイルにおける日本
+語入力モードとアルファベット入力モードの切り替えのカスタマイズを読み込
+んで、Emacs におけるモード切り替え機能をそのキーに設定します。そのキー
+には`canna-toggle-japanese-mode'と言う関数が set されます。
+`canna-toggle-japanese-mode'は、Emacs におけるキーバインディング
+を大幅に変更します。`canna-toggle-japanese-mode'は空白文字を含む
+グラフィカルキャラクタに対応するキーを Emacs のデフォルトである
+`self-insert'と、日本語入力モードにおける
+`canna-self-insert'との間で切り替えます。ここで、注意しなければ
+ならないのは、コントロールキャラクタに関しては常に Emacs のバインディ
+ングのままであることです。
+
+したがって、『かんな/emacs』における未入力時のバインディングは
+`.canna'からは変更できません。『かんな/emacs』における未入力時の
+バインディングのカスタマイズに関しては`.emacs'で行う必要があり
+ます。
+
+
+File: canna-jp  Node: Func key, Prev: Empty status, Up: その他, Next: アンドゥ
+
+ファンクションキーへの機能の割り当て
+====================================
+
+「『かんな/emacs』で日本語入力するための準備」で説明した設定が `.emacs'
+で行われていれば、F1〜F3などのキーに以下の機能が設定されます。
+
+F1
+     記号入力
+F2
+     １６進コード入力
+F3
+     部首入力
+HELP
+     ユーティリティ機能呼び出し
+INS
+     記号入力
+
+この割り当ては`.canna'での記述と無関係に行われます。
+
+`.canna'にてファンクションキーに、ある機能を割り当てても『かんな /emacs』
+では無視されてしまいます。というのは、emacsでのファンクションキーの使い
+方がちょっと変わっているためです。
+
+それではファンクションキーにこれらのモードへの移行のための機能を割り当て
+るにはどのようにするのでしょうか？
+
+emacsではファンクションキーを押すと例えば`ESC [ 1 1 ~'のようなキーを発生
+します(F1キーの場合)。デフォルトでは`ESC [ ('すなわち、 `M-[')が
+`backward-paragraph'にバインドされていますので、前の段落に移動して、
+"11~"が挿入されてしまうことになります。
+
+「『かんな/emacs』で日本語入力するための準備」で示した処理を行っている場
+合には`M-['と`backward-paragraph'のバインドを壊して、`ESC [ 1 1 ~'のよう
+な長いキーシーケンスに対して機能を割り当てることができるようにしてありま
+す。すなわち、`ESC [ 1 1 ~'に対して次のような処理で `canna-kigou-mode'を
+割り当てています。
+
+     (global-set-key "\e[11~" 'canna-kigou-mode)
+
+『かんな/emacs』ではこの方法でF1、F2、F3などにキーを割り当てていたのです。
+F1〜F3などのキーに対してこの設定を行いたくない場合には、emacsで『かんな』
+を起動する前に CANNA-DO-KEYBIND-FOR-FUNCTIONKEYSという名前の変数に`nil'
+を代入しておいて下さい。例えば、`.emacs'の記述は次のようになることになり
+ます。
+
+     (if (and (boundp 'CANNA) CANNA) ; 『かんな/emacs』であることを確認して
+        ;; 『かんな/emacs』 の場合だけ以下を実行します。
+        (progn
+         (load-library "canna")
+         (setq canna-do-keybind-for-functionkeys nil)
+         (canna) ))
+
+
+File: canna-jp  Node: アンドゥ, Prev: Func key, Up: その他, Next: 基本操作
+
+アンドゥ
+========
+
+* Menu:
+
+* Basic operations: 基本操作.	基本操作
+* Key binding: キー操作.	キーへのバインディング
+* Undo and canna-undo::		undo と canna-undo
+* Undo buffer: バッファ.	アンドゥバッファに入れる・入れない
+* Undo plus alpha: プラスα.	アンドゥ＋α
+
+
+File: canna-jp  Node: 基本操作, Prev: アンドゥ, Up: アンドゥ, Next: キー操作
+
+基本操作
+--------
+
+『かんな/emacs』ではアンドゥ機能をサポートしています。直前に確定した部分
+をもう一度読みに戻すことができます。もう一度読みに戻すには次のようにしま
+す。
+
+     M-x canna-undo
+
+
+File: canna-jp  Node: キー操作, Prev: 基本操作, Up: アンドゥ, Next: Undo and canna-undo
+
+キーへのバインディング
+----------------------
+
+実はこの`canna-undo'、普通の`undo'を含んでいます。すなわち、直前に確定し
+た日本語の入力がない場合には普通の`undo'が行われます。したがって、今まで
+`undo'がバインドされていたキーに`canna-undo'をバインドすると便利に使えま
+す。例えば`undo'を`C-_'に割り当てていた人は `.emacs'ファイルにて次のよう
+に記述すると`undo'の代わりに`canna-undo'を割り当てることができます。
+
+     (global-set-key "\C-_" 'canna-undo)
+
+
+File: canna-jp  Node: Undo and canna-undo, Prev: キー操作, Up: アンドゥ, Next: バッファ
+
+undo と canna-undo
+------------------
+
+さて、"直前に確定した日本語"とはどのくらい前までの入力のことを指すのでしょ
+うか？
+
+`canna-undo'は`C-o'などによって日本語入力モードを抜けてしまった時にアン
+ドゥの情報を捨ててしまいます。したがって、日本語を入力して確定した場合、
+日本語入力モードを抜けさえしなければ"直前に確定した日本語"とみなされるわ
+けです。
+
+`undo'のキーに`canna-undo'を割り当てると便利なようで不便なことがあります。
+例えば、日本語入力モードを抜けないで、`C-k'などの操作で行消去を行うこと
+がありますが、このときウッカリ`C-_'などを打ってしまうもんであれば、行の
+復活の代わりにさっき確定した文字が読みに戻ってしまいます。
+
+本来であれば、`C-_'を打つまえに`C-o'を打つなどして日本語入力モードから抜
+ければ良かったのですが、ここは一発元に戻す方法があります。
+
+本当は本来のアンドゥが行いたかった場合に`canna-undo'が作動してしまった場
+合には`C-g C-_ C-_'と打って下さい。最初の`C-g'で読みを放棄します。実は読
+みを放棄した場合にも`canna-undo'のための情報が失われるのです。この状態で
+はさっき入力した日本語までなくなってしまいますが、その次の`C-_'でそれが
+復活し、次の`C-_'が本来の目的であったアンドゥとして機能します。
+
+
+File: canna-jp  Node: バッファ, Prev: Undo and canna-undo, Up: アンドゥ, Next: プラスα
+
+アンドゥバッファに入れる・入れない
+----------------------------------
+
+アンドゥを`C-_'などに割り当てて使っていると結構便利だったりするのですが、
+マルやテンを分けて入力した場合はあまりアンドゥが効果がない場合があります。
+例えば、次のように入力する場合です。
+
+     このようににゅうりょくするばあいです<space>。<return>
+
+このように入力して、
+
+     子のように入力する場合です。
+
+のように変換されてしまってから`C-_'と打っても、
+
+     子のように入力する場合です|。|
+
+となるだけで、寂しい思いをしてしまいます。
+
+「マルとかテンを分けて打つ癖がある僕も悪いけれどもマルやテンだったらアン
+ドゥバッファに入れなくてもいいんじゃないの？」と思うかたもいるでしょう。
+ご安心下さい。そういう場合にもちゃんと対応できるのです。
+
+そのからくりは、`canna-save-undo-text-predicate'という変数です。
+
+`canna-undo'は入力が確定した時にその確定した入力をアンドゥバッファにとっ
+て置くかどうかを`canna-save-undo-text-predicate'にお伺いして判断します。
+`canna-save-undo-text-predicate'にはその判断を行うための関数を代入してお
+きます。`canna-save-undo-text-predicate'という変数に値が束縛されていなかっ
+たり、値が`nil'だった場合には無条件にバッファにセーブしておきます。
+`canna-save-undo-text-predicate'は読みと読みを入力した時のローマ字テキス
+トの２つの文字列を`car'と`cdr' に持つ２進木に対して適用されます。例えば、
+確定した文字列を表す読みが２バイトより長い文字列でなければセーブしないと
+いうことを指定するには次のように記述することになります。
+
+     (setq canna-save-undo-text-predicate 
+        '(lambda (s) 
+           (> (length (car s)) 2) ))
+
+これで、さっきの例で`C-_'を打つと、マルは飛ばされて次のようになります。
+
+     |このようににゅうりょくするばあいです|。
+
+
+File: canna-jp  Node: プラスα, Prev: バッファ, Up: アンドゥ, Next: 再変換
+
+アンドゥ＋α
+------------
+
+「再変換機能というからには、読みに戻るのでは駄目で確定する直前に戻るのが
+本当じゃないの？」という気がしないでもありません。確定する直前に戻るのは
+ひじょ〜〜に大変ですが、それらしくはなんとかすることができます。
+
+それは、アンドゥしたテキストを変換した状態にすることです。アンドゥの後に
+何かを行いたい場合は、CANNA-UNDO-HOOKという変数に関数を代入します。アン
+ドゥの後に変換を行いたい場合には次のようにします。
+
+     (setq canna-undo-hook
+           '(lambda () (message "再変換します....")
+             (canna-do-function canna-func-henkan)) )
+
+このようにしておくことにより、`canna-undo'では「読みに戻します」というメッ
+セージが出ていたものが「再変換します」というメッセージになり、先に確定し
+た文字列が再変換されます。
+
+CANNA-FUNC-HENKANは「変換」を表す機能の番号です。 `canna-do-function'で
+は『かんな』の色々な機能を直接実行することができます。どのような機能が存
+在するかは「付録」を参照して下さい。
+
+
+File: canna-jp  Node: 再変換, Prev: プラスα, Up: その他, Next: スタイル
+
+リージョンの再変換
+==================
+
+Emacs上の任意のテキストを再変換する機能を付加しました。リージョンを引い
+て`M-x canna-henkan-region'としても良いのですが、かな漢字変換用のマーク
+を設定して、ポイント(カーソル)位置を移動し、スペースバーを打つとマークと
+ポイントの間がかな漢字変換されます。スペースバーはマークの直後は再変換用
+のキーとして使われますが、日本語モードを抜けたり文字を挿入したりした後に
+は通常の空白を入れるキーに戻ります。かな漢字変換用のマークを打つにはキー
+ボードより`C-@'を入れることにより行えます。
+
+スペースバーはいつでも空白の挿入として使いたいと言う場合には `(canna)'を
+実行するまえに `canna-use-space-key-as-henkan-region'に`nil'を代入してお
+いてください。このことにより`C-@'へのかな漢字変換用マークを行うバインド
+も行われなくなります。
+
+
+File: canna-jp  Node: スタイル, Prev: 再変換, Up: その他, Next: Specifying server
+
+未確定文字列のスタイル
+======================
+
+未確定文字列に関する『かんな』のデフォルトのスタイルはアンダーラインを引
+くというものです。これに対して『かんな/emacs』では２本の縦棒で囲むという
+スタイルをとっていますが、やはりアンダーラインの方が良いと言うリクエスト
+にお答えすることができます。それには、CANNA-UNDERLINEという変数に非`nil'
+を代入します。例えば次のようになります。
+
+     (setq canna-underline t)
+
+この変数の値の変更は、『かんな』のlispライブラリ(`canna.el'または 
+`canna.elc')をロードする前に行わなければなりません。
+
+`canna-underline'を使うには`attribute.el'が必要です。
+
+
+File: canna-jp  Node: Specifying server, Prev: スタイル, Up: その他, Next: Specifying customization
+
+かな漢字変換サーバの指定
+========================
+
+『かんな』では通常かな漢字変換サーバは環境変数のCANNAHOSTで指定しますが、
+『かんな/emacs』ではそれに加えてCANNA-SERVERという変数にサーバ名を代入し
+ておくことで指定することができます。
+
+『かんな/emacs』での設定の方が環境変数による設定より優先します。
+
+     (setq canna-server "wink")
+
+
+File: canna-jp  Node: Specifying customization, Prev: Specifying server, Up: その他, Next: Functions
+
+カスタマイズファイルの指定
+==========================
+
+『かんな』では通常カスタマイズファイルは環境変数のCANNAFILEで指定します
+が、『かんな/emacs』ではそれに加えてCANNA-FILEという変数にファイル名を代
+入しておくことで指定することができます。
+
+『かんな/emacs』での設定の方が環境変数による設定より優先します。
+
+     (setq canna-file (expand-file-name "~/.canna-emacs"))
+
+
+File: canna-jp  Node: Functions, Prev: Specifying customization, Up: その他, Next: まとめ
+
+『かんな/emacs』で使える関数
+============================
+
+『かんな/emacs』で利用できる関数としては次のものがあります。
+
+`canna-bushu-mode'
+     部首変換モード
+`canna-henkan-region'
+     指定されたリージョンの文字を漢字に変換します
+`canna-hex-mode'
+     １６進コード入力モード
+`canna-kigou-mode'
+     記号入力モード
+`canna-extend-mode'
+     ユーティリティモード
+`canna-reset'
+     日本語入力システムの再起動
+`canna-toggle-japanese-mode'
+     アルファベットモードと日本語モードの切り替え
+`canna-touroku'
+     単語登録
+`canna-touroku-region'
+     リージョンで指定された単語を登録
+`canna-undo'
+     直前に確定した日本語入力を読みに戻す
+`canna-version'
+     『かんな/emacs』のバージョンの表示
+`canna-do-function'
+     『かんな』の機能を実行します。該当する機能が`canna-do-function'呼び
+     だし時の状態で無効である場合はその機能は実行されません。どのような機能が
+     あるかは付録を参照して下さい。
+
+
+File: canna-jp  Node: まとめ, Prev: Functions, Up: その他, Next: 変更点
+
+まとめ
+======
+
+ここで説明した機能を使って`.emacs'の記述を行うとおおよそ次のようになりま
+す。`.emacs'の修正をするときの参考にして下さい。
+
+     (if (and (boundp 'CANNA) CANNA) ; 『かんな/emacs』であることを確認して
+         ;;『かんな/emacs』の場合だけ以下を実行します。
+         (progn
+          (setq canna-underline t)   ;アンダーラインスタイル
+
+          (load-library "canna")     ;ライブラリのロード
+
+          (setq canna-do-keybind-for-functionkeys t)
+          (setq canna-server "wink") ;かな漢字変換サーバの指定
+          (setq canna-file (expand-file-name "~/.canna-emacs"))
+
+          (canna) ;『かんな』の初期化
+
+          (global-set-key "\e[209z" 'canna-japanese-mode) ;NFER
+          (global-set-key "\C-_" 'canna-undo) ;アンドゥの設定
+          (setq canna-save-undo-text-predicate ;アンドゥバッファへ入れる条件
+                '(lambda (s) (> (length (car s)) 2)) )
+          (setq canna-undo-hook ;アンドゥ＋α
+                '(lambda () (message "再変換します....")
+                            (canna-do-function canna-func-henkan)) )
+         )) 
+
+
+File: canna-jp  Node: 変更点, Prev: まとめ, Up: Top, Next: 索引
+
+変更点
+******
+
+以下に『かんな』Version 1.2 で提供されていた『かんな/emacs』から本バージョ
+ンの『かんな/emacs』への変更点を示します。
+
+
+  1. 名前の変更
+
+     各関数、変数などの名前として`iroha'とあったものが`canna'になっ
+     た。また、lisp ファイル名が`iroha.el'から`canna.el'になった。
+
+  2. 各種定数の定義
+
+     『かんな』における各種定数が以前はlispファイル(`iroha.el')で定義
+     されていたが、これを Emacs のソースファイル(`canna.c')で定義する
+     ようにした。
+
+  3. Emacs とのインタフェースの変更
+
+     lisp ファイル(`canna.el')と Emacs (`canna.c')との間のインタ
+     フェースを変更し、consセルの消費を削減した。
+
+
+
+
+File: canna-jp  Node: 付録, Prev: 変更点, Up: Top, Next: 索引
+
+付録
+****
+
+以下の変数の値を`canna-do-func'に与えると該当する機能が実行されます。
+
+CANNA-FUNC-SELF-INSERT
+     入力された文字をそのまま入力とする
+CANNA-FUNC-FUNCTIONAL-INSERT
+     入力された文字を適当にローマ字かな変換などで修飾し入力とする
+CANNA-FUNC-QUOTED-INSERT
+     次の一文字をそのまま入力とする
+CANNA-FUNC-JAPANESE-MODE
+     日本語入力モードに移行する
+CANNA-FUNC-ALPHA-MODE
+     アルファベット入力モードに移行する
+CANNA-FUNC-HENKAN-NYURYOKU-MODE
+     全角ひらがな変換入力モードに移行する
+CANNA-FUNC-FORWARD
+     右へ移動
+CANNA-FUNC-BACKWARD
+     左へ移動
+CANNA-FUNC-NEXT
+     下または次へ移動
+CANNA-FUNC-PREVIOUS
+     上または前へ移動
+CANNA-FUNC-BEGINNING-OF-LINE
+     左端へ移動
+CANNA-FUNC-END-OF-LINE
+     右端へ移動
+CANNA-FUNC-DELETE-NEXT
+     次の一文字の削除
+CANNA-FUNC-DELETE_PREVIOUS
+     左の一文字の削除
+CANNA-FUNC-KILL-TO-END-OF-LINE
+     カーソルから行末まで削除
+CANNA-FUNC-HENKAN
+     変換
+CANNA-FUNC-KAKUTEI
+     確定
+CANNA-FUNC-EXTEND
+     伸ばし
+CANNA-FUNC-SHRINK
+     縮め
+CANNA-FUNC-QUIT
+     中止
+CANNA-FUNC-CONVERT-AS-HEX
+     読みを１６進コードとみなして変換
+CANNA-FUNC-CONVERT-AS-BUSHU
+     読みを部首名とみなして部首一覧表示
+CANNA-FUNC-KOUHO-ICHIRAN
+     候補一覧表示
+CANNA-FUNC-BUBUN-MUHENKAN
+     無変換
+CANNA-FUNC-ZENKAKU
+     全角に変換
+CANNA-FUNC-HANKAKU
+     半角に変換
+CANNA-FUNC-TO-UPPER
+     大文字に変換
+CANNA-FUNC-CAPITALIZE
+     先頭文字を大文字に変換
+CANNA-FUNC-TO-LOWER
+     小文字に変換
+CANNA-FUNC-HIRAGANA
+     ひらがなに変換
+CANNA-FUNC-KATAKANA
+     カタカナに変換
+CANNA-FUNC-ROMAJI
+     ローマ字に変換
+CANNA-FUNC-EXTEND-MODE
+     ユーティリティモードのメニューの表示
+CANNA-FUNC-TOUROKU
+     単語登録モードへの移行
+CANNA-FUNC-HEX-MODE
+     16進コード入力モードへの移行
+CANNA-FUNC-BUSHU-MODE
+     部首入力モードへの移行
+CANNA-FUNC-KIGO-MODE
+     記号入力モードへの移行
+
+以下の機能は『かんな/emacs』の『かんな』の部分が Version 2.1 以上のとき
+のみ有効です。
+
+CANNA-FUNC-ADJUST-BUNSETSU
+     一太郎の文節伸ばし縮めモードのような文節伸ばし縮めモードへの移行
+CANNA-FUNC-BASE-HIRAGANA
+     入力文字のベースをひらがなに変更
+CANNA-FUNC-BASE-KATAKANA
+     入力文字のベースをカタカナに変更
+CANNA-FUNC-BASE-EISU
+     入力文字のベースを英数に変更
+CANNA-FUNC-BASE-ZENKAKU
+     入力文字のベースを全角に変更
+CANNA-FUNC-BASE-HANKAKU
+     入力文字のベースを半角に変更
+CANNA-FUNC-BASE-KANA
+     入力文字のベースをカナ(ひらがなかカタカナ)に変更
+CANNA-FUNC-BASE-KAKUTEI
+     入力ベースを確定入力モードに変更
+CANNA-FUNC-BASE-HENKAN
+     入力ベースを変換入力モードに変更
+CANNA-FUNC-BASE-HIRAGANA-KATAKANA-TOGGLE
+     入力ベースをひらがなとカタカナの間でトグル
+CANNA-FUNC-BASE-ZENKAKU-HANKAKU-TOGGLE
+     入力ベースを全角と半角の間でトグル
+CANNA-FUNC-BASE-KANA-EISU-TOGGLE
+     入力ベースをカナと英数の間でトグル
+CANNA-FUNC-BASE-KAKUTEI-HENKAN-TOGGLE
+     入力ベースを確定入力と変換入力の間でトグル
+CANNA-FUNC-BASE-ROTATE-FORWARD
+     入力ベースの順次切り替え
+CANNA-FUNC-BASE-ROTATE-BACKWARD
+     入力ベースの順次切り替え(逆回転)
+
+以下の機能は『かんな/emacs』の『かんな』の部分が Version 2.2 以上のとき
+のみ有効です。
+
+CANNA-FUNC-MARK
+     マーク
+CANNA-FUNC-TEMPORAL-MODE
+     現在の入力モードを一時保管
+
+
+File: canna-jp  Node: 索引, Prev: 付録, Up: Top
+
+索引
+****
+
+
+* Menu:
+
+* .canna: Func key.
+* .canna: 漢字入力.
+* .emacs: まとめ.
+* .emacs: 初期設定.
+* 16進コード入力: Func key.
+* 16進コード入力: Functions.
+* 16進コード入力: 特徴.
+* Athena Widget: 特徴.
+* C-@: 再変換.
+* C-_: キー操作.
+* C-c: 漢字入力.
+* C-g: Undo and canna-undo.
+* C-k: Undo and canna-undo.
+* CANNAFILE: Specifying customization.
+* CANNAHOST: Specifying server.
+* CASE変換: 特徴.
+* Canna: 概説.
+* F1: Func key.
+* F2: Func key.
+* F3: Func key.
+* INS: Func key.
+* Nemacs: 概説.
+* TTY上のフロントエンド: 特徴.
+* XFER: 漢字入力.
+* Xウィンドウ上のフロントエンド: 特徴.
+* backward-paragraph: Func key.
+* canna-bushu-mode: Functions.
+* canna-do-function: Functions.
+* canna-do-function: プラスα.
+* canna-do-keybind-for-functionkeys: Func key.
+* canna-extend-mode: Functions.
+* canna-func-adjust-bunsetsu: 付録.
+* canna-func-alpha-mode: 付録.
+* canna-func-backward: 付録.
+* canna-func-base-eisu: 付録.
+* canna-func-base-hankaku: 付録.
+* canna-func-base-henkan: 付録.
+* canna-func-base-hiragana: 付録.
+* canna-func-base-hiragana-katakana-toggle: 付録.
+* canna-func-base-kakutei: 付録.
+* canna-func-base-kakutei-henkan-toggle: 付録.
+* canna-func-base-kana: 付録.
+* canna-func-base-kana-eisu-toggle: 付録.
+* canna-func-base-katakana: 付録.
+* canna-func-base-rotate-backward: 付録.
+* canna-func-base-rotate-forward: 付録.
+* canna-func-base-zenkaku: 付録.
+* canna-func-base-zenkaku-hankaku-toggle: 付録.
+* canna-func-beginning-of-line: 付録.
+* canna-func-bubun-muhenkan: 付録.
+* canna-func-bushu-mode: 付録.
+* canna-func-capitalize: 付録.
+* canna-func-convert-as-bushu: 付録.
+* canna-func-convert-as-hex: 付録.
+* canna-func-delete-next: 付録.
+* canna-func-delete_previous: 付録.
+* canna-func-end-of-line: 付録.
+* canna-func-extend: 付録.
+* canna-func-extend-mode: 付録.
+* canna-func-forward: 付録.
+* canna-func-functional-insert: 付録.
+* canna-func-hankaku: 付録.
+* canna-func-henkan: プラスα.
+* canna-func-henkan: 付録.
+* canna-func-henkan-nyuryoku-mode: 付録.
+* canna-func-hex-mode: 付録.
+* canna-func-hiragana: 付録.
+* canna-func-japanese-mode: 付録.
+* canna-func-kakutei: 付録.
+* canna-func-katakana: 付録.
+* canna-func-kigo-mode: 付録.
+* canna-func-kill-to-end-of-line: 付録.
+* canna-func-kouho-ichiran: 付録.
+* canna-func-mark: 付録.
+* canna-func-next: 付録.
+* canna-func-previous: 付録.
+* canna-func-quit: 付録.
+* canna-func-quoted-insert: 付録.
+* canna-func-romaji: 付録.
+* canna-func-self-insert: 付録.
+* canna-func-shrink: 付録.
+* canna-func-temporal-mode: 付録.
+* canna-func-to-lower: 付録.
+* canna-func-to-upper: 付録.
+* canna-func-touroku: 付録.
+* canna-func-zenkaku: 付録.
+* canna-henkan-region: Functions.
+* canna-henkan-region: 再変換.
+* canna-hex-mode: Functions.
+* canna-initialize: 初期設定.
+* canna-kigou-mode: Func key.
+* canna-kigou-mode: Functions.
+* canna-reset: Functions.
+* canna-save-undo-text-predicate: バッファ.
+* canna-server: Specifying server.
+* canna-toggle-japanese-mode: Functions.
+* canna-touroku: Functions.
+* canna-touroku-region: Functions.
+* canna-underline: スタイル.
+* canna-undo: Functions.
+* canna-undo: 基本操作.
+* canna-undo-hook: プラスα.
+* canna-use-space-key-as-henkan-region: 再変換.
+* canna-version: Functions.
+* canna.el: 物件.
+* canna.elc: 物件.
+* cannaserver: 概説.
+* global-set-key: 漢字入力.
+* global-unbind-key-function: 漢字入力.
+* japanese-mode: 漢字入力.
+* undo: キー操作.
+* アンダーライン: スタイル.
+* いろは: 概説.
+* エスケープシーケンス: 漢字入力.
+* カスタマイズ機能: 特徴.
+* カスタマイズファイル: 特徴.
+* かんな: 概説.
+* 記号入力: Func key.
+* 記号入力: Functions.
+* 記号入力: 特徴.
+* クライアント: 概説.
+* サーバクライアント方式: 特徴.
+* 再起動: Functions.
+* 再変換機能: 特徴.
+* 字種変換: 特徴.
+* 辞書アンマウント: 特徴.
+* 辞書マウント: 特徴.
+* たまご: 特徴.
+* 単語削除: 特徴.
+* 単語登録: Functions.
+* 単語登録: 特徴.
+* バージョン: Functions.
+* ファンクションキー: 漢字入力.
+* 部首入力: Func key.
+* 部首入力: 特徴.
+* 部首変換: Functions.
+* ユーザインタフェース: 特徴.
+* ユーティリティ機能: Func key.
+* ユーティリティモード: Functions.
+* アンドゥ: アンドゥ.
+
+
+Tag table:
+Node: Top103
+Node: 概説1120
+Node: 特徴2027
+Node: 物件5136
+Node: 初期設定6528
+Node: 漢字入力7679
+Node: その他9520
+Node: Empty status10179
+Node: Func key12010
+Node: アンドゥ14552
+Node: 基本操作14962
+Node: キー操作15325
+Node: Undo and canna-undo16028
+Node: バッファ17723
+Node: プラスα20074
+Node: 再変換21452
+Node: スタイル22620
+Node: Specifying server23521
+Node: Specifying customization24084
+Node: Functions24680
+Node: まとめ25933
+Node: 変更点27250
+Node: 付録28148
+Node: 索引32065
+
+End tag table

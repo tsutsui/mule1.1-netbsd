@@ -1,0 +1,1176 @@
+Info file: mule-jp,    -*-Text-*-
+produced by texinfo-format-buffer
+from file: mule-jp.texi
+
+
+
+
+File: mule-jp  Node: Top, Up: (dir), Next: Overview
+
+Mule, Multilingual enhancement to GNU Emacs
+*******************************************
+
+Mule は GNU Emacs を複数の言語に対応できるように強化したエディタです。
+Mule は GNU Emacs のすべての機能に加え、アジア、ヨーロッパ系などのさまざ
+まな文字セットを画面に表示したり、キーボードからの入力を受け付けたり、編
+集したりする機能を提供します。
+
+この Info ファイルでは、Mule の使い方や多国語対応の新機能などについて説
+明します。
+
+* Menu:
+
+* Overview::		Mule ってどんなもの?
+* Invocation::		Mule の起動について.
+* Multilingual Char::	Mule がどう多国語文字コードを扱うか.
+* Features::		Mule 特有の機能.
+* Mule Lisp::		Emacs Lisp の拡張.
+* (egg-jp)::		日本語入力ツール.
+* Command List::	コマンド一覧.
+* Concept Index::	概念索引.
+* Command Index::	関数・コマンド索引.
+* Variable Index::	変数索引.
+
+
+各ノードの下位ノード
+
+Overview
+* Characteristic::	Mule の特徴.
+* Multilingual::	各国語対応について.
+* Documents::		ドキュメントの在処.
+* Bug Report::		バグレポート.
+
+Invocation
+* Options::		Mule(独自)の起動時オプション.
+* Init File::  		起動時に参照するファイル.
+
+Multilingual Char
+* Character Set::	文字セット(character-set)について.
+* Coding System::	コード系(coding-system)について.
+* Buffers::		Muleはバッファをどう扱うか.
+* Set Coding System::	コード系(coding-system)の指定方法.
+* Auto Conversion::	コード系の自動変換について.
+* Summary for Char::	多国語文字についてのまとめ.
+
+Features
+* Functions::		多国語文字コード系を扱う関数.
+* Features for Text::	多国語文書編集のための機能.
+* Enhancement::		多国語処理のための拡張.
+
+Mule Lisp
+* Marker::		マーカの拡張.
+* Attribute::		文字の属性（反転など）の付与.
+
+
+
+File: mule-jp  Node: Overview, Prev: Top, Up: Top, Next: Characteristic
+
+Mule とは何か
+*************
+
+Mule は GNU Emacs に基づく多国語対応エディタです。Mule は GNU Emacs への
+パッチの形で配布されています。最新版は Mule Version 1.0 (1993.8.2) 
+で、 GNU Emacs 18.59 をベースにしています。
+
+また、最新の Mule は MS-DOS 上でも動作するよう、Demacs 用のパッチも取り
+込んであります。このパッチの最新バージョンは 1.3.1 Alpha です。
+
+Mule の日本語チュートリアルはコマンド `C-h T'
+(*help-with-tutorial-for-mule*) で起動できます。Mule のバージョンは 
+*mule-version* で、最近の変更点は `C-h N'(*view-mule-news*)で知ることが
+できます。
+
+コマンド:
+## Command: help-with-tutorial-for-mule
+     Mule の日本語版チュートリアルを起動する。
+## Command: view-mule-news
+     Mule の最新の変更点を表示する。
+## Command: mule-version
+     Mule のバージョンを表示する。
+
+* Menu:
+
+* Characteristic::	特徴.
+* Multilingual::	各国語対応について.
+* Documents::		ドキュメントの在処.
+* Bug report::		バグレポート.
+
+
+File: mule-jp  Node: Characteristic, Prev: Overview, Up: Overview, Next: Multilingual
+
+Mule の特徴
+===========
+
+Mule には以下のような特徴があります。
+   * Mule は ASCII 文字セット(7ビット)や ISO Latin-1 の文字セット(8ビッ
+     ト)ばかりでなく、日本語、中国語、韓国語などの文字セット(16ビット)や
+     タイ語も扱うことができます。さらに Mule のテキストバッファはこれら
+     の言語の文字を一つのバッファに混在して保持することができます。
+   * いろいろな文字を入力するために、各種の入力方法を Mule 自身が提供していま
+     す。また、端末エミュレータのもとで動かす場合は、エミュレータが提供する入
+     力方法も利用できます。
+   * ファイル入出力、スクリーン表示、キーボード入力、プロセス間通信のそ
+     れぞれについて独立にコード系を設定できます。
+   * 多国語モードでない場合には、オリジナルの GNU Emacs とほぼ同様に使え
+     ます。
+
+
+File: mule-jp  Node: Multilingual, Prev: Characteristic, Up: Overview, Next: For Japanese
+
+各国語への対応について
+======================
+
+* Menu:
+
+* For Japanese::	日本語.
+* For Chinese::		中国語.
+* For Korean::		韓国語.
+* For European::	ヨーロッパ系言語.
+* For Thai::		タイ語.
+
+
+File: mule-jp  Node: For Japanese, Prev: Multilingual, Up: Multilingual, Next: For Chinese
+
+日本語
+------
+
+Mule では、日本語用の文字セットとしては JIS X0208-1976,1983 (新旧 2バイ
+ト漢字)、JIS X0212-1990(補助漢字)、そして JIS X0201-1976 ( 1バイトの JIS 
+ローマ字／片仮名) を扱えます。またこれらをエンコードするコード系としては、
+いわゆる JIS (JUNET で使われているコード)、MS 漢字コード(通称シフト JIS)、
+日本語 EUC をサポートしています。
+
+
+日本語入力システムとしては、以下のものが用意されています。
+
+   * たまご(EGG)「たかな」バージョン
+   * sj3-egg
+   * かんな(Canna)
+
+いずれもネットワーク仮名漢字変換サーバを利用しローマ字漢字変換方式の日本
+語入力を提供しています。EGG と Canna については Texinfo マニュアルが用意
+されていますので、詳しくはそちらを参照して下さい。
+
+その他、仮名漢字変換サーバを必要としない日本語入力システムとしては以下の
+ものが使えます。
+
+   * quail-system による TCODE 入力(`doc/QUAIL'参照)
+   * SKK -- Mule とともに contributed ソフトとして配布。
+
+
+File: mule-jp  Node: For Chinese, Prev: For Japanese, Up: Multilingual, Next: For Korean
+
+中国語
+------
+
+中国語文字として、Mule は GB2312-1980 と Big5 の二つの文字セットをサポー
+トしています。
+
+中国語入力システムとして、以下のものが用意されています。
+
+   * たまご(EGG)「たかな」バージョン -- PinYin 入力を cserver で中国語 (GB) 
+     に変換。
+   * quail-system -- `cxterm/dict/tit' にあるすべての入力変換テーブルを
+     サポート(`doc/QUAIL'参照)。
+
+quail-system 使用の場合、
+
+   * GB 文字の入力には、quail-py, quail-ccdospy, quail-ctcps3, quail-punct,
+     quail-qj, quail-sw, quail-tonepy
+   * Big5 文字の入力には、quail-py-b5, quail-etzy, quail-punct-b5,
+     quail-qj-bt, quail-zozy
+
+が使用できます。
+
+ニュースグループ `alt.chinese.text' を GNUS (Emacslisp で書かれたニュー
+スリーダ)で読む時は、`hz2gb.el'(`contrib/lisp.tar.Z' の中にある)を使うと
+とても便利です。GNUS を起動する前に `hz2gb.el' をロードすることにより、
+`alt.chinese.text' で使われている Hz encoding を自動的にデコードしたり、
+エンコードしたりします。
+
+
+File: mule-jp  Node: For Korean, Prev: For Chinese, Up: Multilingual, Next: For European
+
+韓国語
+------
+
+韓国語文字として、Mule は KS C5601-1987 文字セットをサポートしています。
+
+韓国語文字の入力用に、`its-hangul.el' が提供されています。これを「たまご」
+システムのもとで使用してください。また、`quail-hangul.el' を利用すること
+もできます。
+
+
+File: mule-jp  Node: For European, Prev: For Korean, Up: Multilingual, Next: For Thai
+
+ヨーロッパ系言語
+----------------
+
+Mule では Latin-1 (ISO8859-1)から Latin-5 (ISO8859-9) までの文字セットや、
+キリル文字、ギリシャ文字もサポートしています。通常の ASCII キーボードか
+らこれらの文字を入力するにはやはり quail-system を使います。
+
+ISO8859 文字の入力には `quail-latin.el'(初心者用)あるいは 
+`quail-ltn.el'(キースロトークを少なくした高速入力用) が使えます。この中
+にはフランス語、ドイツ語、スウェーデン語、その他用のパッケージが入ってい
+ます。
+
+また、ギリシャ語入力用には `quail-greek.el'、ロシア語入力用には 
+`quail-cyrillic.el' が使えます。
+
+
+File: mule-jp  Node: For Thai, Prev: For European, Up: Multilingual, Next: Documents
+
+タイ語
+------
+
+Mule では*動的文字合成*(*dynamic character composition*)の機能によって、
+TIS620 文字セットをベースにしたタイ語をサポートしています。タイ語の入力
+にはやはり *quail-system* を使います。このシステムの使い方は `doc/QUAIL' 
+を参照して下さい。
+
+また、TIS620 のフリーなフォント(12x29 ドット)が `fonts/ETL.tar.Z' の中に
+含まれています。このフォントを 12x24 の ASCII フォントと組み合わせて使う
+ためには、コマンド *x-set-linespace*あるいは起動時オプションの `-lsp' で
+行間を増加させる必要があります。引数として `5+' を指定して下さい。
+
+
+
+File: mule-jp  Node: Documents, Prev: For Thai, Up: Overview, Next: Bug Report
+
+Mule のドキュメント
+===================
+
+Mule に関連するドキュメントは、次のものが `$MULE/etc' ディレクトリにあり
+ます。
+
+`FAQ.Mule, FAQ.Mule.jp'
+     Mule に関してよく出される質問とその回答集。英語版(`FAQ.Mule')と日本
+     語版(`FAQ.Mule.jp')があります。
+`MULE.tut'
+     日本語 Mule チュートリアル。 `C-h T'
+     (*help-with-tutorial-for-mule*) で読むことができます。英語版(GNU
+     Emacs用)は `C-h t'で起動されます。
+
+以下のマニュアルは `$MULE/man' ディレクトリにあります。
+
+`mule-jp.texinfo'
+     この texinfo のソースファイル。
+`egg-jp.texinfo'
+     「たまご」システム用 texinfo のソースファイル。
+`canna-jp.texinfo'
+     「かんな」システム用 texinfo のソースファイル。
+
+以下のドキュメントは `$MULE/doc' ディレクトリにあります。
+
+`EGG'
+     「たまご」の使い方の英語による簡単な説明。
+`ISO2022'
+     ISO2022 についての英語による簡単な説明。
+`QUAIL'
+     quail-system についての英語による簡単な説明。
+`TERMINOLOGY'
+     様々な用語についての英語による簡単な説明。
+`X11'
+     X11 上で Mule を使う際の英語による簡単な説明。
+`attribute.text'
+     文字属性機能についての説明。
+`character.text'
+     多国語文字の扱いについての説明。
+`coding.text'
+     コード系についての説明。
+`picture.text'
+     ピクチャーモードの拡張についての説明。
+`regexp.text'
+     正規表現コンパイラについての説明。
+`syntax.text'
+     文字のシンタックスとカテゴリについて説明。
+
+
+また、新しく付け加えられた機能は `$MULE/NEWFEATURE' に記述されてい
+ます。
+
+
+File: mule-jp  Node: Bug report, Prev: Documents, Up: Overview, Next: Invocation
+
+バグレポート
+============
+
+Mule のバグレポートあるいは修正の提案などは、以下に示すアドレスのメーリ
+ングリストに送ってください。形式は Emacs のものと同様で結構です。
+
+`mule@etl.go.jp'
+     通常の使用言語は英語
+`mule-jp@etl.go.jp'
+     通常の使用言語は日本語
+
+これらのメーリングリストには、必要に応じて Mule がサポートしている 
+`*junet*' というコード系を用いた多国語テキストを流すことが出来ます。
+
+ただし、これらのメーリングリストにバグを連絡するする前に、そのバグが 
+Mule 固有のものなのか、GNU Emacs のバグなのかを確認するようにしてくださ
+い。ここにあげたメーリングリストは Mule 固有の問題のみを扱うメーリングリ
+ストです。
+
+
+File: mule-jp  Node: Invocation, Prev: Bug report, Up: Top, Next: Options
+
+Mule の起動
+***********
+
+Mule は、通常の端末で使う方法、X Window System の上で使う方法、Sun のコ
+ンソール画面で使う方法の 3通りの使い方があります。MS-DOS 上で使う場合に
+ついては `$MULE/INSTALL.dos' を参照して下さい。
+
+*通常の端末で使う方法*
+     端末画面の中で Mule を走らせる方法です。その端末用の termcap または 
+     terminfo が適切に設定されている必要があります。多国語文字を表示でき
+     るかどうかは端末の機能に依存します。
+
+*X Window System で使う方法*
+     X の上で Mule 専用のウィンドウを開いて使う方法です。X に用意されて
+     いるフォントを使って多国語文字を表示することができます。
+
+*Sun のコンソール画面で使う方法*
+     Sun のワークステーションにおいては、Mule は pixrect ライブラリを用
+     いてフレームバッファを操作し、コンソールに Mule 独自のウィンドウを
+     表示することができます。この機能を使った場合、ウィンドウシステムを
+     使わなくても ASCII、 Latin-1、日本語、韓国語、中国語などを表示した
+     り編集したりできます。
+
+
+X を使うことを前提として設定された Mule は、X の上で起動すると自動的に 
+Mule 専用のウィンドウを開きます。X の端末エミュレータの中で Mule を走ら
+せたい場合は、明示的に `-nw' オプションを使用する必要があります。
+
+* Menu:
+
+* Options::		Mule(独自)の起動時オプション.
+* Init File::  		起動時に参照するファイル.
+
+
+File: mule-jp  Node: Options, Prev: Invocation, Up: Invocation, Next: Init File
+
+Mule のオプション
+=================
+
+GNU Emacs のオプションに加え、Mule では以下の X 関係のオプションスイッチ
+が使用できます。
+
+`-fs SIZE'
+     Mule のウィンドウで使うフォントのサイズを SIZE に設定する。
+
+`-lsp LINESPACE'
+     上(u)と下(l)の行間のドットサイズを U+L という形式で設定する。 U, L 
+     はどちらか、あるいは両方が省略できる。U と L の初期値は 1。
+
+`-fnltn1 FONT'
+     Latin-1 フォントとして FONT を使用する。
+
+`-fnltn2 FONT'
+     Latin-2 フォントとして FONT を使用する。
+
+`-fnltn3 FONT'
+     Latin-3 フォントとして FONT を使用する。
+
+`-fnltn4 FONT'
+     Latin-4 フォントとして FONT を使用する。
+
+`-fngrk FONT'
+     ギリシャ文字フォントとして FONT を使用する。
+
+`-fnarb FONT'
+     アラビア文字フォントとして FONT を使用する。
+
+`-fnhbw FONT'
+     ヘブライ文字フォントとして FONT を使用する。
+
+`-fnkana FONT'
+     日本語カタカナ文字フォントとして FONT を使用する。
+
+`-fnroman FONT'
+     日本語ローマン文字フォントとして FONT を使用する。
+
+`-fncrl FONT'
+     キリル文字フォントとして FONT を使用する。
+
+`-fnltn5 FONT'
+     Latin-5 フォントとして FONT を使用する。
+
+`-fnjpold FONT'
+     日本語漢字(旧 JIS)フォントとして FONT を使用する。
+
+`-fncn FONT'
+     中国 GB フォントとして FONT を使用する。
+
+`-fnjp FONT'
+     日本語漢字フォントとして FONT を使用する。
+
+`-fnkr FONT'
+     韓国語ハングル文字フォントとして FONT を使用する。
+
+`-fnjp2 FONT'
+     日本語補助漢字フォントとして FONT を使用する。
+
+`-fnbig5 FONT'
+     中国語 Big5 フォントとして FONT を使用する。
+
+
+さらに Sun のマシンでは、以下の起動時オプションも使用できます。これによ
+り Sun のコンソール画面で ASCII 文字 ばかりでなく Latin-1 や日本語文字な
+どを表示したり編集したりできます。
+
+`-sun'
+     Sun のコンソール画面で Mule 独自のウィンドウを開く。このオプション
+     は、コマンドラインオプションの一番最初に指定されなければならない。
+
+`-fb FRAME-BUFFER'
+     どのフレームバッファを使うかを指定する。このオプションが指定されな
+     い場合は、デフォルトとして `/dev/fb' が使用される。このオプションは、
+     コマンドラインオプションの二番目に指定されなければならない。
+
+`-fp PATHLIST'
+     BDF ファイルを探す際のディレクトリ名のリストを指定する。
+
+`-cs CHARSETS'
+     文字セットとそれに対応する BDF ファイル名とのテーブルファイルを指定
+     する。このオプション指定がされない場合は、デフォルトとして 
+     exec-path 指定されるディレクトリの下にある `CHARSETS' が使用される。
+
+
+
+File: mule-jp  Node: Init File, Prev: Options, Up: Invocation, Next: Multilingual Char
+
+.emacs のサンプル
+=================
+
+Mule は起動時に各自のホームディレクトリにある `.emacs' という初期化ファ
+イル(Init file)を参照します。このファイルに Lisp プログラムを記述してお
+くことにより、Mule を独自にカスタマイズができるようになります。
+
+Mule は Nemacs とは互換性がないため、Nemacs 用の `.emacs' はそのままでは
+エラーを起こす可能性があります。以下に、Mule と Nemacs(そして GNU Emacs 
+も)で共通して使用できる `.emacs' の簡単な例を示します。
+
+ただし、byte-compile する場合は注意しなければなりません。Mule と Nemacs 
+では漢字の内部表現が違いますので、コメント以外に漢字文字列を含む emacs
+lisp ファイルを byte-compile すると Mule と Nemacs の間で共有することは
+できなくなります。
+
+     ; sample .emacs
+
+     ; Lisp ライブラリの load path に "~/elisp" を追加します。
+     (setq load-path (cons (expand-file-name "~/elisp") 
+                             load-path))
+
+     ; ディスプレイに表示するときの文字コードを日本語 EUC にします。
+     (cond ((boundp 'NEMACS) (setq kanji-display-code 3))
+           ((boundp 'MULE)
+            (set-display-coding-system *euc-japan*)))
+
+     ; 新バッファ作成時のファイル文字コードを *euc-japan* にします。
+     (if (boundp 'MULE)
+         (set-default-file-coding-system *euc-japan*))
+
+     ; MH のプログラムとやりとりするときの文字コードを JIS に指定します。
+     (if (boundp 'MULE)
+         (progn
+           (define-program-coding-system nil ".*scan.*" (cons *junet* *junet*))
+           (define-program-coding-system nil ".*inc.*" (cons *junet*
+     *junet*))))
+     (if (boundp 'NEMACS)
+         (progn
+           (define-program-kanji-code nil ".*scan.*" 2)
+           (define-program-kanji-code nil ".*inc.*" 2)))
+
+     ; Text モードにするとき、常に auto-fill-mode にします。
+     (setq text-mode-hook
+           '(lambda () (auto-fill-mode 1)))
+
+     ; mail-mode にしたときに、ファイル文字コードを JIS にセットするようにし
+     ; ます。
+     (setq mail-mode-hook
+           '(lambda ()
+     	 (setq kanji-fileio-code 2)  ; for Nemacs
+     	 (if (boundp 'MULE)
+     	     (set-file-coding-system *junet*))))
+
+     ; GNUS 用の設定を行います。
+     ; 注:必ず各サイト用の設定に書き直してください。
+     (setq gnus-nntp-server "newshost")
+     (autoload 'gnus "gnus" "Read network news." t)
+     (autoload 'gnus-post-news "gnuspost" "Post a new news." t)
+     (setq gnus-your-domain "your.domain.address")
+     (setq gnus-nntp-service "nntp")
+     (setq gnus-use-generic-from t)
+
+     ; BS (C-h) キーと DEL キーを入れかえます。
+     (load-library "term/bobcat")
+
+
+
+File: mule-jp  Node: Multilingual Char, Prev: Init File, Up: Top, Next: Character Set
+
+多国語文字の扱い
+****************
+
+Mule は、多国語モードで日本語をはじめ中国語、韓国語などさまざまな言語の
+文字を扱うことができます。多国語モードにするには、コマンド `C-x C-k
+t'(*toggle-mc-flag*) で変数 `mc-flag' を `t' にします (通常は `t' になっ
+ています)。変数 `mc-flag' のデフォルト値は変数 `default-mc-flag' に保持
+され、コマンド `C-x C-k T' (*toggle-default-mc-flag*) で設定できます。
+
+変数:
+## Local Variable: mc-flag
+     t
+          多国語表示を行ない、カーソルも多国語文字単位で移動。
+     nil
+          多国語表示を行なわない。カーソル移動などは GNU Emacs と同じ。
+     いずれの場合もファイル I/O、プロセス I/O におけるコード系変換が行わ
+     れます。
+## Global Variable: default-mc-flag
+     mc-flag のデフォルト値。
+
+コマンド:
+## Command: toggle-mc-flag
+     `mc-flag' の値を、`t' から `nil'、`nil' から `t' に切替える。
+## Command: toggle-default-mc-flag
+     `default-mc-flag' の値を、`t' から `nil'、`nil' から `t' に切替える。
+
+* Menu:
+
+* Character Set::	文字セット(character-set)について.
+* Coding System::	コード系(coding-system)について.
+* Buffers::		Muleはバッファをどう扱うか.
+* Set Coding System::	コード系(coding-system)の指定方法.
+* Auto Conversion::	コード系の自動変換について.
+* Summary for Char::	多国語文字についてのまとめ.
+
+
+File: mule-jp  Node: Character Set, Prev: Multilingual Char, Up: Multilingual Char, Next: Coding System
+
+文字セット(character-set)
+=========================
+
+文字セット(正確には図形文字集合)とは、文字の集まりとそれぞれの文字をあら
+わすコードを定めたものです。文字セットには、1バイトで表現するものと、複
+数バイトで表現するものがあります。Mule では ASCII, Latin-1, JIS X0201 片
+仮名などの 1バイト文字と、漢字, 韓国語文字などの 2バイト文字の両方を扱
+うことができます。以下に、Mule であらかじめ定義されている文字セットの一
+覧を示します。
+
+  1. コード長が 1バイトのもの
+        * ASCII
+        * ISO8859-1 Latin-1
+        * ISO8859-2 Latin-2
+        * ISO8859-3 Latin-3
+        * ISO8859-4 Latin-4
+        * ISO8859-7 Greek
+        * ISO8859-6 Arabic
+        * ISO8859-8 Hebrew
+        * JIS X0201 Japanese Katakana
+        * JIS X0201 Japanese Roman
+        * ISO8859-5 Cyrillic
+        * ISO8859-9 Latin-5
+        * TIS 620-2533 Thai 
+  2. コード長が 2バイトのもの
+        * JIS X0208 Japanese Old
+        * GB2312-1980 Chinese
+        * JIS X0208 Japanese
+        * KS C5601-1987 Korean
+        * JIS X0212 Japanese Supplement
+        * Big5 Level 1
+        * Big5 Level 2
+        * PinYin-ZhuYin
+
+これらのうち，Big5 Level 1，Big5 Level 2，PinYin-ZhuYinの３つは，プライ
+ベート文字セットと呼ばれる，ISOに登録されていないものです．Mule では，さ
+らに別のプライベート文字セットを定義して使うこともできます。
+
+
+File: mule-jp  Node: Coding System, Prev: Character Set, Up: Multilingual Char, Next: Internal
+
+コード系(coding-system)
+=======================
+
+現在、ひとつの言語を表現するのにも複数のコード系が共存して使われています。
+例えば日本語の漢字コードは、よく使われているものだけでも MS 漢字コード
+(通称 シフトJIS)、日本語 EUC、7bit JIS コードの 3種類もありますし、中国
+語や韓国語の場合も同様に複数のコード系が存在しています。
+
+どのコード系が使われているかは OS によって異なります。また、アプリケー
+ションによっても異なる場合があります。ネットワーク経由の通信プロセス(電
+子メールや電子ニュースなど)は 8ビットを通さないことが多いため、ネットワー
+ク経由で他の計算機と通信を行うようなプログラムでは 7ビットで表現できるコー
+ド系が使われています。逆に OS の内部表現や文書ファイルには 8ビットの 
+EUC などが多く使われています。
+
+つまり、電子メールを受け取り、それをファイルに格納したり画面に表示したり
+するのに、各種コード系相互の変換操作が日常的に行なわれるわけです。この
+ような現実に対応するため、Mule ではファイル入出力、スクリーン表示、キー
+ボード入力、プロセス間通信のそれぞれについて独立に文字コード系を設定で
+きるようになっています。
+
+定義:
+*バッファ内部コード*
+     Mule がバッファの内部表現として用いるコード系。
+     (*Note ファイルの読み書き: In Buffers.)
+*ファイル文字コード*
+     文書ファイルで用いられるコード系。
+     (*Note File I/O::)
+*プロセス文字コード*
+     Mule と外部プロセスの通信に用いられるコード系。
+     (*Note Process::)
+*ディスプレイ文字コード*
+     Mule が端末表示用に送信するコード系。
+     (*Note Display::)
+*キーボード文字コード*
+     Mule がキーボード入力として予期しているコード系。
+     (*Note Key Input::)
+
+これらの処理にそれぞれどのコードが設定されているかは、`C-x C-k C'
+(*list-coding-system*) または `C-x C-k c' (*list-coding-system-briefly*) 
+で知ることができます。
+
+コマンド:
+## Command: list-coding-system
+     `*Help*'バッファを作り、そこに文字コード系に関する変数を表示する。
+## Command: list-coding-system-briefly
+     ミニバッファに文字コード系に関する変数を表示する。
+
+
+Mule では、以下に示す多数のコード系を使用することができます。
+
+   * Mule のバッファで使われている内部コード
+   * MS 漢字コード/シフト JIS (日本語のみ)
+   * ISO2022 に基づくもの(JIS [JUNET], EUC, CTEXT を含む)
+   * Big5(中国語のみ)
+
+以下、各コード系の概要について説明します。
+
+* Menu:
+
+* Internal::		Mule の内部コード.
+* MS Kanji::		MS 漢字コード(シフトJIS).
+* ISO2022::		ISO2022 に基づくもの.
+* Big5::		Big5 コード.
+
+
+File: mule-jp  Node: Internal, Prev: Coding System, Up: Coding System, Next: In Buffers
+
+内部コード
+----------
+
+Mule は、多国語文書の内部表現として独自の内部コードを使っています。この
+内部表現は、Nemacs のものとの互換性はありません。
+
+* Menu:
+
+* In Buffers::		バッファ中での文字表現.
+* In Lisp Object::	Lispでの文字表現.
+
+
+File: mule-jp  Node: In Buffers, Prev: Internal, Up: Internal, Next: In Lisp Object
+
+バッファ中での文字の内部表現
+............................
+
+Mule では、登録されている文字セットごとに固有の*リーディングキャラクタ*
+というものが割り付けられていて、ASCII 以外の文字はすべて* リーディングキャ
+ラクタ*を頭につけたものを内部コードとしています。
+
+文字セットは大きく分けると以下に示す種類に分類できます。
+
+Type 1-1: ASCII 文字セット
+     ASCII 文字 `C'(`C' は0x7f以下のコード)は、以前(GNU Emacs, Nemacs)の
+     内部表現と同じで、そのままのコードでバッファに保持されます。
+
+Type 1-2: ASCII 以外の 1バイト文字セット
+     この文字セットに含まれる文字 `C1' は、リーディングキャラクタ `LC1' 
+     をつけて、`LC1 C1' のように表現されています。つまり ASCII 以外の 1
+     バイト文字は、内部表現では 2バイトになります。
+
+Type 1-3: プライベートに使用する 1バイト文字セット
+     この文字セットの文字 `C1' は、プライベートリーディングキャラクタ 
+     `LCPRV1' と、拡張リーディングキャラクタ `LC12' をつけて `LCPRV1
+     LC12 C1' のようにバッファ内部では 3バイトで表現されます。
+
+Type 2-3: 2バイト文字セット
+     この文字セットは、リーディングキャラクタ `LC2' をつけて `LC2 C21
+     C22' のように表現されています。`C21' は 2バイト文字の最初のバイト、
+     `C22' は 2番目のバイトです。つまり漢字などの 2バイト文字は、内部表
+     現では 3バイトになります。
+
+Type 2-4: プライベートに使用する 2バイト文字セット
+     この文字セットは、プライベートリーディングキャラクタ `LCPRV2' と、
+     拡張リーディングキャラクタ `LC22' をつけて `LCPRV2 LC22 C21 C22' の
+     ようにバッファ内部では 4バイトで表現されています。`C21' はプライベー
+     ト 2バイト文字の最初のバイト、`C22' は 2番目のバイトです。
+
+Type 3-4: 3バイト文字セット
+     この文字セットは、リーディングキャラクタ `LC3' をつけて `LC3 C31
+     C32 C33' のようにバッファ内部では 4バイトで表現されています。`C31' 
+     は 3バイト文字の最初のバイト、`C32' は 2番目のバイト、`C33' は 3番
+     めのバイトです。
+
+Type N: 不定長の合成文字(composite character)セット
+     この文字セットは、合成文字をあらわすリーディングキャラクタ `LCCMP' 
+     を先頭に、`LCCMP LCN1 C11 ... LCN2 C21 ... LCNn Cn1 ...' のように表
+     現されています。文字 `LCN1 C11 ... LCN2 C21 ... LCNn Cn1 ...' は全
+     て同じカラムに表示されます。
+
+ASCII 文字の内部表現は `0XXXXXXX'(ASCII 1文字は 7ビットで表現できる)、そ
+れ以外の `C1' `C21' `C22' ... の内部表現はそれぞれ `1XXXXXXX'(0x80との 
+OR をとり、最上位ビットを 1にしている)です。リーディングキャラクタの内部
+表現は種類によって異なっています。詳しくは `$MULE/doc/character.text' を
+参照して下さい。
+
+
+File: mule-jp  Node: In Lisp Object, Prev: In Buffers, Up: Internal, Next: MS Kanji
+
+Lisp 中での文字オブジェクトの表現
+.................................
+
+Emacs Lisp では、文字オブジェクトを 255 以下の整数として取り扱っています。
+Mule では、文字セットが増えているために、文字オブジェクトを以下のように
+拡張しています。
+
+Type 1-1: `C' (`C' は 0x7f以下)
+     0 ... 0x7f, キャラクタコードそのものと同じ。
+Type 1-2: ((LC1 - 0x80) << 8) | C1
+     0x01A0 ... 0x0FFF
+Type 1-3: ((LC21 - 0x80) << 8) | C1
+     0x20A0 ... 0x3FFF
+Type 2-3: ((LC2 - 0x80) << 16) | (C21 << 8) | C22
+     0x10A0A0 ... 0x19FFFF
+Type 2-4: ((LC22 - 0x80) << 16) | (C21 << 8) | C22
+     0x40A0A0 ... 0x5FFFFF
+Type 3-4: ((C31 - 0x40 << 16) | (C32 << 8) | C33
+     0x60A0A0 ... 0x7FFFFF
+Type N:
+     文字オブジェクトとしては扱えない
+
+例えば、`?' の後に Type-2 の文字 0x81 0xf1 がある場合、その値は 498 ( =
+((0x81 & 0x1f) << 8) | 0xf1) になります。
+
+
+File: mule-jp  Node: MS Kanji, Prev: In Lisp Object, Up: Coding System, Next: ISO2022
+
+MS 漢字コード(シフトJIS)
+------------------------
+
+MS 漢字コード(シフトJIS)は、MS-DOS で採用されているコード系です。このコー
+ド系は JIS X0208 文字セットの第一水準と第二水準の文字を一定の規則に従っ
+て変換し、JIS X0201 文字セットの未定義領域に漢字を割り当てています。MS 
+漢字コードではエスケープシーケンスなしで、X0201 の英数字および片仮名と、 
+X0208 の漢字とを混在させることができます。Mule では、X0201 片仮名も含め
+てこのコード系をサポートしています(Nemacs では X0201 片仮名は使用できま
+せんでした)。
+
+
+File: mule-jp  Node: ISO2022, Prev: MS Kanji, Up: Coding System, Next: JUNET
+
+ISO2022
+-------
+
+Mule では ISO2022 が定める符号拡張法に基づくコード系もサポートしています。 
+ISO2022 とは、文字セット(ASCII, JIS X0208 など)を使って情報交換を行う場
+合の符号化の方法を定めているものです。以下に ISO2022 の簡単な説明を行な
+いますが、なるべくわかりやすくするために正確でない部分があります。完全な
+理解のためには ISO2022 のオリジナル文書を参照して下さい。
+
+なお、ISO に登録されている文字セットは、すべて 7ビットで定義されており 
+(漢字などは 2バイトのコードだが、7 + 7 ビットで定義されている)、文字セッ
+トの文字数に応じて 94 文字セット, 96 文字セット, 94x94 文字セット, 96x96 
+文字セットの 4つのカテゴリに分類されています。
+
+   * 94 文字セット: ASCII(B)、JIS X0201 の左半分(J)と右半分(I)、など
+   * 96 文字セット: Latin-1(A)、Latin-2(B)、Latin-3(C)、など
+   * 94x94 文字セット: GB2312(A)、JIS X0208(B)、KSC5601(C)、など
+   * 96x96 文字セット: 今のところ無し
+
+各文字セットのあとの括弧内の文字は終端文字(final character)で、各文字セッ
+トを識別するものと考えることができます。
+
+
+ISO2022 の符号拡張法は、一般的には以下のような 2段階方式になっています。
+
+  1. 使用したい文字セットをエスケープシーケンスを用いて中間バッファの 
+     G0, G1, G2, G3 に指示(designate)する。
+  2. 次にそのどれかを、制御機能を用いて 7単位のコード表に呼び出す(invoke)。コー
+     ド表は 8ビット系には左と右(GLとGR)の二つ、7ビット系には一つ(GL)ある。
+
+
+中間バッファは、普通は G0, G1 が使われ、7ビット系では SI(Shift In)
+で G0 を、SO(Shift Out)で G1 を呼び出します。8ビット系では、同時に
+ふたつ文字セットを使えるため、GL に G0 を、GR に G1 を呼び出してお
+くのが普通です。たとえば、JIS 8ビットコードは G0 に JIS X0201 ロー
+マ字を、G1 に X0201 片仮名を指示して、G0 を GL に、G1 を GR に呼び
+出して使用しているわけです。
+
+
+指示は、以下のようなエスケープシーケンスで行ないます。
+
+     ESC I F
+
+I は中間文字(intermediate character)で、F は終端文字です。中間文字は 
+0x20 から 0x2F の 16文字ありますが、主な中間文字の意味は以下の通りです。
+
+`$ [0x24]'
+     複数バイト文字セット(94x94または96x96)を示す
+`( [0x28]'
+     終端文字が F である 94 文字セットを G0 に指示する
+`) [0x29]'
+     終端文字が F である 94 文字セットを G1 に指示する
+`* [0x2A]'
+     終端文字が F である 94 文字セットを G2 に指示する
+`+ [0x2B]'
+     終端文字が F である 94 文字セットを G3 に指示する
+`- [0x2D]'
+     終端文字が F である 96 文字セットを G1 に指示する
+`. [0x2E]'
+     終端文字が F である 96 文字セットを G2 に指示する
+`/ [0x2F]'
+     終端文字が F である 96 文字セットを G3 に指示する
+
+また、ISO2022 では規定されていませんが、Mule では以下の中間文字も使用で
+きます。
+
+`, [0x2C]'
+     終端文字が F である 96 文字セットを G0 に指示する
+
+以下に指示のエスケープシーケンスの例を示します。
+
+`ESC `(' `B''
+     ASCII を G0 に指示する
+`ESC `-' `A''
+     Latin-1 を G1 に指示する
+`ESC `$' `(' `A' または ESC `$' `A''
+     GB2312 を G0 に指示する
+`ESC `$' `(' `B' または ESC `$' `B''
+     JISX0208 を G0 に指示する
+`ESC `$' `)' `C' '
+     KSC5601 を G1 に指示する
+
+歴史的な事情から、旧JIS X0208(終端文字 `@')、GB2312(`A')、JIS X0208(`B')
+を G0 に指示する時は `(' を省略したエスケープシーケンスを使うこともでき
+ます。
+
+
+G0 から G3 に指示された文字セットを使うためには、GL あるいは GR に呼び出
+さなければいけません。通常、8ビット系では GL に G0 が、GR に G1 が呼び出
+されており、7ビット系では GL に G0 が呼び出されていますが、G2 や G3 (7ビッ
+ト系では G1 も)は明示的に呼び出しをかける必要があります。この呼び出しに
+はロッキングシフト(locking shift)とシングルシフト(single shift)の 2種類
+があります。
+
+*ロッキングシフト*
+     ロッキングシフトで呼び出された文字セットはずっと呼び出されたままに
+     なります。ある文字セットを既に呼び出してあれば、対応するロッキング
+     シフトは無効になります。ロッキングシフトは以下の7つの機能があります。
+     SI または LS0
+          G0 を GL に呼び出す
+     SO または LS1
+          G1 を GL に呼び出す
+     LS2
+          G2 を GL に呼び出す
+     LS3
+          G3 を GL に呼び出す
+     LS1R
+          G1 を GR に呼び出す
+     LS2R
+          G2 を GR に呼び出す
+     LS3R
+          G3 を GR に呼び出す
+     なお、G0 を GR に呼び出すことはできません。
+*シングルシフト*
+     シングルシフトは、直後の一文字のみを呼び出します。シングルシフトは
+     ロッキングシフトで設定された現在のシフト状態には影響を与えません。
+     SS2
+          G2 の一文字を呼び出す
+     SS3
+          G3 の一文字を呼び出す
+
+
+本来ならば、使いたい文字セットを G0 から G3 のいずれかに指示して、GL ま
+たは GR に呼び出すという 2段階を行なうのが正式なのですが、事前にアナウン
+サというもので宣言を行なうことにより文字セットを指示すると同時に呼び出す
+こともできます。なおアナウンサは当事者間の合意が有れば省略しても良い事に
+なっています。また、使用する文字集合を限定して、デフォルトで G0 から G3 
+に指示してあることにしてエスケープシーケンスを省略したりすることもありま
+す。
+
+このように、ISO2022 に基づく多国語テキストのエンコーディングにはたくさん
+の方法があります。現在世界中には、日本の JUNET で使われているもの、いわ
+ゆる EUC(Extended Unix Code)、X のコンパウンドテキストなどたくさんのコー
+ド系がありますが、これらはすべて ISO2022 の変形です。
+
+Mule では、以下の属性によって ISO2022 を特徴づけています。
+
+  1. G0 から G3 への指示されている文字セットの初期値
+  2. 日本語と中国語の省略形の指示を許すかどうか
+  3. コントロールキャラクタの前に ASCII を G0 に指示しなければならないか
+  4. 行末で ASCII を G0 に指示しなければならないか
+  5. 7ビット系か 8ビット系か
+  6. ロッキングシフトを使うかどうか
+  7. ASCII または JIS X0201-1976 ローマ字のどちらを使うか(日本語の場合のみ)
+  8. JIS X0208-1983 または JIS X0208-76 のどちらを使うか(日本語の場合のみ)
+
+これらの属性を指定することによって、ISO2022 に基づいたコード系を作ること
+ができます。
+
+* Menu:
+
+* JUNET::		JUNET 方式のコード系.
+* EUC::			EUC(拡張 UNIX コード).
+* Compound Text::	コンパウンドテキスト.
+* Korean Mail::		韓国のネットワークで使用されているコード系.
+
+
+File: mule-jp  Node: JUNET, Prev: ISO2022, Up: ISO2022, Next: EUC
+
+JUNET 方式のコード系
+....................
+
+JUNET で使われている、一般的に JIS 7ビット漢字コードと呼ばれているコード
+系は、7ビット系で、しかも G0 しか使わないものです。
+
+*JUNET 方式のコード系(`*junet*')の属性*
+  1. ASCII -> G0
+  2. Yes
+  3. Yes
+  4. Yes
+  5. 7ビット系
+  6. No
+  7. ASCII を使う
+  8. JIS X0208 を使う
+
+アナウンサによって、G0 に指示した文字セットは即 GL に呼び出される事になっ
+ていますが、このアナウンサは省略されています。そして毎回 G0 に JIS ロー
+マ字を指示したり、日本語漢字文字セットを指示したりしているわけです。 
+JUNET で使われているエスケープシーケンスは、正確には以下の意味になります。
+
+`ESC `(' `B''
+     ASCII を G0 へ指示する
+`ESC `(' `J''
+     JIS ローマ字を G0 へ指示する
+`ESC `$' `@''
+     JIS漢字(1978)を G0 へ指示する
+`ESC `$' `B''
+     JIS漢字(1983)を G0 へ指示する
+
+JUNET で認知されているエスケープシーケンスは以上ですが、Mule では 
+ISO2022 に基づいて他にも `ESC `$' `A'' で中国漢字を指示できますし、 `ESC
+`(' `I'' で JIS X0201 片仮名を指示したりできます。
+
+JUNET 方式の利点は、G0 に文字セットを指示するだけで、何語でも使える事で
+す。日本語を使うだけならば G0 に JIS ローマ字, G1 に漢字を指示しておけば、 
+SI と SO の1バイトづつで ROMAN と漢字の切り替えができますが、他の文字セッ
+トを使うときに困ってしまいます。
+
+なお、Mule に附属するドキュメントやソースコードはすべて JUNET 方式のコー
+ド系になっています。
+
+
+File: mule-jp  Node: EUC, Prev: JUNET, Up: ISO2022, Next: Compound Text
+
+EUC(拡張 UNIX コード)
+.....................
+
+EUC は、使用する文字集合を限定し、中間バッファへ指示するエスケープシーケ
+ンスを省略したコード系です。EUC は 8ビット系で使用します。
+
+Mule で使われている日本語のための EUC の属性は、以下のようになります。
+
+*日本語 EUC (`*euc-japan*')の属性*
+  1. ASCII -> G0, JIS X0208 -> G1,
+     JIS X0201 片仮名 -> G2, JIS X0212 -> G3
+  2. Yes
+  3. Yes
+  4. Yes
+  5. 8ビット系
+  6. No
+  7. ASCII を使う
+  8. JIS X0208 を使う
+
+EUC では、G0 が GL に、G1 が GR に呼び出されています。G2 および G3 に指
+示されている文字セットはシングルシフト(SS2 および SS3)で呼び出します。ロッ
+キングシフトは使用しません。
+
+以上の属性は日本語 EUC の場合ですが、あらかじめ G1 に中国漢字文字集合 
+(GB2312) を指示してあることにすれば中国語 EUC になりますし、韓国文字集合 
+(KS C5601)を指示してあることにすれば韓国語 EUC になります。ただ、EUC は、
+文字集合を指示するシーケンスが省略されているため、そのコードを見ただけで
+は統計的手法を使わない限り何語の EUC であるかを判断することはできません。
+よって、EUC では一つのファイルの中に中国語、韓国語、日本語などを混在させ
+ることはできないことになります。
+
+
+File: mule-jp  Node: Compound Text, Prev: EUC, Up: ISO2022, Next: Korean Mail
+
+コンパウンドテキスト
+....................
+
+X Window System で使われているコンパウンドテキストは、EUC と同様に文字集
+合を指示するエスケープシーケンスを省略しているコード系であると考えること
+ができます。ただし GR に呼び出されている文字は 1バイトコードです。
+
+*コンパウンドテキスト(`*ctext*')の属性*
+  1. ASCII -> G0, Latin-1 -> G1
+  2. No
+  3. No
+  4. Yes
+  5. 8ビット系
+  6. No
+  7. ASCII を使う
+  8. JIS X0208 を使う
+
+VT の国際モデル文字端末などでは同様のコード系になっていますので、ディス
+プレイ文字コードにコンパウンドテキストを指定すれば Latin-1 文字を画面に
+表示できます。
+
+
+File: mule-jp  Node: Korean Mail, Prev: Compound Text, Up: ISO2022, Next: Big5
+
+韓国のネットワークで使用されているコード系
+..........................................
+
+韓国のネットワークで使用されているコード系は、JUNET 方式と同じ 7ビット環
+境ですが、G0 と G1 の両方を使い、G1 の呼び出しにはロッキングシフトを使い
+ます。G1 を呼び出す前に、最初に一回だけ、KSC5601 を G1 に指示するエスケー
+プシーケンスが入ります。
+
+*韓国のネットワークで使用されているコード系(`*korean-mail*')の属性*
+  1. ASCII -> G0, KSC5601 -> G1
+  2. No
+  3. No
+  4. Yes
+  5. 7ビット系
+  6. Yes
+  7. No
+  8. No
+
+
+File: mule-jp  Node: Big5, Prev: Compound Text, Up: Coding System, Next: Buffers
+
+Big5
+----
+
+Big5 と呼ばれているコード系には、複数の異なったコード系が存在しているよ
+うです。このうちよく知られているものに Big5-ETen と Big5-HKU-form2 があ
+ります。この二つは文字の種類が 13,000 以上もあるため、現在の Mule では一
+つの文字セットとしては扱えません(Mule では、単一の文字セットとして扱える
+文字種は、最高で約9,200文字までです)。そのため、Mule はこのコード系を以
+下に述べるような変則的な方法で処理しています。
+
+  1. Mule はこれらを異なった文字セットとしては扱わず、同じ Big5 と呼ぶ文字セッ
+     トとして扱う(注:Big5 は GB とは別の文字セットである)。
+  2. Mule は Big5 を二つのサブ文字セットに分割している。
+        * 0xa140 - 0xc67e (Level 1)
+        * 0xc6a1 - 0xfefe (Level 2)
+     そしてこれらに lc-big5-1 と lc-big5-2 の二つのリーディングキャラクタを割
+     り当てている。
+  3. 普通は、各リーディングキャラクタ(or 文字セット)はユニークな文字カテ
+     ゴリを持つ。しかし lc-big5-1 と lc-big5-2 は、`b' という同じニモニッ
+     クのカテゴリになっている。よって、正規表現 `\cb' は、すべての Big5 
+     文字(Level 1 と Level 2)にマッチする。
+  4. もし出力に ISO2022 タイプのコード系が指定された場合、Mule は Big5 を非公
+     式な終端文字(final-character) '0' (Level 1用) と '1' (Level 2用) を使う
+     ように変換する。
+  5. Big5 コードを表示するのに、ETen と HKU の両方のフォントを使用できる。
+     Mule は、文字 C6A1 がフォントの中に存在しているかどうかを検査することに
+     よってどちらのフォントが使われているかを判定する。もし存在しているならば、
+     HKU フォントであり、存在していなければ ETen フォントである。
+
+
+
+File: mule-jp  Node: Buffers, Prev: Big5, Up: Multilingual Char, Next: Set Coding System
+
+Mule のバッファ
+===============
+
+Muleのバッファには、ASCII 文字、その他の 1バイト文字、漢字のような 2バイ
+ト文字が共存できます。ASCII の 1バイト文字のことを alphanumerics と呼び
+ます。
+
+新規バッファ生成時には、Mule はバッファの変数 `mc-flag' に変数 
+`default-mc-flag'の値を設定します。
+
+変数 `mc-flag' が `t' の時、つまりコード変換を行ない多国語を表示する時に
+は、モードラインに以下のようなコード系ニーモニックが現れます。
+
+      [--]E:--**-Mule: Mule.text    (Fundamental) ---NN%--------------
+          ^^
+
+Mule は、ファイル入出力、入力、画面出力、プロセス間通信について、それぞ
+れ独立にコード系を指定させることが出来ますが、通常はファイル用のコード
+系のニーモニックのみ表示しています。最初の一文字がコード系のニーモニッ
+ク、次の `:' が現在英語以外の文字(日本語、中国語など)もちゃんと表示する
+ということを示しています。
+
+ニーモニックはそれぞれ
+`='
+     無変換
+`+'
+     自動変換
+`='
+     バッファ内部コード
+`S'
+     MS 漢字コード(シフト JIS )
+`s'
+     MS 漢字コード(シフト JIS )、行末は CRLF
+`J'
+     JUNET で使われているコード(およびそれに類するもの)
+`X'
+     X で使われているコンパウンドテキストのコード
+`E'
+     日本語 EUC コード
+`K'
+     韓国語 EUC コード
+`k'
+     韓国のネットワークで使用されているコード
+`C'
+     中国語 EUC コード
+`I'
+     96 文字セットの呼び出しに SS2 を用いる ISO2022 コード系
+`i'
+     96 文字セットの呼び出しにロッキングシフトを用いる ISO2022 コード系
+`B'
+     BIG5 コード
+`b'
+     BIG5 コード、行末は CRLF
+
+また、変数 `mc-verbose-code' に `nil' 以外の値をセットすると、モードライ
+ンにファイル用、キー入力用、画面表示用の三つのコード系のニモニックを表示
+するようになります。
+
+      [--]E-J:--**-Mule: Mule.text    (Fundamental) ---NN%------------
+          ^^^
+
+表示されるコードは左から順に
+`file-coding-system'
+     ファイル入出力に用いられるコード(*Note File I/O::)。
+`keyboard-coding-system'
+     キーボード入力として予期しているコード(*Note Key Input::)。
+`display-coding-system'
+     端末表示に用いているコード(*Note Display::)。
+です。
+
+変数:
+## Local Variable: mc-flag
+     t
+          多国語表示を行ない、カーソルも多国語文字単位で移動。
+     nil
+          多国語表示を行なわない。カーソル移動などは GNU Emacs と同じ。
+     いずれの場合もファイル I/O、プロセス I/O におけるコード系変換が行われま
+     す。
+## Global Variable: default-mc-flag
+     mc-flag のデフォルト値。
+## Global Variable: mc-verbose-code
+     nil
+          モードラインにファイル用のコード系のみを表示する。
+     non-nil
+          モードラインにファイル用、キー入力用、画面表示用の三つのコード
+          系ニモニックを表示する。
+
+

@@ -1,0 +1,170 @@
+dot = .
+lispdir = $(dot)$(dot)/lisp/
+etcdir = $(dot)$(dot)/etc/
+shortnamesdir = $(dot)$(dot)/shortnames/
+cppdir = $(dot)$(dot)/cpp/
+oldXMenudir = $(dot)$(dot)/oldXMenu/
+SHELL = /bin/sh
+supportdosdir = $(dot)$(dot)/dos/go32/
+gcclibdir = c:/djgcc/    
+.SUFFIXES: .c.o.s
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+CD=chd
+MAKE=make
+STARTFILES = crt0.o 
+LD = gcc -nostdlib 
+LDFLAGS = -e __start -L$(gcclibdir)lib   
+CFLAGS= -g -O4 -Demacs $(MYCPPFLAG)   -I$(supportdosdir)       $(MCPATH_FLAGS)
+SUPPORTDOS= $(supportdosdir)libdos.a
+DOSOBJ= dosfns.o
+LIBDOS = $(SUPPORTDOS)
+GNULIB_VAR = -lgcc 
+MULE_H = mule.h
+CC_H = codeconv.h
+MULE_OBJ_BASE = mule.o codeconv.o category.o ccl.o
+MULE_ELC_BASE = \
+	${lispdir}mule.elc ${lispdir}mule-util.elc ${lispdir}attribute.elc \
+	${lispdir}kinsoku.elc ${lispdir}quail.elc ${lispdir}regexp.elc \
+	${lispdir}keyboard.elc ${lispdir}ccl.elc
+MULE_LIB_BASE =
+MCPATH_FLAGS =
+MCPATH_H =
+MULE_ELC_EXT = ${lispdir}demacs.elc ${lispdir}dos-fns.elc ${lispdir}fepctrl.elc
+MULE_OBJ = $(MULE_OBJ_BASE) $(MULE_OBJ_EXT)
+MULE_ELC = $(MULE_ELC_BASE) $(MULE_ELC_EXT)
+MULE_LIB = $(MULE_LIB_BASE) $(MULE_LIB_EXT)
+MULE_ELC_PATCHED = $(MULE_ELC) \
+	${lispdir}bytecomp.elc ${lispdir}debug.elc ${lispdir}files.elc \
+	${lispdir}fill.elc ${lispdir}info.elc ${lispdir}isearch.elc \
+	${lispdir}picture.elc ${lispdir}startup.elc ${lispdir}replace.elc \
+	${lispdir}rmail.elc ${lispdir}simple.elc ${lispdir}texinfmt.elc \
+	${lispdir}dired.elc ${lispdir}macros.elc ${lispdir}man.elc \
+	${lispdir}sendmail.elc ${lispdir}dabbrev.elc \
+	${lispdir}prolog.elc ${lispdir}x-mouse.elc ${lispdir}compile.elc
+obj=    dispnew.o scroll.o xdisp.o window.o \
+	term.o cm.o $(XOBJ) $(SUNOBJ) $(DOSOBJ) \
+	emacs.o keyboard.o macros.o keymap.o sysdep.o \
+	buffer.o filelock.o insdel.o marker.o \
+	minibuf.o fileio.o dired.o filemode.o \
+	cmds.o casefiddle.o indent.o search.o regex.o undo.o \
+	alloc.o data.o doc.o editfns.o callint.o \
+	eval.o fns.o print.o lread.o \
+	abbrev.o syntax.o unexec.o  mocklisp.o bytecode.o \
+	process.o callproc.o $(environobj) \
+	doprnt.o \
+	$(MULE_OBJ) $(MCPATH_OBJ)
+termcapobj = termcap.o tparam.o
+mallocobj = malloc.o
+otherobj= $(termcapobj) lastfile.o $(mallocobj)
+lisp=	${lispdir}simple.elc ${lispdir}help.elc \
+	${lispdir}files.elc ${lispdir}window.elc \
+	${lispdir}indent.elc ${lispdir}loaddefs.el ${lispdir}paths.el \
+	${lispdir}startup.elc ${lispdir}lisp.elc \
+	${lispdir}page.elc ${lispdir}register.elc \
+	${lispdir}paragraphs.elc ${lispdir}lisp-mode.elc \
+	${lispdir}text-mode.elc ${lispdir}fill.elc \
+	${lispdir}c-mode.elc ${lispdir}isearch.elc \
+	${lispdir}replace.elc ${lispdir}abbrev.elc \
+	${lispdir}buff-menu.elc ${lispdir}subr.elc \
+	${lispdir}mule-config.el ${lispdir}mule-init.el \
+	$(MULE_ELC)
+SHELL=/bin/sh
+LIBES =   $(LIBX) $(LIBSUN) $(LIBDOS)     -lg  $(GNULIB_VAR) $(MULE_LIB) -lc 
+all: xemacs   ${etcdir}CHARSETS
+execprefix="go32 $(dot)/"
+.SUFFIXES: .elc .el
+.el.elc:
+	$(execprefix)temacs -batch -l ${lispdir}mule-inst.el ${lispdir} ${MULE_ELC_PATCHED}
+xemacs: temacs ${etcdir}DOC ${lisp}
+	$(execprefix)temacs -batch -l inc-vers
+	$(execprefix)temacs -batch -l loadup.el dump
+${etcdir}DOC: ${etcdir}make-docfile ${obj} ${lisp}
+	rm -f ${etcdir}DOC
+	${etcdir}make-docfile ${obj} ${lisp} ${lispdir}version.el > ${etcdir}DOC
+${etcdir}make-docfile:
+	${CD} ${etcdir}; ${MAKE} ${MFLAGS} make-docfile
+temacs:   $(LOCALCPP) $(SHORT) $(STARTFILES) $(OLDXMENU) $(SUPPORTDOS) ${obj} ${otherobj}    
+	ls *.o | grep -v ${STARTFILES} >temacs.rf
+	$(LD) ${STARTFLAGS} ${LDFLAGS} -o temacs ${STARTFILES} @temacs.rf ${LIBES}
+CPP = $(CC) -E
+$(SUPPORTDOS):
+	${CD} $(supportdosdir); ${MAKE} ${MFLAGS}
+paths.h: paths.h-dist
+	echo paths.h needs to be set up from paths.h-dist
+	exit 1
+config.h: config.h-dist
+	echo config.h needs to be set up from config.h-dist
+	exit 1
+mconfig.h: mconfig.h-dist
+	echo mconfig.h needs to be set up from mconfig.h-dist
+	exit 1
+abbrev.o : abbrev.c buffer.h commands.h config.h 
+buffer.o : buffer.c syntax.h buffer.h commands.h window.h config.h $(MULE_H)
+callint.o : callint.c window.h commands.h buffer.h config.h 
+callproc.o : callproc.c paths.h buffer.h commands.h config.h $(MULE_H)         $(CC_H) $(MCPATH_H)
+casefiddle.o : casefiddle.c syntax.h commands.h buffer.h config.h 
+category.o : category.h category.c $(MULE_H)
+ccl.o : ccl.c codeconv.h
+cm.o : cm.c cm.h termhooks.h config.h
+cmds.o : cmds.c syntax.h buffer.h commands.h config.h $(MULE_H)
+codeconv.o: codeconv.c $(MULE_H) $(CC_H)
+crt0.o : crt0.c config.h
+	$(CC) -c $(CFLAGS)   crt0.c
+dired.o : dired.c commands.h buffer.h config.h regex.h $(MCPATH_H)
+dispnew.o : dispnew.c commands.h window.h buffer.h dispextern.h termchar.h  termopts.h cm.h config.h lisp.h $(MULE_H)
+doc.o : doc.c buffer.h config.h paths.h
+doprnt.o : doprnt.c
+editfns.o : editfns.c window.h buffer.h config.h $(MULE_H)
+emacs.o : emacs.c commands.h config.h $(MULE_H) mconfig.h
+fileio.o : fileio.c window.h buffer.h config.h $(MULE_H) $(CC_H) $(MCPATH_H)
+filelock.o : filelock.c buffer.h paths.h config.h  $(MCPATH_H)
+filemode.o : filemode.c 
+indent.o : indent.c window.h indent.h buffer.h config.h termchar.h termopts.h $(MULE_H)
+insdel.o : insdel.c window.h buffer.h config.h 
+keyboard.o : keyboard.c termchar.h termhooks.h termopts.h buffer.h commands.h window.h macros.h config.h $(MULE_H)
+keymap.o : keymap.c buffer.h commands.h config.h $(MULE_H)
+lastfile.o : lastfile.c 
+macros.o : macros.c window.h buffer.h commands.h macros.h config.h
+malloc.o : malloc.c config.h
+marker.o : marker.c buffer.h config.h 
+minibuf.o : minibuf.c syntax.h window.h buffer.h commands.h config.h 
+mocklisp.o : mocklisp.c buffer.h config.h
+mule.o : mule.c mule.h config.h mconfig.h $(MULE_H) $(CC_H)
+process.o : process.c process.h buffer.h window.h termhooks.h termopts.h commands.h dispextern.h config.h $(MULE_H) $(CC_H) $(MCPATH_H)
+regex.o : regex.c syntax.h buffer.h config.h regex.h $(MULE_H)
+scroll.o : scroll.c termchar.h config.h dispextern.h termhooks.h
+search.o : search.c regex.h commands.h buffer.h syntax.h config.h $(MULE_H)
+syntax.o : syntax.c syntax.h buffer.h commands.h config.h $(MULE_H)
+sysdep.o : sysdep.c config.h dispextern.h termhooks.h termchar.h termopts.h window.h $(MCPATH_H)
+term.o : term.c termchar.h termhooks.h termopts.h config.h cm.h $(MULE_H) $(CC_H)
+termcap.o : termcap.c config.h
+terminfo.o : terminfo.c config.h
+tparam.o : tparam.c config.h
+undo.o : undo.c buffer.h commands.h config.h 
+unexec.o  : config.h getpagesize.h mconfig.h puresize.h $(MCPATH_H)
+window.o : window.c indent.h commands.h window.h buffer.h config.h termchar.h
+xdisp.o : xdisp.c macros.h commands.h indent.h buffer.h dispextern.h termchar.h window.h config.h $(MULE_H)
+xfns.o : xfns.c xterm.h window.h config.h
+xmenu.o : xmenu.c xterm.h window.h config.h
+xterm.o : xterm.c xterm.h termhooks.h termopts.h termchar.h  dispextern.h config.h sink.h sinkmask.h $(MULE_H)
+x11fns.o : x11fns.c window.h x11term.h dispextern.h termchar.h config.h $(MULE_H)
+x11term.o : x11term.c x11term.h termhooks.h termopts.h termchar.h  dispextern.h config.h sink11.h sink11mask.h lisp.h gettime.h emacssignal.h  xkeys-aix.h $(MULE_H) $(CC_H)
+alloc.o : alloc.c window.h buffer.h config.h mconfig.h puresize.h
+bytecode.o : bytecode.c buffer.h config.h 
+data.o : data.c buffer.h config.h 
+eval.o : eval.c commands.h config.h
+fns.o : fns.c buffer.h commands.h config.h
+print.o : print.c process.h window.h buffer.h dispextern.h termchar.h config.h 
+lread.o : lread.c buffer.h paths.h config.h $(MULE_H) $(MCPATH_H)
+sunfns.o  : sunfns.c buffer.h config.h
+${etcdir}emacstool: ${etcdir}emacstool.c
+	cd ${etcdir}; ${MAKE} ${MFLAGS} emacstool
+sunterm.o : sunterm.c termchar.h termhooks.h termopts.h 	dispextern.h config.h ${etcdir}bdf.h ${etcdir}bdf.c $(MULE_H)
+${etcdir}bdf.o: config.h paths.h $(MULE_H) 		${etcdir}bdf.h ${etcdir}bdf.c ${etcdir}Makefile
+	${CD} ${etcdir}; ${MAKE} ${MFLAGS} bdf.o
+${etcdir}charsets: xemacs
+	$(etcdir)env EMACSLOADPATH=${lispdir} $(execprefix)xemacs -batch -l $(lispdir)mule-inst.el `pwd`/${etcdir}charsets
+${etcdir}CHARSETS: ${etcdir}charsets ${etcdir}Makefile
+	${CD} ${etcdir}; ${MAKE} ${MFLAGS} CHARSETS
+dosfns.o : dosfns.c dosfns.h config.h

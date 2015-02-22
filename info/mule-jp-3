@@ -1,0 +1,528 @@
+Info file: mule-jp,    -*-Text-*-
+produced by texinfo-format-buffer
+from file: mule-jp.texi
+
+
+
+
+File: mule-jp  Node: Justifying, Prev: Filling, Up: Filling&Justifying, Next: Enhancement
+
+行揃え
+......
+
+Mule は多国語文書についても行揃えを提供しています。英文の場合には語の間
+の空白文字を増やすことによって行揃えが行なわれています。多国語の場合には
+語間には空白文字をいれてはならない場合が多いので、句読点の後ろと 
+alphanumerics と多国語文字の間に空白文字を挿入して行揃えを実現しています。
+
+
+File: mule-jp  Node: Enhancement, Prev: Justifying, Up: Features, Next: Picture Mode
+
+多国語処理のための拡張
+======================
+
+多国語処理を行なうために、ピクチャーモード、矩形領域処理、略称展開
+(dynamic abbreviation)の 3点が拡張されています。
+
+* Menu:
+
+* Picture Mode::	ピクチャーモード.
+* Rectangles::		矩形領域の処理.
+* Abbreviations::	動的な略称展開.
+
+
+File: mule-jp  Node: Picture Mode, Prev: Enhancement, Up: Enhancement, Next: Direction
+
+ピクチャーモード
+----------------
+
+Mule におけるピクチャーモードはファイル `picture.el' へのパッチによって、
+文字の挿入方向、多国語入力の方法の 2点が拡張されています。
+
+* Menu:
+
+* Direction::		  文字の挿入方向の拡張.
+* Input in Picture Mode:: ピクチャーモードでの多国語入力.
+
+
+File: mule-jp  Node: Direction, Prev: Picture Mode, Up: Picture Mode, Next: Input in Picture Mode
+
+文字の挿入方向の拡張
+....................
+
+Emacs のピクチャーモードでは、1文字挿入された後のカーソルの移動方向を上
+下左右斜めに指定できます。斜めを指定した場合には、縦横各方向にそれぞれ 1
+カラム(行)移動します。斜め指定の状態はモードライン上の `nw', `ne', `sw',
+`se' などのニーモニック表示で示されます。
+
+Mule では、かな，漢字，韓国語文字などは通常のアスキー文字の 2倍の文字幅
+を持つので、上記に加え 2カラムと 1行斜めという指定が行なえるようになって
+います。指定状態は、`wnw', `ene', `wsw', `ese' のニーモニックで表示され
+ます。
+
+`se' と `ese' 指定時のカーソルの移動は次のようになります。
+
+     s
+      e
+       指
+        定
+         時
+
+     e
+       s
+         e
+           指
+             定
+               時
+
+コマンド:
+## Command: picture-movement-wnw
+     `C-c ~'。挿入後、左へ 2カラム、上へ 1行移動する。
+## Command: picture-movement-ene
+     `C-c \'。挿入後、右へ 2カラム、上へ 1行移動する。
+## Command: picture-movement-wsw
+     `C-c ?'。挿入後、左へ 2カラム、下へ 1行移動する。
+## Command: picture-movement-ese
+     `C-c |'。挿入後、右へ 2カラム、下へ 1行移動する。
+
+
+File: mule-jp  Node: Input in Picture Mode, Prev: Direction, Up: Picture Mode, Next: Rectangles
+
+ピクチャーモードでの多国語入力
+..............................
+
+Emacs の picture モードでは、通常の文字は全て *picture-self-insert* とい
+うコマンドに割り付けられています。Mule では「たまご」による日本語・中国
+語入力を行なうために、「たまご」使用時には通常文字を全て 
+*egg-self-insert-command* に割り付けます。「たまご」 が文字列を確定した
+後に呼ぶ *self-insert-after-hook* には *picture-insert-after-hook* が割
+り付けられ、この関数が文字列の入力処理を行ないます。
+
+EGG 以外の入力方式 (SKK 等) を用いる場合は、関数 *picture-insert-string*
+(`C-c k')を実行し、ミニバッファから文字列を読み込まなくてはなりません。 
+
+
+関数:
+## Function: picture-insert-after-hook BEGIN END
+     現在のバッファにストリングを挿入した後実行される hook。2引数 BEGIN 
+     と END は挿入したストリングの先頭と最後の位置を示す。
+
+コマンド:
+## Command: picture-insert-string STR
+     *picture-movement* コマンドによって指定された方向へポイントを移動さ
+     せながら、ストリング STR の構成文字を一文字ずつ挿入する。
+
+
+File: mule-jp  Node: Rectangles, Prev: Input in Picture Mode, Up: Enhancement, Next: Abbreviations
+
+矩形領域の処理
+--------------
+
+矩形領域(rectangle)の処理はファイル `rect.el' へのパッチによって拡張され
+ています。
+
+GNU Emacs はバッファ内の矩形領域に対してさまざまな処理を行なう関数を持っ
+ています。しかし Mule では矩形領域の境界にまたがって多国語文字(2バイト文
+字)が存在する可能性があります。これに対処するため、境界上の多国語文字は
+その横幅に対応する文字数分のアスキーのスペースに置き換えた上で処理を行な
+います。
+
+このため、
+     		        ↓
+     		これは rectangle の
+     		境界に,多国語文字が存
+     		在する場合の処理の例
+     		です。test test test
+     			     ↑
+
+上のような2点で指定された矩形領域に対して *kill-rectangle* を行なうと、
+
+     		        ↓
+     		これは rele の
+     		境界に,多 字が存
+     		在する場 理の例
+     		です。test test
+     			↑
+
+というように2行目の「文」と3行目の「合」の2文字が削除されます。また、
+*yank-rectangle* を行なっても、
+
+     		        ↓
+     		これは rectangle の
+     		境界に,多国語  字が存
+     		在する場  の処理の例
+     		です。test test test
+     			     ↑
+
+上記のようになり、元通りには復元しません。
+
+
+File: mule-jp  Node: Abbreviations, Prev: Rectangles, Up: Enhancement, Next: Mule Lisp
+
+動的な略称展開
+--------------
+
+ファイル `dabbrev.el' へのパッチによって、多国語についても動的略称展開
+(dynamic abbreviation)ができるようになっています。ワードの切り出しは 
+*define-word* で定義されたものに従います。
+
+
+File: mule-jp  Node: Mule Lisp, Prev: Abbreviations, Up: Top, Next: Marker
+
+Mule Lisp
+*********
+
+Emacs Lisp に関していくつかの拡張がなされています。
+
+* Menu:
+
+* Marker::		マーカの拡張.
+* Attribute::		属性の付与.
+
+
+File: mule-jp  Node: Marker, Prev: Mule Lisp, Up: Mule Lisp, Next: Attribute
+
+マーカの拡張
+============
+
+Mule では `point-type' という新しいタイプのマーカを提供しています。この
+タイプのマーカの位置への挿入は、そのマーカをポイントのように挿入されたス
+トリングの直後に移動します。先頭にオリジナルのマーカ、最後尾にこの新しい
+マーカをおくことで設定される領域は、領域の全ストリングの削除や最後尾への
+ストリングの挿入などについて特別な配慮を必要としません。
+
+コマンド:
+## Command: set-marker-type MARKER POINT-TYPE
+     POINT-TYPE が `nil' でなければ、マーカ MARKER のタイプを POINT-TYPE 
+     に設定する。`nil' ならばオリジナルのタイプに設定する。 MARKER を返
+     す。
+
+関数:
+## Function: insert-after-markers STRING/CHAR
+     引数としてストリングか文字(いくつでも)をとる。ストリング／文字(たち)をポ
+     イントの後ろに挿入し、挿入位置を指している `point-type' のマーカを挿入さ
+     れたテキストの直前に移動する。
+
+
+File: mule-jp  Node: Attribute, Prev: Marker, Up: Mule Lisp, Next: Command List
+
+属性の付与
+==========
+
+バッファ中の領域について、表示に関する属性を与えることができます。現在提
+供されている属性は下線、反転そして太字(ボールド)です。
+
+コマンド:
+## Command: attribute-on-region ATTR &optional FROM TO
+     領域内の属性 ATTR を on にする。現在のところ ATTR は `underline',
+     `inverse', `bold' が使用できる。プログラムから呼ぶ場合はさらに 2引
+     数 FROM と TO をとる。FROM が `nil' の場合には(point-min)、TO が 
+     `nil' の場合には(point-max)が用いられる。
+## Command: attribute-off-region ATTR &optional FROM TO
+     領域内の属性 ATTR を off にする。ATTR は`underline', `inverse' また
+     は `bold'。
+
+関数:
+## Function: attribute-get-attribute &optional POS
+     位置 POS の attribute range を返す。POS のデフォルト値はカレントポ
+     イント。 attribute range は、attribute type、その始点、終点のリスト。
+
+
+File: mule-jp  Node: Command List, Prev: Attribute, Up: Top, Next: Concept Index
+
+コマンド一覧
+************
+
+*チュートリアル*
+Mule 日本語版チュートリアルを起動
+     `C-h T'
+
+*多国語文字モードの設定*
+多国語文字モード⇔ alphanumerics モードの切替え
+     `C-x C-k t'
+多国語文字モード⇔ alphanumerics モードのデフォルト値の切替え
+     `C-x C-k T'
+
+*使用する多国語文字コード系の設定*
+キーボード文字コードの設定
+     `C-x C-k i'
+ディスプレイ文字コードの設定
+     `C-x C-k d'
+ファイル文字コードの設定
+     `C-x C-k f'
+ファイル読み込み時のファイル文字コードの一時的切替え
+     `C-u C-x C-f'
+ファイル書き込み時のファイル文字コードの一時的切替え
+     `C-u C-x C-w'
+プロセス文字コードの設定
+     `C-x C-k p'
+選択されているコード系を表示
+     `C-x C-k C'または`C-x C-k c'
+ファイル文字コードのデフォルト値の設定
+     `C-x C-k F'
+プロセス文字コードのデフォルト値の設定
+     `C-x C-k P'
+
+*インクリメンタル探索*
+ストリング入力
+     (`C-s',`C-r' などの後)`C-k'STRINGRET
+
+*ピクチャーモード*
+左へ 2カラム、上へ 1行カーソル移動
+     `C-c ~'
+右へ 2カラム、上へ 1行カーソル移動
+     `C-c \'
+左へ 2カラム、下へ 1行カーソル移動
+     `C-c ?'
+右へ 2カラム、下へ 1行カーソル移動
+     `C-c |'
+
+*変更(キーボード文字コードが ISO2022 系のコード系になっているとき)*
+ポイントのある単語の綴りチェック
+     `M-#'
+かっこの挿入
+     `M-{'
+
+
+File: mule-jp  Node: Concept Index, Prev: Command List, Up: Top, Next: Command Index
+
+概念索引
+********
+
+
+* Menu:
+
+* .emacs: Init File.
+* Big5 コード: Buffers.
+* Big5 コード: For Chinese.
+* Big5 コード: Set Coding System.
+* Demacs: Overview.
+* EGG: For Chinese.
+* EGG: For Japanese.
+* EUC: Buffers.
+* EUC: EUC.
+* EUC: For Japanese.
+* EUC: ISO2022.
+* EUC: Set Coding System.
+* Emacs: Overview.
+* GNU Emacs: Overview.
+* ISO2022: ISO2022.
+* ISO2022: Set Coding System.
+* JIS コード: Buffers.
+* JIS コード: For Japanese.
+* JIS コード: Set Coding System.
+* JUNET: ISO2022.
+* JUNET: JUNET.
+* MS 漢字コード: Buffers.
+* MS 漢字コード: For Japanese.
+* MS 漢字コード: MS Kanji.
+* MS 漢字コード: Set Coding System.
+* Mule: Overview.
+* alphanumerics: Buffers.
+* char-category: char-category.
+* char-syntax: char-syntax.
+* character quote: char-syntax.
+* close parenthesis: char-syntax.
+* comment ender: char-syntax.
+* comment starter: char-syntax.
+* cxterm: For Chinese.
+* expression prefix operator: char-syntax.
+* find file: File Input.
+* init file: Init File.
+* open parenthesis: char-syntax.
+* paired delimiter: char-syntax.
+* punctuation: char-syntax.
+* quail-system: For Chinese.
+* quail-system: For Japanese.
+* string quote: char-syntax.
+* symbol constituent: char-syntax.
+* whitespace syntax: char-syntax.
+* word: Clause.
+* word constituent: char-syntax.
+* write file: File Output.
+* アトリビュート: Attribute.
+* 英数字: char-category.
+* 追いだし処理: Filling.
+* オプション: Options.
+* 拡張word: Clause.
+* カスタマイズ: Init File.
+* 下線: Attribute.
+* カタカナ: char-category.
+* 漢字: char-category.
+* 外部プロセス: Process.
+* 画面表示 : Display.
+* キーボード入力: Key Input.
+* キーボード文字コード: Coding System.
+* 記号: char-category.
+* キリル文字: char-category.
+* 禁則: Filling.
+* 行揃え: Justifying.
+* 行詰め: Filling.
+* ギリシャ文字: char-category.
+* 矩形領域: Rectangles.
+* コード系: Coding System.
+* コード系: Set Coding System.
+* コード変換コマンド: Functions.
+* コンパウンドテキスト: ISO2022.
+* 語: Clause.
+* サーバプロセス: Process.
+* シフト JIS コード: Buffers.
+* シフト JIS コード: For Japanese.
+* シフト JIS コード: MS Kanji.
+* シフト JIS コード: Set Coding System.
+* 正規表現: Regular Expression.
+* 正規表現コンパイラ: Regular Expression Compiler.
+* たかな: For Chinese.
+* たかな: For Japanese.
+* 多国語: Features.
+* 多国語処理: Features.
+* 多国語文書編集機能: Features for Text.
+* 多国語モード: Multilingual Char.
+* 多国語文字コード変換: Functions.
+* たまご: For Chinese.
+* たまご: For Japanese.
+* 探索: Search.
+* 置換: Search.
+* ディスプレイ文字コード : Coding System.
+* ドキュメント: Documents.
+* 反転: Attribute.
+* バッファ: Buffers.
+* バッファ生成: Buffers.
+* バッファ内部コード: Coding System.
+* バッファ内部表現: In Buffers.
+* 表示: Display.
+* 表示属性: Attribute.
+* ひらがな: char-category.
+* ピクチャーモード: Picture Mode.
+* ファイル出力: File Output.
+* ファイル入出力: File I/O.
+* ファイル入力: File Input.
+* ファイル文字コード: Coding System.
+* ファイル文字コード: File Input.
+* フォント: Display.
+* 太字: Attribute.
+* ぶら下げ処理: Filling.
+* 文節: Clause.
+* プロセス間通信: More Process.
+* プロセス間通信: Process.
+* プロセス文字コード: Coding System.
+* プロセス文字コード: Process.
+* ボールド: Attribute.
+* マーカ: Marker.
+* モードライン: Buffers.
+* 文字オブジェクト: In Lisp Object.
+* 文字修飾: Attribute.
+* 文字セット: Multilingual Char.
+* リーディングキャラクタ: In Buffers.
+
+
+File: mule-jp  Node: Command Index, Prev: Concept Index, Up: Top, Next: Variable Index
+
+関数・コマンド索引
+******************
+
+
+* Menu:
+
+* append-to-file: File Output.
+* attribute-get-attribute: Attribute.
+* attribute-off-region: Attribute.
+* attribute-on-region: Attribute.
+* call-process: Process.
+* call-process-region: Process.
+* char-category: Syntax.
+* char-category: char-category.
+* char-syntax: Syntax.
+* code-convert-region: Functions.
+* code-convert-string: Functions.
+* code-detect-region: Functions.
+* define-category: char-category.
+* define-program-coding-system: More Process.
+* define-service-coding-system: More Process.
+* define-word-regexp: Clause.
+* describe-category: char-category.
+* egg-self-insert-command: Input in Picture Mode.
+* fill-paragrap: Filling.
+* find-alternate-file: File Input.
+* find-file: File Input.
+* find-file-other-window: File Input.
+* find-file-read-only: File Input.
+* find-process-coding-system: More Process.
+* find-process-coding-system: Process.
+* help-with-tutorial-for-mule: Overview.
+* insert-after-markers: Marker.
+* insert-file: File Input.
+* isearch: Search.
+* isearch-backward: Search.
+* isearch-backward-regexp: Search.
+* isearch-forward: Search.
+* isearch-forward-regexp: Search.
+* list-coding-system: Coding System.
+* list-coding-system-briefly: Coding System.
+* make-coding-system: Set Coding System.
+* modify-category-entry: char-category.
+* modify-syntax-entry: char-syntax.
+* mule-version: Overview.
+* open-network-stream: Process.
+* picture-insert-after-hook: Input in Picture Mode.
+* picture-insert-string: Input in Picture Mode.
+* picture-movement-ene: Direction.
+* picture-movement-ese: Direction.
+* picture-movement-wnw: Direction.
+* picture-movement-wsw: Direction.
+* re-search-backward: Search.
+* re-search-forward: Search.
+* regexp-compile: Regular Expression Compiler.
+* regexp-word-compile: Regular Expression Compiler.
+* replace-regexp: Search.
+* replace-string: Search.
+* save-buffer: File Output.
+* search-backward: Search.
+* search-forward: Search.
+* self-insert-after-hook: Input in Picture Mode.
+* set-current-process-coding-system: Process.
+* set-default-file-coding-system: File I/O.
+* set-default-process-coding-system: Process.
+* set-display-coding-system: Display.
+* set-file-coding-system: File I/O.
+* set-keyboard-coding-system: Key Input.
+* set-marker-type: Marker.
+* set-word-regexp: Clause.
+* start-process: Process.
+* toggle-default-mc-flag: Multilingual Char.
+* toggle-mc-flag: Multilingual Char.
+* view-mule-news: Overview.
+* write-file: File Output.
+
+
+File: mule-jp  Node: Variable Index, Prev: Command Index, Up: Top, Next: Concept Index
+
+変数索引
+********
+
+
+* Menu:
+
+* code-priority: Auto Conversion.
+* current-process-coding-system: Process.
+* default-file-coding-system: File I/O.
+* default-file-coding-system: File Input.
+* default-file-coding-system: File Output.
+* default-mc-flag: Buffers.
+* default-mc-flag: Multilingual Char.
+* default-process-coding-system: Process.
+* display-coding-system: Display.
+* file-coding-system: File I/O.
+* file-coding-system: File Input.
+* file-coding-system: File Output.
+* file-coding-system-for-read: File Input.
+* keyboard-coding-system: Key Input.
+* kinsoku-bol-chars: Filling.
+* kinsoku-eol-chars: Filling.
+* kinsoku-nobashi-limit: Filling.
+* mc-flag: Buffers.
+* mc-flag: File I/O.
+* mc-flag: Multilingual Char.
+* mc-verbose-code: Buffers.
+
+

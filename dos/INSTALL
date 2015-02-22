@@ -1,0 +1,23 @@
+This document is *very* incompleted.
+
+Demacs installation procedure.
+
+By default, the compilation parameters is setted to cross-compileing
+environment on some UNIX machine with GCC 2.1 (You can change this by
+editing latter lines in `src/s-msdos3.h').  If you have such
+environment, you can construct `src/temacs' with:
+	% make temacs
+
+Before putting lisp stuff to DOS machines, I recommend to
+byte-recompile them on UNIX.  And then put `src/temacs', `etc/DOC' and
+lisp stuff to DOS machine and dump `demacs' like:
+	C> go32 temacs -batch -l loadup dump
+
+
+Send any comments, suggestions, and bug reports to:
+
+	demacs-bugs@sigmath.osaka-u.ac.jp
+
+---
+Manabu Higashida  Osaka University, JAPAN.      <manabu@sigmath.osaka-u.ac.jp>
+HIRANO Satoshi    Electrotechnical Lab., JAPAN. <hirano@etc.go.jp>

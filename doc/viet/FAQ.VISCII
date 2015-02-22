@@ -1,0 +1,423 @@
+                      FAQ for Viet-Std & TriChlor Software
+                      ====================================
+
+Last modified date: June 3, 1993
+
+This is the list of Frequently Asked Questions on Viet-Std and TriChlor
+Software, which will cover the VIQR/VISCII standards and public-domain
+Vietnamese software.
+
+TABLE OF CONTENTS
+-----------------
+
+[A0] Viet-Std
+	A1. What is Viet-Std?
+	A2. VIQR
+	A3. VISCII
+	A4. UNICODE
+	A5. Where to get the specifications?
+	A6. VIQR/VISCII for software developers
+	A7. Contact points
+		A6.1 Postal address
+		A6.2 Email: viet-std@haydn.stanford.edu
+[B0] TriChlor
+	B1. What is TriChlor?
+	B2. What software available?
+	B3. Contact Points
+		B3.1 Postal Address
+		B3.2 Email
+		B3.3 trichlor-talk@haydn.stanford.edu
+	B4. Can you help?
+
+[C0] Where/How to get software 
+	C1. Via modem download
+	C2. Via FTP 
+	C3. Via Email
+	C4. Via Postal Mail
+
+[D0] Microsoft Windows 3.1
+	D1. Basic Package WINVNKEY
+		D1.1 What is WinVNKey
+		D1.2 How to Install
+		D1.3 Change Configuration
+		D1.4 Hardware/Software notes: Compatibility
+		D1.5 WordPerfect
+		D1.6 Word
+		D1.7 AmiPro
+		D1.8 Apple Laser Writer
+	D2. More Fonts
+	D3 Other Packages
+		D3.1 VietVU
+		D3.2 ThiTa^.p
+[E0] DOS
+	E1. Basic Package VietDOS
+		E1.1 What is VietDOS
+		E1.2 How to Install
+		E1.3 Change Configuration
+		E1.4 Hardware/software notes
+		E1.5 WordPerfect
+		E1.6 WordStar
+[F0] Unix
+	F1. Base VietTerm
+	F2. etc...
+[G0] Tex/Latex
+[F0] Other software
+	[F1] Is there any similar software for:
+		- Macintosh/Apple ?
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[A0] Viet-Std
+     ********
+A1. What is Viet-Std?
+    ~~~~~~~~~~~~~~~~
+Viet-Std is the short name for the Vietnamese Standardization Group, which
+unites Vietnamese professionals worldwide from many fields to promote the
+standardization of Vietnamese character encoding and to monitor ongoing
+work of international bodies in this regard.  The Viet-Std group has
+proposed an 8-bit Vietnamese code table known as Vietnamese Standard Code
+for Information Interchange (VISCII) that allows Vietnamese characters
+to integrate into existing computing environments on many platforms.  
+The group also defined a Vietnamese Quoted Readable (VIQR) convention that
+allows use of Vietnamese characters in 7-bit environments.
+In addition, the group has contacted the two committees on multilingual 
+character encoding---the Unicode Consortium and the International 
+Standardizations Organization (ISO)---to ensure that all the Vietnamese 
+characters be encoded in a precomposed form in the same manner as other
+Latin-based European languages.
+
+
+
+A2. VIQR
+    ~~~~
+VIQR stands for Vietnamese Quoted Readable, which is a convention to
+write Vietnamese using 7-bit ASCII only.  Vietnamese text written in
+this convention is so easy to read that their use is very popular in
+7-bit environments.  The convention was initiated by the Vietnamese
+community using Internet e-mail and Usenet News in 1987.  The Vietnamese 
+Standardization Group later adopted and formalized the technique, and
+the rest is history.  VIQR has been used by thousands of Vietnet members
+worldwide.
+
+Following is the VIQR mnemonics for composing Vietnamese using ASCII
+graphic characters only.
+
+                  VIQR Mnemonics for Vietnamese Diacritics. (*)
+          *=====================================================*
+          | Diacritic   | Char |  ASCII Code        | D<a^'>u   |
+          |=====================================================|
+          | breve       |  (   |  0x28, left paren  | tr<a(>ng  |
+          | circumflex  |  ^   |  0x5E, caret       | m<u~>     |
+          | horn        |  +   |  0x2B, plus sign   | m<o'>c    |
+          |-------------+------+--------------------+-----------|
+          | acute       |  '   |  0x27, apostrophe  | s<a('>c   |
+          | grave       |  `   |  0x60, backquote   | huy<e^`>n |
+          | hook above  |  ?   |  0x3F, question    | h<o?>i    |
+          | tilde       |  ~   |  0x7E, tilde       | ng<a~>    |
+          | dot below   |  .   |  0x2E, period      | n<a(.>ng  |
+          |-------------+------+--------------------+-----------|
+          | d bar       |  dd  |  (repeated d)      | <dd>      |
+          | D bar       |  DD  |  (repeated D)      | <DD>      |
+          *=====================================================*
+
+    Example:
+	  Tra(m na(m trong co~i ngu+o+`i ta,
+	  Chu+~ ta`i chu+~ me^.nh khe'o la` ghe't nhau\.
+	  Tra?i qua mo^.t cuo^.c be^? da^u,
+	  Nhu+~ng ddie^`u tro^ng tha^'y ma` ddau ddo+'n lo`ng.
+
+    To avoid a diacritical symbol combining with the preceding vowel,
+    one has to insert a backslash in between as in the last word on
+    the second line.
+	       
+A3. VISCII
+    ~~~~~~
+VISCII stands for Vietnamese Standard Code for Information Interchange,
+an 8-bit encoding of Vietnamese characters designed by the Vietnamese
+Standardization Group.  VISCII encodes all Vietnamese characters in a
+precomposed form, thus allowing VSCII-compliant software to integrate
+into existing computing environments.  This feat has been achieved by 
+preserving all the 96 ASCII graphic characters and distributing the
+remaining 134 Vietnamese-specific characters wisely in the upper half
+region of ASCII (128 characters) and in the control character region
+(6 characters).  To minimize conflicts with operating systems or
+communication software, only the least-often used six upper case 
+Vietnamese characters are put in the slots of the least-often used
+six control characters.
+
+Following is the VISCII table expressed in the VIQR convention.
+     	
+                        VISCII 8-bit Encoding Table. (*)
+  *======================================================================*
+  |   | 0x  1x  2x  3x  4x  5x  6x  7x | 8x  9x  Ax  Bx  Cx  Dx  Ex  Fx  |
+  |===|==================================================================|
+  | 0 | nul dle sp  0   @   P   `   p  | A.  O^` O~  o^` A`  DD  a`  dd  |
+  | 1 | soh dc1 !   1   A   Q   a   q  | A(' O^? a(' o^? A'  u+' a'  u+. |
+  | 2 | A(? dc2 "   2   B   R   b   r  | A(` O^~ a(` o^~ A^  O`  a^  o`  |
+  | 3 | etx dc3 #   3   C   S   c   s  | A(. O^. a(. O+~ A~  O'  a~  o'  |
+  | 4 | eot Y?  $   4   D   T   d   t  | A^' O+. a^' O+  A?  O^  a?  o^  |
+  | 5 | A(~ nak %   5   E   U   e   u  | A^` O+' a^` o^. A(  a.  a(  o~  |
+  | 6 | A^~ syn &   6   F   V   f   v  | A^? O+` a^? o+` a(? y?  u+~ o?  |
+  | 7 | bel etb '   7   G   W   g   w  | A^. O+? a^. o+? a(~ u+` a^~ o.  |
+  | 8 | bs  can (   8   H   X   h   x  | E~  I.  e~  i.  E`  u+? e`  u.  |
+  | 9 | ht  Y~  )   9   I   Y   i   y  | E.  O?  e.  U+. E'  U`  e'  u`  |
+  | A | lf  sub *   :   J   Z   j   z  | E^' O.  e^' U+' E^  U'  e^  u'  |
+  | B | vt  esc +   ;   K   [   k   {  | E^` I?  e^` U+` E?  y~  e?  u~  |
+  | C | ff  fs  ,   <   L   \   l   |  | E^? U?  e^? U+? I`  y.  i`  u?  |
+  | D | cr  gs  -   =   M   ]   m   }  | E^~ U~  e^~ o+  I'  Y'  i'  y'  |
+  | E | so  Y.  .   >   N   ^   n   ~  | E^. U.  e^. o+' I~  o+~ i~  o+. |
+  | F | si  us  /   ?   O   _   o   DEL| O^' Y`  o^' U+  y`  u+  i?  U+~ |
+  *=======================================================================*
+
+  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  (*) Excerpt from RFC-DRAFT of Vietnamese Standardization Group, Conventions
+  for encoding the Vietnamese Language, prepared by Randal Atkinson and
+  Viet-Std, 1993.
+
+A4. UNICODE
+    ~~~~~~~
+<???>
+
+A5. Where to get the spec
+    ~~~~~~~~~~~~~~~~~~~~~
+One can acquire the Viet-Std specifications via ftp, email, or postal mail.
+
+ftp:   All VISCII archives carry the spec for viet-std, check below
+       for VISCII ftp sites worldwide.
+email: Mail your request to viet-std@haydn.stanford.edu or contact
+       the Viet-Std group directly via postal address (below) or fax.
+
+A6. VIQR/VISCII for software developers
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+Software developers are encouraged to use the Viet-Std specifications.
+Most Vietnamese software houses have voiced their support for 
+VISCII in their products. There is no fee of any kind
+levied on the software that uses the VIQR/VISCII standards. 
+
+A7. Contact points
+    ~~~~~~~~~~~~~~
+A7.1 Postal address
+        Viet-Std, 1212 Somerset Dr., San Jose, CA 95312, USA 
+	Fax: (408) 246-9532
+A7.2 Email
+	viet-std@haydn.stanford.edu 
+Most of questions and inquiries are quickly handled by a group of
+people in Viet-Std and/or others on the net.
+
+[B0] TriChlor
+     ********	
+B1. What is TriChlor
+    ~~~~~~~~~~~~~~~~
+TriChlor is a non-profit software group that was founded by Cuong Tan Nguyen,
+Cuong Minh Bui, and Tin Le in 1991 to independently explore and implement any
+encoding scheme for Vietnamese to gain real experience with the pros and cons
+in each scheme.  Since then it has been joined by Vietnamese software 
+developers worldwide to develop public-domain VISCII-compliant software
+for use on Unix, X-Windows, DOS, MS Windows 3.1, etc.  As of this writing
+it has completed work on DOS, MS Windows 3.1, X-Windows, and various Unix
+flavors.  By distributing VISCII-compliant software of high quality
+to the public for FREE of charge, the TriChlor group hopes that 
+VISCII/VIQR will ultimately be accepted as the de-facto standards.
+
+The TriChlor group welcomes donations of any amount from users to support
+ongoing developments.
+
+B2. What software is available?
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+MS-DOS: Software to Vietnamize all DOS applications, eg: Dbase, Foxpro,
+MS-Word, Dos Edit, Lotus 123, etc.; Hypertext databases of Vietnamese
+songs and poems; True Vietnamese word processor & text editor; print
+utilities for dot-matrix and laser to print Vietnamese.
+
+WINDOWS 3.1: Vietnamese keyboards to type/display/print Vietnamese in 99%
+of all Window 3.1 software e.g.: Pagemaker, Ventura, Coreldraw, Photoshop,
+MS Word, Quattro Pro, Foxpro, etc.; multimedia database of Vietnamese
+poems; Vietnamese theme cliparts; Vietnamese VISCII Truetype fonts.
+
+Unix & X-WINDOWS: Vietnamese keyboard shell; email & news in true Vietnamese;
+Vietnamese library and fonts for software developers; VISCII locale for
+Sun OS 4.1.x, AIX; tex/latex & nroff/troff.
+
+MAC: Currently under development, tentative release date: Summer 93
+
+B3. Contact Points
+    ~~~~~~~~~~~~~~
+B3.1 Postal Address
+        TriChlor, 3388 Burgundy Dr, San Jose CA 95132, USA
+	Fax: (408) 246-9532
+B3.2 Email
+        trichlor@haydn.stanford.edu
+
+B3.3 trichlor-talk@haydn.stanford.edu
+TriChlor Group maintains a mailing list (trichlor-talk@haydn.stanford.edu)
+for announcements, questions and inquiries on TriChlor Group's software.
+This is the fastest way to gain support for WINVNKEY, VietVu and other
+software.  To join the mailing list, please mail to 
+	trichlor-talk-request@haydn.stanford.edu
+with 'SIGN-ON' on the "Subject:" line.
+	
+B4. Can you help?
+    ~~~~~~~~~~~~~
+Are you a software developer?  All software developers are welcome to
+participate in development of Vietnamese applications of any kind.
+Contributions to the Vietnamese FREE Software Archive are greatly
+appreciated.  Currently many special interest groups are working
+fervently on different aspects of the Future of Vietnamese Computing.
+For users, please help use and distribute software freely to your
+friends, colleagues, or community. 
+
+[C0] Where/How to get software?
+     *************************
+C1. Via modem download
+    ~~~~~~~~~~~~~~~~~~	
+	Modem (VietNet BBSes)
+	~~~~~~~~~~~~~~~~~~~~~
+	1-213-734-8528	Los Angeles & Southern California, USA
+	1-408-730-1092	Bay Area & Northern California, USA
+
+C2. Via FTP
+    ~~~~~~~
+All the ftp sites that carry VIQR/VISCII specifications also have the
+software from the TriChlor Group.  The number of sites is growing rapidly.
+The list of new sites is announced in the VNSoftware INFORMATION FILE, which
+is posted regularly on Vietnet by hho@chaph.usc.edu (Ho^` Phu+o+'c Hu`ng).
+
+Anonymous FTP                            Directory
+~~~~~~~~~~~~~                            ~~~~~~~~~
+	(Username: anonymous, Password: your e-mail address.
+	Please FTP from the site closest to you.)
+
+Sony Corporation, CA, USA		/tin/VN
+	sonygate.sony.com (192.65.137.2)  (Main VietNet archive,
+	with other TriChlor VISCII software for Unix and X-Windows)
+	(unfortunately, this site may be unavailable in the near future)
+SIMTEL20, NM, USA			pd1:<msdos.viscii>
+	wsmr-simtel20.army.mil (192.88.110.20)
+Oakland Univ., MI, USA			/pub/msdos/viscii
+	oak.oakland.edu (141.210.10.117)
+Washington Univ., MO, USA		/mirrors/msdos/viscii
+	wuarchive.wustl.edu (128.252.135.4)
+North Carolina State U., NC, USA        /mirrors/wustl/mirrors/msdos/
+    	compute1.cc.ncsu.edu (152.1.10.46)	 	      viscii	
+UUNet Communication Service, VA, USA 	/systems/ibmpc/msdos/simtel20/
+	ftp.uu.net (137.39.1.9)                                viscii
+Halcyon Organization, WA, USA		/wuarchive/mirrros/msdos/viscii
+	halcyon.com (192.135.191.2)
+AARNet, Melbourne, Australia		/micros/pc/oak/viscii
+	archie.au (139.130.4.5)
+Monash Univ., Melbourne, Australia      /pub/vietnam
+	monu6.cc.monash.edu.au (130.194.1.106)
+Austria					/pc/dos/viscii
+	swdsrv.edvz.univie.ac.at (131.130.1.4)
+Imperial College, London, UK		/computing/systems/ibmpc/SIMTEL20/
+	src.doc.ic.ac.uk, (146.169.2.1)                             viscii
+Finland			                /pub/msdos/SIMTEL20-mirror/viscii
+	nic.funet.fi (128.214.6.100)
+Germany					/pub/msdos/simtel/viscii
+	sun0.urz.uni-heidelberg.de (129.206.100.126)
+Japan					/mirrors/simtel20.msdos/viscii
+   	isfs.kuis.kyoto-u.ac.jp (130.54.20.1)
+Switzerland        		        /mirror/msdos/viscii
+	nic.switch.ch, (130.59.1.40)
+Taiwan			                /SIMTEL20/msdos/viscii
+	nctuccca.edu.tw, (140.111.3.21) 
+C3. Via Email
+    ~~~~~~~~~
+Electronic Mail (uuencoded)
+Use FTPMAIL server at DEC (ftpmail@decwrl.dec.com) to access all 
+archives above (send FTP commands in an e-mail message to this 
+address), or use the mailserver at saigon.com (send e-mail to 
+mailserv@saigon.com, with a command HELP in the body for info).
+
+C4. Via Postal Mail
+    ~~~~~~~~~~~~~~~
+Please send $5 to cover postage and disks to Cu+o+`ng Nguye^~n at
+3388 Burgundy Dr., San Jose, CA 95132, USA.  All DOS & Windows software
+will be mailed out on 2 high density 3.5" diskettes.
+
+[D0] Microsoft Window 3.1
+     ********************
+D1. Basic Package WINVNKEY
+    ~~~~~~~~~~~~~~~~~~~~~~
+D1.1 What is WinVNKey?
+     ~~~~~~~~~~~~~~~~~
+WinVNKey is a software utility running under MS Windows 3.1.
+Vietnamese characters can be typed in from an ASCII keyboard,
+displayed, and printed on any monitor and printer supported by
+Microsoft Corporation.  The default style of typing Vietnamese is
+based on the VIQR convention.  However, WinVNKey allows the user
+to customize the style.
+
+D1.2 How to Install
+     ~~~~~~~~~~~~~~
+D1.3 Change Configuration
+     ~~~~~~~~~~~~~~~~~~~~
+D1.4 Hardware/software notes: Compability
+The following software have been tested and verified to be compatible with 
+VISCII software:
+
+D1.5 WordPerfect
+D1.6 Word
+D1.7 AmiPro
+D1.8 Apple Laser Writer
+Q: I've install WinVNKey on a 386/486 SVGA/S3/ATI Ultra system connected to 
+   an Apple Laser Writer. The problem is that the Viet fonts are not
+   displayed correctly in any of the word processors, e.g., Write,
+   Word for Windows 2.0 or Amipro 2.0 & 3.0. 
+
+A: Check your printer setup. Click on the "Control Panel", click on "Printers"
+   icon, Select "Options", Select "Advanced Options".  Make sure the option 
+    "Use Printers Fonts for all True Type Fonts" is *NOT* checked.  If you 
+    have to *UNCHECK* the option, click "OK" to save it, otherwise click
+    "CANCEL".
+
+D2. More Fonts
+    ~~~~~~~~~~  
+A set of fonts is included with the WinVNKey package.  Additional fonts are 
+available separately in the archive as pdfon1tt.zip, and pdfon2tt.zip, etc.
+Please check any VISCII archives or Vietnet BBSes for newly released fonts.
+
+D3. Other Packages
+    ~~~~~~~~~~~~~~
+D3.1 VietVU
+It allows any commercial MS Windows software on the market to type,
+display, print Vietnamese. It is very much like WinVNKey, but has a
+Vietnamese Clipboard. 
+
+D3.2 ThiTa^.p
+These are collections of poems by Vietnamese poets Quang Dung
+and Nguyen Binh, implemented in a Windows 3.1 menu system.
+
+[E0] PC/MS-DOS
+     *********
+E1. Basic Package VietDOS
+    ~~~~~~~~~~~~~~~~~~~~~
+E1.1 What is VietDOS?
+     ~~~~~~~~~~~~~~~~ 
+	This program allows the user to use most existing DOS applications
+(for example, WordPerfect, MS-Word, Dbase, Foxpro, Turbo C, etc) in Vietnamese.
+In addition, file and directory names can also be in Vietnamese.  EGA or VGA
+monitor only.
+
+E1.2 How to Install
+
+E1.3 Change Configuration
+
+E1.4 Hardware/software notes
+
+E1.5 WordPerfect
+
+E1.6 WordStar
+
+[F0] Unix
+     ****
+F1 Base VietTerm
+
+
+[G0] Tex/Latex
+
+[F0] Other software
+[F1] Is there any similar software for:
+	- Macintosh/Apple ?
+
+::::::::::::::::::::::::::::::::: END :::::::::::::::::::::::::::::::::

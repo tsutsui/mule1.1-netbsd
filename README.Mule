@@ -1,0 +1,335 @@
+1989.12.15: Nemacs Ver.3.2.1 (MUSUME-DOUJOUJI version)
+1989.12.17: Nemacs Ver.3.2.1A (MUSUME-DOUJOUJI version with ANCHIN patch)
+1989.12.22: Nemacs Ver.3.2.3 (YUMENO-AWAYUKI version)
+1990.3.3:   Nemacs Ver.3.3.1 (HINAMATSURI version)
+1990.6.6:   Nemacs Ver.3.3.2 (FUJIMUSUME version)
+1992.3.4:   Mule Ver.0.9.0 Beta
+1992.3.23:  Mule Ver.0.9.1 Beta
+1992.4.6:   Mule Ver.0.9.2 Beta
+1992.4.18:  Mule Ver.0.9.3 Beta
+1992.5.28:  Mule Ver.0.9.4 Beta
+1992.7.31:  Mule Ver.0.9.5 Beta
+1992.8.5:   Mule Ver.0.9.5.1 Beta
+1992.10.27: Mule Ver.0.9.6 Beta
+1992.12.28: Mule Ver.0.9.7 Beta
+1993.1.22:  Mule Ver.0.9.7.1 Beta
+1993.6.14:  Mule Ver.0.9.8 Beta
+1993.8.1:   Mule Ver.1.0 (KIRITSUBO)
+
+############################################################
+	0. INTRODUCTION
+	1. WHAT IS MULE
+	2. SUPPORTED LANGUAGES
+	3. SUPPORTED SYSTEMS
+	4. INSTALLATION
+	5. DOCUMENTS
+	6. DISTRIBUTION
+	7. NEWS GROUP AND MAILING LIST
+	8. MAIL SERVICE
+	9. MISC
+############################################################
+
+0. INTRODUCTION
+
+This directory contains the distribution of Mule Ver.1.0.
+
+Mule is free software distributed either as patches to GNU Emacs
+(18.59) or as a complete tar file.  You can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 1, or (at
+your option) any later version.
+
+Mule is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License
+along with GNU Emacs; see the file COPYING.  If not, write to the Free
+Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+
+
+1. WHAT IS MULE?
+
+Mule is a MULtilingual Enhancement to GNU Emacs.  It can
+handle not only ASCII characters (7 bits) and ISO Latin-1 (8
+bits), but also Japanese, Chinese, Korean (16 bits) coded in
+the ISO2022 standard and its variants (e.g. EUC, Compound
+Text).  For Chinese there is support for both GB and Big5.
+In addition, Thai (based on TIS620) and Vietnamese (based on
+VISCII and VSCII) are also supported.
+
+A text buffer in Mule can contain a mixture of characters
+from these languages.  To input any of these characters, you
+can use various input methods provided by Mule itself.  In
+addition, if you use Mule under some terminal emulator
+(kterm, cxterm, or exterm), you can use any input methods
+supported by the emulator.
+
+
+2. SUPPORTED LANGUAGES
+
+2.0 ENGLISH
+
+Just type in. :-)
+
+2.1 JAPANESE
+
+It is strongly recommended to install Wnn4.108.  EGG system
+bundled with Mule can communicate with jserver of Wnn and
+provide you a very convenient Japanese inputting method.
+See 'doc/EGG' for the usage of this system.
+You can run Mule as a client of X window, or run it under
+some Japanese terminal (including such emulators as kterm and
+exterm).  In the latter case, you can use any inputting
+methods supported by the terminal.
+Among other inputting methods are:
+	EGG-SJ3, CANNA (bundled with Mule)
+	SKK, boiled-egg (in 'contrib' directory)
+
+2.2 CHINESE
+
+It is strongly recommended to install Wnn4.108.  EGG system
+bundled with Mule can communicate with cserver of cWnn and
+provide you a very convenient Chinese (GB) inputting method.
+See 'doc/EGG' for the usage of this system.
+You can run Mule as a client of X window, or run it under
+some Chinese terminal (including such emulators as cxterm and
+exterm).  In the latter case, you can use any inputting
+methods supported by the terminal.
+
+QUAIL system (bundled with Mule) also provides several
+inputting methods for:
+	GB: PINYIN, PINYIN_with_TONE, CCDOSPY, SW
+	Big5: PINYIN, ETZY, ZOZY
+See 'doc/QUAIL' for the usage of this system.
+
+Subscribers of alt.chinese.text and alt.chinese.text.big
+will find it very useful to use GNUS (news reader written in
+Emacslisp) with gnusutil.el (in 'contrib/lisp.tar.Z').  It
+encodes/decodes HZ/zW encoding or Big5 to/from Mule internal
+code automatically.
+
+2.3 KOREAN
+
+Korean inputting method is provided by QUAIL system (bundled
+with Mule).  See 'doc/QUAIL' for the usage of this system.
+The name of quail-package for Hanugl is 'hangul'.  You can
+run Mule as a client of X window, or run it under Hangul
+terminal or exterm.
+
+2.4 EUROPEAN
+
+Many kinds of European character inputting methods are
+provided by QUAIL system (bundled with Mule).  For the
+moment, QUAIL provides inputting methods for:
+	Latin1, Latin2,.. Latin5, Greek (ISO8859-7),
+	Hebrew (ISO8859-8), Cyrillic (ISO8859-5)
+See 'doc/QUAIL' for the usage of this system.
+As for Hebrew, right-to-left writing is supported.  See
+'doc/R2L'.
+
+2.5 THAI
+
+Thai support based on TIS620 character set.  The inputting
+method is also provided by QUAIL system (bundled with Mule).
+See 'doc/QUAIL' for the usage of this system.  The name of
+quail-package for Thai is 'thai'.  A free font for TIS620
+(12x29 dots) is also available in 'fonts/ETL.tar.Z'.  To use
+the font with 12x24 ASCII font, you should increase upper
+linespace by the command x-set-linespace or command line
+argument of "-lsp".  Specify "5+" as the argument.
+
+2.6 VIETNAMESE
+
+Vietnames support is based on two-table-VISCII methods,
+which divide VISCII's code table into two, lower-case and
+upper-case.  Mule can read/write any of VISCII, VIQR, VSCII.
+The inputting method is also provided by QUAIL system
+(bundled with Mule).  See 'doc/QUAIL' for the usage of this
+system.  The name of quail-package for Vietnames is 'viet'.
+For X, you can use both VISCII and VSCII fonts.  A free font
+for VISCII is available in 'fonts/ETL.tar.Z' which is
+designed suitable for the use with other ETL fonts.
+
+2.7 OTHER LANGUAGES
+
+We are willing to support Arabic and Devanagali as soon as
+we get enough information on how they are supported in the
+other softwares.
+
+
+3. SUPPORTED SYSTEMS
+
+Basically, Mule runs on any systems (and machines) on which
+GNU Emacs runs.  In addition, several systems (including
+DOS, NT) are supported.  See etc/MACHINES.
+
+
+4. INSTALLATION
+
+To install Mule, see INSTALL.Mule in addition to INSTALL.
+
+
+5. DOCUMENTS
+
+For the moment, we have the following documents.
+'etc' directory contains:
+	FAQ (for original GNU Emacs in English)
+	FAQ.jp (for original GNU Emacs in Japanese)
+	FAQ-Mule (for Mule in English)
+	FAQ-Mule.jp (for Mule in Japanese)
+	emacs.1 (man file for original GNU Emacs in English)
+	mule.1 (man file for Mule in English)
+'info' directory contains:
+	emacs (for original GNU Emacs in English)
+	mule-jp (for Mule in Japanese)
+	egg-jp (for EGG in Japanese)
+	canna-jp (for CANNA in Japanese)
+You may also find various documents under 'doc' directory.
+Especially, please refer 'doc/TERMINOLOGY' if you find
+unknown terms.  Novice users may have to read 'doc/X11',
+'doc/EGG', and 'doc/QUAIL'.
+
+The file NEWFEATURE is also very important.
+
+Since many of these documents (including this file) were
+written by a non-native speaker of English (it's me), you
+may find many curious expressions.  Please correct them.  In
+addition, we are looking for volunteers who translate the
+documents to Chinese, Korean, and the other langauges.
+
+For Vietnamese, the Viet-Std Group has kindly translated
+some of these documents.  Those are under the directory
+'doc/viet'.
+
+
+6. DISTRIBUTION
+
+Mule is available by anonymous ftp from:
+
+	etlport.etl.go.jp [192.31.197.99]:/pub/mule
+		Manager: Ken'ichi HANDA <handa@etl.go.jp>
+	ftp.mei.co.jp [132.182.49.2]:/public/free/gnu/emacs/Mule
+		Manager: Motohide Murakami <murakami@msr.mei.co.jp>
+	sh.wide.ad.jp [133.4.11.11]:/JAPAN/mule/mule-1.0
+		Manager: Akira KATO <kato@wide.sfc.keio.ac.jp>
+	ftp.funet.fi [128.214.6.100]:/pub/gnu/emacs/mule
+		Manager: Hannu Aronsson <haa@cs.hut.fi>
+	cs.huji.ac.il [132.65.16.10]:/pub/gnu/mule
+		Manager: The System Group <system@cs.huji.ac.il>
+
+As for a mail service, read the section 8.
+
+If you are accessing from out of Japan, please use the one
+of the last two sites.  For Europeans, the last site is
+probably the best.  Either ftp the complete tar file
+(mule-1.0.tar.gz), *or* if you have an unmodified GNU Emacs
+18.59 you can ftp just the patch file (diff-18.59-1.0.gz)
+and apply that.  If you find a patch with version number
+higher than 1.0, apply that also.
+
+These directories contain several other useful files such as
+X's fonts and contributed softwares.  See the file '00README'.
+
+We are looking for more ftp sites.  If you can kindly
+provide this service, please send mail to
+mule-request@etl.go.jp.
+
+
+7. NEWS GROUP AND MAILING LIST
+
+Mule's main discussion is done on the newsgroup
+fj.editor.mule in Japanese.  For those who can't subscribe
+this newsgroup, we provide mail<->news gateway service.
+Please send request of this service to mule-request@etl.go.jp.
+
+For those who don't speak Japanese, we are running two
+mailing lists:
+	mule@etl.go.jp (for general discussion)
+	mule-vn@etl.go.jp (for Vietnamese)
+In both of them, main language is English, but you can
+send/receive any multilingual text supported by mule.
+
+Please send requests of subscribing/unsubscribing to:
+	mule-request@etl.go.jp
+saying which mailing list you want to join.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+We are willing to create mailing lists specific to the other
+languages if there are many requests.
+
+We are running one more mailing list to test new version of
+Mule on various platforms before the official release:
+	mule-jp@etl.go.jp (main language: Japanese)
+All mails to the above mailing lists are also sent to
+the members of this mailing list.
+
+
+8. MAIL SERVICE
+
+For those who are not IP reachable, we have started an
+automatic mail service.  Send request to:
+	mule-by-mail@etl.go.jp
+with the valid Subject field described below:
+------------------------------------------------------------
+This system analyzes only the Subject field of a mail header.
+The acceptable format of Subject is:
+	Subject: filename mail-address
+		Send the specified file to <mail-address>.
+The acceptable 'filename' is one of the followings:
+------------------------------------------------------------
+	diff-18.59-1.0 -- Patch for GNU Emacs 18.59, 33 files
+	diff-18.59-1.0.N -- Nth part of diff-18.59-1.0
+			   -- N should be one of 01, 02 .. 33
+	patch-1.0-N -- Nth patch for Mule Ver.1.0
+		      -- N should be one of 01, 02...
+	ETL.tar -- Fonts for Laint1,Cyrillic,Greek,Thai,Viet..., 3 files
+	Chinese.tar -- Fonts for Chinese-GB (16/24) , 20 files
+	Japanese.tar -- Fonts for Japanese-JIS (14/16/24), 25 files
+	Korean.tar -- Fonts for Korean-KSC (16/24), 18 files
+	READMEDIR.tar -- Several documents about Mule, 2 files
+	lisp.tar -- Useful ELISP libraries in contrib directory, 3 files
+	HELP -- This message
+------------------------------------------------------------
+For instance, a mail with 'Subject: Chinese.tar me@etl.go.jp'
+will send Chinese fonts divided into 20 files to <me@etl.go.jp>.
+The above message alters on version up of Mule.  You'ld
+better check the correct format by requesting HELP because
+the above list gets out of date sometimes.
+------------------------------------------------------------
+
+Anonymous UUCP service is also avalable for Japanese sites.
+For more details, send email to gnuinfo@dit.co.jp.  The
+subject and the body are just ignored.
+
+Russian or Ukrainian sites should ask mail service to
+	postmaster@ts.kiev.ua, or
+	nib@ts.kiev.ua,
+however, as far as I know, their system are not yet
+automated.
+
+
+9. MISC
+
+9.1 PRINTING UTILITY
+
+To print various characters supported by Mule, we provide a
+program 'm2ps' which will be installed automatically while
+installing mule (just as etags, emacsclient).
+'m2ps' converts Mule's text to PostScript by using BDF files
+for getting glyphs of characters.
+
+9.2 CODE CONVERSION LIBRARY
+
+Convert coding-system of a text.  Not yet supported.
+
+9.2 CODE TRANSLATION LIBRARY
+
+Translate character code of Chinese letters among GB, JIS,
+KSC, Big5.  Not yet supported.
+
+
+---
+Ken'ichi HANDA  Electrotechnical Lab., JAPAN.  <handa@etl.go.jp>
+Satoru TOMURA   Electrotechnical Lab., JAPAN.  <tomura@etl.go.jp>
+Mikiko NISIKIMI Electrotechnical Lab., JAPAN.  <nisikimi@etl.go.jp>

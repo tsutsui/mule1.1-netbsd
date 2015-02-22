@@ -1,0 +1,924 @@
+-*- Indented-Text -*-
+
+$AUbR;::So0f(BMule.FAQ$A;y1>IOJGG0GE(B(Maebashi)$A5DHUND0f5D7-Rk(B.$ANRCG>!?ID\5X(B
+$AVRSZT-ND(B,$A5+8y(BMule$AVP::So4&@m5DLX5cWwAKR;P)P^8D(B.$ADZH]RQ>!?ID\5X=xPPAKH7(B
+$AHO(B,$AHtDz7"OV4mNs(B,$AVTPD5XO#M{DzD\M(V*NRCG(B.
+
+$AAuTF;T(B(liu@etl.go.jp),$AKoPQ:.(B(t91241ss@sfc.keio.ac.jp)
+1993$ADj(B1$ATB(B22$AHU(B
+--------------------------------------------------------------------
+
+1993$ADj(B11$ATB(B9$AHU0f(B
+--------------------------------------------------------------
+$AUb7](BFAQ$A5DD?5DTZSZ(B,$AW\=a(B,$A9iDIAKSP9XSZ(BMule$A5DNJLb:M=b4p(B,$ART1c2NUU(B.
+
+$ADZH]RQ>!?ID\5X=xPPAKH7HO(B,$AHtDz7"OV4mNs(B,$AVTPD5XO#M{DzD\M(V*NRCG(B.
+$AR27G3#;6S-SPPB5DW7<SOnD?(B.
+
+$ATZNJLb5D(BA-14$AVP(B,$A<GTXSPTuQy5C5=WnPB0f(BFAQ$A5D7=7((B.
+
+$ATZVFWwUb7](BFAQ$AJ1(B,$A5C5=VZ6`HKJ?5D0oVz(B.$ATZ4K6TSh4KT.Vz5DVnN;1mJ>VTPD5X8PP;(B.
+--
+Takahiro Maebashi <maebashi@mcs.meitetsu.co.jp>
+-------------------------------------------------------------------------
+$ATZ(BMule$AVP6AUb7](BFAQ$AJ1(B,$A?IJdHk(B"M-2 C-x $"$AV;2iTDNJLb(B.$AOk?4=b4pJ1JdHk(B"C-x $"
+$A<4?I;V84T-W4(B.
+
+$AHtOk8y>]NJLb:EBk(BX-XX$A=xPP<lKwJ1(B,$AGkJdHk(B"M-C-s ^X-XX:".$AHgUR2;5=(B,$AGk<LPxJTWE(B
+$AJdHk(B"C-r".$AUR5=NJLb:s(B,$AJdHk(BESC$A?IMQ@k<lKwW4L,(B.
+-------------------------------------------------------------------------
+$AR;0c5DPEO"(B
+
+A-1: Mule$AJGJ2C4(B?
+
+  Mule$AJGG?;/(BGNU Emacs(Ver.18),$AJ9V.D\9;6TS&84J}SoQT5D<FKc;z1`</;7>3(B.
+
+  Mule$ASPRTOBLX5c(B:
+    * Mule$A2;=vD\4&@m(BASCII$ANDWV(B(7Bit)$A:M(BISO Latin-1$A5DNDWV(B(8Bit),$A;9D\9;4&(B
+      $A@mHUND(B, $AVPND(B,$A:+ND5H5DNDWV7{:E(B(16Bit).$A4KMb8|=xR;2=5X(B,Mule$A5DND<~;:(B
+      $A3eFw?I0QUbP)SoQT5D(B $ANDWV;lM,TZR;8v;:3eFwVP=xPP4"4f(B.
+    * $AND<~JdHk3v(B,$AS+FAOTJ>(B,$A<|ELJdHk(B,$A9}3L(B(?:)$A<dM(Q6V.<d(B,$A8wWT?IIh6(6@A"5D(B
+      $ANDWV7{:ELeO5(B.
+    * $A7G6`9zSoQTW4L,J1(B,$A2YWw7=7(:MT-@45D(BGNU Emacs$A;y1>R;Qy(B.
+
+A-2: $A?I4S:N4&5C5=(BMule?
+
+  $A?I4SOBAP5X7=(B anonymous ftp $A5C5=(BMule:
+
+     etlport.etl.go.jp[192.31.197.99]:/pub/mule
+     sh.wide.ad.jp[133.4.11.11]:/JAPAN/mule
+     ftp.mei.co.jp[132.182.49.2]:/public/free/gnu/emacs/Mule
+     ftp.funet.fi[128.214.6.100]:/pub/gnu/emacs/mule
+
+  $A4S:#Mb=xPP2YWwJ1(B,$AGkJ9SC(Bsh.wide.ad.jp.
+
+  $ATZRTIOND<~D?B<DZ(B,$ASP(BMule$A7"2<PNJ=5DR;U{LW(Btar$AND<~(B, $A:M293d(BGNU Emacs
+  18.59$A5D2?7VND<~A=VV(B. $ARQ3VSP(BGNU Emacs$A5DHK(B, $AGk>!A?J9SCFd2?7V293dND<~(B.
+  $A3}4KMbND<~D?B<VP;9SP8wVV(Bfont,ELISP$A5H4GJi?b(B.
+
+A-3: Mule$A5DWnPB0f5DC{3F(B?
+
+  Mule$A5DOVTZ0fJG(B1.0($AM):x(B) patchlevel 01, $ART(BGNU Emacs 18.59$AN*;y4!(B.
+
+A-4: $AJ9SC(BMule$ASPJ2C4@{5c(B? $A;rU_K5(B,$ASkFdJ9SC(BMule,$A2;HgJ9SC(BNemacs$A5DGi?vSPBp(B?
+ $AHg9{SP5D;0(B,$ATZTuQy5DGi?vOB(B?
+
+  $AJ9SC(BMule$ASPHgOB@{5c(B:
+    * $A2;=v?I4&@mS"ND(B,$AR2?I4&@mHUND(B,$AVPND(B,$A:+ND(B,$AFdK|6`VVSoQT(B.$A6xGR?IRT;l:O(B
+      $AJ9SCUbP)SoQT(B.
+    * $ATZ;:3eFwVP5DAlSr@o(B,$A?IRTV86(SP9XOTJ>5DJtPT(B,$ASk(BNemacs$A2;M,(B,$ATZR;0c5D(B
+      $AD)6KOTJ>(B($AHg9{SPD)6KOTJ>5D;0(B)$AR2?IRTJ9SCOTJ>JtPT5D9&D\(B.
+    ?? * $A=vJ9SCS"So:MHUSoJ1(B,$ASkFdJ9SC8=JtTZ(BNemacs$AIO5D(B"TAMAGO",$A2;HgJ9SC(B
+      $A1d;;P'BJ8|:C5DHUSoJdHkO5M3(B"TAKANA$A0f(BTAMAGO".
+    * Nemacs $AJGRT(BGNU Emacs 18.55 $AN*;y4!(B,Mule $AJGRT(BEmacs 18.59$AN*;y4!(B.
+    * $A8=JtSPG?4s5D(B regular expression compiler.
+
+  $A746xQTV.(B,Mule$AJG1H(BNemacs$A8|84TS(B,$A8|>^4s5D3LPr(B,$ATZ<FKc;zWJT4=OF67&5D;7>3(B
+  $AVP(B,$AHtV;J9SCHUND5D;0(B,$AR2?I=vJ9SC(BNemacs.
+
+  $AAmMb(B,Mule$A:M(BNemacs$AV.<dC;SP;%;;PT(B,$ARTG0N*(BNemacs$ASCQPVF3v5DS&SCHm<~(B
+  (application) $ATZ(BMule$AIOSP?ID\2;K3@{TKPP(B.
+
+A-5: Nemacs $A;a1;H!O{Bp(B?
+
+  $A;X4p51H;JG2;(B.$A5+IP2;D\H76((B.Nemacs $A5DWnVU0f<4JG(B3.3.2.
+
+A-6: $A=+@4(B,Mule$A;a1;(BGNU Emacs $A:O2"Bp(B?
+
+  GNU Emacs $A5DWwU_(BR.M.Stallman$AG?5wLa9)6`VVSoQT5D3!:O(B,$AVwR*J9SC(BUnicode.
+  $AHg9{TZ(BMule$AVPR2?IRTJ9SC(BUnicode$A5D;0(B,Mule$A:M(BNemacs$A<4?I:O2"(B.$A5+D?G0(BMule$AVP(B
+  $A;92;D\J9SC(BUnicode.
+
+A-7: $ASP<F;-=+(BMule$A5DLX5cR}=x(BEpoch(or Nepoch)$AVPBp(B?
+
+  $AD?G0IPN^<F;-=+(BMule$A5DLX5cR}=xHk(BEpoch.
+
+A-8: $ASP<F;-=+(BMule$A5DLX5cR}=x(BDemacs$AVPBp(B?
+
+  $A=+@4Sh18VFWwRT(BGNU Emacs 19$AN*;y4!5D(BMule, $A:O2"(BGNU Emacs $A:M(BMule, $AD?G0;9(B
+  $AC;SPC<D?(B.
+
+A-10: Mule$ASP(Bmailing list$ABp(B?
+
+  $AOVTZ(B,$ASPRTOBA=8v(Bmailing list$A9)=xPPRTS"So5DLVB[(B.
+
+     mule@etl.go.jp   $AM(3#J9SCS"So(B
+     mule-vn@etl.go.jp  $A9XSZJ9SCT=DOSo5D(Bmailing list,$AM(3#J9SCS"So(B
+
+  $AAmMb(B,$ASPRTOB9)=xPP8w(Bplatform$A5DJTQi(B.
+
+     mule-jp@etl.go.jp  $AM(3#J9SCHUSo(B
+
+  $AGkJ9SCPBNEWi(B(fj.editor.mule)$A=xPPRTHUSo5DR;0cLVB[(B.
+
+A-11: $ATZ:N4&=xPP(BMule$A5D9JUO1(8f(B?
+
+  $AGkTZPBNEWi(B(fj.editor.mule)$ARTHUND=xPPSP9X(BMule$A5D9JUO1(8f;rP^U}La085H(B.
+  $A2;D\TD6A4KPBNEWi5DHKGkRTS"NDKM5=(Bmule@etl.go.jp.
+
+A-12: Mule$ASPVPND(B($AS"ND(B/$AHUND(B/$A:+ND(B)$A5D2YWwK5CwBp(B?
+
+  $AJWOHSPS"ND5D<FKc;zMxIO2YWwK5Cw(B.$AM(3#(B,$AO5M39\@mT1;aW<18RTSC(Bman$AC|AnSo?I(B
+  $A=xPP2NUU5D2YWwK5Cw(B,$AHg9{C;SP5D;0(B,$AGk=+(B $MULE/etc/mule.1$A?=145=2YWwK5Cw(B
+  $AND<~D?B<V.:sTYJ9SC(B.
+
+A-13: Mule$AC{WV5DSI@4(B?
+
+  $ARTOB4S(BUNIX$ASCSo(B $ASI@4(B/$A6A7(4G5dR}SC(B:
+
+    [MULE](UNIX$AC|AnSo(B)
+    "MULtiLingual Enhancement to GNU Emacs"$A5DBTSo(B.  MULE$AJGBbWS5DRbK<(B,
+    $AR2SPMg9L5DHK(B,$AV4^V5D<R;o5DRbK<(B,$A<H6TS&(BGNU$AC{3F5D6/NoO5AP(B,$ASV6TS&AKOq(B
+    gawk,$A83SZO`74RbK<5DC{3FO5AP(B.($A2NUU(B: Demacs,Emacs,gawk,Nemacs)
+
+    $AUb8vC{WVJGSI(B Hironobu Suziki<hironobu@sra.co.jp>$ALa3v5D(B.
+
+A-14: $A?I4S:N4&5C5=Ub7]WJAO(B(Mule FAQ list)$A5DWnPB0f(B?
+
+  Mule FAQ$ASPS"ND0f(B,$AHUND0f(B,$A:+ND0f(B,$AVPND0f(B?:).$AWwN*ND<~=xPP7"2<5DJ1:r(B,$A7V1p(B
+  $AN*ND<~C{(BFAQ-mule($AS"ND0f(B),FAQ-mule.jp($AHUND0f(B),FAQ-mule.kr($A:+ND0f(B),
+  FAQ-mule.cn($AVPND0f(B).$AFdVP(B,$AHUND0fJGT-0f(B,$AFdK|8w0f5D8|PB?ID\ITSPQS3Y(B.
+
+  $AM(9}RTOB7=7(?I5C5=(B Mule FAQ.
+
+    * $A4S<FKc;zMxBgPBNEWi@o(B.$ATZPBNEWi(Bfj.editor.mule$AVP;a2;6(FZ5XJdHk(BMule
+      FAQ.
+
+    * $AM(9}(Banonymous FTP. $A4SRTOB5X7=M(9}(B anonymous FTP $A5C5=(B:
+
+         etlport.etl.go.jp: /pub/mule/READMEDIR
+         sh.wide.ad.jp: /JAPAN/mule/READMEDIR
+
+    * $A4S(BMule$A7"2<SC5DND<~VP(B. Mule$APB7"1mJ1(B,$AWnPB5D(BFAQ$ART(Betc/FAQ-Mule $A;r(B
+      etc/FAQ-Mule.jp$A5DC{3F(B,$A1;0|@(TZ(BMule$A5D7"2<ND<~VP(B.
+
+$A99V~<002W0(B
+
+B-1: $AJ9(BMule$A5D(Bpatch$A6TW<(BEmacs,$ANRJTWESC(BEmacs$A;r(BNemacs $AWV1`RkPBTv<S5D(B
+ lisp$AND<~(B,$A5+2"2;3I9&(B,$AGkNJNJLbTZDD@o(B?
+
+  Mule$A5D(Blisp$AND<~VP(B,$A:,SPPm6`V;SPTZ(BMule$AIO2ED\=xPP(Bbyte compile $A5D2?7V(B.$ARr(B
+  $A4K99V~(BMule$A5DJ1:r(B,$AM>VP;aWT6/WV1`RkPBTv<S5D(B($A;rJG(Bpatch$A6TW<AK5D(B)lisp$AND<~(B.
+  $AC;SP1XR*Oq0Q(Bpatch$A6TW<(BEmacs$AJ1DGQyJV6/2YWwWV1`Rk9$Ww(B.
+
+B-2: $ATuQy99V~TZ(BX window$AIO?ITKPP5D(BMule?
+
+  $AV;R*TZ(B $MULE/src/config.h $AVP6(Re:jV8An(B: HAVE_X_WINDOWS .  $AAmMb(B,$A6(Re(B
+  HAVE_X_SELECTION$A:s(B,$A?IRT2YWwJ9SCAK(B X $A5D(B SELECTION $A5D(B cut&paste.
+
+  $A5+JG(B,$ARrN*(BMule$AJGJ9SC>2L,A4=S=xPP99V~5D(B,$A1XPkR*SP>2L,A4=SSC5D(BlibX11.a.
+  $AC;SP>2L,A4=SSCWV?b5D3!:O(B,$A99V~(B X $AJ1W7<S(B
+
+    #define  ForceNormalLib YES
+
+  $ASP1XR*VFWw>2L,A4=SSC5D(BlibX11.a.
+
+B-3: $ATuQy99V~TZ(BSun$A5D?XVFL(IO?ITKPP5D(BMule?
+
+  $ATZ(B $MULE/src/config.h$AVP(B, $A6(Re(B HAVE_SUN_CONSOLE.
+
+  $A4KJ1(B,$ARrN*J9SC(Bpixrect$AWV?b(B,$ASP1XR*OHW0TX:C(BSunView_Programmers. Solaris
+  2.0 $AV.:s5D(BOS$ARrC;SPDZ2X(Bpixrect$AWV?b(B,$AKyRT2;D\J9SCUbOn9&D\(B. $A<4J9JG(BSunOS
+  4.x,$A9:BrHk(BSun$A5D<FKc;zJ1(B,$ASISZ(BSunOS$AVPShOHC;SPW0TX:C(BSunView_Programmers
+  $A5DT59J(B,$AKyRTJBOH1XPkR*W0TX:C(BSunView_Programmers.
+
+B-4: "Pure Lisp storage exhausted"$A5DNDWVOTJ>:s(Bcompile$AMjH+M#V9AK(B,$AN*J2C4(B?
+
+  Ken'ichi Handa <handa@etl.go.jp>$AHgOBP45=(B:
+
+    $AUbJGRrN*(B puresize.h$AVP5D(BPURESIZE$A5DJ}V5L+P!5DT59J(B.$A2;M,5DO5M3SP1XR*Tv(B
+    $A4s(B PURESIZE$A5DJ}V5(B. $AAmMb(B,$AJ9SC(Bsite-init.el $A6AH!6`VVSoQT;7>35DIh6(ND(B
+    $A<~(B(e.g.  japanese.el,chinese.el)$A5DJ1:r(B,$AR2SP1XR*Tv4s(BPURESIZE$A5DJ}V5(B.
+    $ASP1XR*2IH!HgOB7=7((B: $AOH0QUb8vJ}V53K16(B,$AHg9{(Bcompilation$AK3@{5D;0(B,$A2N?<(B
+    temacs $A6AH!(B mule-init.el $AV.:s5D(BPure Bytes Used XXXXX$AJ}V5(B,$ATY4NIh6((B
+    $A1HFdIT4sP)5DJ}V5(B,$A=xPP(Bmake.
+
+  $AV55CW"Rb5DJG(B,$ATZ(B src/config.h$AVPKdR2SP(BPURESIZE$A5D6(Re(B,$A5+RrN*TZ(BMule$AIO5D(B
+  src/puresize.h$AVPTY6H6(ReAK(BPURESIZE$A5DJ}V5(B,$AKyRTP^8D(Bconfig.h$AVP5D(B
+  PURESIZE$AV5C;SPHN:NRbRe(B.$AGkW"RbGaRWO09_AK(BEmacs$A:\H]RW$B!V$AO]Hk$B!W$A=xH%(B:).
+
+B-5: "Undefined Symbol: _des_crypt"$A5DNDWVOTJ>:s(B,compile$AMjH+M#V9AK(B,$AN*J2C4(B?
+
+  Masato Minda <minmin@astec.co.jp>$AHgOBP45=(B:
+
+    $AUb9JUOJGTZ(BSunOS$A5D(B JLE1.1$AIO=xPP>2L,A4=SJ17"Iz5D0I(B.
+
+    $A=b>v0l7((B:
+      $A6TW<(BJLE$A5D(Bpatch ($AM|AK(B patch ID)
+      $AJ9SC(BJLE1.1.1 rev B$ART:s5D2?7V(B.
+      $A2;J9SC(BJLE :-)
+
+    $AKdH;;9C;SP3"JT9}(B,$AWw8v?U0W5D(B _des_crypt$A:/J}J2C45D(B, $AR;Fp=xPP(Blink $A5D;0(B,$A2;(B
+    $AV*;a2;;a3I9&DX(B.
+
+B-6: Mule$A5D(B compilation$AC;SPRl3#(B,$A5+2;D\W<H75XJdHkVPND(B.
+
+  $A02W0(BMule$A5DJ1:r(B,$ATZ(Bsite-init.el$AVPOHV86(O#M{J9SCSoQT5DFdSoQT(Bspecific$AND(B
+  $A<~:s(B, $ATY=xPPW0TX(B. site-init.el $AWwN*3uJ<V5(B,$A2"2;4fTZ(B.
+
+  $AO#M{J9SCVPNDJ1(B,$ATZ(Blisp/site-init.el$AVPP4Hk(B(load "chinese")$AR;PP:s(B,$ATYJT(B
+  $AWE99V~(BMule.
+
+$A9XSZJ9SC6`VVSoQT(B
+
+C-1: Mule$AIOSPDD<8VV?IRTJ9SC5DVPNDNDWVO5M3(B?
+
+  Mule$AIOSPA=VV?IJ9SC5DVPNDNDWVLeO5(B,GB $A:M(BBIG5. GB$AJGTZVP9z4sB=5H5XM(SC5D(B
+  $A<r;/::WV(B,BIG5$AJGTZOc8[<0L(Me5H5XJ9SC5D71LeWV(B.$ATZ(BMule$AIO(B,$A?IRTVFWw:,SPUb(B
+  $AA=VV::WVLeO55DND<~(B,$A>_LeGk2NUU(BC-3.
+
+  [$AW"Rb(B] BIG5$A4sVB6TS&6(ReN*VPND::WVLeO55D(BCNS(Chinese National
+         Standard)11643$A5D5ZR;:M5Z6~0e?i(B.
+
+C-2: Mule$AIO?I4&@mDD<8VVVPND::WV(Bfont?
+
+  $AHg9{JGTZ(BX window$AO5M3IO2YWw(BMule$A5D;0(B, $APhR*VPND(B fonts $A@4OTJ>VPND(B. $AOBAP(B
+  $AVPND(B fonts $A7V2<TZ(BX11R5$AND<~D?B<OB5D(B cxterm$AND<~DZ(B,
+
+     X.V11R5/contrib/client/cxterm/fonts $ADZSP(B:
+        cclib16fs.bdf          16x16 Fang Song style, GB encoding
+        cclib16st.bdf          16x16 Song style, GB encoding
+        cclib24st.bdf          24x24 Song style, GB encoding
+        hku-ch16.bdf           16x16 Fang Song style, BIG5 encoding
+
+    $AAmA=On(B fonts$AJJ:O(BBIG5:
+        taipei15               16x15 Fang Song style, BIG5 encoding
+        taipei24               24x24 Song style, BIG5 encoding
+
+    $AHg9{J9SC(BcWnn$AJdHkVPND5D;0(B,$AAmMbPhR*(BSiSheng fonts(cWnn,$A2NUU(BC-4a):
+        etl14-sisheng.bdf      7x14 SiSheng font for cWnn
+        etl16-sisheng.bdf      8x16 SiSheng font for cWnn
+        etl24-sisheng.bdf      12x24 SiSheng font for cWnn
+
+  $AHg9{UbP)(Bfonts$A;9C;SPW0TXTZDz5D<FKc;zIO(B,$AGkOrDz5D(B local X window$A9\@m8:(B
+  $ATpHKT1R*Gs0oVz(B. fonts $A?I4SOBAP5X7=(B anonymous FTP $A5C5=(B:
+
+        etlport.etl.go.jp[192.31.197.99]: /pub/mule/fonts
+        sh.wide.ad.jp[133.4.11.11]: /JAPAN/mule/mule-1.0/fonts
+        ftp.mei.co.jp[132.182.49.2]: /public/free/gnu/emacs/Mule/fonts
+        ftp.funet.fi[128.214.6.100]: /pub/gnu/emacs/mule/mule-1.0/fonts
+
+C-3: $A9XSZ(BMule$AIO5DVPND::WV1`BkO5M3(B.
+
+  $A51Dz6AP4:,SPVPND::WV5DND<~J1(B,$A1XPkW"CwJ9SC:NVVJiJ=(B. $ATZ(BMule$A5DJ@=g@o(B,$AUb(B
+  $AJiJ=<4JGNDWV1`BkO5M3(B(coding system). $ANDWV1`BkO5M3?IRTTZSk8yD?B<2"AP(B
+  $A5D(B.emacs$AND<~VP=xPPIh6((B. $ARTOBOjJvH}VV2;M,5DGi?v(B:
+
+    * $A1`</:,SP(B GB$A:M(B ASCII$A5DND<~(B: $ASP<8VV7=7(?IRTGx1p(BGB$ANDWV:M(B ASCII$ANDWV(B.
+      $AWn3#SC5D7=7(JG0Q5Z0K8v(Bbit $A?4WwR;8vPE:E(B.$AHg9{5Z0K8v(Bbit$AJG(B"1"$A5D;0(B,$ADG(B
+      $AC4FdNDWVJG(BGB, $AHt2;H;(B,$ATrJG(BASCII. $AUbVVGx1p7=7(R2JJSCSZ(Bcxterm. $AHg9{(B
+      $A=vJ9SC(BGB$A:M(BASCII$A5D;0(B,$AUbVV7=7(O`517=1c(B. $AJ9SCUbVVNDWV1`BkO5M3J1(B, $ATZ(B
+      .emacs$AVP<SHkOBAPC|AnSo(B:
+
+            (set-default-file-coding-system *euc-china*)
+
+    * $A1`</:,SP(B BIG5$A:M(BASCII$A5DND<~(B:
+      $AW<H75XK5(B,BIG5$ASP6`VV1dPNNDWV(Bfont. $AWnFU1iJ9SC5DJG(B BIG5-ETen$A:M(B
+      BIG5-HKU. NEWLINE$ATZ(B UNIX$AO5M3:M(B DOS$AO5M3VP2"2;O`M,(B, $ARr4K1XPkOHH7HO(B
+      Mule$AJGTZ(B UNIX$A;9JGTZ(BDOS$AIOTKPP(B,$ATYW<H75XPpJvSkFd6TS&5DNDWV1`BkO5M3(B.
+      $ATZ(B.emacs$AVP(B,$A<SHkRTOBHN:NR;PPC|AnSo(B:
+
+      BIG5-HKU under UNIX
+           (set-default-file-coding-system *big5-hku*)
+
+      BIG5-ETen under UNIX
+           (set-default-file-coding-system *big5-eten*)
+
+      BIG5-HKU under DOS
+           (set-default-file-coding-system *big5-hku-dos*)
+
+      BIG5-ETen under DOS
+           (set-default-file-coding-system *big5-eten-dos*)
+
+      $ADz?IRTWTSIQ!Tq(BHKU$A;r(BETen, default$AJG(B *BIG5-HKU*.
+
+    * $A1`</:,SI(BGB, BIG5$A:M(B ASCII$A5DND<~(B:
+
+      $AJWOHGkW"RbRTOBJBJ5(B: Mule$AJGD?G0(B, $AN(R;5DR;8v1`</;7>3?IRTM,J15X1`</(B
+      GB$A:M(B BIG5$ANDWV(B. $A@}Hg(B, GB$A:M(B BIG5$A2;?ID\M,J1OTJ>TZ(B cxterm$AVP(B.
+
+      $AHg9{DzO#M{TZR;8vND<~VPM,J10|:,(BGB$A:M(B BIG5, $ANRCGMF<vDzTZ(B.emacs$AVP<S(B
+      $AHkRTOBR;PPC|AnSo(B:
+
+              (set-default-file-coding-system *junet*)
+
+      $ASP4KNDWV1`BkO5M3(B,$A2;=v?IM,J14&@m(B GB$A:M(BBIG5$ANDWV(B,$A;9?ITZM,R;ND<~VP4&(B
+      $A@mHUND(B,$A:+ND(B,$AE7V^NDWV5H(B. $ANDWV1`BkO5M3(B*junet*$AVP2eHkAKR;VVLXJbNDWV(B--
+      "escape sequence", $A=iSZA=VV2;M,O5M35DNDWVV.<d(B. $A5Z0K8v(Bbit$AW\1#3VTZ(B
+      "0".
+
+      $AR2?IRTSCRTOBC|AnSo4zLf(B*junet*:
+
+              (set-default-file-coding-system *euc-china*)
+
+      $A4KJ1(B,GB$ANDWV5D5Z0K8v(Bbit$A1;Ih6(TZ(B"1", $AFdK|8wVVNDWV5D5Z0K8v(Bbit$ATr1;Ih(B
+      $A6(TZ(B"0", $A;%O`V.<d??(B escape sequences $A=xPPGx7V(B.
+
+      $AR2?IRTJ9SCOBAPC|AnSo(B:
+
+              (set-default-file-coding-system *ctext*)
+
+      $AGkW"RbV;Pk2ISCUbH}VVNDWV1`BkO5M3VP5DHNRbR;VV(B. $AK|CG;%O`V.<d6<JG6@(B
+      $AA"5D(B.
+
+C-4: $ATuQyJdHkVPND(B?
+
+  C-4a: cWnn
+
+    $AWnVwR*5DVPNDJdHk7(JGM(9}(BEgg$AO5M3(B, $AA*O5IO(BcWnn$A5D(Bcserver. cserver$AJGR;(B
+    $A8v<FKc;zMxBgIO5DF4Rt:M::WV5D1d;;7~NqL((B. $AK|=SJUF4Rt(B, $AOTJ>::WV(B. $AJ9SC(B
+    cserver, $A1XPkOH02W0(BcWnn(4.108$A0f;r8|3Y5D0f1>(B).cWnn$AJG(BWnn$A5DR;VV(B, $A?IRT(B
+    $A4SH!5C(BMule$A5C5X7=5C5=(B. $AJ9SC(BcWnn$A1XPkR*OHSP(B SiSheng fonts($A2NUU(B C-2).
+
+    $AGkW"Rb(BEgg$A5DOVTZ0fV;La9)(BGB$ANDWV(B. $AHg9{O#M{JdHk(BBIG5, $A;rRrD3VVT-Rr2;D\(B
+    $AJ9SC(BcWnn, $AGk2NUURTOB(B"C-4b:quail".
+
+    $AJ9SC(Bcserver$AJ1(B,$A1XPkOjO8W"CwTKPP(Bcserver$A5D<FKc;zC{3F(B,$ATZ(B.emacs$AVP<SHkOB(B
+    $AAPC|AnSo(B:
+
+             (require 'chinese)
+             (set-cserver-host-name "hostname")
+
+    $ATZ(B"hostname"$A4&1XPkLnIOUfU}2YWwTKPP(Bcserver$A5D<FKc;zC{3F(B.
+
+    $A4r(B"C-\"$A<|H7HO(Bmode-line$A4&8D1d:sJdHkVPND(B. $A?IRTR;4NJdHk<88v5%4J(B,$AH;:s(B
+    $AGC?U0W<|=xPP1d;;(B. $AHg9{OTJ>5D::WV2;JGKyO#M{5D(B, $AGkTYGC?U0W<|(B. $AC?GCR;(B
+    $A4N?U0W<|(B, cserver$A;a0oVzQ0UR2;M,5D5%4J(B. $ARTOB=iI\<88v1d;;J15DVXR*<|(B:
+
+             space     $AQ0UROBR;8v5%4J(B
+             RET       $AH7HO(B
+             C-f       $ARFOrOBR;8v5%4J(B
+             C-b       $ARFOrIOR;8v5%4J(B
+             C-i       $AKu6L5%4J(B
+             C-o       $A@)U95%4J(B
+             C-g       $AH!O{(B
+
+    $A5ZR;4NJ9SC(Bcserver$AJ1(B, $A;a1;NJ<0JG7qO#M{VFWwWV5d(B,$AUbJ16TKySPNJLb6<;X4p(B
+    "YES".
+
+    $ATY4N4rHk(B"C-\"$A<|(B, $A?IMK3vVPNDJdHkW4L,(B. $AOjO82NUU(B doc/EGG .
+
+  C-4b: quail
+
+    Mule$AN*O#M{JdHk(BBIG5,$A;rRrD3VVT-Rr2;D\J9SC(Bcserver$A5DHK(B, $ALa9)AmR;VVVPND(B
+    $AJdHk7((B--"quail". quail $A0|@(TZ(BMule$A5D1jW<7"2<WJAOVP(B. $AHg9{JlO$(Bcxterm
+    $A5D;0(B, $ARr(B quail$AR`D\La9)(Bcxterm$AKyLa9)5DKySPJdHk7((B, $AKyRT(Bquail$A6TDz@4K5(B
+    $A;a1d5C7G3#<r5%(B.
+
+    $AHtTZ(BMule$AIOJ9SC(B]cxterm$AVP5D(BXXX.Tit$AJdHk7((B, $ATZ(B.emacs$AVP<SHkOBAPC|AnSo(B:
+             (load "quail/XXX")
+             (quail-use-package "XXX")
+    XXX$AN*RTOBHN:NR;On(B:
+             py, tonepy, sw, punct, qj, ccdospy, ctcps3, etzy, py-b5,
+             zozy, qj-b5, punct-b5
+
+    [$AW"Rb(B] $ATZRTOBH}8vLu<~6<1;BzWc5DGi?vOB(B,$A2;TYPhR*C|AnSo(B(load "quail/XXX").
+
+             1) $A99V~(BMule$AJ1(B, $AC;SP6(Re(Bmacro symbol EGG.
+             2) $A99V~(BMule$AJ1(B, $AJBOHSP6AH!(B chinese.el.
+             3) "quail/XXX"$AVP5D(BXXX$AJG(Bpy,qj $A;r(Bpunct$AHN:NR;On(B.
+
+    $A<SHk(B(load "quail/XXX")$A;aJ9(BMule$A5DFt6/KY6HITN"B}R;P)(B,$A3}4KMbC;SPFdK|(B
+    $AH15c(B. $ANRCG=(RiDzOHTZ(B.emacs$AVP<SHkUbPPC|AnSo(B, $AH;:sTYOrDz5DO5M39\@m8:(B
+    $ATpHKT1UwGsRb<{(B.
+
+    $ATZ(Bcxterm$A5D=iI\WJAOVP(B,$A6TC?R;VVJdHk7(6<=xPPAKHgOB<r=i(B:
+    ($AR}SC(B cxterm/dict/tit/README)
+
+    $AC{3F(B       $A::WVO5M3(B  $A<r=i(B
+    ---------   ------  ----------------------------------------
+    PY          GB      $A1jW<F4RtJdHk7((B
+    TONEPY      GB      $A1jW<F4RtJdHk7((B($ANeIy(B)
+    SW          GB      CCDOS style ShouWei $AJdHk7((B($A5ZR;(B & $AWn:s2?7](B)
+
+    Punct       GB      $A>d6A7(JdHk1m(B
+    QJ          GB      Quan Jiao -- GB$A::WVO5M3VP5D(Bdouble-byte ASCII
+    CCDOSPY     GB      CCDOS style $A<rBTF4RtJdHk7((B
+    CTCPS3      GB      $A9c6+;0Rt1j(B CPS3 $A8ER*(B
+                        (Fung-Fung Lee <lee@milo.stanford.edu>$AV41J(B, $AOj<{(B
+                        june.cs.washington.edu:~ftp/pub/yeung/cantonese.shar)
+
+    ETZY        BIG5    ETen ZhuYin ($ARt1j(B) ETen $A<|EL9f;.JdHk(B
+                (HKU)   (Susie Chu <chu@ames.arc.nasa.gov>$AV41J(B)
+    PY-b5       BIG5    HKU BIG5 $A7"Iy1jW<F4RtJdHk7((B
+                (HKU)   (Stephen G Simpson <simpson@math.psu.edu>$AV41J(B)
+    ZOZY        BIG5    ETen ZhuYin ($ARt1j(B) $A5Z6~<|EL9f;.JdHk(B
+                (HKU)   $AHgTZ(B ZeroOne, DACHEN system, etc.
+    QJ-b5       BIG5    Quan Jiao -- BIG5$A::WVO5M3VP5D(B double-byte ASCII
+    Punct-b5    BIG5    $A>d6A7(JdHk1m(B
+
+    -------------------
+
+    quail$A;7>3VP(B,$A4rHk(B"C-]"$A<|?IRTQ!Tq(BASCII$AJdHk7(;rVPNDJdHk7((B. $ATZ(B
+    quail-mode $AVP4rHk(B"M-z"$A?IOTJ>(Bhelp$AND<~(B.
+
+  C-4c: PIG-mode
+
+    PIG-mode$AJG8vO`517=1c5DO5M3(B. $A?IM,J11d;;<88vWV4J(B, $A2"TJPmJdHkJ!BTAK5D(B
+    $AF4Rt5H(B. $A?I4SOBAP5X7=(Banonymous FTP$A5C5=(B.
+
+          etlport.etl.go.jp[192.31.197.99]: /pub/mule/contrib
+          sh.wide.ad.jp[133.4.11.11]: /JAPAN/mule/mule-1.0/contrib
+          ftp.mei.co.jp[132.182.49.2]: /public/free/gnu/emacs/Mule/contrib
+          ftp.funet.fi[128.214.6.100]: /pub/gnu/emacs/mule/mule-1.0/contrib
+
+    $A<r=i(B(readme)$AND<~R20|@(TZDZ(B. $A>](B burt@dfki.uni-kl.de $AIyCw(B, $APk293dRT(B
+    $AOB9&D\5D6(Re(B:
+
+       (defun pig-parse-cz (string)
+        (let ((indx 0) list)
+         (while (string-match "\\([^0-5]+[0-5]\\)-*" string indx)
+          (setq list (cons (substring string (match-beginning 1) (match-end 1))
+                            list))
+          (setq indx (match-end 0)))
+         (nreverse list)))
+
+  C-4d: $AFdK|JdHk7((B
+
+    $AHg9{O#M{J9SC(Bcxterm$A1>Im5DJdHk7((B, $AGkR@UURTOB2=Vh(B.
+
+    1) $ATZ(B.emacs$AVP<SHkOBAPA=PPC|AnSo(B:
+
+       (set-default-display-coding-system *euc-china*)
+       (set-default-keyboard-coding-system *euc-china*)
+
+    2) $ATZ(Bcxterm$AIOV4PPOBCfC|An(B:
+
+       % mule -nw
+
+    $AOVTZ(B, $ADz?IRTJ9SC(Bcxterm$A1>Im5DJdHk7(AK(B. $AGkW"Rb3}AK(BGB, $A2;D\SC4K7=7(Jd(B
+    $AHk(BBIG5.
+
+C-5: $ATuQyH!5CVPND5D(B hardcopy?
+
+  $ASPR;8vC{(B"m2ps"$A5D3LPr?I=+(BMule$A5DDZ2?7{:EW*;;3I(BPostScript$APNJ=(B. $A@}(B, $AS!K"(B
+  $AND<~C{N*(B chinese.txt$A5DND<~J1(B, $AR@UURTOB2=Vh(B:
+
+    1) $AJdHk(B"C-x C-f chinese.txt RET", $A6AHkND<~(B.
+       (RET $A<4;X35<|(B)
+
+    2) $AJdHk(B"C-u C-x C-w tmp RET *internal* RET",$ART(BMule$A5DDZ2?1mJ>PNJ=1#(B
+       $A4fFdND<~(B.
+
+    3) $A;X5=(B shell$A;7>3(B, $A4rHkRTOBC|An(B:
+
+         % m2ps < tmp |lpr
+
+  $A4KJ1(B, $ASP1XR*RT(B -P option$ACwH79f6(S!K";zC{3F(B. $A@}Hg(B, $AS!K";zC{3FN*(B"lw",
+  $ATrHgOB(B:
+
+         % m2ps < tmp |lpr -Plw
+
+  $ATZOBR;FZPB7"PP5D(BMule$AVP(B, $A;a0|@((B m2ps$A5DWnPB0f(B, $A?IRTV1=SW*;;(B GB$A;r(BBIG5
+  $A::WVWV7{5=(B PostScript$APNJ=(B.
+
+C-6: $ATuQyTZ(BMule$AIOTD6APBNEWi(B?
+
+  $ATZ(BMule$AIOOH6AH!(B chinese.el$AND<~:s(B, $ATYJ9SC(B GNUS$A:M(B gnusutil.el$A>M?IRTTD6A(B
+  $ATZ(B alt.chinese.text$A<0(B alt.chinese.text.big5$APBNEWi@o5DNDUB8e<~(B. $ATZ(B
+  alt.chinese.text $AVP5D(B ~{$ASk(B ~},$AO`51SZ(BMule$AVP5D(B"ESC$A"( $AV8OrVPND(BGO$A?*J<(B
+  $A5D1jV>(B)$A:M(B"ESC(B"($AV8Or(BASCII GO$A?*J<5D1jV>(B), $A3FWw(B HZ encoding. $AW"RbTZFp(B
+  $A6/(B GNUS$AV.G0OH6AH!(B gnusutil.el.  gnusutil.el$AND<~TZ(BMule$A5D(BFTP$AND<~Wi5D(B
+  contrib/lisp.tar.gz$AVP(B.($A2;0|@(TZ(BMule$A5D7"2<ND<~VP(B)
+
+  gnusutil.el $AS&8C1;1#4fTZR;8vOjO8P4SP1dJ}(B"load-path"$A5DND<~D?B<OB(B, $AHt(B
+  $A4KND<~D?B<VPR2SP(B gnus.el$A5D;08|:C(B.
+
+  $AH;:sTZ(B.emacs$AVP<SHkRTOBA=PPC|AnSo(B, $AFp6/(BMule.
+
+     (set gnus-Group-mode-hook 'gnusutil-initialize)
+     (autoload 'gnusutil-initialize "gnusutil")
+
+  $AUbQy(B, $ADz>M?IRTTD6A(Balt.chinese.text$A:M(B alt.chinese.text.big5$AVP5D::WVAK(B.
+
+  $AR;5)W0TX:C(B gnusutil.el, $AOrA=8vPBNEWiM68eJ12;TYPhR*FdK|LXJbJVPx(B. $A?IRT(B
+  $AP4::WV(B, $A?IRTOq(BASCII$ANDWVR;Qy5X=xPPM68e(B. gunsutil$A;aWT6/0Q::WV8e<~W*;;(B
+  $AVAJJ515DJiJ=(B.  alt.chinese.text$APBNEWiJ9SC(BGB$AJdHk7((B,
+  alt.chinese.text.big5$APBNEWiJ9SC(BBIG5$AJdHk7((B.
+
+  [$AW"Rb(B]$A51Sh18=+RQ4"4f:C5DND<~OrPBNEWiM68eJ1(B, $A1XPkW"RbND<~S&RTJJ515DND(B
+  $AWV1`BkO5M3=xPP1#4f(B. $AGkJ9SCOBAP1#4f(B/$A:t3vC|An(B:
+
+     + $A1#4fM6Or(Balt.chinese.text$A5D8e<~(B
+       "C-u C-x C-w filename RET *hz* RET"
+
+     + $A:t3vM6Or(Balt.chinese.text$A5D8e<~(B
+       "C-u C-x C-f filename RET *hz* RET"
+
+     + $A1#4fM6Or(Balt.chinese.text.big5$A5D8e<~(B
+       "C-u C-x C-w filename RET *big5-eten* RET"
+
+     + $A:t3vM6Or(Balt.chinese.text.big5$A5D8e<~(B
+       "C-u C-x C-f filename RET *big5-eten* RET"
+
+C-7: $ATuQy<DVPND5D5gWSSJ<~(B?
+
+  $ANRCGIP2;CwH7DDR;8v2EJG<DVPND5gWSSJ<~5D1jW<JiJ=(B. $AGk2NUUOBAP8wOn(B,$A5=5WDDR;On8|(B
+  $AN*9c7:J9SC(B :-)?
+
+    1) $AJ9SC(B*euc-china*$A;r(B *big5-??*$AU_H7PE5Z0K8v(Bbits$ATZ(Bsendmail$AJ12;;a1;BdOB(B.
+    2) $AJ9SC(B*junet*$A;r(B *ctext*.
+    3) $AJ9SC(BMIME.
+    4) $AJ9SC(BHZ.
+    5) $AJ9SCFdK|JiJ=(B.
+
+C-8: $ATuQyJdHkHUND(B?
+
+  $AHUNDSPRTOB<8VVJdHkO5M3(B:
+
+    * TAMAGO(EGG), TAKANA version
+    * sj3-egg
+    * Canna
+
+  $ARTIO8wJdHkO5M36<JGJ9SC<FKc;zMxIOHUND<YC{::WV1d;;7~NqL((B, $ALa9)B^BmWV::(B
+  $AWV1d;;7=J=5DHUNDJdHk7((B. $AOjO82NUU8wJdHkO5M35D2YWwK5CwJi(B. $AUbH}OnHUNDJd(B
+  $AHkO5M3TZ99V~(B Mule$AJ1:r(B,$A1XPkJBOH=xPPIh6((B.
+
+  $AR2?IRTJ9SCHUNDJdHk7((B" SKK". $AJ9SC(B"SKK"$ATZ99V~(BMule$A5DJ1:r(B,$A2;PkJBOH=xPPHN(B
+  $A:NLX1p5DIh6((B. "SKK"$AJdHk7(?ITZ(BMule$AVPMjH+6@A"5X=xPPJ9SC(B, $AR2?I=hVz4G5d(B
+  $A7~NqL(=xPPJ9SC(B.
+
+C-9: "EGG"$AJGJ2C4(B?
+
+  "EGG"$AJG@{SC(BWnn$A5D<FKc;zMxBgIO5D1d;;(B jsever/cserver, $ALa9)HUND;rVPNDJd(B
+  $AHk;7>35DO5M3C{3F(B. "EGG"$AHUNDRkWw(B" TAMAGO".
+
+  "EGG"$A4sVB7V@`N*(B, $ANDWVJdHk1d;;O5(B($AB^BmWV(B,$AHUND<YC{1d;;2?7V(B), $AHUND<YC{::(B
+  $AWV(B/$AF4Rt(B -->Hanzi$A1d;;2?7V:MHUND1`</9&D\H}2?7V(B. $ANDWVJdHk1`;;O52;=v?IJ9(B
+  $ASCHUNDF=<YC{(B,$AF,<YC{(B,$AF4Rt(B,$A;9?IRTJdHk:+ND:MFdK|SoQT(B.
+
+C-10: $ATuQyJdHk(BISO 8859$ANDWV(B?
+
+  Mule$AIOLa9)4S(BLatin-1(ISO8859-1)$AVA(BLatin-1(ISO8859-9)$A5DNDWVWi:OO5AP(B. $AR;(B
+  $A0c4S(B ASCII$A<|ELJdHkUbP)NDWVJ1HTPhR*Ft6/(B quail-system.
+
+  $ARTOBAP>Y5DNe8vND<~?I9)JdHk(BISO 8859$ANDWVJ1J9SC(B:
+
+    * quail/latin.el: $AJ9SC@-6!WVD85DVn6`SoQT(B, $AUy6T3uQ'U_(B.
+    * quail/ltn.el: $AJ9SC@-6!WVD85DVn6`SoQT(B, $AUy6TJlA7U_(B.
+    * quail/cyrillic.el: $AJ9SCK9@-7rNDWV5DVn6`SoQT(B.
+    * quail/greek.el: $AO#@0NDWVSC(B.
+    * quail/hebrew.el: $AO#2.@4NDWVSC(B.
+
+C-11: $AJ@=gIOSP4SSRP45=Ws5DSoQT(B, MuLe$A?IRT6TS&UbVVSoQTBp(B?
+
+  $AD?G0(BMuLe$ADZ2XO#2.@4So(B, $A?IJ9SC(B quail/hebrew.el$AJdHk7=7((B. $AAmMbGk2NUU(B
+  highlight-reverse-direction, r2l-double-cursor$A5H5DWJAO(B. MuLe$A=+@4W<18(B
+  $ATv<S0"@-2.So(B, $A2(K9So5H(B.
+
+C-12: $ASPDDP):M(BMuLe$ASP9XA*5DNDWV1`BkO5M3(B? $A>_LeTZJ2C4J1:rSP9XA*DX(B?
+
+  MuLe$ALa9)RTOBKyJ>NDWV1`BkO5M3(B:
+
+    * $ATZ(BMule$A5D;:3eFwVPJ9SC5DDZ2?7{:E(B
+    * MS $A::WV7{:E(B/SHIFT JIS($A=vO^HUND(B)
+    * $ART(BISO2022$AN*;y4!5D7{:E(B($A0|@((BJIS[JUNET],EUC,CTEXT)
+    * BIG5($A=vO^VPND(B)
+
+  $ATZ(BMule$AIO(B,$A?I;%O`6@A"5XV86(ND<~JdHk3v(B,$A<|ELJdHk(B, $AS+FAOTJ>(B, process$A<dM((B
+  $AQ6(B,$A8wWT5DWV7{O5M3(B.
+
+C-13: "Buffer list"$AVP1mJ>5D;:3eFw5D4sP!N*J2C4:M1#4f5DND<~4sP!O`2n<+4s(B?
+
+  $ATZ(BMule$AVP(B,$AWwN*NDWV5DDZ2?1mJ>(B, $AC?R;NDWVWi6<IhSPR;(B leading character($A6A(B
+  $AHkNDWV(B), $A3}(BASCII$ARTMbKySPNDWV6<=PWwDZ2?NDWV(B, $ATZNDWV?*J<4&<SSP6AHkNDWV(B.
+  $ARr4K(B,Latin-1$A5H(B 8 bit$ANDWVTZDZ2?TrWw(B 2 byte, $A::WV5H(B 16 bit$ANDWVTZDZ2?Tr(B
+  $AWw(B 3 byte. $AHg9{JGRTDZ2?1mJ>5DW4L,=xPP1#4f5D;0(B, $A;:3eFw5D4sP!:MND<~5D(B
+  $A4sP!S&51R;VB(B, $A5+JGHtRTFdK|5D(B encoding$A7(=xPP1#4f5D;0TrA=4&5D4sP!>MSP(B
+  $AKy3vHk(B.
+
+C-14: set-keyboard-coding-system $A2;D\Ih6((B*autoconv*, *big5-hku*,
+ *big5-eten*, *internal*, $AN*J2C4(B?
+
+  $AUbJG(BMule$A5DLXJbV.4&(B.
+
+C-15: $ATZ(BEUC$AIO(B, $AO#M{M,J1OTJ>HU1>(B, $AVP9z(B,$A:+9z(B,EC$A5H9zSoQTJ1TuC40l(B?
+
+  $A8w9zSoQT5D(BEUC$AJGJ9SC1K4K6@A"(B, $A5+MjH+R;Qy5DNDWVO5M3(B, $AKyRT2;?ID\;l:OM,(B
+  $AJ1OTJ>(B. $AHt1XPkM,J1TZ(BMule$AIOOTJ>6`9zSoQT5D;0(B,$AGkJ9SC(B*junet*$A;r(B*ctext*$AND(B
+  $AWVO5M3(B.
+
+C-16: $ASP(BMule$AIO=xPPJ9SCKySPNDWVO5M35D=iI\WJAOBp(B?
+
+  $A=iI\WJAON*(BISO 2022. JIS$A5D;0JG(BJIS X0202. Mule$A5D(Btexinfo$A2YWwK5Cw:M(B
+  $MULE/doc/ISO2022$AVPR2SP<r5%K5Cw(B.
+
+C-17: incremental search$AJ1TuQyJdHk::WV(B?
+
+  isearch($ATv<S<lKw(B)$AJ1(B, $A4rHk(B"C-k"$A<4?IJdHkNDWVEEAP(B. $ARrN*UbVV(Bmode $A<4J9TZ(B
+  mini buffer$AV.VPR2?IRTJdHkNDWVEEAP(B, $AKyRTJ9SC(B"C-\"$A<|?IJdHkVPND(B/$AHUND(B.
+  $AJdHkNDWVEEAP:s(B, $APk4rHk;X35<|(B. Mule$A?ITY4NJ5PP(Bisearch. ($AW"(B: $A4KOn=|FZDZ(B
+  $ASP8|8D(B)
+
+C-18: $A4S:N4&?IRT5C5=(BMule$AIOJ9SC5D8wVVSoQT(Bfont?
+
+  $A?IRT4SOB5X7=(Banonymous FTP$A5C5=(B:
+
+    etlport.etl.go.jp: /pub/mule/fonts
+    sh.wide.ad.jp: /JAPAN/mule/fonts
+
+  $ATZRTIO5X7=(B, $A0|:,SPOBAP(Bfont $AND<~(B:
+
+    BIG5.tar.gz
+     -- Big5 encoding 16x15dots font for chinese
+    Chinese.tar.gz
+     -- 16x16 and 24x24 GB fonts for Chinese
+    CYRILLIC.tar.gz
+     -- KOI encoding fonts for Cyrillic characters
+    ETL.tar.gz
+     -- 14dots, 6dots, and 24dots fonts for ISO8859-1,2,3,4,5,7,8,9
+        12x24dots fonts for SiSheng
+        12x29dots fonts for Thai
+        12x24dots fonts for Vietnamese
+    Japanese.tar.gz
+     -- 14x14, 16x16, 24x24 JIS fonts for Japanese
+    Korean.tar.gz
+     -- 16x16 and 24x24 Korean fonts
+
+C-19: quail-help $AW4L,J1OTJ>5DNDWV:MJ5<JJdHk5DNDWV2"2;R;Qy(B, $AUbJG9JUOBp(B?
+
+  $AGkH7HOJG7qU}H75XIh6(AK1dJ}(B *quail-keyboard-translate-table*. $A4K1dJ}(B
+  $AHtHTJG3uJ<V5W4L,5D;0(B, $ATr<FKc;z<Y6(J9SCWE:M(B vt100$AM,QyEEAP5D<|EL(B, $A2"=x(B
+  $APPFdEEAPOTJ>5DTKWw(B. $AHtJGJ9SC(BJIS$A<|EL5D;0(B, $A1XPkTZ(B.emacs$AVP<SHkRTOBC|An(B
+  $ASo(B:
+
+    (setq *quail-keyboard-translate-table*
+          *quail-keyboard-translate-table-jis*)
+
+  $AOjO8Gk2NUU(B doc/keyboard-translation.text.
+
+C-20: $ATuQyS!K"TZ(BMule$AIOWw3I5DND<~(B?
+
+  $AJ9SC(BMule$A5D(B etc$AND<~WiOB5D3LPr(Bm2ps, $A?IRT=+:,SP6`9zSoQT5DND<~W*;;3I(B
+  PostScript $AS!K"5DPNJ=(B. $A5+JGV55CW"Rb5DJG(B, m2ps$AV;SPP'SZ>-9}(BMule$ANDWVO5(B
+  $AM3(B*internal* $A=xPP(B encode$A4&@m:s5DND<~(B.
+
+  m2ps$AJG0Q(B X $A5D(BBDF$AND<~?4Ww(B font$A=xPPJ9SC(B, $A=+NDWV2?7VU9?*3I(B bitmap$A:s4+KM(B
+  $AHkS!K";z(B. $ARr4KS!K";zVP<4J9C;SP(B font$AR2?IRTS!K"6`9zSoQT5DND<~(B. $AOjO8Gk(B
+  $A2NUU(Bm2ps$A5DMxIO2YWwK5Cw(B(m2ps.1).
+
+$ASk(BNemacs/Emacs$A5D;%;;PT(B
+
+D-1: Mule$ASk(BNemacs/Emacs$A?IRT8_K.F=5D;%;;Bp(B?
+
+  MuLe(0@$AJGTZ(BNemacs/Emacs$A5D;y4!IO1`VF5D(B.$A4S(BEmacslisp $A5D=G6H@4K5(B,$AKd2;6`5+(B
+  $AR2SP2;?I;;5D5X7=(B.$A4KMb(BMule$ASk(B Nemacs$A;y1>IO2;M,(B.
+
+  $A9XSZ(BMule$ASk(BNemacs/Emacs$A5D7G;%;;PT(B,Enami Tsugumoto
+  <enami@sys.ptg.sony.co.jp>$AWw9}RTOB5DK5Cw(B:
+
+    * Nemacs Mule$A6@LX5D:/J}(B,$A1dJ}6xR}Fp5D7G;%;;PT(B.
+    * $ATZ(BMule$AN*AKJ5OV6`SoQT;/(B,$AJ9SCR*Gs1d;/6xR}Fp5D7G;%;;PT(B.
+    * Nemacs$ASk(BMule$AIO(BAscii$ARTMb5DNDWV1mOV7=J=2;M,6xR}Fp5D(Bbyte
+      compile$A:s5D7G;%;;PT(B.($A5+JG(Bbyte code$A5D;%;;PTJG4fTZ5D(B)
+    * $A3IN*;y4!5D(BEmacs$A0f:E2;R;VB6xR}Fp5D7G;%;;PT(B.
+
+D-2: $A4s<RO20.5D(Bange-ftp$AFp6/:s(B,$AN*J2C4(BM-! (shell-command)$A;aJ'0\(B?
+
+  ange-ftp$AFp6/:sPm6`:/J}1;H!4zAK(B.$AFdVP0|@((BMule$AVPR}J}V86(1d8|:s5D(B
+  write-region$ASk(Binsert-file-contents.
+
+  $AC|An(Bshell-command$A@{SC(BMule$AVP6(Re5DR}J}5wSC:/J}(Bwrite-region $ASk(B
+  insert-file-contents,$A5+1;(Bange-ftp$AH!4z:s5D(Bwrite-region$A2;D\=bJMUbP)R}(B
+  $AJ}(B.$ARr4K7"Iz4mNs6x5<VB(Bshell-command$A5DV4PPJ'0\(B.
+
+  $A9XSZ=b>v0l7((B,Msayuki kuwada <kuwada@soliton.ee.uec.ac.jp> $AWw9}RTOB5D(B
+  $AK5Cw(B:
+
+    $ATZ(Bange-ftp.el$A5D(Bange-ftp-write-region$A<0(B
+    ange-ftp-insert-file-contents $A5DR}J}6(Re2?Wn:sW7<S(B&rest
+    coding-system,$A2"WwRTOBP^8D>MPP(B.  ($ASk(BEmacs,Nemacs$A6<D\92SC(B)
+
+    [$AW"Rb(B] $AOBCf5DP^8DJG6TRTOB0f:E5D(B
+     RCS:       $Header: ange-ftp.l, v 4.29 92/08/14 17:04:34 ange Exp $
+    $A0f:E2;M,R}J}SP?ID\2;M,(B.$ARTOB=v9)2N?<(B
+
+    $ATZ:/J}(Bange-ftp-write-region$ADZ2?SPA=8v5X7=SC5=(B
+    ange-ftp-real-write-region, $A6T4KWwRTOBP^8D(B.
+
+    (ange-ftp-real-write-region start end temp nil visit)
+    -->
+    (apply 'ange-ftp-real-write-region start end temp nil
+           visit coding-system)
+
+    (ange-ftp-real-write-region start end filename append visit)
+    -->
+    (apply 'ange-ftp-real-write-region start end filename append
+           visit coding-system)
+
+    $A4KMb(B,$A6T(Bange-ftp-insert-file-contents$AVPSC5=(B
+    ange-ftp-real-insert-file-contents $A5DA=8v5X7=R2WwRTOBP^8D(B.
+
+    (ange-ftp-real-insert-file-contents temp visit)
+    -->
+    (apply 'ange-ftp-real-insert-file-contents temp visit
+           coding-system)
+
+    (ange-ftp-real-insert-file-contents filename visit)
+    -->
+    (apply 'ange-ftp-real-insert-file-contents filename  visit
+           coding-system)
+
+D-3: Nemacs$ASk(BMule$AD\7q92SC(B.emacs?
+
+  $ARrN*(BMule$ASk(BNemacs$AC;SP;%;;PT(B,$AHgJ9SC(BNemacs$ASC5D(B.emacs Mule $ASP?ID\7"Iz4m(B
+  $ANs(B.$A5+JG(B,$AHg0Q(BMule$ASC5D2?7VSk(BNemacs$ASC5D2?7V7V?*(B, $A>M?IRT92SC(B.
+
+    (if (boundp 'MULE)
+       ($AJ9SC(BMule$AJ1V4PP2?7V(B))
+    (if (boundp 'NEMACS)
+       ($AJ9SC(BNemacs$AJ1V4PP2?7V(B))
+
+  Mule$A5D(Btexinfo$AK5CwJi@o(B, $ASP(BMule$ASk(BNemacs$AD\92SC(B.emacs$A@}9)2N?<(B.
+
+  $A5+JG(B,$A=xPP(Bbyte-compile$AJ1?ID\2;D\92SC(B.$A6T4K(BEnami Tsugutomo
+  <enami@sys.ptg.song.co.jp>$ATxWwRTOBK5Cw(B.
+
+    $A<4J9J9(B~/.emacs Nemacs$ASk(BMule$AD\9;92SC(B,$AHgR*=xPP(Bbyte-compile $A1XPkSC1p(B
+    $A5D(B($A1;(Bbyte compile$A5D(B)$AND<~(B.
+
+    $AR2>MJGK5(B,$AHg:,SP::WVNDWVO5AP(B($ARr(BNemacs$ASk(BMule$AVP::WV5D1mOV7=J=2;M,6xR}(B
+    $AFp5D(Bbyte-compile$A:sND<~5D7G;%;;PT(B),$A1XPkVXPB=xPP(B byte compile.
+
+D-4: $ATZ(BNemacs$ATKPP5C:\:C(B,$A5+TZ(BMule$AVP3vOV(B"symbol's function definition is
+ void: define-program-kanji-code"$A6x2;D\U}3#TKPP(B.$A8CTuC40l(B?
+
+  Atsushi Furuta <furta@srarc2.sra.co.jp>$AJGUbQy=bJM5D(B
+
+    $A:/J}(Bdefine-program-kanji-code$AJG(BNemacs$AKy6@SP5D(B,$A9JTZ(B Mule$AVP2;D\TKPP(B.
+    Mule$AVP(Bdefine-program-coding-system$AFp4zLfWwSC(B.$A6T4K1XPkWwRTOBP^8D(B.
+
+      (define-program-kanji-code nil ".*inc.*" 2)
+      -->
+      (define-program-coding-system nil ".*inc.*" *junet*)
+
+    $AM,Qy(B,$AHg:,SP(B"kanji-cod"$A5D:/J}C;SPUR5=(B, $ASC(B"coding-system"$A4zLf(B
+    "kanji-code"$A5D:/J}SP?ID\TZ(BMule$AVP4fTZ(B.  $A4KMb(B,"mc-flag"$A4zLf(B
+    "kanj-flag"$AFpWwSC(B.
+
+  $AAmMb(B,$AR2SPJ9(BNemacs$ASC5D3LPrBkTZ(BMule$AR2D\TKPP5D3LPr0|(B.$A6T4K(B Ken'ichi
+  Handa <handa@etl.go.jp>$AWw9}RTOBK5Cw(B.
+
+    $AN*AKJ94S(BNemacs$AOr(BMule$A5DRF6/1d5C8|<r5%(B,$AM(9}<SHk5gWSPE<~A*BgMx5D4s<R(B
+    $A92M,E,A&(B,$A1`VFAKRTOB<r5%5D3LPr0|(B.
+
+    $AHg0QOBCfA=8v(B.el$AND<~Kf1c<S5=DD8vW0HkB7>6@o(B,$A<4J9Dc5D(B.emacs $A:,SP9)(B
+    Nemacs$ASC5D3LPrBk(B,$AV;R*OsOBCfDGQyP^8DR;OB(B.emacs,$ADc>M?IRTM,(BNemacs$AR;Qy(B
+    $A5XJ9SC(BMule.
+
+      (load-library "nemacs-pre")
+         ...$AT-@45D(B.emacs$ABk(B
+      (load-library "nemacs-post")
+
+    $A51H;UbQyP^8D2;;aS0Ol(BNemacs$A5DJ9SC(B.
+
+    nemacs-pre.el$A<0(Bnemacs-post.el$A?IM(9}(Bftp$A4S(B
+    etlport.etl.go.jp:/pub/mule/contrib.lisp$A5C5=(B.
+
+D-5: GNU Emacs, Nemacs$ASC5D3LPr(B,$ASPDDP)D\SCDDP)2;D\SC(B?
+
+  * $AN^PkHN:N1d8|>MD\@{SC5D(B
+
+  $A3LPrC{(B     $A0f:E(B             $A18?<(B
+  auctex    6.1d, 7.1p
+  cmutex    2.03
+  GNUS      3.13,3.14.1,
+            3.15              GNU Emacs 19.x
+                              $ARrN*KySP5D:/J}(B,$A1dJ}C{6<J9SC(B
+                              $AP!P4WVD8(B,$AHg9{RQ>-Ih6((Bhook,$A1XPk(B
+                              $AP^8D(Bhook.
+  ispell    2.1?              $A4xSP(Bispell 3.0.5$A5D(B
+  mh-e      3.8
+  SKK       6.7$ART:s(B           $A1H(B6.7$A>I5D2;PP(B
+  Supercite 2.3               $AHgR*J9SCHUSoGk2NUUNJLb(BE-3
+  vm        5.32, 5.33
+
+  * Mule$AW(SC;r1;P^8D3I(BMule$ASC5D(B
+  $A3LPrC{(B        $A0f:E(B             $A18?<(B
+  boiled-egg    3.10             $AJUB<TZ(Bmule/contrib
+  canna
+  Egg           3.05             Mule$A1jW<W018(B
+  diclookup                      $AJUB<TZ(Bmule/contrib
+  guess-coding                   $AJUB<TZ(Bmule/contrib
+  keisen                         $ATv>.0f(B,$AJUB<TZ(Bmule/contrib
+  keisen                         $AH}VX4sQ'0f(B
+  mh-serach                      $AJUB<TZ(Bmule/contrib
+  sj3-egg       1.6
+  jam-zcat      1.42
+
+  * Mule$AVP2;D\TKPP5D(B
+  $A3LPrC{(B        $A0f:E(B             $A18?<(B
+  ange-ftp      4.20             $A5+JJ515XP^8D5D;0?IRT(B($A2N?<(BD-2)
+  x-sb-mouse    1.4(92-05-23)    $A5+JJ515XP^8D5D;0?IRT(B
+
+$A5gWSPE<~(B&$A5gWSPBNE(B
+
+E-1: $AHg:NWT6/5XIh6((Bmail$AW4L,5DWVBk(B?
+
+  $AHgDcTZJ9SC(BRMAIL$A<0(BVM,$ASC(Bmail-mode-hook$AIh6((Bmail$AW4L,5DWVBk(B.  $A@}Hg(B,$AR*Ih6((B
+  euc-china$ABk5D;0(B,
+
+  (setq mail-mode-hook ()
+        '(lambda ()
+           (cond ((boundp 'NEMACS)
+                  (setq kanji-fileio-code 2))
+                 ((boundp 'MULE)
+                  (set-file-coding-system *euc-china*)))))
+
+  $AHgDcTZJ9SC(BMH-E$A5D;0(B,$ATrSC(Bmh-letter-mode-hook$AIh6((Bmh-letter $AW4L,5DWVBk(B.
+
+  (setq mh-letter-mode-hook
+        '(lambda ()
+           (cond ((boundp 'NEMACS)
+                  (setq kanji-fileio-code 2))
+                 ((boundp 'MULE)
+                  (set-file-coding-system *euc-china*)))))
+
+  $AWn:C0QRTIOBk7ETZ(B.emacs$A@o(B
+
+  $AHg9{0Q(Bmule-init.el$AP^8D3IDcKyPhR*5DIh6((B,$ARTIO5DIh6(>M2;PhR*AK(B.
+
+E-2: $AJiP45gWSPE<~<05gWSPBNEJ1(B,$A4r(Bc-c c-y$A<|R}SC7{:E1d3I(B" ".$ATuQy2ED\J9Fd(B
+ $A1d3I(B">"?
+
+  $AJ9SC(Bsupercite$A?IRT0QR}SC7{:EIh6(3I(B">".supercite$ASPPm6`9&D\(B,$AR}SC7{:ER2(B
+  $AD\8y>]8vHKO2;6HNRbIh6((B.$AOjO8K5CwGk2N?<(B E-3 -- E-5.
+
+E-3: $ASC(Bsupercite$ATuQy2ED\J9R}SC7{:E@o:,SPC{WV(B?
+
+  $A04OBCf5DIh6(S&8C?IRT(B.$AUb8vIh6(JG4S(Bksaka@mtl.t.u-tokyo.ac.jp$A@45D(B.$A8y>](B
+  $APhR*?IRTJ!H%R;P)PP(B.$A;9?IRT8y>]O2;68D1dWnOBCf(B3$APP(B($AOjO8K5CwGk2N?<(B
+  supercite$AK5CwJi(B)
+
+    ;;  sc
+    (autoload 'sc-cite-original     "supercite" "Supercite 3.1" t)
+    (autoload 'sc-submit-bug-report "supercite" "Supercite 3.1" t)
+    (autoload 'sc-perform-overloads "sc-oloads" "Supercite 3.1" t)
+    (setq mail-citation-hook 'sc-cite-original)
+    (setq mail-yank-hooks 'sc-cite-original)    ; for all but MH-E
+    (setq mh-yank-hooks 'sc-cite-original)      ; for MH-E (3.7 or later)
+    (setq news-reply-mode-hook 'sc-perform-overloads) ; for RNEWS,GNEWS,GNUS
+    (setq mail-setup-hook 'sc-perform-overloads)      ; for RMAIL,PCMAIL,GNUS
+    (setq gnews-ready-hook 'sc-perform-overloads)     ; for GNEWS
+
+    (setq sc-electric-references-p nil)
+    (setq sc-preferred-header-style 1)
+    (setq sc-citation-leader "")
+
+
+E-4: $A@{SC(BSupercite$AHg:NJ9R}SC7{:EWT6/Ih6(3I(B">"?
+
+  $ATZ(BE-3$A5DIh6(IOTY<SIOOBCfR;PP>MPP(B
+
+    (setq sc-nested-citation-p t)
+
+  $A5+GkW"Rb(B,$AUbQyIh6(:sR}SC7{:E>MN^7(0|:,C{WV(B
+
+E-5: $AJ9SC(Bsupercite$AJ1(B,$AHgR*SC(Bdefault$AR}SC7{:ERTMb5D7{:EWwN*(Bdefault$ASC5D;0(B,
+ $A8CTuC40l(B?
+
+  $AN*4K(B,$A?I@{SC(Byoichi@s5g.ksp.fujixerox.co.jp$A1`VF5D(B sc-register-2.3.1. 
+  $AJ9SCJ1W0IO(Bsc-register,$AH;:s<SIORTOBIh6((B
+
+    (setq sc-load-hook '(lambda () (require 'sc-register)))
+    (setq sc-preferred-attribution 'registeredname)
+
+  $A5+JG(B,supercite 3.0$ART:s5D0f2;D\SC(Bsc-register.$A=+@4>]K54S?*J<Fp>MWiW0IO(B
+  sc-register$A9&D\(B.
+
+$A;-Cf1mJ>(B
+
+F-1: X$AIOJ9SC(BMule$AJ1(B,fonts$ASPJ12?7VMQBd;rOT5C:\T_(B. $AUbJGN*J2C4(B?
+
+  Takahashi Naoto (ntakahas@etl.go.jp)$A:M(BKen'ichi Handa
+  (handa@etl.go.jp$ATxWw9}RTOBK5Cw(B.
+
+  Mule$A8y>](BAscii font$A5D?m6HIz3I405D(B.fonts$A5D2?7VMQBdJGRrN*(Bfonts$A5D?m6HSk(B
+  Ascii$A5D2;R;Qy(B.$A::So(B,$AHUSo(B,$A:+9zSo5D(Bfonts$A5D?m6H1XPkJG(BAscii$A5D(B2$A16(B,$A6xFdK{5D(B
+  fonts$A5D?m6H1XPkSk(BAscii$AO`M,(B.
+
+  fonts$AMQBd<0OTT_JGRrN*(BX$A5DWT6/1d169&D\(B.$AHg9{V86(5D(B fonts$A7{:O(BXLFD$A8qJ=GR(B
+  fonts$A2;4fTZJ1(B,X$A5D(Bserver$A>M0QWT<:V*5@5D(Bfonts$AJJ515X@)4sKuP!6xJ9SC(B.$A@}Hg(B,
+  $AV86((B
+
+    "-*-fixed-medium-r-*--*-*-*-*-*-*-jisx0208.1983-*"
+
+  $AJG7{:O(BXLFD$A5D(B,$ARr4K(BX$A5DWT6/1d169&D\>MFpWwSC(B.$AO`6T6xQT(B, mule-init.el$A@o5D(B
+  $AIh6((B
+
+    "-*-fixed-medium-r-*--*-*-jisx0208.1983-*"
+
+  $A2;7{:O(BXLFD$A8qJ=(B,$AKyRTWT6/1d169&D\>M2;S&8CFpWwSC(B.$ARTIOV;JGR;P)>-QiV.L8(B.
+
+F-2: $AHgSC(B(x-set-bell t)$AIh6(AK(Bvisible-bell,$A;-CfIA5DN;VCTZ;-CfVPQk(B,$A76N'(B
+ $AT<N*;-Cf4sP!(B1$A5D(B/4.$AUbJGIh<FR*GsBp(B?
+
+  $AJG5D(B,$A4S(BGNU Emacs 18.58$A?*J<1d3IUbQy5D(B.
+
+
+
+
+
+
+
+

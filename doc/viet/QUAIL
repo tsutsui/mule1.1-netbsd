@@ -1,0 +1,72 @@
+************* Vietnamese translation of mule-0.9.7/doc/QUAIL *****************
+
+This file is in plain 8-bit VISCII (VIetnamese Standard Code for Information
+Interchange).  VISCII was designed by the oversea Vietnamese Standardization
+Group (viet-std@haydn.stanford.EDU).  VISCII documents and public-domain
+VISCII-compliant software running on Unix, X-Windows, DOS, MS-Windows 3.1 can
+all be retrieved by anonymous ftp from media.mit.edu (18.85.0.2) under the
+directory /pub/Vietnet/Viet-std (for documents) and /pub/Vietnet/Viscii (for
+software).  Please read FAQ.VISCII for more info. 
+
+This translation is contributed by the Viet-Std Group -- May 24, 1993 (Hoc Ngo)
+
+********************* Bän d¸ch Vi®t ngæ cüa QUAIL ****************************
+  Chú thích:  Nguyên bän tiªng Anh ðôi khi ðßþc ghi lÕi trong ngo£c vuông [].
+******************************************************************************
+
+Quail là mµt h® th¯ng d¸ch khóa chæ [key-translation] ð½n giän cho phép ngß¶i
+dùng ðánh các chæ ða ngôn ngæ t× bàn chæ ASCII bình thß¶ng.
+
+Chúng tôi cung c¤p nhi«u kh¯i nhu li®u quail [quail-package], m²i kh¯i tß½ng
+Ñng v¾i mµt phß½ng pháp ðánh chæ.  ChÆng hÕn, h° s½ lisp/quail-py.el cung c¤p
+tr÷n bµ nhu li®u ð¬ ðánh Hoa ngæ b¢ng phß½ng pháp PinYin.  h° s½
+lisp/quail-hangul.el là mµt kh¯i nhu li®u khác dùng ð¬ ðánh Hàn ngæ.
+
+BÕn có th¬ nÕp [load] nhi«u kh¯i nhu li®u cùng mµt lúc nhßng chï có qui lu§t
+d¸ch [translation rules] ðßþc ð¸nh nghîa trong kh¯i nhu li®u hi®n hành [current
+package] là có hi®u lñc mà thôi. TrÕng thái quail [quail-mode] ðßþc t¡t m·
+[toggle] b¢ng ki¬m tñ C-].  Khi bÕn chuy¬n vào trÕng thái quail, tên kh¯i
+nhu li®u hi®n hành s¨ hi®n ra · modeline nhß sau:
+	Q-xxxxx
+v¾i xxxxx là thông ði®p b¢ng chæ ða ngôn ngæ cho kh¯i nhu li®u hi®n hành.
+Trong trÕng thái quail, M-s s¨ thay ð±i kh¯i nhu li®u hi®n hành (b¤m <ESP>
+ho£c <TAB> ð¬ kªt thúc mµt cách bình thß¶ng).
+
+Trong trÕng thái quail, t¤t cä các khóa chæ hình [graphic key] mà bÕn ðánh
+vào s¨ ðßþc d¸ch ra theo qui lu§t cüa kh¯i nhu li®u hi®n hành.  BÕn có th¬
+ðánh M-z ð¬ th¤y ðßþc bän mô tä s½ lßþc v« các qui lu§t và các kªt n¯i cüa
+các khóa chæ [key-binding].
+
+Có th¬ có nhi«u Ñng tñ* thöa mãn chu²i ký tñ bÕn ðánh vào bàn ðánh chæ
+nhßng chï có Ñng tñ ð¥u tiên ðßþc hi¬n th¸ [display] trong vùng tÕm [buffer]
+v¾i d¤u gÕch dß¾i [underscore].  BÕn có th¬ dùng M-n và M-p ð¬ ch÷n lña các
+Ñng tñ khác.  M-i s¨ hi¬n th¸ danh sách các Ñng tñ và liên kªt m²i Ñng tñ
+v¾i mµt con s¯ g°m 2 s¯ mã.  BÕn có th¬ ch÷n b¤t cÑ Ñng tñ nào b¢ng cách
+ðánh vào 2 s¯ mã tß½ng Ñng.
+
+   	| * Ñng tñ: candidate
+	| L¶i ngß¶i d¸ch: candidate là thí sinh ho£c là ngß¶i Ñng cØ ð¬ ðßþc
+	| ch÷n vào mµt chÑc vø nào. — ðây, candidate dùng ð¬ chï nhæng chæ
+	| ðáp Ñng ðßþc qui lu§t kªt hþp nào ðó trong trÕng thái quail, nên
+	| cách d¸ch ðúng nh¤t là Ñng tñ.
+
+Sau khi ch÷n xong chæ bÕn mu¯n,  bÕn có th¬ ðánh tiªp mµt khóa næa cho chæ
+khác.  D¤u gÕch dß¾i s¨ tñ ðµng di chuy¬n t¾i khóa chæ kª.  Nhßng ð¯i v¾i
+mµt s¯ kh¯i nhu li®u (chÆng hÕn nhß quail-hangul), có nhæng qui lu§t nhß là
+   		ab	-->	A
+		aba	-->	B
+		b	-->	C
+Trong trß¶ng hþp này, nªu bÕn ðánh "abab", quail s¨ d¸ch ra thành "BC". Nªu
+th§t ra ý bÕn mu¯n là "AA", bÕn phäi nói rõ ràng biên gi¾i cüa t×ng chæ
+b¢ng cách ðánh <SPC>.  Trong thí dø này, bÕn phäi ðánh "ab<SPC>ab".
+
+Sau ðây là tóm t¡t nhæng khóa m®nh l®nh [command keys]:
+----------------------------------------------------------------------------
+C-]:	Thoát khöi trÕng thái quail   [Exit from quail-mode]
+DEL:	Xóa chæ bên trái trong quail  [Delete chars backwards in quail-mode]
+M-i:  	Hi¬n th¸ danh sách các Ñng tñ [show list of all candidates]
+M-n:  	Ch÷n Ñng tñ kª tiªp           [select next candidate]
+M-p:  	Ch÷n Ñng tñ trß¾c             [select previous candidate]
+M-s:   	Ch÷n kh¯i quail               [select quail package]
+M-z:	Hi¬n th¸ bän mô tä s½ lßþc kh¯i nhu li®u quail hi®n hành
+----------------------------------------------------------------------------

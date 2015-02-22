@@ -1,0 +1,1028 @@
+Info file: egg-jp,    -*-Text-*-
+produced by texinfo-format-buffer
+from file: egg-jp.texi
+
+
+
+
+
+File: egg-jp  Node: Editing, Prev: Registration, Up: Dictionary Management, Next: Customization
+
+辞書編集
+========
+
+「たまご」は、現在使用している辞書の辞書項目を編集できます。編集とは、辞
+書項目の追加、削除、単語の使用/不使用の切り替えです。編集を行なう場合は
+コマンド *edit-dict-item* を使います。
+
+## Command: edit-dict-item YOMI
+     読み YOMI を持つ辞書項目を編集する。
+
+`M-x edit-dict-item' を起動し、ミニバッファで項目の読みを指定すると 
+`*Nihongo Dictionary Information*' というバッファが作られ、その中にその
+読みを持つ辞書項目の情報が表示されます。たとえば“はな”という読みを持つ
+項目はこのように表示されます。
+
+      *花            名詞      辞書：基本語彙(pubdic)/14991 頻度：12
+      *鼻            名詞      辞書：基本語彙(pubdic)/14993 頻度：4
+      *華            名詞      辞書：基本語彙(pubdic)/14992 頻度：1
+      *はな          名詞      辞書：基本語彙(pubdic)/14990 頻度：1
+      *ハナ          人名      辞書：人名(pubdic)/1806 頻度：0
+      *塙            単漢字    辞書：単漢字(pubdic)/1975 頻度：0
+      *放            タ行五段  辞書：基本語彙(pubdic)/14994 頻度：2
+      *話            サ行五段  辞書：基本語彙(pubdic)/14998 頻度：68
+      *離            サ行五段  辞書：基本語彙(pubdic)/14997 頻度：10
+      *放            サ行五段  辞書：基本語彙(pubdic)/14996 頻度：4
+      *はな          サ行五段  辞書：基本語彙(pubdic)/14995 頻度：1
+
+一行めの“花”について細かく見ましょう。
+
+行頭の“*”はその辞書項目がシステム辞書に登録されていて変更できないこと
+を示しています。変更可能な利用者辞書に登録されている辞書項目の場合は空白
+が表示されます。次の“花”は辞書項目の見出し語で、その後の「名詞」は辞書
+項目の品詞です。最後の項目は登録されている辞書の名前、項目番号、頻度です。
+
+この状態では、通常のカーソル移動コマンドの他に以下のコマンドが使用できま
+す。これらを用いて、削除する項目を指定したり項目を追加したりします。
+
+`a'
+     辞書項目を追加します。
+`d'
+     カーソルの辞書項目を削除指定します。削除指定された辞書項目は行の先
+     頭 に `D' を表示します。
+`n'
+`C-n'
+     カーソルを下に移動します。
+`p'
+`C-p'
+     カーソルを上に移動します。
+`C-u'
+     辞書項目の使用/不使用を切り替えます。不使用にすると頻度が -1 になり
+     ます。
+`q'
+     編集を終了します。削除は行ないません。
+`u'
+     削除指定された辞書項目の削除指定を解除します。
+`x'
+     削除指定された辞書項目を実際に削除します。
+`M-h'
+     辞書項目の頻度を設定します。
+
+
+また、辞書にコメントを設定することもできます。コマンド 
+*set-dict-comment* でメニューから辞書ファイルを選択し、そのあとコメント
+の文字列を入れます。コメントを設定すると辞書管理などでファイル名のかわり
+にコメントが使われます。
+
+## Command: set-dict-comment
+     辞書にコメントを設定する。
+
+
+File: egg-jp  Node: Customization, Prev: Editing, Up: Top, Next: Language Specific File
+
+自分流の使い方
+**************
+
+「たまご」では、使用する辞書や変換サーバを設定したり、入力の変換のしかた
+を変えたりすることができます。
+
+* Menu:
+
+* Language Specific File:: 言語特定ファイル.
+* Initialization::	初期設定.
+* Input Translation::	入力変換方法の変更.
+
+
+File: egg-jp  Node: Language Specific File, Prev: Customization, Up: Customization, Next: Initialization
+
+言語特定ファイル
+================
+
+Mule および「たまご」では複数の言語を扱うことができますが、あらかじめ各
+言語を扱いやすいようにするための設定ファイルを読み込む必要があります。例
+えば、日本語を使う場合には `japanese.el' を、中国語を使う場合には 
+`chinese.el' をロードします。これらにより、各言語に合わせて word や 
+syntax の定義を行なったり、入力文字変換システムの変換表を読み込んだりし
+ます。
+
+
+言語特定ファイルを読み込むには、以下の方法があります。
+
+  1. 必要な言語特定ファイルの読み込みを行なった状態の実行形式ファイルを
+     作る。 Mule 構築時に `site-init.el'(デフォルトではこのファイルは存
+     在していない)で、`(load "japanese")'などとして読み込む。詳しくは、 
+     `$MULE/INSTALL.Mule'を参照のこと。
+  2. Mule の起動時に `~/.emacs' の中で読み込みを行う (`site-init.el' で
+     読み込みが行なわれている場合は、`~/.emacs' で読み込む必要はない)。
+  3. 利用者が Mule 使用時に *load-library* コマンドで読み込む。
+
+通常は`site-init.el'で読み込みを行なった状態の実行形式のファイルを
+作る方法をとります。
+
+さらに Sun で X11 を使用する場合には、次のようにしてファイルを読み込むと 
+Sun のファンクションキーが利用可能となります(*Note Sun Key map::)。
+
+     (load "egg-keymap")
+
+
+
+File: egg-jp  Node: Initialization, Prev: Language Specific File, Up: Customization, Next: Server
+
+初期設定
+========
+
+「たまご」の個人ごとの初期設定は次の 2つのファイルで行います。
+
+*Mule の初期設定ファイル (`~/.emacs')*
+     このファイルで変換サーバホストの設定をします。
+*「たまご」の初期設定ファイル *
+     仮名漢字変換サーバが使用する辞書を指定します(*Note Dictionary::)。
+
+* Menu:
+
+* Server::		仮名漢字変換サーバの指定.
+* Dictionary::		使用辞書の指定.
+
+
+File: egg-jp  Node: Server, Prev: Initialization, Up: Initialization, Next: Dictionary
+
+変換サーバの指定
+----------------
+
+仮名漢字変換サーバ jserver が動作しているホストの名前は、
+
+  1. 変数 `jserver-list'
+  2. 変数 `wnn-host-name'
+  3. 環境変数 `JSERVER'
+
+のいずれかに文字列で指定します。優先順位は変数 `jserver-list'、変数 
+`wnn-host-name'、環境変数 `JSERVER' の順になります。
+
+同様に、cserver が動作しているホストの名前は、
+
+  1. 変数 `cserver-list'
+  2. 変数 `cwnn-host-name'
+  3. 環境変数 `CSERVER'
+
+のいずれかに文字列で指定します。優先順位は変数 `cserver-list'、変数 
+`cwnn-host-name'、環境変数 `CSERVER' の順になります。
+
+変数 `jserver-list', `cserver-list' には、複数の変換サーバのリストを設定
+できます。サーバとの接続に失敗した場合には、リストの次のサーバと接続を試
+みます。ホストの指定がされていない場合、または `nil' が指定されている場
+合はローカルホストが指定されたとみなします。
+
+
+一旦変換サーバとの通信が確立した後で、変換サーバのホストを変更するには、 
+`M-x set-jserver-host-name', `M-x set-cserver-host-name' を実行して新し
+いホストを指定しなくてはなりません。変数 `wnn-host-name' や 
+`cwnn-host-name' の値を変えるだけでは変更できません。
+
+## Global Variable: jserver-list
+     jserver ホスト名を文字列で指定する。複数の変換サーバのリストを設定
+     できる。サーバとの接続に失敗した場合には、リストの次のサーバと接続
+     を試みる。値が `nil' の場合は、ローカルホストを指定しているものとみ
+     なす。
+
+     たとえば、仮名漢字サーバーホストが `vanilla' で、そのマシンの 
+     jserver との接続に失敗した場合には `espresso' に接続したい場合、 
+     `~/.emacs' に次の行を追加すればよい。
+          (setq jserver-list '("vanilla" "espresso"))
+     2つ以上のホストを指定することも可能である。
+
+## Global Variable: cserver-list
+     cserver が動いているホスト名を文字列で指定する。それ以外は 
+     `jserver-list' と同じ。
+
+## Global Variable: wnn-host-name
+     仮名漢字変換サーバホスト名を文字列で指定する。今使っているサーバの
+     ホスト名はこの変数に設定される。
+
+## Global Variable: cwnn-host-name
+     cserver ホスト名を文字列で指定する。それ以外は `wnn-host-name' と同
+     じ。
+
+## Command: set-jserver-host-name HOSTNAME
+     現在接続しているサーバがあればクローズし、新たに jserver ホストを 
+     HOSTNAME に設定する。また、`jserver-list' の先頭に HOSTNAME を設定
+     する。サーバへは接続が必要となるまで接続しない
+
+## Command: set-cserver-host-name HOSTNAME
+     現在接続しているサーバがあればクローズし、新たに cserver ホストを 
+     HOSTNAME に設定する。また、`cserver-list' の先頭に HOSTNAME を設定
+     する。サーバへは接続が必要となるまで接続しない
+
+## Command: disconnect-wnn
+     仮名漢字変換サーバとのコネクションを解放する。
+
+
+File: egg-jp  Node: Dictionary, Prev: Server, Up: Initialization, Next: Input Translation
+
+使用辞書の指定
+--------------
+
+以下の説明では Mule のシステムディレクトリを `$MULE' で示します。
+
+「たまご」は変換サーバとの通信を開始すると初期設定ファイルを探索実行して
+環境設定を行います。
+
+初期設定ファイルの探索はまず `egg-startup-file' と 
+`egg-startup-file-search-path' を用いて行います。見つからない場合は 
+`egg-default-startup-file' と `load-path' を用いて探索します。
+
+
+`egg-startup-file' の標準設定は `.eggrc' です。サイトで使用する標準初期
+設定ファイルは `$MULE/lisp/eggrc-v41' です。
+
+## Global Variable: egg-startup-file
+     初期設定ファイルの名前を指定する。標準設定では `.eggrc'。
+
+## Global Variable: egg-startup-file-search-path
+     探索を行なうディレクトリのリストを指定する。`egg-startup-file' がディ
+     レクトリを指定していない場合はこの探索パス上のファイルを探す。標準
+     設定では、`("~" ".")'。
+
+## Global Variable: egg-default-startup-file
+     サイトで共通に使用する初期設定ファイルを指定する。ファイル名がディ
+     レクトリを指定していない場合は `load-path' 上のファイルを探す。
+
+
+「たまご」の初期設定ファイルでは、変換サーバが使用する辞書の設定を行いま
+す。辞書指定には *add-wnn-dict* を使います。引数によって、辞書ファイル・
+頻度ファイルのオープンモードや、パスワードが付いている辞書ファイルを読み
+書きモードでオープンする場合のパスワードファイルなどが指定できます。なお、
+辞書指定は正変換用と逆変換用で独立して指定するので、 あらかじめ 
+*set-wnn-reverse* で、どちらの環境かを指定します。
+
+## Function: set-wnn-reverse ARG
+     ARG が `nil' のとき正変換環境、`t' のとき逆変換環境を指定する。
+     `eggrc' で、辞書、附属語、パラメータを読み込む環境を指定する。
+
+## Function: add-wnn-dict DFILE HFILE PRIORITY DMODE HMODE &optional DPASWD HPASWD
+     辞書 DFILE を優先順位 PRIORITYで使用し、この辞書の頻度ファイルに 
+     HFILE を指定する。辞書ファイルモード DMODE と 頻度ファイルモード 
+     HMODE はそれぞれ `non-nil' なら読み書きモードでオープンし、`nil' な
+     ら読み込みのみでオープンする。辞書、頻度にパスワードのついたファイ
+     ルを読み書きモードでオープンしたい場合には、 DPASWD, HPASWD に、パ
+     スワードのはいったファイルを指定すればよい。なお、このパスワードファ
+     イルはクライアント側にあるファイルなので絶対パスで指定する。ファイ
+     ルのパス名は `$WNNLIB' からの相対パス(日本語の場合、デフォルトは 
+     `/usr/local/lib/wnn/ja_JP') で、ファイル名の先頭に `!' をつけるとク
+     ライアント側のファイルになる。
+          例:
+          (add-wnn-dict "pubdic/kihon.dic" "usr/$USER/kihon.h" 5 nil t)
+
+          (add-wnn-dict "usr/$USER/ud" "" 5 t t)
+
+          (add-wnn-dict "pubdic/local.dic" "usr/$USER/local.h"
+          	      5 t t "/usr/local/lib/wnn/passwd_dic"
+          	      "/usr/local/lib/wnn/passwd_frq")
+
+辞書以外にも、関数 *set-wnn-fuzokugo* を使って付属語ファイルの指定を行う
+こともできます。
+
+## Function: set-wnn-fuzokugo FUZOKUGO-FILE
+     FUZOKUGO-FILE を付属語ファイルに指定する。ファイルのパス名は 
+     `$WNNLIB' からの相対パス(日本語の場合、デフォルトは 
+     `/usr/local/lib/wnn/ja_JP') になる。
+
+
+また、*set-wnn-param* によって変換パラメータを細かく指定することもできま
+す。
+
+## Command: set-wnn-param N NSHO P1 P2 ... P15
+     変換パラメータを設定する。パラメータの意味は以下の通り。
+     N
+          N(大)文節解析のN
+     NSHO
+          大文節中の小文節の最大数
+     P1
+          幹語の頻度のパラメータ
+     P2
+          小文節長のパラメータ
+     P3
+          幹語長のパラメータ
+     P4
+          今使ったよビットのパラメータ
+     P5
+          辞書のパラメータ
+     P6
+          小文節の評価値のパラメータ
+     P7
+          大文節長のパラメータ
+     P8
+          小文節数のパラメータ
+     P9
+          疑似品詞 数字の頻度
+     P10
+          疑似品詞 カナの頻度
+     P11
+          疑似品詞 英数の頻度
+     P12
+          疑似品詞 記号の頻度
+     P13
+          疑似品詞 閉括弧の頻度
+     P14
+          疑似品詞 付属語の頻度
+     P15
+          疑似品詞 開括弧の頻度
+
+          例:
+          (set-wnn-param  2 10 2 45 5  80 5 1 40  0 400 -100 400  80 200 2 200)
+
+     また、ミニバッファでインタラクティブにパラメータを指定することもできる。
+     `M-x set-wnn-param' とすると、
+
+          : 2
+
+     のようにパラメータが一つずつ順に表示される。値を変更する必要がなけ
+     ればそのまま、変更したければ修正してから `RET' を押すと次のパラメー
+     タに移る。
+
+
+
+File: egg-jp  Node: Input Translation, Prev: Dictionary, Up: Customization, Next: Key Maps
+
+入力文字変換方法の変更
+======================
+
+「たまご」は入力文字変換表に基づいてキー入力を変換します。この変換を行う
+部分を*入力文字変換系*(Input character Translation System: ITS)と呼びま
+す。デフォルトの変換表は、「たまご」システムに含まれる `its-*.el' ファイ
+ル中で定義されています。これを変更するためには、自分の好みの入力変換法を 
+`~/.emacs' ファイルの中に記述してやります。
+
+変換表を作成するには、まず関数 *its-define-mode* によって作成する変換表
+を宣言し、その表での入力変換の方法を関数 *its-defrule*で定義します。
+
+## Function: its-define-mode NAME &optional INDICATOR RESET
+     これから *its-defrule* などが定義する入力文字変換モード NAME を定義
+     選択する。INDICATOR が `non-nil' のときは、このモードが選択された時
+     にその文字列がモードラインに表示される。 RESET が `non-nil' のとき
+     には its-mode の初期化を行う。
+
+          	(its-define-mode "roma-kana" "あ" t)
+
+     は、its-mode として `"roma-kana"' という名前の変換表を新たに定義す
+     ることを宣言する。この変換表が選択されたときには、モードラインには
+     [あ]と表示される。最後の `t' は its-mode `"roma-kana"' を clear す
+     ることを指示する。`nil' の場合は定義の追加を行なう。
+
+## Function: its-defrule INPUT OUTPUT &optional NEXT STATE MAP
+     INPUT は入力文字列を、OUTPUT はそれに対する変換出力文字列を示す。
+
+          	(its-defrule "a" "あ")
+
+     は、"`a'" を "あ" に変換することを意味する。「たまご」では入力の大
+     文字小文字を区別するので、この定義は "`A'" を "あ" に変換することは
+     意味しない。
+
+     NEXT がある場合には、INPUT の入力があると、OUTPUTを変換の出力とし、
+     さらに NEXT が入力としてあったものとして変換を続ける。
+
+          	(its-defrule  "tch" "っ" "ch")
+
+     は、入力 `tch' に対して "っ" を出力した上で、引き続き `ch' が入力さ
+     れたように動作することを指定する。
+
+     第 4引数 STATE がある場合には、INPUT の入力があり、その入力の変換規
+     則が確定していない間 STATE の文字列をフェンス領域に表示する(STATE 
+     が `nil' の場合には OUTPUTを表示する)。すなわち、
+
+          (its-defrule "n" "ん"  nil "n")
+
+     は入力 `n' があった場合、この規則が適用されることが確定するまでの間 
+     `n' を表示することを意味する。変換が確定しない時に表示する文字列は変
+     数 `its:make-terminal-state' および変数 
+     `its:make-non-terminal-state' に指示された関数によって生成される。
+
+     変換規則は MAP で指定された変換表に登録される。MAP が `nil' の場合
+     は最後に *its-define-mode* で定義された変換表に登録される。なお、
+     OUTPUT が `nil' の場合は INPUT に対する変換規則が削除される。
+
+
+例えばローマ字仮名モードで `dhi' と入力したら "でぃ" と変換したい場
+合は、`~/.emacs' に次の行を追加します。
+
+     (its-defrule "dhi" "でぃ" nil nil "roma-kana")
+
+これによって `roma-kana' という変換表に、`dhi' を "でぃ" に変換するルー
+ルが追加されます。
+
+おなじ入力に対して異なる変換を登録した場合は、最新の規則だけが有効になり
+ます。また、変換表から変換規則を削除したい時には、出力に `nil' を指定し
+た *its-defrule* を用います。たとえば、変換表 "roma-kana" にある `tch' 
+という変換規則を削除するには、
+
+       (its-defrule "tch" nil nil nil "roma-kana")
+
+とします。変換表に登録されているすべての変換規則を削除するには、関数 
+*its-define-mode*を用います。たとえば
+
+       (its-define-mode "roma-kana" nil t)
+
+は変換表 "roma-kana" のモードライン表示は変えずに、すべての変換規則を削
+除します。
+
+なお、*its-defrule*によって変換規則を再定義あるいは削除すると、
+
+     (its-defrule "dhi" "でぃ") を再定義しました
+     (its-defrule "tch" "っ") を削除しました
+
+のようなメッセージがミニバッファに出力されます。このメッセージが出力され
+るか否かは、変数 `its:*defrule-verbose*' によって制御できます。
+
+## Global Variable: its:*defrule-verbose*
+     `nil' の場合、its-defrule の警告を抑制する。
+
+
+
+File: egg-jp  Node: Key Maps, Prev: Input Translation, Up: Top, Next: global-map
+
+キーマップ
+**********
+
+「たまご」は、global-map、フェンスモード、漢字変換モードにおいてキーバイ
+ンドを変更しています。
+
+* Menu:
+
+* global-map::		global-map の key binding の変更
+* fence-mode-map:: 	フェンスモードの key binding の変更
+* henkan-mode-map::	漢字変換モードの key binding の変更
+
+
+File: egg-jp  Node: global-map, Prev: Key Maps, Up: Key Maps, Next: fence-mode-map
+
+global-map の key binding の変更
+================================
+
+「たまご」では通常使用している global-map を変更しており、元の 
+global-map は `si:*global-map*' に退避しています。
+
+「たまご」での global-map の変更点は次の通りです。
+
+  1. `self-insert-command' を `egg-self-insert-command' に変更した。
+  2. `(define-key global-map "\C-\\" 'toggle-egg-mode)'
+     `(define-key ctl-x-map  " " 'henkan-region)'
+     `(define-key global-map "\C-^" 'special-symbol-input)'
+     を追加した。
+
+
+File: egg-jp  Node: fence-mode-map, Prev: global-map, Up: Key Maps, Next: henkan-mode-map
+
+フェンスモードの key binding の変更
+===================================
+
+フェンスモードのキーバインドの変更は通常の方法で行います。フェンスモード
+のキーマップには、`fence-mode-map' を使用します。デフォルトのキーバイン
+ドは次の通りです。
+
+     (define-key fence-mode-map "\e"   fence-mode-esc-map)
+     (define-key fence-mode-map "\eh"  'fence-hiragana)
+     (define-key fence-mode-map "\ek"  'fence-katakana)
+     (define-key fence-mode-map "\e<"  'fence-hankaku)
+     (define-key fence-mode-map "\e>"  'fence-zenkaku)
+     (define-key fence-mode-map "\e\C-h" 'its:select-hiragana)
+     (define-key fence-mode-map "\e\C-k" 'its:select-katakana)
+     (define-key fence-mode-map "\eq"    'its:select-downcase)
+     (define-key fence-mode-map "\eQ"    'its:select-upcase)
+     (define-key fence-mode-map "\ez"    'its:select-zenkaku-downcase)
+     (define-key fence-mode-map "\eZ"    'its:select-zenkaku-upcase)
+     (define-key fence-mode-map " "    'henkan-fence-region-or-single-space)
+     (define-key fence-mode-map "\C-@" 'henkan-fence-region)
+     (define-key fence-mode-map "\C-a" 'fence-beginning-of-line)
+     (define-key fence-mode-map "\C-b" 'fence-backward-char)
+     (define-key fence-mode-map "\C-c" 'fence-cancel-input)
+     (define-key fence-mode-map "\C-d" 'fence-delete-char)
+     (define-key fence-mode-map "\C-e" 'fence-end-of-line)
+     (define-key fence-mode-map "\C-f" 'fence-forward-char)
+     (define-key fence-mode-map "\C-g" 'fence-cancel-input)
+     (define-key fence-mode-map "\C-h" 'help-command)
+     (define-key fence-mode-map "\C-i" 'undefined)  
+     (define-key fence-mode-map "\C-j" 'undefined)  ;;; LFD
+     (define-key fence-mode-map "\C-k" 'fence-kill-line)
+     (define-key fence-mode-map "\C-l" 'fence-exit-mode)
+     (define-key fence-mode-map "\C-m" 'fence-exit-mode)  ;;; RET
+     (define-key fence-mode-map "\C-n" 'undefined)
+     (define-key fence-mode-map "\C-o" 'undefined)
+     (define-key fence-mode-map "\C-p" 'undefined)
+     (define-key fence-mode-map "\C-q" 'its:select-previous-mode)
+     (define-key fence-mode-map "\C-r" 'undefined)
+     (define-key fence-mode-map "\C-s" 'undefined)
+     (define-key fence-mode-map "\C-t" 'fence-transpose-chars)
+     (define-key fence-mode-map "\C-u" 'undefined)
+     (define-key fence-mode-map "\C-v" 'undefined)
+     (define-key fence-mode-map "\C-w" 'henkan-fence-region)
+     (define-key fence-mode-map "\C-x" 'undefined)
+     (define-key fence-mode-map "\C-y" 'undefined)
+     (define-key fence-mode-map "\C-z" 'eval-expression)
+     (define-key fence-mode-map "\C-|" 'fence-toggle-egg-mode)
+     (define-key fence-mode-map "\C-_" 'jis-code-input)
+     (define-key fence-mode-map "!"	  'fence-insert-self-command)
+     .....
+     .....
+     (define-key fence-mode-map "~"	  'fence-insert-self-command)
+     (define-key fence-mode-map "\177" 'fence-backward-delete-char)
+
+
+File: egg-jp  Node: henkan-mode-map, Prev: fence-mode-map, Up: Key Maps, Next: Japanese Texinfo
+
+仮名漢字変換モードの key binding の変更
+=======================================
+
+仮名漢字変換モードのキーバインドの変更は通常の方法で行います。仮名漢字変
+換モードのキーマップには、`henkan-mode-map' を使用します。デフォルトのキー
+バインドは次のようになっています。
+
+     (define-key henkan-mode-map "\e"   henkan-mode-esc-map)
+     (define-key henkan-mode-map "\ei"  'henkan-bunsetu-chijime-sho)
+     (define-key henkan-mode-map "\eo"  'henkan-bunsetu-nobasi-sho)
+     (define-key henkan-mode-map "\es"  'henkan-select-kouho-dai)
+     (define-key henkan-mode-map "\eh"  'henkan-hiragana)
+     (define-key henkan-mode-map "\ek"  'henkan-katakana)
+     (define-key henkan-mode-map "\ez"  'henkan-select-kouho-sho)
+     (define-key henkan-mode-map "\e<"  'henkan-saishou-bunsetu)
+     (define-key henkan-mode-map "\e>"  'henkan-saichou-bunsetu)
+     (define-key henkan-mode-map " "    'henkan-next-kouho)
+     (define-key henkan-mode-map "\C-@" 'henkan-kakutei-first-char)
+     (define-key henkan-mode-map "\C-a" 'henkan-first-bunsetu)
+     (define-key henkan-mode-map "\C-b" 'henkan-backward-bunsetu)
+     (define-key henkan-mode-map "\C-c" 'henkan-quit)
+     (define-key henkan-mode-map "\C-d" 'undefined)
+     (define-key henkan-mode-map "\C-e" 'henkan-last-bunsetu)
+     (define-key henkan-mode-map "\C-f" 'henkan-forward-bunsetu)
+     (define-key henkan-mode-map "\C-g" 'henkan-quit)
+     (define-key henkan-mode-map "\C-h" 'henkan-help-command)
+     (define-key henkan-mode-map "\C-i" 'henkan-bunsetu-chijime-dai)
+     (define-key henkan-mode-map "\C-j" 'undefined)
+     (define-key henkan-mode-map "\C-k" 'henkan-kakutei-before-point)
+     (define-key henkan-mode-map "\C-l" 'henkan-kakutei)
+     (define-key henkan-mode-map "\C-m" 'henkan-kakutei)
+     (define-key henkan-mode-map "\C-n" 'henkan-next-kouho)
+     (define-key henkan-mode-map "\C-o" 'henkan-bunsetu-nobasi-dai)
+     (define-key henkan-mode-map "\C-p" 'henkan-previous-kouho)
+     (define-key henkan-mode-map "\C-q" 'undefined)
+     (define-key henkan-mode-map "\C-r" 'undefined)
+     (define-key henkan-mode-map "\C-s" 'undefined)
+     (define-key henkan-mode-map "\C-t" 'toroku-henkan-mode)
+     (define-key henkan-mode-map "\C-u" 'undefined)
+     (define-key henkan-mode-map "\C-v" 'henkan-inspect-bunsetu)
+     (define-key henkan-mode-map "\C-w" 'henkan-next-kouho-dai)
+     (define-key henkan-mode-map "\C-x" 'undefined)
+     (define-key henkan-mode-map "\C-y" 'undefined)
+     (define-key henkan-mode-map "\C-z" 'henkan-next-kouho-sho)
+     (define-key henkan-mode-map "!"	   'henkan-kakutei-and-self-insert)
+     ....
+     ....
+     (define-key henkan-mode-map "~"	   'henkan-kakutei-and-self-insert)
+     (define-key henkan-mode-map "\177" 'henkan-quit)
+
+
+File: egg-jp  Node: Japanese Texinfo, Prev: henkan-mode-map, Up: Top, Next: Japanese Font
+
+日本語 Texinfo
+**************
+
+「たまご」を用いると、この Info のように Texinfo に日本語を使うことがで
+きます。これは、次のファイルの変更によって実現されています。
+
+`man/texinfo.tex'
+     Texinfo 本体および設定に応じて国別の texinfo ファイルを読み込む
+`man/texinfo-jp.tex'
+     日本語フォント、見出しの日本語、日本語の索引の処理
+`man/texindex.c'
+     EUC 文字を含む index ファイルの処理
+`lisp/texinfmt.el'
+`lisp/texinfmt.elc'
+     `@cindex' と `@defvr' の処理
+
+* Menu:
+
+* Japanese Font::	日本語文字の使用.
+* Japanese in Index::	日本語文字を含む索引.
+* Extension to defvr:: 	defvrの拡張.
+
+
+File: egg-jp  Node: Japanese Font, Prev: Japanese Texinfo, Up: Japanese Texinfo, Next: Japanese in Index
+
+日本語文字の使用
+================
+
+Mule ではいろいろな国の言語を利用できるため、Texinfo でも多国語に対応す
+る必要があります。それで Mule に付属する Texinfo では、ファイルの先頭で
+使用する言語を指定することにより、各国語に対応するための設定を行うファイ
+ルを読み込ませることができます。
+
+たとえば、日本語を使用する場合には、
+
+     \def\lang{jp}
+
+という行を `texinfo.tex' を読み込む前に指定することにより、日本語フォン
+トなどの設定を行う `texinfo-jp.tex' を自動的に読み込み、Texinfo 中で日本
+語が使えるようになります。日本語 TeX には、NTT 版と ASCII 版の 2種類があ
+りますが、`texinfo-jp.tex' はどちらの TeX にも自動的に対応します。
+
+
+Texinfo ではテキストの属性、たとえば定義なのか変数なのかを明らかにできる
+ようにするためのコマンドがいくつかありますが、日本語環境では以下のコマン
+ドの引数として、日本語を用いることができます。
+
+ただし、日本語 TeX で広く使用可能なフォントは明朝体とゴシック体だけなの
+で、英字フォントを駆使した場合とはかなり効果が違います。たとえば、英字で
+斜体が使われる場合とボールド体が使われる場合の両方とも、ゴシック体が使わ
+れます。注意して使用してください。
+
+`@code'
+     印刷された場合は明朝体になり、Infoファイルでは`...'でかこまれて表示
+     されます。
+`@samp'
+     印刷された場合は明朝体で`...'でかこまれて、Infoファイルでは`...' 
+     でかこまれて表示されます。
+`@file'
+     印刷された場合は明朝体で`...'でかこまれて、Infoファイルでは`...' 
+     でかこまれて表示されます(`@samp'と現状では同じです)。
+`@kbd'
+     印刷された場合は明朝体になり、Infoファイルでは`...'でかこまれて表示
+     されます。
+`@key'
+     印刷された場合は明朝体になり、Infoファイルではそのまま表示されます。
+`@ctrl'
+     印刷された場合は明朝体で ^ がついて、Infoファイルでは引数の最初の文
+     字に よって示されるコントロール文字が表示されます。
+`@var'
+     印刷された場合はゴシック体で、Infoファイルではそのまま表示されます。
+`@dfn'
+     印刷された場合はゴシック体で、Infoファイルでは"..."でかこまれて表示
+     されます。
+`@cite'
+     印刷された場合はゴシック体で、Infoファイルでは`...'でかこまれて表示
+     されます。
+`@emph'
+     印刷された場合はゴシック体で、Infoファイルでは*...*でかこまれて表示
+     されます。
+`@strong'
+     印刷された場合はゴシック体で、Infoファイルでは*...*でかこまれて表示
+     されます(日本語文字の場合、`@emph'と同じになります)。
+`@i'
+     印刷された場合はゴシック体で、Infoファイルではそのまま表示されます。
+`@b'
+     印刷された場合はゴシック体で、Infoファイルではそのまま表示されます。
+`@t'
+     印刷された場合は明朝体で、Infoファイルではそのまま表示されます。
+
+
+File: egg-jp  Node: Japanese in Index, Prev: Japanese Font, Up: Japanese Texinfo, Next: Extension to defvr
+
+日本語文字を含む索引項目
+========================
+
+概念索引の項目として、日本語文字を含むものを使うことができます。
+
+     @cindex CONCEPT[YOMI]
+
+という形で索引項目を指定します。YOMI にはひらがなを用いて下さい。項目 
+CONCEPT は読み YOMI の順で並べ変えられて、概念索引に現れます。索引には 1
+バイト文字、2バイト文字の順で、2バイト文字はあいうえお順で現れます。
+
+たとえば、
+
+     @cindex 概念索引[がいねんさくいん]
+
+のように項目を指定し、
+
+     @printindex cp
+
+で索引を生成させると、ガの位置に概念索引という項目があらわれます。
+
+
+File: egg-jp  Node: Extension to defvr, Prev: Japanese in Index, Up: Japanese Texinfo, Next: Sun Key map
+
+defvr の拡張
+============
+
+コマンド @defvr を用いて変数の説明を行なう場合に、その変数がローカルかグ
+ローバルかを示すことができます。
+
+     @defvr {Global variable} variable-name
+     変数の説明
+
+は、Info ファイルでは次のように、
+
+     ## Global Variable: variable-name
+          変数の説明
+
+また印刷された場合には次のようになります。
+
+## Global variable: variable-name
+     変数の説明
+
+ローカル変数を説明する時には、
+
+     @defvr {Local variable} another-variable-name
+
+としてください。
+
+
+File: egg-jp  Node: Sun Key map, Prev: Extension to defvr, Up: Top, Next: Part-of-Speech
+
+Sun の X11 におけるキー割り当て
+*******************************
+
+Sun 上で X11 を使用する場合、`$MULE/lisp/egg-keymap.el'をロードすること
+により(例えば、`.emacs'の中で `(load "egg-keymap")'を実行すると) Sun の
+ファンクション・キーが使用できます。キー割り当ては以下の通りです。
+
+F1
+     ファイル文字コードの設定(*set-file-coding-system*)
+F2
+     辞書項目編集(*edit-dict-item*)
+F3
+     JISコード入力(*jis-code-input*)
+F4
+     辞書登録(*toroku-region*)
+F5
+     リージョン中の半角を全角に変える(*zenkaku-region*)
+F6
+     リージョン中の全角を半角に変える(*hankaku-region*)
+F7
+     リージョン中のひらがなをカタカナに変える(*katakana-region*)
+F8
+     リージョン中のカタカナをひらがなに変える(*hiragana-region*)
+F9
+     リージョンの仮名漢字変換(*henkan-region*)
+L1
+     buffer の内容を現在アクティブな buffer に挿入する (*insert-buffer*)
+L2
+     ファイルの内容を現在アクティブな buffer に挿入する(*insert-file*)
+L3
+     リージョンを評価する(*eval-region*)
+L4
+     現在アクティブな buffer を評価する(*eval-current-buffer*)
+L5
+     ウインドウの大きさを大きくする(*enlarge-window*)
+L6
+     ウインドウの大きさを小さくする(*shrink-window*)
+L7
+     現在アクティブな buffer のテキストの変更を取り消す 
+     (*revert-buffer*)
+L8
+     現在アクティブな buffer のテキストの変更を取り消す 
+     (*revert-buffer*)
+L9
+     現在アクティブな buffer の先頭にカーソルをもっていく 
+     (*beggining-of-buffer*)
+L10
+     現在アクティブな buffer の最後にカーソルをもっていく 
+     (*end-of-buffer*)
+
+
+File: egg-jp  Node: Part-of-Speech, Prev: Sun Key map, Up: Top, Next: Concept Index
+
+品詞の扱いについて
+******************
+
+辞書登録における品詞の扱いについて、pubdic マネジャである橘さんが pubdic 
+参加者に宛てた e-mail の一部を以下に転載します。ここで挙げたものは Wnn
+V3 以前の品詞構成を対象にしていますので、現在の「たまご」の品詞とは違い
+ますが、辞書登録の際に参考にはなるでしょう。Wnn V4 の品詞構成は、各サイ
+トの `$WNNLIB/hinsi.data' を見て下さい。
+
+普通名詞
+     これは言うまでもないと思います。ただし、固有名詞、"する" が付くと動
+     詞になるものには使わないで下さい。
+固有名詞
+     人名
+          人名に使用します。
+     地名
+          地名に使用します。
+     人名&地名
+          人名と地名の両方に使用するものに使います。
+     固有名詞
+          その他の固有名詞に使います。
+動詞
+     五段
+          "書か/ない", "書き/ます", "書く", "書け/ば", "書こ/う"のように
+          五段活用するものに使います。登録する時は"書" を "か" だけで登
+          録します。
+     一段(体)
+          使わないで下さい。
+     一段(非体)
+          "落ち/ない", "落ち/ます", "落ちる", "落ちれ/ば", "落ちろ" のよ
+          うな一段活用動詞の変化しない部分"落ち" を登録します。
+     サ変(する)
+          "達し/ない", "達し/ます", "達する", "達すれ/ば", "達せよ" のよ
+          うなサ行変格活用する動詞に使います。"達" を "たっ" で登録しま
+          す。語幹が名詞であるものは名詞(する) を使って下さい。
+     サ変(ずる)
+          基本的に上と同じですが、"論ずる" のようにザ行で活用するものに
+          使います。
+     その他
+          pd-wnn と関係しますが、使う必要はないと思います。
+形容動詞
+     ダナ型
+          "簡単な", "簡単だ" のような普通の形容動詞の語幹"簡単" を登録し
+          ます。名詞とだぶるものも多いですが、そういう場合は両方に登録し
+          ます。
+     トタル型
+          "毅然と/した", "毅然たる" のような文語的形容動詞に使います。
+形容詞
+     "美しかっ/た", "美しく/ない", "美しい", "美しけれ/ば"のような形容詞
+     の語幹 "美し" を登録します。
+連体詞
+     "この" (とっさに他の例が思い浮かばない)のように体言にかかる活用しな
+     い語を登録します。
+副詞
+     "だんだん", "せめて" のように用言に掛かる活用しない語を登録します。
+接続詞
+感動詞
+     "しかし", "やはり", "へえ", "ふーん" などです。
+単漢字
+     一つの漢字から構成される語でも、ちゃんと名詞とか接尾語とか使うよう
+     に。
+接頭語
+     "助"(監督,教授など), "大"(宣伝,改革など), "ウルトラ" など。
+接尾語
+     "者"(担当,賛成など), "区"(品川,新宿など), "マン" など。
+助数詞
+     接尾語と似ているが、"円", "年" など数字の後に付くもの。
+数詞
+     現在使用していません。
+
+
+File: egg-jp  Node: Concept Index, Prev: Part-of-Speech, Up: Top, Next: Functions&Variables
+
+概念索引
+********
+
+
+* Menu:
+
+* CSERVER: Overview.
+* Emacs: Overview.
+* ITS: Input Translation.
+* ITS: Overview.
+* JIS入力: JIS Input.
+* JSERVER: Conversion Mode.
+* JSERVER: Overview.
+* Mule: Overview.
+* Sun: Sun Key map.
+* TeX: Japanese Font.
+* Wnn: Configuration.
+* Wnn: Overview.
+* X11: Sun Key map.
+* X11R5: Hangul Input.
+* customization: Customization.
+* eggrc: Dictionary.
+* fonts: Japanese Font.
+* pubdic: Part-of-Speech.
+* texinfo: Japanese Texinfo.
+* 16進入力: Fence Mode.
+* 一括式変換: Batch Method.
+* インクリメンタルサーチ: Isearch.
+* 大文字変換表: Input Translation Table.
+* カーソル移動(フェンス内での): Fence Mode.
+* カタカナ変換: Katakana Conversion.
+* カタカナ変換表: Input Translation Table.
+* 仮名漢字変換: Conversion Mode.
+* 仮名漢字変換: Interactive Method.
+* 仮名漢字変換コマンド: Conversion Command.
+* 変換サーバ: Server.
+* 漢字入力: Kanji Input.
+* 漢字変換モード: Conversion Mode.
+* 概念索引: Japanese in Index.
+* キーマップ: Key Maps.
+* 記号入力: Interactive Method.
+* 逆変換: Reverse Conversion.
+* 句点: Kuten and Touten.
+* 項目: Japanese in Index.
+* 小文字変換表: Input Translation Table.
+* ゴシック体: Japanese Font.
+* サーバ指定: Initialization.
+* 索引: Japanese in Index.
+* 削除(辞書項目の): Editing.
+* 削除(変換規則の): Input Translation.
+* システム辞書: Dictionary.
+* 初期設定: Initialization.
+* 辞書: Dictionary Management.
+* 辞書: Dictionary.
+* 辞書指定: Initialization.
+* 辞書登録: Registration.
+* 辞書編集: Editing.
+* 全角大文字変換表: Input Translation Table.
+* 全角小文字変換表: Input Translation Table.
+* 全角変換: Zenkaku Conversion.
+* 対話式漢字入力: Interactive Method.
+* たかな: Overview.
+* たまご: Overview.
+* 「たまご」のモード: Interactive Method.
+* 透過モード: Transparent Mode.
+* 読点: Kuten and Touten.
+* 動作環境: Configuration.
+* 入力文字変換: Interactive Method.
+* 入力文字変換系: Input Translation.
+* 入力文字変換方法: Input Translation.
+* 入力文字変換モード: Input Mode.
+* 抜け方(漢字変換モードからの): Conversion Command.
+* 抜け方(辞書編集からの): Editing.
+* 抜け方(フェンスモードからの): Fence Mode.
+* 抜け方(メニューからの): Menu Selection.
+* 半角変換: Hankaku Conversion.
+* ハングル: Hangul Input.
+* バグレポートの送り先: Overview.
+* 表示法(フェンスモードの): Fence Mode.
+* ひらがな漢字変換: Kanji Conversion.
+* ひらがな変換: Hiragana Conversion.
+* ひらがな変換表: Input Translation Table.
+* 品詞: Part-of-Speech.
+* 頻度ファイル: Dictionary.
+* ファンクション・キー: Sun Key map.
+* フェンス: Input Mode.
+* フェンスモード: Fence Mode.
+* 変換表: Input Translation Table.
+* ミニバッファ: Input in Minibuffer.
+* ミニバッファでの漢字入力: Input in Minibuffer.
+* 明朝体: Japanese Font.
+* メニュー: Menu Selection.
+* モードライン: Interactive Method.
+* モードラインの表示(変換表の): Input Translation.
+* 読み: Japanese in Index.
+* 利用者辞書: Dictionary.
+* ローマ字仮名変換法: Input Translation.
+* ローマ字漢字変換: RomaKan Conversion.
+* ローマ字ひらがな変換: RomaHira Conversion.
+* んの入力法: Kuten and Touten.
+* カスタマイズ: Customization.
+
+
+File: egg-jp  Node: Functions&Variables, Prev: Concept Index, Up: Top
+
+関数・変数索引
+**************
+
+
+* Menu:
+
+* add-wnn-dict: Dictionary.
+* b (bold font): Japanese Font.
+* busyu-input: Interactive Method.
+* cindex: Japanese in Index.
+* cite: Japanese Font.
+* code: Japanese Font.
+* ctrl: Japanese Font.
+* defvar: Extension to defvr.
+* dfn: Japanese Font.
+* disconnect-wnn: Server.
+* edit-dict-item: Editing.
+* emph: Japanese Font.
+* file: Japanese Font.
+* henkan-hiragana: Conversion Command.
+* henkan-inspect-bunsetu: Conversion Command.
+* henkan-katakana: Conversion Command.
+* henkan-saichou-bunsetu: Conversion Command.
+* henkan-saishou-bunsetu: Conversion Command.
+* henkan-select-kouho: Conversion Command.
+* i (italic font): Japanese Font.
+* isearch: Isearch.
+* isearch-backward: Isearch.
+* isearch-backward-regexp: Isearch.
+* isearch-forward: Isearch.
+* isearch-forward-regexp: Isearch.
+* its-define-mode: Input Translation.
+* its-defrule: Input Translation.
+* jis-code-input: JIS Input.
+* kakusuu-input: Interactive Method.
+* kbd: Japanese Font.
+* key: Japanese Font.
+* next-mode: Selecting Translation Table.
+* previous-mode: Selecting Translation Table.
+* printindex: Japanese in Index.
+* samp: Japanese Font.
+* select-downcase: Selecting Translation Table.
+* select-hiragana: Selecting Translation Table.
+* select-katakana: Selecting Translation Table.
+* select-mode-from-menu: Selecting Translation Table.
+* select-notification: Conversion Mode.
+* select-upcase: Selecting Translation Table.
+* select-zenkaku-downcase: Selecting Translation Table.
+* select-zenkaku-upcase: Selecting Translation Table.
+* set-cserver-host-name: Server.
+* set-dict-comment: Editing.
+* set-egg-fence-mode-format: Fence Mode.
+* set-egg-henkan-mode-format: Conversion Example.
+* set-jserver-host-name: Server.
+* set-wnn-fuzokugo: Dictionary.
+* set-wnn-param: Dictionary.
+* set-wnn-reverse: Dictionary.
+* special-symbol-input: Interactive Method.
+* strong: Japanese Font.
+* t (typewriter font): Japanese Font.
+* toggle-egg-mode: Fence Mode.
+* toggle-egg-mode: Input Mode.
+* toroku-henkan-mode: Registration.
+* toroku-region: Registration.
+* var: Japanese Font.
+
+
+
+

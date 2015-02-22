@@ -1,0 +1,460 @@
+############################################################
+#        CODING SYSTEM					   #
+############################################################
+
+Contents:
+	1. What is coding-system?
+	2. Structure of coding-system
+	  2.1 Property 'coding-system
+	  2.2 Property 'eol-type
+	  2.3 Property 'post-read-conversion
+	  2.4 Property 'pre-write-conversion
+	3. How to create coding-system?
+	4. Predefined coding-system
+	6. Automatic conversion
+	  6.1 Category of coding-system
+	  6.2 How automatic conversion works?
+	  6.3 Priority of category
+	7. How coding-system is shown in mode-line?
+	8. ISO2022
+	9. Special treatment of Big5
+
+1. What is coding-system?
+
+`coding-system' is a method for encoding several
+character-sets and represented by a symbol which has
+properties of 'coding-system and 'eol-type.
+
+You can specify different coding-system on file I/O, process
+I/O, output to terminal (if not running on X), input from
+keyboard (if not running on X).
+
+
+2. Structure of coding-system
+
+2.1 Property 'coding-system
+
+The value of the property 'coding-system is a vector:
+  [ TYPE MNEMONIC DOCUMENT DUMMY FLAGS ]
+or the other coding-system.  Contents of the vector are:
+  TYPE:	nil: no conversion, t: automatic conversion,
+	0:Internal, 1:Shift-JIS, 2:ISO2022, 3:Big5, 4:CCL.
+  MNEMONIC: a character shown at mode-line to indicate the coding-system.
+  DOCUMENT: a describing documents for the coding-system.
+  DUMMY: always nil (for backward compatibility)
+  FLAGS (option): more precise information about the coding-system,
+    If TYPE is 2 (ISO2022), FLAGS should be a list of:
+      LC-G0, LC-G1, LC-G2, LC-G3:
+	Leading character of charset initially designated to G? graphic set,
+	nil means G? is not designated initially,
+	lc-invalid means G? can never be designated to,
+	if (- leading-char) is specified, it is designated on output,
+      SHORT: non-nil - allow such as \"ESC $ B\", nil - always \"ESC $ \( B\",
+      ASCII-EOL: non-nil - designate ASCII to g0 at end of line on output,
+      ASCII-CNTL: non-nil - designate ASCII to g0 at control codes on output
+      SEVEN: non-nil - use 7-bit environment on output,
+      LOCK-SHIFT: non-nil - use locking-shift (SO/SI) instead of single-shift
+	or designation by escape sequence,
+      USE-ROMAN: non-nil - designate JIS0201-1976-Roman instead of ASCII,
+      USE-OLDJIS: non-nil - designate JIS0208-1976 instead of JIS0208-1983,
+      NO-ISO6429: non-nil - don't use ISO6429's direction specification,
+  If TYPE is 3 (Big5), FLAGS `t' means Big5-ETen, `nil' means Big5-HKU,
+  If TYPE is 4 (private), FLAGS should be a cons of CCL programs
+    for encoding and decoding.  See documentation of CCL for more detail.
+
+2.2 Property 'eol-type
+
+The value of the property 'eol-type is:
+  nil: no conversion for end-of-line type
+  1:   LF
+  2:   CRLF
+  3:   CR
+  vector of length 3: automatic detection of end-of-line type.
+	1st element: coding-system of eol-type LF
+	2nd element: coding-system of eol-type CRLF
+	3rd element: coding-system of eol-type CR
+
+2.3 Property 'post-read-conversion
+
+The value of the property 'post-read-conversion is a
+function to convert some text just read into a buffer.  When
+the function is called, the text has already been converted
+according to 'coding-system and 'eol-type of the
+coding-system.  The argument of the function is the region
+(START and END) of inserted text.
+
+2.4 Property 'pre-write-conversion
+
+The value of the property 'pre-write-conversion is a
+function to convert some text just before writing it out.
+After the function is called, the text is converted accoding
+to 'coding-system and 'eol-type of the coding-system.  The
+argument of the function is the region (START and END) of
+the text.
+
+
+3. How to create coding-system?
+
+Mule provides a function `make-coding-system' to create a
+coding-system.
+
+FUNCTION make-coding-system: TYPE MNEMONIC DOC &optional EOL-TYPE FLAGS
+
+Register symbol NAME as a coding-system whose 'coding-system
+property is a vector [ TYPE MNEMONIC DOC nil FLAGS ] and
+'eol-type property is EOL-TYPE.  If `t' is specified as
+EOL-TYPE, the value of 'eol-type property is a vector of
+generated coding-systems whose 'eol-type properties are 1
+(LF), 2 (CRLF), and 3 (CR).  The names of generated
+coding-systems are NAMEunix, NAMEdos, and NAMEmac respectively.
+
+Just to make an alias of some coding-system, call a fucntion
+`copy-coding-system'.
+
+FUNCTION copy-coding-system: ORIGINAL ALIAS
+
+Make the same coding-system as ORIGINAL and name it ALIAS.
+If 'eol-type property of ORIGINAL is a vector, coding-systems
+ALIASunix, ALIASdos, and ALIASmac are generated, and
+'eol-type property of ALIAS becomes a vector of them.
+
+#######################################
+#### Important incompatible change ####
+#######################################
+
+Although mule of the previous version predefined such
+coding-systems as *sjis-dos* and *junet-dos*, these are now
+obsolete and you should use *sjis*dos and *junet*dos
+instead.
+
+
+4. Predefined coding-system
+
+In the file lisp/mule.el, the following coding-systems are
+predefined.
+
+----- lisp/mule.el -----------------------------------------
+(make-coding-system
+ '*noconv* nil
+ ?= "No conversion.")
+
+(make-coding-system
+ '*autoconv* t
+ ?+ "Automatic conversion." t)
+
+(make-coding-system
+ '*internal* 0
+ ?= "Internal coding-system used in a buffer.")
+
+(make-coding-system
+ '*sjis* 1
+ ?S "Coding-system of Shift-JIS used in Japan." t)
+
+(make-coding-system
+ '*iso-2022-jp* 2
+ ?J "Coding-system used for communication with mail and news in Japan."
+ t
+ (list lc-ascii lc-invalid lc-invalid lc-invalid
+       'short 'ascii-eol 'ascii-cntl 'seven))
+(copy-coding-system '*iso-2022-jp* '*junet*)
+
+(make-coding-system
+ '*oldjis* 2
+ ?J "Coding-system used for old jis terminal."
+ t
+ (list lc-ascii lc-invalid lc-invalid lc-invalid
+       'short 'ascii-eol 'ascii-cntl 'seven nil 'use-roman 'use-oldjis))
+
+(make-coding-system
+ '*ctext* 2
+ ?X "Coding-system used in X as Compound Text Encoding."
+ t
+ (list lc-ascii lc-ltn1 lc-invalid lc-invalid
+       nil 'ascii-eol))
+
+(make-coding-system
+ '*euc-japan* 2
+ ?E "Coding-system of Japanese EUC (Extended Unix Code)."
+ t
+ (list lc-ascii lc-jp lc-kana lc-jp2
+       'short 'ascii-eol 'ascii-cntl))
+
+(make-coding-system
+ '*euc-korea* 2
+ ?K "Coding-system of Korean EUC (Extended Unix Code)."
+ t
+ (list lc-ascii lc-kr lc-invalid lc-invalid
+       nil 'ascii-eol 'ascii-cntl))
+;; 93.12.16 by K.Handa
+(copy-coding-system '*euc-korea* '*euc-kr*)
+
+(make-coding-system
+ '*iso-2022-kr* 2
+ ?k "Coding-System used for communication with mail in Korea."
+ nil
+ (list lc-ascii (- lc-kr) lc-invalid lc-invalid
+       nil 'ascii-eol 'ascii-cntl 'seven 'lock-shift))
+(copy-coding-system '*iso-2022-kr* '*korean-mail*)
+
+(make-coding-system
+ '*euc-china* 2
+ ?C "Coding-system of Chinese EUC (Extended Unix Code)."
+ t
+ (list lc-ascii lc-cn lc-invalid lc-invalid
+       nil 'ascii-eol 'ascii-cntl))
+
+(make-coding-system
+ '*iso-2022-ss2-8* 2
+ ?I "ISO-2022 coding system using SS2 for 96-charset in 8-bit code."
+ t
+ (list lc-ascii lc-invalid nil lc-invalid
+       nil 'ascii-eol 'ascii-cntl))
+
+(make-coding-system
+ '*iso-2022-ss2-7* 2
+ ?I "ISO-2022 coding system using SS2 for 96-charset in 7-bit code."
+ t
+ (list lc-ascii lc-invalid nil lc-invalid
+       'short 'ascii-eol 'ascii-cntl 'seven))
+
+(make-coding-system
+ '*iso-2022-lock* 2
+ ?i "ISO-2022 coding system using Locking-Shift for 96-charset."
+ t
+ (list lc-ascii nil lc-invalid lc-invalid
+       nil 'ascii-eol 'ascii-cntl 'seven
+       'lock-shift))			;93.12.1 by H.Minamino
+
+(make-coding-system
+ '*big5-eten* 3
+ ?B "Coding-system of BIG5-ETen."
+ t t)
+
+(make-coding-system
+ '*big5-hku* 3
+ ?B "Coding-system of BIG5-HKU."
+ t nil)
+------------------------------------------------------------
+
+
+6. Automatic conversion
+
+6.1 Category of coding-system
+
+Mule has a facility to detect coding-system of text
+automatically, however, what mule actually detect is not a
+coding-system itself but a category of coding-system.  A
+category is also represented by a symbol and a value should
+be an actual coding-system.
+
+There are eight categories:
+
+*coding-category-internal*:
+	coding-system used in a buffer
+
+*coding-category-sjis*
+	Shift-JIS
+
+*coding-category-iso-7*
+	ISO2022 variation with the following feature:
+	  o no locking shift, single shift
+	  o only G0 is used
+
+*coding-category-iso-8-1*
+	ISO2022 variation with the following feature:
+	  o no locking shift
+	  o designation sequence is allowed only for G0 and G1
+	  o G1 is used only for 1-byte character set
+
+*coding-category-iso-8-2*
+	ISO2022 variation with the following feature:
+	  o no locking shift
+	  o designation sequence is allowed only for G0 and G1
+	  o G1 is used only for 2-byte character set
+
+*coding-category-iso-else*
+	ISO2022 variation which doesn't satisfy any of above.
+
+*coding-category-big5*
+	Big5 (ETen or HKU)
+
+*coding-category-bin*
+	Any other coding-system which uses MSB.
+
+The values of these symbols are pre-defined as follows:
+----- lisp/mule.el -----------------------------------------
+(defvar *coding-category-internal* '*internal*)
+(defvar *coding-category-sjis* '*sjis*)
+(defvar *coding-category-iso-7* '*junet*)
+(defvar *coding-category-iso-8-1* '*ctext*)
+(defvar *coding-category-iso-8-2* '*euc-japan*)
+(defvar *coding-category-iso-else* '*iso-2022-ss2-7*)
+(defvar *coding-category-big5* '*big5-eten*)
+(defvar *coding-category-bin* '*noconv*)
+------------------------------------------------------------
+but, some of them are overridden in such language specific
+files as japanese.el, chinese.el, etc.
+
+#######################################
+#### Important incompatible change ####
+#######################################
+
+Here's a table of corresponding categories in the previous
+version.
+--------------------------------------------------------
+	new				old
+--------------------------------------------------------
+*coding-category-internal*	*internal-code-category*
+*coding-category-sjis*		*sjis-code-category*
+*coding-category-iso-7*		*junet-code-category*
+*coding-category-iso-8-1*	*ctext-code-category*
+*coding-category-iso-8-2*	*euc-code-category*
+*coding-category-iso-else*	nothing
+*coding-category-big5*		*big5-code-category*
+*coding-category-bin*		*private-code-category*
+
+6.2 How automatic conversion works?
+
+When coding-system `*autoconv*' is specified on reading text
+(this is the default), mule tries to detect a category of
+coding-system by which text are encoded.  If an appropriate
+category is found, it converts text according to a
+coding-system bound to the cateogry.  If the 'eol-type
+property of the coding-system is a vector of coding-systems
+and Mule detects a type of end-of-line (LF, CRLF, or CR) of
+the text, one of those coding-system is used.
+
+Automatic conversion occurs both on reading from files and
+inputing from process.  In the latter case, if some
+coding-system is found, output-coding-system of the process
+is also set to the found coding-system.
+
+6.3 Priority of cateogry
+
+In the case that more than two categories are found, the
+category of the highest priority is selected.
+
+A priority of category is pre-defined as follows:
+----- lisp/mule.el -----------------------------------------
+(set-coding-priority
+ '(*coding-category-iso-8-2*
+   *coding-category-sjis*
+   *coding-category-iso-8-1*
+   *coding-category-big5*
+   *coding-category-iso-7*
+   *coding-category-iso-else*
+   *coding-category-bin*
+   *coding-category-internal*))
+------------------------------------------------------------
+The function `set-coding-priority' put a property 'priority
+to each element of the argument from 0 to 7 (smaller number
+has higher priority).  Some language specific files may
+override this priority.
+
+
+7. How coding-system is shown in mode-line?
+
+Each coding-system has unique mnemonic (one character).
+By default, mnemonic of `file-coding-system' of a buffer is
+shown at the left of mode-line of the buffer.  In addition,
+the mnemonic is followed by an another mnemonic to show
+eol-type of the coding-system.  This mnemonic is defined as
+follows:
+	".": LF
+	":": CRLF
+	"'": CR
+	"_": not yet desided
+	"-": nil (for coding-system of nil, *noconv*, or *internal*)
+So, usual appearance of mode-line for a buffer which is
+visiting a file (*junet* encoding on Unix system) is:
+
+	    +-- mnemonic of file-coding-system
+	    |+-- mnemonic of eol-type
+	    VV
+	[--]J.:----Mule: filename
+
+The left most bracket is the indicator for inputing method.
+
+When a buffer is attaced to some process, coding-system
+for input and output of the process are also shown as
+follows:
+
+	    +-- mnemonic of file-coding-system
+	    |+-- mnemonic of eol-type of file-coding-system
+	    ||+-- mnemonic of input-coding-system of a process
+	    |||+-- mnemonic of eol-type of input-coding-system
+	    ||||+-- mnemonic of output-coding-system of a process
+	    |||||+-- mnemonic of eol-type of output-coding-system
+	    VVVVVV
+	[--]+_+.--:--**-Mule: *shell*
+
+This means that Mule is now communicating with shell with
+coding-systems *autoconv*unix ("+.") for input and nil
+("--") for output.
+
+
+8. ISO2022
+
+For decoding to Type 2 (ISO2022), we have the following
+restrictions:
+
+Locking-Shift:
+  Use SI and SO only when decoding with a coding-system
+  whose LOCK-SHIFT and SEVEN is t.
+Single-Shift:
+  Use SS2 and SS3 (if SEVEN is nil) or ESC N and ESC O (if
+  SEVEN is t).
+Invocation:
+  G0 is always invoked to GL, G1 to GR (but only if SEVEN is
+  nil).  G2 and G3 are invoked to GL by Shingle-Shift of SS2
+  and SS3.
+Unofficial use of ESC sequence for designation:
+  If SEVEN is t, LOCK-SHIFT is nil, and designation to G2
+  and G3 are prohibited, we should designate all character
+  sets to G0 (and hence invoke to GL).  To designate 96
+  char-set to G0, we use "ESC , <F>".  For instance, to
+  designate ISO8859-1 to G0, we use "ESC , A".
+Unofficial use of ESC sequence for composit character:
+  To indicate the start and end of composit character, we
+  use ESC 0 (start) and ESC 1 (end).
+Text direction specifier of ISO6429
+  We use ISO6429's ESC sequence "ESC [ 2 ]" to change text
+  direction to right-to-left, and "ESC [ 0 ]" to revert it
+  to left-to-right.
+
+
+9. Special treatment of Big5
+
+As far as I know, there's several different codes called
+Big5.  The most famous ones are Big5-ETen and
+Big5-HKU-form2.  Since both of them use a code range 0xa140
+- 0xfefe (in each row, columns (second byte) 0x7f - 0xa0 is
+skipped) and number of characters is more than 13000, it's
+impossible to treat each of them as a single character-set
+in the current Mule system.  So, Mule treat them in a quite
+irregular manner as described below:
+
+(1) Mule does not treats them as a different character set,
+but as the same character set called Big5.
+	Caution!! Big5 is a different character set from GB.
+
+(2) Mule divides Big5 into two sub-character-sets:
+	0xa140 - 0xc67e (Level 1)
+	0xc6a1 - 0xfefe (Level 2)
+and allocates two leading-chars lc-big5-1 and lc-big5-2 to
+them.  (See character.txt)
+
+(3) Usually, each leading-char (or character-set) has unique
+character category.  But lc-big5-1 and lc-big5-2 has the
+same character category of mnemonic 't'.  So, regular
+expression "\\ct" matches any Big5 (Level 1 and Level 2)
+characters.  (See syntax.txt)
+
+(4) If you specify ISO2022 type coding-system on output,
+Mule converts Big5 code using unofficial final-characters
+'0' (for Level 1) and '1' (for Level 2).
+
+(5) You can use either fonts of ETen or HKU for displaying
+Big5 code.  Mule judges which font is used by examining
+existence of character whose code point is 0xC6A1.  If it
+exists, the font is HKU, else the fonts is ETen.

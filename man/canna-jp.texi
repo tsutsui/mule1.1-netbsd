@@ -1,0 +1,1798 @@
+\def\lang{jp}
+%\kanjifiletype=20
+\overfullrule=0pt
+\input texinfo @c -*-texinfo-*-
+@comment %**start of header
+@c canna.texinfo release 1.2 91-Sep-6
+@setfilename canna
+@settitle 『かんな/emacs』の手引
+@iftex
+@finalout
+@end iftex
+@comment %**@setchapternewpage odd
+@c      @smallbook
+@comment %**end of header
+
+@titlepage
+@sp 3
+@center @titlefont{『かんな／ｅｍａｃｓ』の手引}
+@sp 4
+@center 第７版
+@sp 1
+@center 1993年11月12日
+@sp 5
+@center 大熊　友嘉里
+@sp 1
+@center 今　　　昭
+@sp 1
+@center NEC 日本電気株式会社
+@page
+
+@vskip 0pt plus 1filll
+
+  一太郎は、(株)ジャストシステムの商標です。
+
+  Canna on Nemacs or Mule is distributed in the forms of patches
+  to Nemacs or Mule under the terms of the GNU EMACS GENERAL
+  PUBLIC LICENSE which is distributed along with GNU Emacs
+  by the Free Software Foundation.
+
+  Canna on Nemacs or Mule is distributed in the hope that it will
+  be useful, but WITHOUT ANY WARRANTY; without even the
+  implied warranty of MERCHANTABILITY or FITNESS FOR A
+  PARTICULAR PURPOSE.  See the GNU EMACS GENERAL PUBLIC
+  LICENSE for more details.
+
+  You should have received a copy of the GNU EMACS GENERAL
+  PUBLIC LICENSE along with Nemacs or Mule; see the file COPYING.
+  If not, write to the Free Software Foundation, 675 Mass
+  Ave, Cambridge, MA 02139, USA.
+
+  $Id: canna.texinfo,v 1.12 1993/11/15 04:32:10 kon Exp $
+@end titlepage
+@synindex vr fn
+@parindent=0.0pt
+
+@c ========================================
+@node Top, 概説, (dir), (dir)
+
+@ifinfo
+『かんな/emacs』へようこそ。
+
+この info ファイルはスペースキーと@kbd{n}だけで全て通して読むことができ
+るようになっています。スペースキーを押し、ページスクロールした時に、もう
+それ以上スクロールできず、ベルがなる様な場合には@kbd{n}を押して下さい。
+次のセクションに進むことができます。@refill
+
+もちろんtexinfoの機能を使って目的の部分だけをツリー上のメニューからたどっ
+て読むこともできます。
+
+是非スペースキーと@kbd{n}を使って一度全体を通して読んでみて下さい。
+@end ifinfo
+
+@menu
+* Intro: 概説.			『かんな/emacs』とは？
+* Init: 初期設定.		『かんな/emacs』で日本語入力するための準備
+* Input: 漢字入力.		日本語入力のしかた
+* Customize: カスタマイズ	カスタマイズ
+* Others: その他.		その他特殊なことについて
+* Changes: 変更点.		変更点
+
+* Index: 索引.		索引
+@end menu
+
+@c %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@node 概説, 特徴, Top, Top
+@chapter 『かんな／ｅｍａｃｓ』とは？
+@c %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@c @dm @multiply@jintercharskip by 30@multiply@jasciikanjiskip by 30
+@cindex かんな[かんな]
+@cindex Nemacs
+@cindex Mule
+@cindex cannaserver
+@cindex いろは[いろは]
+@cindex Canna
+@cindex クライアント[くらいあんと]
+
+『かんな/emacs』とは日本語入力システム『かんな』を組み込んだNemacsまたは
+Muleのことであり、日本語を入力するための機能を追加したNemacsまたはMuleで
+す。かな漢字変換はかな漢字変換サーバであるcannaserverと接続して行います。
+この意味では「『かんな/emacs』はcannaserverのクライアントである」と言え
+ます。 
+
+『かんな』と言う名前は「かな漢字変換」の「かな」(仮名)の古い読
+み方である『かんな』によっています。『かんな』を英語で表記する場
+合はCannaとつづります。
+
+@menu
+* Features: 特徴.	『かんな/emacs』の特徴
+* Config: 物件.		『かんな/emacs』を構成する物件
+@end menu
+
+@c ============================================================
+@node 特徴, 物件, 概説, 概説
+@section 『かんな/emacs』の特徴
+@cindex たまご[たまご]
+@cindex サーバクライアント方式[さーばくらいあんとほうしき]
+@cindex 再変換機能[さいへんかんきのう]
+@cindex カスタマイズ機能[かすたまいずきのう]
+@cindex ユーザインタフェース[ゆーざいんたふぇーす]
+@cindex TTY上のフロントエンド[TTYじょうのふろんとえんど]
+@cindex Xウィンドウ上のフロントエンド[Xうぃんどうじょうのふろんとえんど]
+@cindex カスタマイズファイル[かすたまいずふぁいる]
+
+『かんな/emacs』は次のような特徴を持っています。
+
+@enumerate
+@item
+『たまご』のようなユーザインタフェース
+
+『たまご』のようなユーザインタフェースがいいなら『たまご』を使えば良いと
+思われるでしょう。『かんな』のユーザインタフェースは『たまご』のものと良
+く似ているのですが、『かんな』が『たまご』と比べて大きく異なる点は、
+「『かんな』はemacs以外の環境でも使える」という事です。『かんな』はほと
+んど同じユーザインタフェースをTTY上のフロントエンド(canuum)、Ｘウィンドウ上
+のフロントエンド(kinput2)、等の形で提供しています。
+
+すなわち、UNIXのほとんどすべての環境で『かんな』のユーザインタフェースが
+使えるのです。
+
+『かんな/emacs』は『かんな』ユーザインタフェースを提供するプログラムの１
+つとして準備されています。『かんな』を用いて日本語入力を行うプログラムは
+共通のカスタマイズファイルによってカスタマイズが行えるのはもとより、ほぼ
+共通のかな漢字変換操作を提供します。
+
+@item
+逐次自動変換方式
+
+Nemacs または Mule で逐次自動変換をサポートしたのはおそらく『かんな』が
+初めてでしょう。将来的には一太郎に見られるフル再変換処理を Nemacs または 
+Mule との組み合わせでやりたいところです。 
+
+@item
+カスタマイズ機能
+
+機能のキーに対する割り当てや、ローマ字かな変換規則などがカスタマイズで
+きます。
+
+また、このとき用いるカスタマイズファイルは『かんな』の他のアプリケーショ
+ンで日本語入力を伴うものと共有されます。
+
+@item
+サーバクライアント方式。
+
+どのマシンで使うときも常に同一マシン上の同一の辞書を使えます。
+
+@item
+日本語入力のための付加機能
+
+入力した文字の字種変換によりローマ字やカタカナに変換する機能、入力した英
+単語のCASE(大文字、小文字)を変更する機能、
+記号入力機能、部首入力機能、１
+６進コード入力機能、かな漢字変換中に特定の文節の読みを修正し変換し直す機
+能、接続するサーバを変更する機能、単語登録削除機能、辞書マウントアンマウ
+ント機能等をユーザインタフェースの一端として提供します。
+
+@cindex 字種変換[じしゅへんかん]
+@cindex CASE変換[CASEへんかん]
+@cindex 記号入力[きごうにゅうりょく]
+@cindex 部首入力[ぶしゅにゅうりょく]
+@cindex 16進コード入力[16しんこーどにゅうりょく]
+@cindex 単語登録[たんごとうろく]
+@cindex 単語削除[たんごさくじょ]
+@cindex 辞書マウント[じしょまうんと]
+@cindex 辞書アンマウント[じしょあんまうんと]
+@item
+再変換機能
+
+間違って確定キーを押してしまっても一歩前になら戻れます。
+@end enumerate
+
+@c ============================================================
+@node 物件, 初期設定, 特徴, 概説
+@section 『かんな/emacs』を構成する物件
+
+『かんな/emacs』を構成する物件は次の通りです。
+
+@enumerate
+@item
+emacs (『かんな/emacs』本体)
+
+『かんな』ライブラリを組み込んだemacsです。いくつかの『かんな』ライブラ
+リ関数がemacs-lispから呼び出せるようにしてあります。『かんな/emacs』は日
+本語入力システム『かんな』がインストールされている環境で動作します。
+
+ベースとなっているemacsのバージョンは18.55(Nemacs)または18.59(Mule)で、
+nemacsのバージョンは3.3.2、Muleのバージョンは1.0になっています。 
+
+@item
+/usr/local/@{emacs,mule@}/etc/DOC-18.5[59].××
+
+上記emacsに対応するドキュメントファイルです。
+
+@item
+/usr/local/@{emacs,mule@}/lisp/canna.@{el,elc@}
+
+emacsのキー入力を横取りして日本語入力にしてしまうプログラムです。lispで
+書かれたソース(@file{canna.el})とコンパイルされたオブジェクト
+(@file{canna.elc})があります。@refill
+@end enumerate
+@cindex canna.el
+@cindex canna.elc
+
+上記４つのファイルをemacsの18.55または18.59、nemacsの3.3.2またはmuleの
+1.0が走っている環境に持ってくれば『かんな/emacs』が使えることになりま
+す。 
+
+@c ============================================================
+@node 初期設定, 漢字入力, 物件, Top
+@chapter 『かんな／ｅｍａｃｓ』で日本語入力するための準備
+
+『かんな/emacs』で日本語を入力するためには、@file{.emacs}ファイルにある
+程度の記述を加えなければなりません。基本的には次の記述を加えることになり
+ます。@refill
+
+@cindex .emacs
+@cindex canna-initialize
+@example
+(if (and (boundp 'CANNA) CANNA) ; 『かんな/emacs』であることを確認して
+   ;; 『かんな/emacs』 の場合だけ以下を実行します。
+   (progn
+    (require 'canna)
+    (canna) ))
+@end example
+
+上記の設定をすると、『かんな/emacs』を利用するためのlispプログラムをロー
+ドし、『かんな』の初期化を行います。
+
+これ以外にも@file{.emacs}に記述しておくと便利な機能がありますが、それら
+については追って説明いたします。@refill
+
+『かんな/emacs』がインストールされている状態で、@file{.emacs}に上記の記
+述が存在すれば、『かんな/emacs』で日本語が入力できるようになります。@refill
+
+@c ============================================================
+@node 漢字入力, Change mode, 初期設定, Top
+@chapter 日本語入力のしかた
+
+ここでは『かんな』での日本語入力のしかたについて簡単に説明をします。詳し
+くは『かんな』マニュアルをご参照ください。
+
+@menu
+* Change mode: Change mode.	日本語モードへの切り替え
+* Romaji : Romaji .		ローマ字かな変換入力
+* Henkan to kanji : 変換.	漢字への変換
+* Kouho selection : 選択. 	候補選択(次候補、前候補)
+* Kouho ichiran : 一覧.		候補一覧表示
+* Bunsetsu : 文節. 		文節
+* Bubun kakutei :Bubun kakutei.	部分確定
+* Jishu : 字種.			字種変換
+* Sign : 記号.			記号入力
+* Hex : 16進.			16 進コード入力
+* Bushu : 部首.			部首入力
+* Touroku : 単語登録. 		単語登録
+* Other functions ::		その他の機能
+@end menu
+
+@c ============================================================
+@node Change mode, Romaji, 漢字入力, 漢字入力
+@section 日本語モードへの切り替え
+
+キーを入力するとアルファベットが入力されるアルファベットモードから、キー
+を入力するとローマ字かな変換が行われ日本語入力ができる日本語入力モードへ
+切り替えるためには、@kbd{C-o}か@key{XFER}を押します。
+
+読みを入力してない状態でもう一度@kbd{C-o}か@key{XFER}を入力することでア
+ルファベットモードへ戻ります。
+
+@file{.canna}ファイルで、@refill
+
+@cindex C-c
+@cindex XFER
+@cindex .canna
+@cindex japanese-mode
+@cindex global-unbind-key-function
+@cindex global-set-key
+@cindex エスケープシーケンス[えすけーぷしーけんす]
+@cindex ファンクションキー[ふぁんくしょんきー]
+@example
+(global-unbind-key-function 'japanese-mode)
+(global-set-key "\C-e" 'japanese-mode)
+@end example
+
+のように指定するとemacsでも自動的に@kbd{C-e}がモード切り替えのキーになり
+ます。ただし、@key{XFER}は相変わらずモード切り替えキーとして有効です。@refill
+
+@example
+(global-unbind-key-function 'japanese-mode)
+(global-set-key "\Nfer" 'japanese-mode)
+@end example
+
+のようにしても、『かんな/emacs』では@key{XFER}がモード切り替えキーとして
+機能するままであり、しかも@key{NFER}がモード切り替えキーになることはあり
+ません。@kbd{C-e}を指定したときと@key{NFER}を指定したときの違いは、
+@kbd{C-e}が１バイトキーなのに対し、@key{NFER}がエスケープシーケンスで構
+成されることです。エスケープシーケンスで構成されるキーに対する機能の割り
+当ては「ファンクションキーへの機能の割り当て」の項を参照して下さい。@refill
+
+このように、若干の例外はあるのですが、日本語の入力のしかたは『かんな』を
+使った他のアプリケーションなどの場合と同じです。
+
+
+※注
+
+『かんな/emacs』では、他のアプリケーションでの日本語入力と違い、ある制限
+があります。それは、エスケープシーケンスを発生するキーに対して簡単には機
+能を割り当てられないことです。→「ファンクションキーへの機能の割り当て」
+
+@c ============================================================
+@node Romaji, 変換, Change mode, 漢字入力
+@section ローマ字かな変換入力
+
+@kbd{C-o}あるいは@key{XFER}を入力し日本語入力モードになるとローマ字かな
+変換が行われます。ローマ字はヘボン式、訓令式のどちらでも受け付けます。
+『ん』、や『ぁ』『っ』のような拗音については次のように入力します。
+
+@cindex 撥音[はつおん]
+@cindex 拗音[ようおん]
+@cindex 長音[ちょうおん]
+
+@example
+ん(撥音)        n あるいは mn
+んい(ん＋母音)	nni (または、mni または n'i)
+拗音            x を先行させる
+長音            - (ハイフン)を入力する
+@end example
+
+例えば次のようになります。
+
+@example
+へんかん        henkan
+あんない        annnai / amnnai / an'nai
+たんい          tanni / tamni / tan'i
+てぃー          texi- / thi-
+@end example
+
+@c ============================================================
+@node 変換, 選択, Romaji, 漢字入力
+@section 漢字への変換
+
+読みを入力した後で@key{space}を入力することによりかな漢字変換が行われ
+候補が表示されます。変換した漢字を確定するには@key{return}を押します。
+
+@cindex かな漢字変換[かなかんじへんかん]
+@cindex SPACE
+@cindex RETURN
+@example
+                きょうは
+SPACE           今日は
+@end example
+
+
+候補が表示されている状態で@key{BS}を入力することにより読みの状態に戻す
+ことができます。
+
+@example
+                今日は
+BS              きょうは
+@end example
+
+
+@c ============================================================
+@node 選択, 一覧, 変換, 漢字入力
+@section 候補選択(次候補、前候補)
+
+かな漢字変換により表示された候補が希望する語でなかった場合には、
+@key{↓}(または@kbd{C-n})を入力することによって次候補を表示する
+ことができます。希望の漢字が出てくるまで何度でも@key{↓}を入力できます。
+
+@cindex 候補[こうほ]
+@cindex 候補選択[こうほせんたく]
+@cindex 次候補[じこうほ]
+@cindex 前候補[まえこうほ]
+@example
+                今日は
+↓              京は
+↓              興は
+@end example
+
+@key{↓}を叩きすぎて希望する語が行きすぎてしまた時には@key{↑}
+(または@kbd{C-p})を入力します。
+
+@example
+                今日は
+↓              京は
+↓              興は
+↑              京は
+@end example
+
+@c ============================================================
+@node 一覧, 文節, 選択, 漢字入力
+@section 候補一覧表示
+
+@cindex 候補一覧表示[こうほいちらんひょうじ]
+@cindex XFER
+@cindex C-w
+同音異義語がたくさんある場合は、候補の一覧を表示させることもできます。
+漢字に変換した状態で、@key{space}(または@key{XFER}、@kbd{C-w})を入力する
+と候補一覧が表示されます。
+
+@example
+                今日は
+SPACE           1今日は  2京は  3興は  4強は  5凶は
+@end example
+
+候補一覧を出した状態では、@key{space}あるいは@key{→}にて次候補(右候補)
+を選択します。@key{←}は前候補(左候補)を選択します。@key{↓}・@key{↑}は
+それぞれ前候補列・次候補列の表示を行います。また、各候補に振られている一
+桁の数字を入力することにより、その候補までカーソルを移動することができま
+す。
+
+カーソルが希望する候補の所まできたところで@key{return}を打つことでその候
+補を選択できます。
+
+どの候補も選択せずに候補一覧モードを抜ける時には@key{BS}または@kbd{C-g}
+を入力します。
+
+@c ============================================================
+@node 文節, Bubun kakutei, 一覧, 漢字入力
+@section 文節
+
+比較的長い読みを入力し@key{space}を押すと、表示されている候補が複数の文
+節に区切られていることがあります。
+
+@cindex 文節[ぶんせつ]
+@cindex カレント文節[カレント文節]
+@cindex C-f
+@cindex C-b
+@example
+                |きょうははやくかえりたい|
+SPACE           |今日は| 早く 帰りたい
+@end example
+
+次候補・前候補選択や、候補一覧表示などは文字が反転表示されている文節(カ
+レント文節)に対してのみ行われます。別の文節をカレント文節にするためには、
+@kbd{C-f}または@key{→}や、@kbd{C-b}または@key{←}を用いてカレント文節
+を移動します。
+
+@example 
+                |今日は| 早く 帰りたい
+→              今日は |早く| 帰りたい
+→              今日は 早く |帰りたい|
+←              今日は |早く| 帰りたい
+@end example
+
+また、カレント文節の長さが適当でない時があります。このような場合には
+@kbd{C-i}・@kbd{C-o}を用いて文節の長さを調整して下さい。@kbd{C-i}・
+@kbd{C-o}はそれぞれ、文節縮め・文節伸ばしを意味します。
+
+@cindex 文節縮め[ぶんせつちぢめ]
+@cindex 文節伸ばし[ぶんせつのばし]
+@cindex C-i
+@cindex C-o
+@example
+                |ここではきものを|
+SPACE           |ここでは| 着物を
+C-i             |ここで| 履き物を
+C-o             |ここでは| 着物を
+@end example
+
+@c ============================================================
+@node Bubun kakutei, 字種, 文節, 漢字入力
+@section 部分確定
+
+@kbd{C-k}を入力することにより、カーソルのあった文節より左側の部分を確定
+させることができます。カーソル部分より後の文節は読みに戻されます。
+
+@cindex 部分確定[ぶぶんかくてい]
+@cindex C-k
+@example
+                |ながさきはきょうもあめです|
+SPACE           |長崎は| 今日も 雨です
+→              長崎は |今日も| 雨です
+C-k             長崎は|きょうもあめです|
+@end example
+
+この部分確定機能は、読みを間違えて入力してしまった場合、正しい部分を確定
+させるという場合に便利です。
+
+@c ============================================================
+@node 字種, 記号, Bubun kakutei, 漢字入力
+@section 字種変換
+
+読みを入力している状態や単候補表示状態では、読みの文字列を全角カタカナ・
+半角カタカナ・全角アルファベット・半角アルファベットなどの文字列に変換す
+ることが可能です。
+字種変換には@kbd{C-n}または@key{↓}と、@kbd{C-p}または@key{↑}を用います。
+@kbd{C-n}または@key{↓}を入力することで『ひらがな〜全角カタカナ〜半角カ
+タカナ〜全角アルファベット〜半角アルファベット』と字種変換が行われ、もう
+一度@kbd{C-n}または@key{↓}を入力すると元の読みの状態に戻ります。
+@kbd{C-p}または@key{↑}を入力すると逆周りの字種変換が行われます。
+
+@cindex 字種変換[じしゅへんかん]
+@cindex C-p
+@cindex C-n
+@example
+                ふぉとぐらふ
+↓              フォトグラフ
+↓              フォトグラフ(半角)
+↓              ｆｏｔｏｇｕｒａｆｕ
+↓              fotogurafu
+@end example
+
+※注 Nemacs では半角カタカナはスキップされます。
+
+また、字種変換している状態で@kbd{C-i}や、@kbd{C-o}を入力すると字種変換の
+対象となる領域が伸縮します。
+
+
+@example
+                ふぉとぐらふを
+↓              フォトグラフヲ
+C-i             フォトグラフを
+@end example
+
+入力している読みに、かなに変換されないアルファベットが入っている場合は、
+カタカナに変換されず、『ひらがな〜全角アルファベット〜半角アルファベット
+〜ひらがな』の順で字種変換が行われます。
+
+@example
+                こmぷてr
+↓              ｃｏｍｐｕｔｅｒ
+↓              computer
+@end example
+
+@c ============================================================
+@node 記号, 16進, 字種, 漢字入力
+@section 記号入力
+
+@key{INS}を入力することにより記号一覧表示を得ることができます。読みで
+「きごう」と入力して漢字変換することによっても、一般的な記号が候補として
+出てきます。選択の方法は数字による選択ができないことを除いて候補一覧表示
+の時と同じです。
+
+@cindex 記号入力[きごうにゅうりょく]
+@cindex canna-kigo-mode
+@cindex INS
+@example
+INS             [2121] 、 。 ， ． ・ ： ； ？ ！
+@end example
+
+記号を選択しないで記号一覧表示を消すためには@kbd{C-g}を入力して下さい。
+@key{ins}キーの変わりに@kbd{M-x canna-kigo-mode}によっても同じことが行え
+ます。
+
+@c ============================================================
+@node 16進, 部首, 記号, 漢字入力
+@section 16 進コード入力
+
+16 進コード入力の方法には 2 つありますが、ここでは 16 進コードを読みとし
+て入力する方法について説明します。
+
+ 4 桁の 16 進数を読みとして入力した後に@kbd{C-y}を押すと 4 桁の 16 進数に
+対応する文字が表示されます。
+
+@cindex 16進コード入力
+@example
+2276            ２２７６
+C-y             ♪
+@end example
+
+@c ============================================================
+@node 部首, 単語登録, 16進, 漢字入力
+@section 部首入力
+
+読めない漢字でも部首さえわかればなんとかできるのが部首入力です。ある部首
+を持つ漢字の一覧を表示させることができます。
+部首入力の方法には 2 つの方法がありますが、ここでは部首名を読みとして入
+力し、その入力に対応した部首一覧を表示させる方法について説明します。
+部首名を読みとして入力した後に@kbd{C-w}を押すと部首一覧が表示されます。
+目的の漢字を選択する手順は候補一覧の場合と同じです。
+
+@cindex 部首入力
+@example
+kigamae         きがまえ
+C-w             １气  ２氛  ３氤  ４氣
+@end example
+
+@c ============================================================
+@node 単語登録, Help key, 部首, 漢字入力
+@section 単語登録
+
+@menu 
+* Help key: Help key.	HELPキーでの単語登録
+* Touroku region::	M-x canna-touroku-region を用いる場合
+@end menu
+
+@cindex 単語登録[たんごとうろく]
+@cindex ユーザ辞書[ゆーざじしょ]
+日本語入力機能には、変換をより早く的確に行えるようにするために、単語登録
+機能があります。単語登録は、読みが入力されていない状態の時に行う方法と、
+リージョンを設定し、@kbd{M-x canna-touroku-region}で登録する方法がありま
+す。
+
+単語登録はユーザ辞書が指定されているときのみ有効です。ユーザ辞書の指定方
+法については、後述のカスタマイズの項を参照して下さい。
+
+マウントしているユーザ辞書がなくマウントに失敗したユーザ辞書(userdic)が
+ある場合、単語登録を行うときにその辞書を作成するか否かを聞いてきます。
+「y」と答えると辞書を作成した後に以下の単語登録を行います。
+
+@c ============================================================
+@node Help key, Touroku region, 単語登録, 単語登録
+@subsection HELP キーでの単語登録
+
+@cindex HELP
+@cindex 品詞分け[ひんしわけ]
+ユーティリティキー@key{help}を押し、「４単語登録」を選択し、次に「１単語
+登録」を選択します。
+
+(このとき、カスタマイズファイルにユーザ辞書を指定しないと単語登録はでき
+ません。)
+
+登録する単語を入力します。動詞、形容詞、形容動詞は、終止形で入力し、他は
+すべて語幹で入力します。@key{return}を押すと、読みの入力要求がされます。
+次に読みを入力します。@key{return}を押すと、品詞の候補が表示されます。こ
+こで、登録する単語の品詞を入力します。選択した品詞によってはさらに細かい
+品詞分けをするかどうかが表示されることもありますので、正しいかどうかを考
+えて答えて下さい。
+
+「第１開発部」を「いちかい」で登録する例は次のようになります。
+
+@example
+HELP            [拡張]|１記号入力| ２コード入力 ３部首入力 ４単語登録 ５環境設定
+４              [拡張]１記号入力 ２コード入力 ３部首入力 |４単語登録| ５環境設定
+RETURN          [拡張]|１単語登録| ２単語削除 ３辞書マウント／アンマウント
+RETURN          [登録]単語?[]
+第１開発部       [登録]単語?[第１開発部]
+RETURN          [登録]単語?[第１開発部] 読み?[]
+いちかい         [登録]単語?[第１開発部] 読み?[いちかい]
+RETURN          [品詞]|１人名| ２地名 ３団体・会社 ４名詞 ５サ変名詞 ６単漢字
+４              [品詞]さらに細かい品詞分けのために質問をしてもよいですか？(y/n)
+y               [品詞]「第１開発部な」は正しいですか。(y/n)
+n               [辞書]|１user| ２d1jinmei
+RETURN          [あ] 『第１開発部』を登録しました
+@end example
+
+@c ============================================================
+@node Touroku region, Other functions, Help key, 単語登録
+@subsection M-x canna-touroku-region を用いる場合
+
+@key{help}キーの代わりに@kbd{M-x canna-extend-mode}でも同じことが行えま
+す
+@cindex canna-touroku-region
+@cindex canna-extend-mode
+
+@c ============================================================
+@node  Other functions, カスタマイズ, Touroku region, 漢字入力
+@section その他
+
+その他の機能としては以下のものがあります。
+
+@enumerate
+@item
+逐次自動変換による入力
+@item
+確定入力モードによる入力(ひらがな、カタカナ(全角/半角)、英数(全角/半角))
+@item
+記号入力モード(記号全般、ロシア文字、ギリシャ文字、罫線)
+@item
+コード入力モード
+@item
+部首入力モード
+@end enumerate
+
+@c ============================================================
+@node カスタマイズ, ファイル, Other functions, Top
+@chapter カスタマイズ
+
+@menu 
+* Intial File: ファイル. 	カスタマイズのための初期設定
+* Learning:学習. 		個人別学習ファイルの作成
+* Dictionary: 辞書.     	ユーザ辞書の利用
+* Romaji table: ローマ字.  	ローマ字かな変換のカスタマイズ
+* Key def: キー割り当て.	機能のキーへの割り当て
+* Konnna: こんな.		こんな風にカスタマイズしてみたい
+@end menu
+
+かな漢字変換に関して変換に利用する辞書を始めとしてキー操作やローマ字かな
+変換テーブルにいたるまでカスタマイズすることができます。
+
+ここでは、カスタマイズをいかに行うかについて説明します。
+
+@c ============================================================
+@node ファイル, 学習, カスタマイズ, カスタマイズ
+@section カスタマイズのための初期設定
+
+カスタマイズを行うにはまず@file{$(CANNALIBDIR)/sample/default.canna}
+を自分のホームディレクトリに持ってきて@file{.canna}という名前でセーブ
+します。
+
+@cindex カスタマイズ[かすたまいず]
+@cindex .canna
+@example
+%  cp  $(CANNALIBDIR)/sample/default.canna  .canna
+%  chmod  u+w  .canna
+@end example
+
+すでに@file{.canna}を持っている人は上記の操作は不要です。
+
+※注
+
+ $(CANNALIBDIR) は『かんな』の種々のファイルが置かれているディレクト
+リです。『かんな』をインストールした際のコンフィギュレーショ
+ンによって、その位置は異なります。例えば、/usr/lib/canna であったり、
+/usr/local/canna/lib であったりします。そのマシンでの正確な位置について
+はマシンのシステム管理者にお問い合わせください。
+
+@c ============================================================
+@node 学習, 辞書, ファイル, カスタマイズ
+@section 個人別学習ファイルの作成
+
+基本辞書@code{iroha}は各ユーザに共有されており、各ユーザの使用状況によっ
+て候補順が並べかえられます。
+
+他の人の利用により候補順が変わるのがいやな場合、次のようにして個人別学習
+ファイルを作ります。
+
+@cindex 学習ファイル[がくしゅうふぁいる]
+@example
+% mkdic  -fq  iroha
+@end example
+
+@c ============================================================
+@node 辞書, ローマ字, 学習, カスタマイズ
+@section ユーザ辞書の利用
+
+新規に単語を登録するためにはユーザ辞書を設定しなくてはなりません。
+
+ユーザ辞書は mkdic コマンドで作成できます。kuma というユーザ辞書を作成する
+ときは次のようにします。
+
+@cindex ユーザ辞書[ゆーざじしょ]
+@cindex mkdic
+@example
+% mkdic kuma
+@end example
+
+次に、カスタマイズファイル@file{.canna}に以下の行を加えます。
+
+@example
+(use-dictionary :user  "kuma")
+@end example
+ 
+最初は中身が空のファイルを指定しておき、順次辞書登録により単語を追加して
+いくのがよいでしょう。
+
+@c ============================================================
+@node ローマ字, キー割り当て, 辞書, カスタマイズ
+@section ローマ字かな変換のカスタマイズ
+
+ローマ字かな変換に関して、例えば「こんにちは」と入力するのに「konnichiha」
+と入力するのになれている場合と「konnnichiha」と入力する(「n」の回数が違
+います)のになれている場合があります。
+
+このようにローマ字かな変換だけをとってみても好みはいろいろあります。
+
+ローマ字変換に関してはカスタマイズファイルにより、好みのテーブルを指定す
+ることができます。また、標準的に用意しているテーブルに好みのものがない場
+合は、自分でローマ字かな変換テーブルを作成することもできます。
+
+ここでは、標準的に提供されているローマ字かな変換テーブルについて説明しま
+す。
+
+標準的に提供されるローマ字かな変換テーブルとしては以下のものがあります。
+
+これらのテーブルは $(CANNALIBDIR)/dic の下にファイルの形で存在します。
+
+@cindex default.kp
+@cindex just.kp
+@cindex newjis.kp
+@cindex kaisoku.kp
+@cindex romkana-table
+@cindex tut.kp
+@table @var
+@item default.kp
+デフォルトのローマ字かな変換テーブル
+@item just.kp
+一太郎と同一のローマ字かな変換規則を持つテーブル
+@item kana.kp
+アルファベットキーボードで疑似的にかな入力を行うためのテーブル。このテー
+ブルを用いることにより、日本語モードとアルファベットモードの切り替えだけ
+で、かな入力とアルファベット入力の切り替えも行えます
+@item newjis.kp
+アルファベットキーボードで疑似的に新JISキーボードのカナ配列をシミュレー
+トするためのテーブル
+@item kaisoku.kp
+快速ローマ字配列をシミュレートするためのテーブル
+@item tut.kp
+TUT入力用のテーブル
+@end table
+
+デフォルトではdefault.kpが選ばれますが、その他のローマ字かな変換テーブル
+を利用する場合はカスタマイズファイルにて次のような行を加えます。kana.kp 
+を利用する場合は、
+
+@example
+(setq romkana-table "kana.kp")
+@end example
+
+指定した名前はファイル名とみなされサーチされます。サーチは次の順番で行わ
+れます。
+
+@enumerate
+
+@item
+カレントディレクトリ
+
+指定されたファイルをカレントディレクトリでサーチします。
+
+@item 
+ホームディレクトリ
+
+指定されたファイルをホームディレクトリでサーチします。
+
+@item
+辞書ディレクトリ
+
+指定されたファイルを $(CANNALIBDIR)/dic でサーチします。
+@end enumerate
+
+いずれのディレクトリにもローマ字かな変換テーブルが存在しない場合はローマ
+字かな変換入力が行えませんのでご注意下さい。
+
+@c ============================================================
+@node キー割り当て, こんな, ローマ字, カスタマイズ
+@section 機能のキーへの割り当て
+
+デフォルトではどのキーにも割り当てられていない機能(16進コード入力、部
+首変換など)が存在します。これらの機能を特定のキーに割り当てたり既に割
+り当てられている機能についても別のキーに割り当てたりすることができます。
+
+以下に例を示します。
+
+@example
+(global-set-key "\F2" 'hex-mode)
+(global-set-key "\F3" 'bushu-mode)
+
+(set-key 'yomi-mode "\F2" 'convert-as-hex)
+@end example
+
+上記を@file{.canna}に追加すると、@key{F2},@key{F3}キーがそれぞれ、
+
+@table @key
+@item F2
+16 進入力
+@item F3
+部首選択入力
+@end table
+
+として機能するようになります。ただし、Emacs から利用する場合には上記だ
+けでは不足であり、さらにいくつかの記述を @file{.emacs}に入れる必要があります。
+本件につきましては「5.2 ファンクションキーへの機能の割り当て」をご覧いただく
+ようお願いします。
+
+@c 具体例として、上記のようなカスタマイズを @file{.canna}で行った場合の記述を示
+@c します。@file{.emacs}などで以下の記述を追加してください。
+@c
+@c @example
+@c (global-set-key "\e[12~" 'canna-hex-mode)
+@c (global-set-key "\e[13~" 'canna-bushu-mode)
+@c @end example
+
+@c ============================================================
+@node こんな, 空白文字, キー割り当て, カスタマイズ
+@section こんな風にカスタマイズしてみたい
+
+以下では、次のようにカスタマイズしてみたいときにどのようにカスタマイズファ
+イルに記述すれば良いかの例を示します。
+
+@enumerate
+
+@item
+変換は@key{xfer}ですることにし、スペースは全角空白文字の入力として使いた
+い。
+
+@item 
+候補を数字で選んだら候補一覧を抜けたい。
+
+@item
+候補を選択したら次の文節に移動したい。
+
+@item
+一太郎のような操作性で入力したい。
+
+@item
+「 と ［ を両方使いたい。
+
+@end enumerate
+
+@menu
+* Self insert: 空白文字.	変換はXFERですることにし、スペースは全角空白文字の入力として使いたい
+* Select direct::		候補を数字で選んだら候補一覧を抜けたい
+* Stay after validate::		候補を選択したら次の文節に移動したい
+* Just canna: 一太郎.		一太郎のような操作性で入力したい
+* Brackets: カッコ.		「 と ［ を両方使いたい
+@end menu
+
+@c ============================================================
+@node 空白文字, Select direct, こんな, こんな
+@subsection 変換はXFERですることにし、スペースは全角空白文字の入力として使いたい
+
+このようにするにはまず、スペースキーに対して通常の入力機能(self-insert)
+を割り当てます。self-insert の self とはキー自身を指します。すなわち、ス
+ペースキーに対してself-insertを割り当てると空白を挿入すると言う機能がス
+ペースキーに割り当てられます。
+
+スペースキーに self-insert 機能を割り当てるには以下のようにします。
+
+@cindex self-insert
+@example
+(global-set-key "\Space", 'self-insert)
+@end example
+
+"\Space"はスペースキーを示します。"\Space"の代わりに"   "のように記述して
+も同じ意味になります。
+
+このように設定するとスペースキーが変換操作に使えなくなり、代わりに全
+角空白が挿入されます。
+
+@c ============================================================
+@node Select direct, Stay after validate, 空白文字, こんな
+@subsection 候補を数字で選んだら候補一覧を抜けたい
+
+『かんな』では候補一覧を表示している状態で候補に振られている数字を押し
+た場合、カーソルがその候補に移動するだけで実際の選択は行われません。
+
+実際に選択を行うには確定キー(デフォルトではリターンキー)を押さなければな
+りません。
+
+これが面倒で数字を選んだ時点でその候補を選択して、候補一覧表示を終わって
+しまいたい場合は次のようにカスタマイズファイルに記述します。
+
+@cindex select-direct
+@example
+(setq select-direct t)
+@end example
+
+これにより、数字を選択しただけで、候補が選択され候補一覧が終了します。
+
+@c ============================================================
+@node Stay after validate, 一太郎, Select direct, こんな
+@subsection 候補を選択したら次の文節に移動したい
+
+長い文章を入れて変換キーを押し、前の文章から候補選択をするようなやり方を
+している人も多くいるでしょう。
+
+そのような人の場合、候補一覧で選択した時にカレント文節が同じ部分にとどまっ
+てしまうといちいち文節移動をしなければならなくなるので不便を感じてはいな
+いでしょうか。
+
+「一覧を選択したのだからその文節での仕事は終わっているはずだ。一覧選択を
+終わったら次の文節に移動して欲しい。」というふうにお思いのかたも多いでしょ
+う。そのような場合は、次のようにカスタマイズします。
+
+@cindex stay-after-validate
+@example
+(setq stay-after-validate nil)
+@end example
+
+@c ============================================================
+@node 一太郎, カッコ, Stay after validate, こんな
+@subsection 一太郎のような操作法で入力したい
+
+「一太郎に慣れているので一太郎とできるだけ同じ操作で日本語入力がしたい」
+と言うかたもいらっしゃるでしょう。
+
+一太郎とだいたい同じキー操作を提供するカスタマイズファイルが
+@file{$(CANNALIBDIR)/sample/just.canna}として提供されていますので、以下
+のコマンドによりそのファイルをカスタマイズファイルとして使うようにして下
+さい。
+
+@cindex just.canna
+@example
+% cd
+% cp $(CANNALIBDIR)/sample/just.canna .canna
+@end example
+
+@c ============================================================
+@node カッコ, その他, 一太郎, こんな
+@subsection 「 と ［ を両方使いたい
+
+ワープロによっては「.」(ピリオド)を打った時に「。」が入力されるか「.」が
+入力されるかを選択できたり、「[」(角かっこ)を入力した時に「「」(かぎかっ
+こ)が入力されるか「［」(全角のかっこ)が入力されるかが選択できるものがあ
+ります。
+
+『かんな』でもローマ字かな変換テーブルを書き換えれば「.」や「[」に対応す
+る記号を変更することができますが、ローマ字かな変換テーブルの書き換えは若
+干面倒な作業でもあります。
+
+このような場合以下のカスタマイズを行うことによってそれぞれの記号を両方定
+義しておき、必要に応じて簡単に切り替えることが可能になります。
+
+@cindex defsymbol
+@example
+(defsymbol ?. "。" ".")
+(defsymbol ?[ "「" "[")
+@end example
+
+このようにしておくと「.」を入力した時に変換キーを押すことによって「。」
+か「.」を選択することができるようになります。
+
+
+@c ============================================================
+@node その他, Empty status, カッコ, Top
+@chapter その他特殊なことについて
+
+@menu
+* Empty status: Empty status.   未入力状態について
+* Function Keys: Func key.	ファンクションキーへの機能の割り当て
+* Undo: アンドゥ.		アンドゥ
+* Region: 再変換.	 	リージョンの再変換.
+* Style: スタイル.		未確定文字列のスタイル
+* Specifying server::		かな漢字変換サーバの指定
+* Specifying customization::	カスタマイズファイルの指定
+* Boiled-egg like::		boiled-egg みたいな使いかた
+* Functions::			『かんな/emacs』で使える機能
+* Summary: まとめ.		まとめ
+@end menu
+
+@c ============================================================
+@node Empty status, Func key, その他, その他
+@section 未入力状態について
+
+ここでは、アルファベット入力状態や、日本語入力状態でも入力中の文字列が
+存在しない状態を「未入力状態」と呼びます。
+
+『かんな/emacs』における未入力状態のとりあつかいは、通常の『かんな』ア
+プリケーションプログラムにおける未入力状態と若干異なります。これは『か
+んな/emacs』におけるキーの取り扱いとして以下の方針を採用しているためで
+す。
+
+『かんな/emacs』では『かんな』起動時にカスタマイズファイルにおける日本
+語入力モードとアルファベット入力モードの切り替えのカスタマイズを読み込
+んで、Emacs におけるモード切り替え機能をそのキーに設定します。そのキー
+には@code{canna-toggle-japanese-mode}と言う関数が set されます。
+@code{canna-toggle-japanese-mode}は、Emacs におけるキーバインディング
+を大幅に変更します。@code{canna-toggle-japanese-mode}は空白文字を含む
+グラフィカルキャラクタに対応するキーを Emacs のデフォルトである
+@code{self-insert}と、日本語入力モードにおける
+@code{canna-self-insert}との間で切り替えます。ここで、注意しなければ
+ならないのは、コントロールキャラクタに関しては常に Emacs のバインディ
+ングのままであることです。
+
+したがって、『かんな/emacs』における未入力時のバインディングは
+@file{.canna}からは変更できません。『かんな/emacs』における未入力時の
+バインディングのカスタマイズに関しては@file{.emacs}で行う必要があり
+ます。
+
+@c ============================================================
+@node Func key, アンドゥ, Empty status, その他
+@section ファンクションキーへの機能の割り当て
+
+「『かんな/emacs』で日本語入力するための準備」で説明した設定が
+@file{.emacs}で行われていれば、@key{F1}〜@key{F3}などのキーに以下の機能
+が設定されます。@refill
+
+@table @key
+@item F1
+記号入力
+@item F2
+１６進コード入力
+@item F3
+部首入力
+@item HELP
+ユーティリティ機能呼び出し
+@item INS
+記号入力
+@end table
+@cindex F1
+@cindex F2
+@cindex F3
+@cindex 記号入力[きごうにゅうりょく]
+@cindex 16進コード入力[16しんこーどにゅうりょく]
+@cindex 部首入力[ぶしゅにゅうりょく]
+@cindex ユーティリティ機能[ゆーてぃりてぃきのう]
+@cindex .canna
+@cindex INS
+
+この割り当ては@file{.canna}での記述と無関係に行われます。
+
+@file{.canna}にてファンクションキーに、ある機能を割り当てても『かんな
+/emacs』では無視されてしまいます。というのは、emacsでのファンクションキー
+の使い方がちょっと変わっているためです。@refill
+
+それではファンクションキーにこれらのモードへの移行のための機能を割り当て
+るにはどのようにするのでしょうか？
+
+emacsではファンクションキーを押すと例えば@kbd{ESC [ 1 1 ~}のようなキーを発
+生します(@key{F1}キーの場合)。デフォルトでは@kbd{ESC [ (}すなわち、
+@kbd{M-[})が@code{backward-paragraph}にバインドされていますので、前の段
+落に移動して、``11~''が挿入されてしまうことになります。@refill
+
+「『かんな/emacs』で日本語入力するための準備」で示した処理を行っている場
+合には@kbd{M-[}と@code{backward-paragraph}のバインドを壊して、@kbd{ESC
+[ 1 1 ~}のような長いキーシーケンスに対して機能を割り当てることができるよう
+にしてあります。すなわち、@kbd{ESC [ 1 1 ~}に対して次のような処理で
+@code{canna-kigou-mode}を割り当てています。@refill
+
+@cindex backward-paragraph
+@cindex canna-kigou-mode
+@example
+(global-set-key "\e[11~" 'canna-kigou-mode)
+@end example
+
+『かんな/emacs』ではこの方法で@key{F1}、@key{F2}、@key{F3}などにキーを割
+り当てていたのです。@key{F1}〜@key{F3}などのキーに対してこの設定を行いた
+くない場合には、emacsで『かんな』を起動する前に
+@var{canna-do-keybind-for-functionkeys}という名前の変数に@code{nil}を代
+入しておいて下さい。例えば、@file{.emacs}の記述は次のようになることにな
+ります。@refill
+
+@cindex canna-do-keybind-for-functionkeys
+@example
+(if (and (boundp 'CANNA) CANNA) ; 『かんな/emacs』であることを確認して
+   ;; 『かんな/emacs』 の場合だけ以下を実行します。
+   (progn
+    (require 'canna)
+    (setq canna-do-keybind-for-functionkeys nil)
+    (canna) ))
+@end example
+
+@c ============================================================
+@node アンドゥ, 基本操作, Func key, その他
+@section アンドゥ
+@cindex アンドゥ
+
+@menu
+* Basic operations: 基本操作.	基本操作
+* Key binding: キー操作.	キーへのバインディング
+* Undo and canna-undo::		undo と canna-undo
+* Undo buffer: バッファ.	アンドゥバッファに入れる・入れない
+* Undo plus alpha: プラスα.	アンドゥ＋α
+@end menu
+
+@c ============================================================
+@node 基本操作, キー操作, アンドゥ, アンドゥ
+@subsection 基本操作
+
+『かんな/emacs』ではアンドゥ機能をサポートしています。直前に確定した部分
+をもう一度読みに戻すことができます。もう一度読みに戻すには次のようにしま
+す。
+
+@example
+M-x canna-undo
+@end example
+@cindex canna-undo
+
+@c ============================================================
+@node キー操作, Undo and canna-undo, 基本操作, アンドゥ
+@subsection キーへのバインディング
+
+実はこの@code{canna-undo}、普通の@code{undo}を含んでいます。すなわち、直
+前に確定した日本語の入力がない場合には普通の@code{undo}が行われます。し
+たがって、今まで@code{undo}がバインドされていたキーに@code{canna-undo}を
+バインドすると便利に使えます。例えば@code{undo}を@kbd{C-_}に割り当ててい
+た人は @file{.emacs}ファイルにて次のように記述すると@code{undo}の代わり
+に@code{canna-undo}を割り当てることができます。@refill
+
+@cindex undo
+@cindex C-_
+@example
+(global-set-key "\C-_" 'canna-undo)
+@end example
+
+@c ============================================================
+@node Undo and canna-undo, バッファ, キー操作, アンドゥ
+@subsection undo と canna-undo
+@cindex C-k
+@cindex C-g
+
+さて、``直前に確定した日本語''とはどのくらい前までの入力のことを指すので
+しょうか？@refill
+
+@code{canna-undo}は@kbd{C-o}などによって日本語入力モードを抜けてしまった
+時にアンドゥの情報を捨ててしまいます。したがって、日本語を入力して確定し
+た場合、日本語入力モードを抜けさえしなければ``直前に確定した日本語''とみ
+なされるわけです。@refill
+
+@code{undo}のキーに@code{canna-undo}を割り当てると便利なようで不便なこと
+があります。例えば、日本語入力モードを抜けないで、@kbd{C-k}などの操作で
+行消去を行うことがありますが、このときウッカリ@kbd{C-_}などを打ってしま
+うもんであれば、行の復活の代わりにさっき確定した文字が読みに戻ってしまい
+ます。@refill
+
+本来であれば、@kbd{C-_}を打つまえに@kbd{C-o}を打つなどして日本語入力モー
+ドから抜ければ良かったのですが、ここは一発元に戻す方法があります。@refill
+
+本当は本来のアンドゥが行いたかった場合に@code{canna-undo}が作動してしまっ
+た場合には@kbd{C-g C-_ C-_}と打って下さい。最初の@kbd{C-g}で読みを放棄し
+ます。実は読みを放棄した場合にも@code{canna-undo}のための情報が失われるの
+です。この状態ではさっき入力した日本語までなくなってしまいますが、その次
+の@kbd{C-_}でそれが復活し、次の@kbd{C-_}が本来の目的であったアンドゥとして
+機能します。@refill
+
+@c ============================================================
+@node バッファ, プラスα, Undo and canna-undo, アンドゥ
+@subsection アンドゥバッファに入れる・入れない
+
+アンドゥを@kbd{C-_}などに割り当てて使っていると結構便利だったりするので
+すが、マルやテンを分けて入力した場合はあまりアンドゥが効果がない場合があ
+ります。例えば、次のように入力する場合です。@refill
+
+@example
+このようににゅうりょくするばあいです<space>。<return>
+@end example
+
+このように入力して、
+
+@example
+子のように入力する場合です。
+@end example
+
+のように変換されてしまってから@kbd{C-_}と打っても、
+
+@example
+子のように入力する場合です|。|
+@end example
+@cindex canna-save-undo-text-predicate
+
+となるだけで、寂しい思いをしてしまいます。
+
+「マルとかテンを分けて打つ癖がある僕も悪いけれどもマルやテンだったらアン
+ドゥバッファに入れなくてもいいんじゃないの？」と思うかたもいるでしょう。
+ご安心下さい。そういう場合にもちゃんと対応できるのです。
+
+そのからくりは、@code{canna-save-undo-text-predicate}という変数です。
+
+@code{canna-undo}は入力が確定した時にその確定した入力をアンドゥバッファ
+にとって置くかどうかを@code{canna-save-undo-text-predicate}にお伺いして
+判断します。@code{canna-save-undo-text-predicate}にはその判断を行うため
+の関数を代入しておきます。@code{canna-save-undo-text-predicate}という変
+数に値が束縛されていなかったり、値が@code{nil}だった場合には無条件にバッ
+ファにセーブしておきます。@code{canna-save-undo-text-predicate}は読みと
+読みを入力した時のローマ字テキストの２つの文字列を@code{car}と@code{cdr}
+に持つ２進木に対して適用されます。例えば、確定した文字列を表す読みが２バ
+イトより長い文字列でなければセーブしないということを指定するには次のよう
+に記述することになります。@refill
+
+@example
+(setq canna-save-undo-text-predicate 
+   '(lambda (s) 
+      (> (length (car s)) 2) ))
+@end example
+
+これで、さっきの例で@kbd{C-_}を打つと、マルは飛ばされて次のようになりま
+す。@refill
+
+@example
+|このようににゅうりょくするばあいです|。
+@end example
+
+@c ============================================================
+@node プラスα, 再変換, バッファ, アンドゥ
+@subsection アンドゥ＋α
+
+「再変換機能というからには、読みに戻るのでは駄目で確定する直前に戻るのが
+本当じゃないの？」という気がしないでもありません。確定する直前に戻るのは
+ひじょ〜〜に大変ですが、それらしくはなんとかすることができます。
+
+それは、アンドゥしたテキストを変換した状態にすることです。アンドゥの後に
+何かを行いたい場合は、@var{canna-undo-hook}という変数に関数を代入します。
+アンドゥの後に変換を行いたい場合には次のようにします。@refill
+
+@cindex canna-undo-hook
+@example
+(setq canna-undo-hook
+      '(lambda () (message "再変換します....")
+        (canna-do-function canna-func-henkan)) )
+@end example
+@cindex canna-func-henkan
+@cindex canna-do-function
+
+このようにしておくことにより、@code{canna-undo}では「読みに戻します」と
+いうメッセージが出ていたものが「再変換します」というメッセージになり、先
+に確定した文字列が再変換されます。@refill
+
+@var{canna-func-henkan}は「変換」を表す機能の番号です。
+@code{canna-do-function}では『かんな』の色々な機能を直接実行することがで
+きます。どのような機能が存在するかは「付録」を参照して下
+さい。@refill
+
+@c ============================================================
+@node 再変換, スタイル, プラスα, その他
+@section リージョンの再変換
+@cindex canna-henkan-region
+@cindex C-@@
+@cindex canna-use-space-key-as-henkan-region
+
+Emacs上の任意のテキストを再変換する機能を付加しました。リージョンを引い
+て@kbd{M-x canna-henkan-region}としても良いのですが、かな漢字変換用のマー
+クを設定して、ポイント(カーソル)位置を移動し、スペースバーを打つとマーク
+とポイントの間がかな漢字変換されます。スペースバーはマークの直後は再変換
+用のキーとして使われますが、日本語モードを抜けたり文字を挿入したりした後
+には通常の空白を入れるキーに戻ります。かな漢字変換用のマークを打つにはキー
+ボードより@kbd{C-@@}を入れることにより行えます。@refill
+
+スペースバーはいつでも空白の挿入として使いたいと言う場合には
+@code{(canna)}を実行するまえに
+@code{canna-use-space-key-as-henkan-region}に@code{nil}を代入しておいて
+ください。このことにより@kbd{C-@@}へのかな漢字変換用マークを行うバ
+インドも行われなくなります。@refill
+
+@c ============================================================
+@node スタイル, Specifying server, 再変換, その他
+@section 未確定文字列のスタイル
+
+未確定文字列に関する『かんな』のデフォルトのスタイルはアンダーラインを引
+くというものです。これに対して『かんな/emacs』では２本の縦棒で囲むという
+スタイルをとっていますが、やはりアンダーラインの方が良いと言うリクエスト
+にお答えすることができます。それには、@code{canna-set-fence-mode-format}
+という関数を使います。
+例えば次のようになります。@refill
+
+@cindex アンダーライン[あんだーらいん]
+@cindex canna-set-fence-mode-format
+@example
+(canna-set-fence-mode-format nil nil t)
+@end example
+
+@code{canna-set-fence-mode-format}の各引数では次のことを指定します。
+@refill
+
+第1引数は入力中の文字列の両脇を縦棒(@kbd{|})で囲むかどうかを指定します。
+@refill
+
+第2引数は変換を行っている時に文節と文節の間を空白で区切るかどうかを指定
+します。@code{nil}を指定すると文節と文節の間にすき間を入れません。
+@refill
+
+第3引数はアンダーラインや反転を使うかどうかを指定します。アンダーライン
+や反転を使う場合には@file{attribute.el}が必要です。@refill
+
+ちなみに筆者は@code{nil t nil}で使っていますが、最初のうちは
+@file{attribute.el}があるなら@code{nil nil t}、ないなら@code{t t nil}で
+使うのが良いでしょう。@refill
+
+@c ============================================================
+@node Specifying server, Specifying customization, スタイル, その他
+@section かな漢字変換サーバの指定
+
+『かんな』では通常かな漢字変換サーバは環境変数の@var{CANNAHOST}で指定し
+ますが、『かんな/emacs』ではそれに加えて@var{canna-server}という変数にサー
+バ名を代入しておくことで指定することができます。@refill
+
+『かんな/emacs』での設定の方が環境変数による設定より優先します。
+
+@cindex CANNAHOST
+@cindex canna-server
+@example
+(setq canna-server "wink")
+@end example
+
+@c ============================================================
+@node Specifying customization, Boiled-egg like, Specifying server, その他
+@section カスタマイズファイルの指定
+
+『かんな』では通常カスタマイズファイルは環境変数の@var{CANNAFILE}で指定
+しますが、『かんな/emacs』ではそれに加えて@var{canna-file}という変数にファ
+イル名を代入しておくことで指定することができます。@refill
+
+『かんな/emacs』での設定の方が環境変数による設定より優先します。
+
+@cindex CANNAFILE
+@example
+(setq canna-file (expand-file-name "~/.canna-emacs"))
+@end example
+
+@c ============================================================
+@node Boiled-egg like, Functions, Specifying customization, その他
+@section boiled-egg みたいな使いかた
+@cindex boiled-egg
+
+『かんな』を使って boiled-egg みたいな使いかたをすることができます。
+boiled-egg みたいな使いかたをするには@var{rK-trans-key}と言う変数に 
+boiled-egg 的使いかたをする時の起動キーを定義します。例えば以下のように
+なります。@refill
+@cindex rK-trans-key
+
+@example
+(setq rK-trans-key "\C-t")
+@end example
+
+何も指定をしないと@key{C-j}がデフォルトとして用いられます。@refill
+
+さて、boiled-egg 的な使いかたをする場合には、boiled-egg 的な使いかたをし
+たいバッファにて、
+
+@example
+M-x canna-boil
+@end example
+@cindex canna-boil
+
+を実行します。そうすると、@var{rK-trans-key}で指定したキーが起動キーとし
+て定義され、以下のような操作で、日本語入力が行えます。@refill
+
+@example
+boiled-egg mitainitukaemasu<C-j>
+@end example
+
+上記の入力の結果は以下のようになります。
+
+@example
+boiled-egg |みたいに 使えます|
+@end example
+
+これは『かんな』で変換キーを押した時と同じような状態です。あとは『かんな』
+の通常の変換操作で入力できます。
+
+@c ============================================================
+@node Functions, まとめ, Boiled-egg like, その他
+@section 『かんな/emacs』で使える関数
+
+『かんな/emacs』で利用できる関数としては次のものがあります。
+
+@table @code
+@item canna-bushu-mode
+@cindex canna-bushu-mode
+@cindex 部首変換[ぶしゅへんかん]
+部首変換モード
+@item canna-henkan-region
+@cindex canna-henkan-region
+指定されたリージョンの文字を漢字に変換します
+@item canna-hex-mode
+@cindex canna-hex-mode
+@cindex 16進コード入力[16しんこーどにゅうりょく]
+１６進コード入力モード
+@item canna-kigou-mode
+@cindex canna-kigou-mode
+@cindex 記号入力[きごうにゅうりょく]
+記号入力モード
+@item canna-extend-mode
+@cindex canna-extend-mode
+@cindex ユーティリティモード[ゆーてぃりてぃもーど]
+ユーティリティモード
+@item canna-reset
+@cindex canna-reset
+@cindex 再起動[さいきどう]
+日本語入力システムの再起動
+@item canna-toggle-japanese-mode
+@cindex canna-toggle-japanese-mode
+アルファベットモードと日本語モードの切り替え
+@item canna-touroku
+@cindex canna-touroku
+@cindex 単語登録[たんごとうろく]
+単語登録
+@item canna-touroku-region
+@cindex canna-touroku-region
+リージョンで指定された単語を登録
+@item canna-undo
+@cindex canna-undo
+直前に確定した日本語入力を読みに戻す
+@item canna-version
+@cindex canna-version
+@cindex バージョン[ばーじょん]
+『かんな/emacs』のバージョンの表示
+@item canna-do-function
+@cindex canna-do-function
+『かんな』の機能を実行します。該当する機能が@code{canna-do-function}呼び
+だし時の状態で無効である場合はその機能は実行されません。どのような機能が
+あるかは付録を参照して下さい。
+@item canna-set-fence-mode-format
+@cindex canna-set-fence-mode-format
+『かんな』で入力を行っている部分の見え方を指定します。
+@item canna-rk-trans
+@cindex canna-rk-trans
+左にあるローマ字列をローマ字かな変換し、『かんな』の読み入力状態に移行
+します。
+@item canna-rk-trans-region
+@cindex canna-rk-trans-region
+リージョンで指定された部分にあるローマ字をローマ字かな変換し、『かんな』
+の読み入力状態に移行します。
+@item canna-boil
+@cindex canna-boil
+boiled-egg 的な使いかたをする準備をします。この関数はこの関数を実行した
+バッファだけに効力を持ちます。
+@end table
+
+@c ============================================================
+@node まとめ, 変更点, Functions, その他
+@section まとめ
+
+ここで説明した機能を使って@file{.emacs}の記述を行うとおおよそ次のように
+なります。@file{.emacs}の修正をするときの参考にして下さい。@refill
+
+@cindex .emacs
+@example
+(if (and (boundp 'CANNA) CANNA) ; 『かんな/emacs』であることを確認して
+    ;;『かんな/emacs』の場合だけ以下を実行します。
+    (progn
+     (require 'canna)           ;ライブラリのロード(ロードされてないなら)
+     (setq canna-do-keybind-for-functionkeys t)
+     (setq canna-server "wink") ;かな漢字変換サーバの指定
+     (setq canna-file (expand-file-name "~/.canna-emacs"))
+
+     (canna) ;『かんな』の初期化
+
+     (canna-set-fence-mode-format nil t nil) ; 入力中の見え方
+     (global-set-key "\e[209z" 'canna-japanese-mode) ;NFER
+     (global-set-key "\C-_" 'canna-undo) ;アンドゥの設定
+     (setq canna-save-undo-text-predicate ;アンドゥバッファへ入れる条件
+           '(lambda (s) (> (length (car s)) 2)) )
+     (setq canna-undo-hook ;アンドゥ＋α
+           '(lambda () (message "再変換します....")
+                       (canna-do-function canna-func-henkan)) )
+    )) 
+@end example
+
+@c ============================================================
+@node 変更点, v22to23, まとめ, Top
+@chapter 変更点
+
+『かんな/emacs』に関しては今まで特別にバージョンをつけてはいませんでした
+が、『かんな』Version 1.2 対応のものを 1.2、Version 2.2 対応のものを 2.2
+とさせていただきます。今回提供するバージョンも『かんな』Version 2.2 をベー
+スにしていますが、以前の『かんな/emacs』から機能変更がありますので、
+Version 2.3 とさせていただきます。
+
+@menu
+* v22to23::	Version 2.2 から 2.3 への変更点
+* v12to22::	Version 1.2 から 2.2 への変更点
+@end menu
+
+@c ============================================================
+@node v22to23, v12to22, 変更点, 変更点
+@section Version 2.2 から 2.3 への変更点
+
+以下に『かんな/emacs』Version 2.2 から 2.3 への変更点を示します。
+
+@enumerate
+
+@item
+最初のモード表示の変更
+
+最初のモード表示を「かんな」にしました。(今まではハイフン６つでした)。
+
+@item
+ミニバッファ利用時のモード表示
+
+ミニバッファで入力を行っている場合もモード表示をするようにしました。
+
+@item
+ミニバッファ入力中のバグの修正
+
+ミニバッファで入力を行っている時に、候補一覧などを表示させると、今までミ
+ニバッファにあった文字列を消してしまうと言うバグがありました。これを直し
+ました。
+
+@item
+boiled-egg 対応
+
+boiled-egg のような入力もできるようにしました。また、mlh もオプション
+(mlh 側の若干の対応)で対応可としました。
+
+@end enumerate
+
+@c ============================================================
+@node v12to22, 付録, v22to23, 変更点
+@section Version 1.2 から 2.2 への変更点
+
+以下に『かんな』Version 1.2 で提供されていた『かんな/emacs』から Version 
+2.2 ベースの『かんな/emacs』への変更点を示します。
+
+@enumerate
+
+@item
+名前の変更
+
+各関数、変数などの名前として@code{iroha}とあったものが@code{canna}になり
+ました。また、lisp ファイル名が@file{iroha.el}から@file{canna.el}になり
+ました。
+
+@item
+各種定数の定義
+
+『かんな』における各種定数が以前はlispファイル(@file{iroha.el})で定義
+されていましたが、これを Emacs のソースファイル(@file{canna.c})で定義する
+ようにしました。
+
+@item
+Emacs とのインタフェースの変更
+
+lisp ファイル(@file{canna.el})と Emacs (@file{canna.c})との間のインタ
+フェースを変更し、consセルの消費を削減しました。
+
+@end enumerate
+
+
+@c ============================================================
+@node 付録, 索引, v12to22, Top
+@unnumbered 付録
+
+以下の変数の値を@code{canna-do-func}に与えると該当する機能が実行されます。
+
+@table @var
+@item canna-func-self-insert
+@cindex canna-func-self-insert
+入力された文字をそのまま入力とする
+@item canna-func-functional-insert
+@cindex canna-func-functional-insert
+入力された文字を適当にローマ字かな変換などで修飾し入力とする
+@item canna-func-quoted-insert
+@cindex  canna-func-quoted-insert
+次の一文字をそのまま入力とする
+@item canna-func-japanese-mode
+@cindex canna-func-japanese-mode
+日本語入力モードに移行する
+@item canna-func-alpha-mode
+@cindex canna-func-alpha-mode
+アルファベット入力モードに移行する
+@item canna-func-henkan-nyuryoku-mode
+@cindex canna-func-henkan-nyuryoku-mode
+全角ひらがな変換入力モードに移行する
+@item canna-func-forward
+@cindex canna-func-forward
+右へ移動
+@item canna-func-backward
+@cindex canna-func-backward
+左へ移動
+@item canna-func-next
+@cindex canna-func-next
+下または次へ移動
+@item canna-func-previous
+@cindex canna-func-previous
+上または前へ移動
+@item canna-func-beginning-of-line
+@cindex canna-func-beginning-of-line
+左端へ移動
+@item canna-func-end-of-line
+@cindex canna-func-end-of-line
+右端へ移動
+@item canna-func-delete-next
+@cindex canna-func-delete-next
+次の一文字の削除
+@item canna-func-delete_previous
+@cindex canna-func-delete_previous
+左の一文字の削除
+@item canna-func-kill-to-end-of-line
+@cindex canna-func-kill-to-end-of-line
+カーソルから行末まで削除
+@item canna-func-henkan
+@cindex canna-func-henkan
+変換
+@item canna-func-kakutei
+@cindex canna-func-kakutei
+確定
+@item canna-func-extend
+@cindex canna-func-extend
+伸ばし
+@item canna-func-shrink
+@cindex canna-func-shrink
+縮め
+@item canna-func-quit
+@cindex canna-func-quit
+中止
+@item canna-func-convert-as-hex
+@cindex canna-func-convert-as-hex
+読みを１６進コードとみなして変換
+@item canna-func-convert-as-bushu
+@cindex canna-func-convert-as-bushu
+読みを部首名とみなして部首一覧表示
+@item canna-func-kouho-ichiran
+@cindex canna-func-kouho-ichiran
+候補一覧表示
+@item canna-func-bubun-muhenkan
+@cindex canna-func-bubun-muhenkan
+無変換
+@item canna-func-zenkaku
+@cindex canna-func-zenkaku
+全角に変換
+@item canna-func-hankaku
+@cindex canna-func-hankaku
+半角に変換
+@item canna-func-to-upper
+@cindex canna-func-to-upper
+大文字に変換
+@item canna-func-capitalize
+@cindex canna-func-capitalize
+先頭文字を大文字に変換
+@item canna-func-to-lower
+@cindex canna-func-to-lower
+小文字に変換
+@item canna-func-hiragana
+@cindex canna-func-hiragana
+ひらがなに変換
+@item canna-func-katakana
+@cindex canna-func-katakana
+カタカナに変換
+@item canna-func-romaji
+@cindex canna-func-romaji
+ローマ字に変換
+@item canna-func-extend-mode
+@cindex canna-func-extend-mode
+ユーティリティモードのメニューの表示
+@item canna-func-touroku
+@cindex canna-func-touroku
+単語登録モードへの移行
+@item canna-func-hex-mode
+@cindex canna-func-hex-mode
+16進コード入力モードへの移行
+@item canna-func-bushu-mode
+@cindex canna-func-bushu-mode
+部首入力モードへの移行
+@item canna-func-kigo-mode
+@cindex canna-func-kigo-mode
+記号入力モードへの移行
+@end table
+
+以下の機能は『かんな/emacs』の『かんな』の部分が Version 2.1 以上のとき
+のみ有効です。
+
+@table @var
+@item canna-func-adjust-bunsetsu
+@cindex canna-func-adjust-bunsetsu
+一太郎の文節伸ばし縮めモードのような文節伸ばし縮めモードへの移行
+@item canna-func-base-hiragana
+@cindex canna-func-base-hiragana
+入力文字のベースをひらがなに変更
+@item canna-func-base-katakana
+@cindex canna-func-base-katakana
+入力文字のベースをカタカナに変更
+@item canna-func-base-eisu
+@cindex canna-func-base-eisu
+入力文字のベースを英数に変更
+@item canna-func-base-zenkaku
+@cindex canna-func-base-zenkaku
+入力文字のベースを全角に変更
+@item canna-func-base-hankaku
+@cindex canna-func-base-hankaku
+入力文字のベースを半角に変更
+@item canna-func-base-kana
+@cindex canna-func-base-kana
+入力文字のベースをカナ(ひらがなかカタカナ)に変更
+@item canna-func-base-kakutei
+@cindex canna-func-base-kakutei
+入力ベースを確定入力モードに変更
+@item canna-func-base-henkan
+@cindex canna-func-base-henkan
+入力ベースを変換入力モードに変更
+@item canna-func-base-hiragana-katakana-toggle
+@cindex canna-func-base-hiragana-katakana-toggle
+入力ベースをひらがなとカタカナの間でトグル
+@item canna-func-base-zenkaku-hankaku-toggle
+@cindex canna-func-base-zenkaku-hankaku-toggle
+入力ベースを全角と半角の間でトグル
+@item canna-func-base-kana-eisu-toggle
+@cindex canna-func-base-kana-eisu-toggle
+入力ベースをカナと英数の間でトグル
+@item canna-func-base-kakutei-henkan-toggle
+@cindex canna-func-base-kakutei-henkan-toggle
+入力ベースを確定入力と変換入力の間でトグル
+@item canna-func-base-rotate-forward
+@cindex canna-func-base-rotate-forward
+入力ベースの順次切り替え
+@item canna-func-base-rotate-backward
+@cindex canna-func-base-rotate-backward
+入力ベースの順次切り替え(逆回転)
+@end table
+
+以下の機能は『かんな/emacs』の『かんな』の部分が Version 2.2 以上のとき
+のみ有効です。
+
+@table @var
+@item canna-func-mark
+@cindex canna-func-mark
+マーク
+@item canna-func-temporal-mode
+@cindex canna-func-temporal-mode
+現在の入力モードを一時保管
+@end table
+
+@node 索引, , 付録, Top
+@unnumbered 索引
+
+@printindex cp
+
+@contents
+@bye

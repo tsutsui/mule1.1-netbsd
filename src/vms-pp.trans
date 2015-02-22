@@ -1,0 +1,36 @@
+! translations for extra long variable names
+!234567890123456789012345678901		1234567890123456789012345678901
+Vminibuffer_local_completion_map	Vminibuf_local_completion_map
+Vminibuffer_local_must_match_map	Vminibuf_local_must_match
+Finsert_abbrev_table_description	Finsert_abbrev_table_descrip
+Sinsert_abbrev_table_description	Sinsert_abbrev_table_descrip
+internal_with_output_to_temp_buffer	internal_with_out_to_temp_buf
+Vminibuffer_completion_predicate	Vminibuf_completion_predicate
+Qminibuffer_completion_predicate	Qminibuf_completion_predicate
+!
+! The followings are added
+!       for Mule 0.9.7.1	06-MAR-1993	T.Atsushiba
+!
+CANNA_FN_BaseKakuteiHenkanToggle	CANNA_FN_BaseKakuteiHenkanTgl
+Qwnn_cannot_registered_in_the_dict	Qwnn_cannot_registered_in_dict
+Qwnn_overflow_global_hindo_table	Qwnn_overflow_global_hindo_tbl
+Qwnn_overflow_global_jisho_table	Qwnn_overflow_global_jisho_tbl
+Vcanna_fn_BaseKakuteiHenkanToggle	Vcanna_fn_BaseKakuteiHenkanTgl
+init_compile_charset_information	init_compile_charset_info
+insert_from_string_before_markers	insert_from_string_bef_markers
+qminibuffer_completion_predicate	qminibuffer_completion_pred
+vminibuffer_completion_predicate	vminibuffer_completion_pred
+!
+! The followings are added
+!       for Mule 0.9.8		15-JUN-1993	T.Atsushiba
+!
+MCPATH_NO_BACKWARD_COMPATIBILITY	MCPATH_NO_BACKWARD_COMPATIBILITY
+Qinvoke_find_file_translation_mode	Qinvoke_find_file_trans_mode
+!
+! Not changed.
+!
+$$PsectAttributes_NOSHR$$environ	$$PsectAttributes_NOSHR$$environ
+_$$PsectAttributes_NOOVR$$$D$ATA	_$$PsectAttributes_NOOVR$$$D$ATA
+_$$PsectAttributes_NOOVR$$__DATA	_$$PsectAttributes_NOOVR$$__DATA
+0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ	0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_$	abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_$

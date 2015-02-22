@@ -1,0 +1,261 @@
+%% TeX macros to handle Japanese texinfo files for Egg
+%% Modified by Satoru Tomura (tomura@etl.go.jp)
+%% 92.7.8   modified for Mule Ver.0.9.5 by K.Handa <handa@etl.go.jp>
+%%	To detect type of jTeX and its version, the method
+%%	posted by Takafumi SAKURAI <sakurai@math.metro-u.ac.jp> is used.
+%% 92.9.30  modified for Mule Ver.0.9.6 by K.Handa <handa@etl.go.jp>
+%%	For unknown reason, \newif\ifNTTOLD should be before
+%%      \ifNTT.
+%% 93.4.29  modified for Mule Ver.0.9.7 by N.Hikichi <hikichi@sra.co.jp>
+
+%% 92.7.8 by K.Handa
+\newif\ifNTT
+\ifx\gtfam\undefined
+\NTTtrue
+\else
+\NTTfalse
+\fi
+
+\newif\ifNTTOLD
+\ifNTT
+\ifx\jendlinetype\undefined
+\NTTOLDtrue
+\else
+\NTTOLDfalse
+\fi
+\fi
+%% end of patch
+
+%% TeX macros to handle Japanese texinfo files
+%% 92/05/24 merged jtexinfo.tex (by H. Isozaki and N. Hikichi) into this
+%% Created by Satoru Tomura (tomura@etl.go.jp)
+
+\def\jtexinfoversion{1.03}
+
+\ifNTT
+\message{jtexinfo(NTT JTeX) package [Version \jtexinfoversion]:}
+\else
+\message{jtexinfo(ASCII JTeX) package [Version \jtexinfoversion]:}
+\fi
+\message{}
+
+
+
+%% 日本語フォントに関する互換性
+\ifNTT
+\kanjifiletype=20 
+\let\min=\dm\let\dg=\goth
+\else
+\let\dm=\min\let\goth=\dg
+\fi
+
+%% 日本語フォントの定義
+\ifNTT
+\ifNTTOLD			% 92.7.8 by K.Handa
+\jfont\tendm=dm10 scaled {\magstephalf}
+\jfont\tendg=dg10 scaled {\magstephalf}
+\else
+\jfont\tendm=dm10 scaled \magstephalf
+\jfont\tendg=dg10 scaled \magstephalf
+\fi
+\else
+\font\tendm=min10 scaled \magstephalf
+\font\tendg=goth10 scaled \magstephalf
+\fi
+
+%% Fonts for title
+\ifNTT
+\jfont\titledm=dm12 scaled \magstep3
+\jfont\titledg=dg12 scaled \magstep3
+\else
+%\font\titledm=min12 scaled \magstep3
+\font\titledm=min10 scaled \magstep5
+%\font\titledg=goth12 scaled \magstep3
+\font\titledg=goth10 scaled \magstep5
+\fi
+
+%% Fonts for indics and small examples
+\ifNTT
+\jfont\inddm=dm9
+\jfont\inddg=dg9
+\else
+\font\inddm=min9
+\font\inddg=goth9
+\fi
+\def\indexfonts{\let\it=\indit \let\sl=\indsl \let\bf=\indbf \let\rm=\indrm \let\dm=\inddm \let\dg=\inddg}
+
+%% Fonts for headings
+\ifNTT
+\jfont\chapdm=dm12 scaled \magstep2
+\jfont\chapdg=dg12 scaled \magstep2
+\else
+%\font\chapdm=min12 scaled \magstep2
+\font\chapdm=min10 scaled \magstep3
+%\font\chapdg=goth12 scaled \magstep2
+\font\chapdg=goth10 scaled \magstep3
+\fi
+
+\ifNTT
+\jfont\secdm=dm12 scaled \magstep1
+\jfont\secdg=dg12 scaled \magstep1
+\else
+%\font\secdm=min12 scaled \magstep1
+\font\secdm=min10 scaled \magstep2
+%\font\secdg=goth12 scaled \magstep1
+\font\secdg=goth10 scaled \magstep2
+\fi
+
+\ifNTT
+\ifNTTOLD			% 92.7.8 by K.Handa
+\jfont\ssecdm=dm12 scaled {\magstephalf}
+\jfont\ssecdg=dg12 scaled {\magstephalf}
+\else
+\jfont\ssecdm=dm12 scaled \magstephalf
+\jfont\ssecdg=dg12 scaled \magstephalf
+\fi
+\else
+%\font\ssecdm=min12 scaled \magstephalf
+\font\ssecdm=min10 at 13pt
+%\font\ssecdg=goth12 scaled \magstephalf
+\font\ssecdg=goth10 at 13pt
+\fi
+
+\def\textfonts{\let\rm=\tenrm\let\it=\tenit\let\sl=\tensl\let\bf=\tenbf\let\smallcaps=\tensc\let\sf=\tensf%
+               \let\dm=\tendm\let\dg=\tendg\dm}
+\def\chapfonts{\let\rm=\chaprm\let\it=\chapit\let\sl=\chapsl\let\bf=\chapbf\let\tt=\chaptt\let\sf=\chapsf%
+               \let\dm=\chapdm\let\dg=\chapdg\dg}
+\def\secfonts{\let\rm=\secrm\let\it=\secit\let\sl=\secsl\let\bf=\secbf\let\tt=\sectt\let\sf=\secsf%
+               \let\dm=\secdm\let\dg=\secdg\dg}
+\def\subsecfonts{\let\rm=\ssecrm\let\it=\ssecit\let\sl=\ssecsl\let\bf=\ssecbf\let\tt=\ssectt\let\sf=\ssecsf%
+               \let\dm=\ssecdm\let\dg=\ssecdg\dm}
+
+\def\i#1{{\sl\dg #1}}
+\def\b#1{{\bf\dg #1}}
+
+\def\titlefont#1{{\titlerm\titledg #1}}
+
+% インデックスにソートキーを[]で指定する．
+\def\Jempty{}
+\def\singleindexer #1{\singleindexerB#1[]\singleindexerA}
+% 93.4.29 by N.Hikichi
+% \def\singleindexerB#1[#2]{\edef\Jone{#1}\edef\Jtwo{#2}%
+\def\singleindexerB#1[#2]{\def\Jone{#1}\def\Jtwo{#2}%
+\ifx\Jempty\Jtwo\let\Jnext=\relax\let\singleindexerA=\singleindexerD%
+\else\let\Jnext=\singleindexerC\let\singleindexerA=\singleindexerE\fi%
+\Jnext}
+\def\singleindexerC#1[]{}
+\def\singleindexerD{\doind{\indexname}{\Jone}}
+\def\singleindexerE{\Jdoind{\indexname}{\Jone}{\Jtwo}}
+
+\def\Jdoind #1#2#3{%
+{\indexdummies % Must do this here, since \bf, etc expand at this stage
+\count10=\lastpenalty %
+\escapechar=`\\%
+{\let\folio=0% Expand all macros now EXCEPT \folio
+\def\rawbackslashxx{\indexbackslash}% \indexbackslash isn't defined now
+% so it will be output as is; and it will print as backslash in the indx.
+%
+% Now process the index-string once, with all font commands turned off,
+% to get the string to sort the index by.
+{\indexnofonts
+\xdef\temp1{#3}%
+}%
+% Now produce the complete index entry.  We process the index-string again,
+% this time with font commands expanded, to get what to print in the index.
+\edef\temp{%
+\write \csname#1indfile\endcsname{%
+\realbackslash entry {\temp1}{\folio}{#2}}}%
+\temp }%
+\penalty\count10}}
+
+\outer\def\initial #1{%
+{\let\tentt=\sectt \let\sf=\sectt
+\let\dm=\secdm\let\dg=\secdg\dg%%***
+\ifdim\lastskip<\initialskipamount
+\removelastskip \penalty-200 \vskip \initialskipamount\fi
+\line{\secbf\secdg#1\hfill}\kern 2pt\penalty3000}}%%***
+
+% 非互換な日本語化部分
+
+%%%\def\inforefzzz #1,#2,#3,#4**{See Info file \file{\losespace#3{}}, node `\losespace#1{}'}
+\def\inforefzzz #1,#2,#3,#4**{Info ファイル \file{\losespace#3{}},node `\losespace#1{}' 参照}
+
+%%%\def\pxref #1{see \xrefX [#1,,,,,,,]}
+%%%\def\xref #1{See \xrefX [#1,,,,,,,]}
+\def\pxref #1{\xrefX [#1,,,,,,,] 参照}
+\def\xref #1{\xrefX [#1,,,,,,,] 参照}
+
+%%\def\xrefX [#1,#2,#3,#4,#5,#6]{%
+%%\setbox1=\hbox{\i{\losespace#5{}}}%
+%%\setbox0=\hbox{\losespace#3{}}%
+%%\ifdim \wd0 =0pt \setbox0=\hbox{\losespace#1{}}\fi%
+%%\ifdim \wd1 >0pt%
+%%section \unhbox0{} in \unhbox1%
+%%\else%
+%%\refx{#1-snt} [\unhbox0], page\tie \refx{#1-pg}%
+%%\fi }
+\def\xrefX [#1,#2,#3,#4,#5,#6]{%
+\setbox1=\hbox{\i{\losespace#5{}}}%
+\setbox0=\hbox{\losespace#3{}}%
+\ifdim \wd0 =0pt \setbox0=\hbox{\losespace#1{}}\fi%
+\ifdim \wd1 >0pt%
+\unhbox1 の \unhbox0{} 節%
+\else%
+\refx{#1-snt} [\unhbox0], \tie \refx{#1-pg} 頁%
+\fi }
+
+%%\def\Ysectionnumberandtype{%
+%%\ifnum\secno=0 chapter\xreftie\the\chapno %
+%%\else \ifnum \subsecno=0 section\xreftie\the\chapno.\the\secno %
+%%\else \ifnum \subsubsecno=0 %
+%%section\xreftie\the\chapno.\the\secno.\the\subsecno %
+%%\else %
+%%section\xreftie\the\chapno.\the\secno.\the\subsecno.\the\subsubsecno %
+%%\fi \fi \fi }
+
+\def\Ysectionnumberandtype{%
+\ifnum\secno=0 \xreftie\the\chapno 章%
+\else \ifnum \subsecno=0 \xreftie\the\chapno.\the\secno 節%
+\else \ifnum \subsubsecno=0 %
+\xreftie\the\chapno.\the\secno.\the\subsecno 小節%
+\else %
+\xreftie\the\chapno.\the\secno.\the\subsecno.\the\subsubsecno 小々節%
+\fi \fi \fi }
+
+%
+% A4 size(Japanese) define, top margin = 20, bottom margin = 21,
+%  left margin = 30, right margin = 15
+%
+\def\a4book{
+\global\lispnarrowing = 0.3in
+\global\baselineskip 12pt
+\global\parskip 3pt plus 1pt
+
+% for @cropmarks
+%\global\hsize = 6.5in
+% without @cropmarks
+\global\hsize = 6.7in
+
+\global\doublecolumnhsize=2.4in \global\doublecolumnvsize=15.0in
+\global\vsize=9.8in
+\global\tolerance=700
+\global\hfuzz=1pt
+
+\global\pagewidth=\hsize
+\global\pageheight=\vsize
+\global\font\ninett=cmtt9
+
+\global\let\smalllisp=\smalllispx
+\global\let\smallexample=\smalllispx
+\global\def\Esmallexample{\Esmalllisp}
+
+% for @cropmarks
+%\global\voffset = -1.0in
+%\global\hoffset = -0.2in
+
+% without @cropmarks
+\global\voffset = 0.0in
+%\global\hoffset = -1.0in
+\global\hoffset = -0.2in
+}
+

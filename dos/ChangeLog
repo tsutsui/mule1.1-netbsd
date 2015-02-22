@@ -1,0 +1,182 @@
+Thu Feb 25 19:51:59 1993  Manabu Higashida  (manabu@sigmath.osaka-u.ac.jp)
+
+	* src/callproc.c (child_setup): Executing `*.bat' file as command
+	interpreter's option, 'cause directry executing may cause dumb.
+
+	* Supports FEPCTRL 1.5.
+
+Wed Feb 17 19:49:25 1993  Manabu Higashida  (manabu@sigmath.osaka-u.ac.jp)
+
+	* src/buffer.h, src/buffer.c, src/fileio.c, src/emacs.c: Rename
+	lisp symbol `file-type' to `file-translation-mode' to avoid
+	confliction in words.
+
+	* src/transmode.h, src/transmode.c: New file, which supports
+	`file-translation-mode'.
+
+	* src/callproc.c (Fcall_process): Returns process's return code.
+
+	* src/dired.c (Ftime_to_string): Could returns long output format
+	of `ls'.
+
+Sat Oct  3 15:49:06 1992  Manabu Higashida  (manabu@sigmath.osaka-u.ac.jp)
+
+	* Demacs 1.3.1 alpha test starts.
+
+	* src/emacs.c (main): Kick the routine to handle TZ environment
+	variable in the `demacs.exe' build by Borland C++ 2.0.
+
+	* src/fileio.c (copy-file): `go32.exe' faults by calling chmod ().
+	
+	* src/dispnew.c (init_display): Add to call dos_term_init (), but 
+	currently have no effect in `dosterm.c'.
+
+	* lisp/saveconf.el (save-context): Change the configuration file
+	name.
+
+	* Simply applies `diff-0.9.3-1.3.0' demacs patch to `mule-0.9.6'.
+
+Mon May 25 12:35:07 1992  Manabu Higashida  (manabu@sigmath.osaka-u.ac.jp)
+
+	* Demacs 1.3.0 alpha test starts.
+
+	* demacs.el, dos-fns.el, fepctrl.el: New files.
+
+	* mule.el (mode-line-format): Change to display the buffer
+	file-type on mode-line like " (Text Binary)--".
+	* mule.el (load): Set buffer file-type to text if load file has
+	extension ".el".
+
+	* novice.el (enable-command, disable-command): Find file
+	`~/_emacs' instead of `~/.emacs'.
+
+	* loadup.el: Add to loadup `demacs', `dos-fns' and `fepctrl'.
+	* loadup.el: Ignore version control of DOC-file.
+	* loadup.el: Dump with name `demacs', and not dump with version
+	number.
+
+	* compile.el (grep): Use null device name " nul" instead of "
+	/dev/null".
+	* compile.el (compile1): DOS support.
+
+	* paths.el (abbrev-file-name): Use "~/abbrev.def" instead of
+	"~/.abbrev_defs".
+
+	* bytecomp.el (byte-compile-file): Save byte-compiled buffer as
+	binary.
+
+	* loaddefs.el (auto-mode-alist): Load "~/_emacs" as Emacs Lisp mode.
+
+	* startup.el (dommand-line): Set startup-file name to "~/_emacs".
+
+	* files.el (backup-buffer): Set failed backupname to "~/backup.~".
+	* files.el: Change makeing backup-file name convention to fit dos
+	naming sense.
+
+	* ymakefile: Support DOS assist library `../assist.dos/libdos.a'.
+
+	* dired.c: Change assist library staff name to `dir.[hc]' from
+	`ndir.[hc]', so no need to patch.
+
+	* puresize.h (PURESIZE): Increase pure-space to 187000.
+
+	* fileio.c (Fexpand_file_name): Fix to get correct current
+	directory of another disk.
+
+Sat May 23 15:37:55 1992  Manabu Higashida  (manabu@sigmath.osaka-u.ac.jp)
+
+	* dosfns.[hc]: New file.
+
+	* m-dos386.h, s-msdos3.h: New file.
+
+	* config.h-dist (subprocesses): Currently, not supported on MSDOS.
+
+	* mule-config.h (EGG): Currently, not supported on MSDOS.
+
+	* puresize.h (PURESIZE): Add proper size (186000) for MSDOS.  It's
+	requires slightly more pure-space for demacs.elc, dos-fns.elc and
+	fepctrl.elc.
+
+	* lisp.h: Some prototype-mismatching problems are resolved.
+
+	* crt0.c: Add startup routine for go32.
+
+	* emacs.c (main): Set default file-translation mode to binary.
+	* emacs.c (main): Almost of all signals are not supported on go32.
+	* emacs.c: Change the path-delimitting char to ';'.
+	* emacs.c: (decode_env_path): Add a code to replace
+	file-delimitting char from '\' to '/' in environment variables.
+
+	* lread.c (readchar): Add codes to avoid a bug of getc () in the
+	djgcc's libc.
+	* lread.c (Fload): Add codes to load byte-compiled file with
+	binary-translate mode.
+	* lread.c (absolute_filename_p): Handling drive name.
+	* lread.c (init_read): Set `load-path' to the value of environment
+	variable `EMACSLOADPATH' when invoking.
+
+	* termcap.c: Include `fcntl.h'.
+	* termcap.c (tgetent): Add codes handling drive name.
+	* termcap.c (tgetent): `termcap' file should be opend by
+	text-translate mdoe.
+
+	* malloc.c: Add get_lim_data ().
+
+	* filemode.c (filemodestring): Emulate directory write permission.
+
+	* dispnew.c (sit-for): Call input_wait_timeout () in `src/sysdep.c'.
+
+	* dired.c (Fdirectory_files, file_name_completion): Missing d_ino
+	member of DIRENTRY.
+	* dired.c (Ffile_attributes): On MSDOS, files having extension
+	`.com', `.exe' or `.bat' should be x-marked.
+	* dired.c (syms_of_dired): Add lisp function `time-to-string' to
+	get time-string from the file attribute.
+
+	* keyboard.c (syms_of_keyboard): Add global variable
+	`ibmpc-enhanced-keybaord' for to distinguish IBM PC enhanced
+	keyboard.
+	* keyboard.c (read_command_char): Put codes in place of alarm ().
+	* keyboard.c (get_input_pending): Put codes in place of sigblock ().
+	* keyboard.c (read_avail_input): Put codes in place of read ()
+	from keybaord.
+	* keybaord.c (read_key_sequence): Add codes for FEPCTRL.
+
+	* callproc.c (call_process_cleanup): Kill temporary file instead
+	of kill process.
+	* callproc.c (Fcall_process): Use temporary file instead of pipe.
+	* callproc.c (init_callproc): Set `exec-path' to the value of
+	environment variable `EMACSEXECPATH' when invoking.
+	* callproc.c (init_callproc): Get user's shell name from
+	envionment variable `COMSPEC'. 
+
+	* fileio.c: Many many changes have done to handle drive name and
+	file translate mdoe.
+
+	* sysdep.c: Add MSDOS support codes.
+
+	* unexec.c: If MSDOS, include `aout.h' instead of `a.out.h'.
+	* unexec.c: Some prototype-mismatching problems are resolved.
+	* unexec.c (unexec): mark_x () is none-sense on MSDOS.
+	* unexec.c (write_segment): EFAULT is not occured.
+
+	* xdisp.c (decode_mode_spec): Remove switch-branch displaying the
+	file-type nmonic of buffer on mode-line.
+
+	* buffer.h (struct buffer): Add a member `Lisp_Object file_type'
+	to store the file-translation type of a buffer.
+	* buffer.h (struct buffer): Add a member `Lisp_Object fep_mode'
+	to store FEP mode on a buffer.
+	* buffer.h: Declare `Lisp_Object Qfile_type' as extern.
+
+	* buffer.c: Add a global variable `Lisp_Object Qfile_type' to
+	store default file-translation type.
+	* buffer.c (set_buffer_internal): Add FEPCTRL codes to handle
+	switching buffers.
+	* buffer.c (init_buffer_once): Add initializing codes for added
+	buffer local variables to MSDOS.
+	* buffer.c (syms_of_buffer): Declare default buffer-local variable
+	`default-file-type'.
+	* buffer.c (syms_of_buffer): Declare buffer-local variable
+	`file-type' and `fep-mode'.
+

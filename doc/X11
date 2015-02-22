@@ -1,0 +1,130 @@
+How to run Mule under X11?
+
+------------------------------------------------------------
+Table of contents:
+	1. SETTING FONT PATH
+	2. BUILDING FONTS
+	3. ADDITIONAL FONTS
+	4. MULE'S FONT SELECTION MECHANISM
+------------------------------------------------------------
+
+1. SETTING FONT PATH
+
+To run Mule as a client of X, X's font is required for each
+character set (e.g. GB2312 [Chinese], JISX0208 [Japanese]).
+The fonts you can use on your X server are listed by the
+command 'xlsfonts'.
+	% xlsfonts | egrep -i gb2312
+will show you fonts for Chinese (GB).
+	% xlsfonts | egrep -i jisx0208
+will show you fonts for Japanese.
+	% xlsfonts | egrep -i ksc5601
+will show you fonts for Korean.
+	% xlsfonts | egrep -i big5
+will show you fonts for Big5.
+
+If you can't find necessary fonts, check your 'Font Path' by:
+	% xset q
+Under the default setting of X.V11R5, fonts for Japanese and
+Korean are in the directory /usr/lib/X11/fonts/misc.  If
+these directories are not in your Font Path, put them in by:
+	% xset fp+ /usr/lib/X11/fonts/misc
+If there are no such directories, you must create X's font
+from BDF files by yourself  (See BUILDING FONT).
+
+Now, you can run Mule on X.  If you want to use different
+fonts than defaults, you can specify them by command line
+switch or your X's resource file (try 'man mule' or look
+into the file 'mule/etc/mule.1').
+
+2. BUILDING FONTS
+
+X.V11R5 is distributed with many fonts (BDF format).  Those
+are under X.V11R5/mit/fonts/bdf/misc:
+	jiskan16.bdf, jiskan24.bdf (Japanese)
+	hanglm16.bdf, hanglm24.bdf (Korean)
+and under X.V11R5/contrib/clients/cxterm/fonts:
+	cclib16st.bdf, cclib24st.bdf (Chinese GB)
+	hku-ch16.bdf (Chinese Big5)
+To create fonts from these files, you'd better make a
+directory for them (say ${font}):
+	% mkdir ${font}
+	% cd ${font}
+	% bdftopcf xxx/jiskan24.bdf >jiskan24.pcf
+	% bdftopcf yyy/hanglm24.bdf >hanglm24.pcf
+	...
+	% mkfontdir
+	% xset fp+ `pwd`
+Now you can check if you are really able to use these fonts by
+'xlsfonts' command.  You must use 'bdftosnf' instead of
+'bdftopcf' if you are using X.V11R4.
+
+3. ADDITIONAL FONTS
+
+Mule requires more fonts than in the distribution of
+X.V11R5.  For instance, in the case of using EGG with cWnn's
+cserver, font for SiSheng characters is necessary.  The
+directory 'fonts' under the ftp directory of Mule contains
+those fonts.
+
+
+4. MULE'S FONT SELECTION MECHANISM
+
+There are many ways to specify which font to be used for
+a certain character set.
+
+  (1) By calling the function 'set-x-default-font'
+	In lisp/mule-init.el, most of fonts are given
+	default values by calling this function.  You can
+	change or add values by calling it in site-init.el.
+	You can call it in your .emacs for fonts except for
+	ASCII.  Here's the document of 'set-x-default-font'
+	------------------------------------------------------------
+	set-x-default-font:
+	Set FONTNAME (2nd arg) and ENCODING (3rd arg) as a default
+	for the character set LEADING-CHAR (1st arg).
+	------------------------------------------------------------
+	Example in mule-init.el:
+	(set-x-default-font
+	  lc-thai "-*-fixed-medium-r-*--*-*-*-*-*-*-tis620.2529-1" 1)
+
+  (2) By specifying fonts in X's resource database
+	Please read man file of Mule (etc/mule.1).
+	Example in my ~/.Xresources:
+	*FontJP:		-*-fixed-medium-r-*--*-*-jisx0208.1983-*
+	*FontLTN1:		-ETL-Fixed-Medium-R-Normal--*-*-ISO8859-1
+
+  (3) By specifying fonts in command line argument of Mule
+	Please read man file of Mule (etc/mule.1).
+	Example:
+	% mule -fn a14 -fnjp k14
+
+  (4) By calling the function 'x-set-font'
+	This is the only way to change font dynamically.
+	Here's the document of 'x-set-font'.  Please note
+	that it is extended from the original of GNU Emacs.
+	You can not use it while dumping (creating) Mule.
+	------------------------------------------------------------
+	x-set-font:
+	Sets the font to be used for the X window.
+	When called from a program, expects three arguments,
+	 FONTNAME, LEADING-CHAR (0 or 0x81..0xFF), and ENCODING (0 or 1).
+	LEADING-CHAR and ENCODING default to 0.
+	Return t if the fonts is loaded successfully, else return nil.
+	------------------------------------------------------------
+	Example:
+	ESC ESC (x-set-font "k14" lc-jp 0)<CR>
+
+The priorities are: (1) < (2) < (3) < (4)
+
+Use 'x-get-fontinfo' to know which font is loaded.
+------------------------------------------------------------
+x-get-fontinfo:
+Return font information for the character set LEADING-CHAR
+by a list of:
+  REQUESTED-NAME: Fontname specified for openining font.
+  OPENED-NAME: Fontname of the font actually opened.
+  OPENED: t if the font has already opened, else nil.
+------------------------------------------------------------
+If OPENED-NAME is nil and OPENED is t, ASCII font is being
+used instead of REQUESTED-NAME.

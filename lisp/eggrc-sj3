@@ -1,0 +1,23 @@
+;;;
+;;;	Standard Start Up File for EGG
+;;;	Version 1.0
+;;;	Copyright 1990 Kiyoji Ishii
+;;;
+
+(set-default-sys-dic-directory "/usr/sony/dict/sj3")
+(set-default-usr-dic-directory "/usr/sony/dict/sj3/user/$USER")
+
+;;;
+;;; System Dictionary
+;;;
+
+(setsysdic "sj3main.dic")
+
+;;;
+;;; Private Dictionary
+;;;
+
+(setusrdic "private.dic")
+(setusrstdy "study.dat")
+
+
