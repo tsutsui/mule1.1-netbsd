@@ -1066,12 +1066,12 @@ PinYin$BJQ49$r9T$J$&!#%b!<%I%i%$%s$K$O!"Cf9q8lJ8;z$N(B `QuanPin' $B$,I=<($5$l
 $B$3$NJQ?t$,(B @code{t} $B$N>l9g$K$O!"(B@kbd{nn} $B$r(B @strong{$B$s(B} $B$KJQ49$9$k!#(B@refill
 @end defvr
 
-@defvr {Global variable} use-kuten-for-comma
+@defvr {Global variable} use-kuten-for-period
 $B$3$NJQ?t$,(B @code{t} $B$N>l9g$K$O!"(B@kbd{,} $B$r(B @kbd{$B!"(B} $B$K!"$=$l0J30$N>l9g$O!"(B
  @kbd{$B!$(B} $B$KJQ49$9$k!#(B@refill
 @end defvr
 
-@defvr {Global variable} use-touten-for-period
+@defvr {Global variable} use-touten-for-comma
 $B$3$NJQ?t$,(B@code{t}$B$N>l9g$K$O!"(B@kbd{.} $B$r(B @kbd{$B!#(B} $B$K!"$=$l0J30$N>l9g$O!"(B
  @kbd{$B!%(B} $B$KJQ49$9$k!#(B@refill
 @end defvr

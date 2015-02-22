@@ -1,5 +1,14 @@
 ;;; -*-indented-text-*-
 
+Fri Mar 11 23:26:56 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
+    * The third patch for Ver.1.1.
+
+Fri Mar 11 23:26:30 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/attribute.el (attribute-on-region): Document updated.
+
+Fri Mar 11 23:17:21 JST 1994	Akira Kon <kon@d1.bs2.mt.nec.co.jp>
+    * lisp/canna.el, lisp/can-n-egg.el: Updated.
+
 Fri Mar 11 12:37:41 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
     * The second patch for Ver.1.1.
 

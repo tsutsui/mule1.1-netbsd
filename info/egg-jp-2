@@ -100,7 +100,7 @@ File: egg-jp  Node: Language Specific File, Prev: Customization, Up: Customizati
 
 Mule および「たまご」では複数の言語を扱うことができますが、あらかじめ各
 言語を扱いやすいようにするための設定ファイルを読み込む必要があります。例
-えば、日本語を使う場合には `japanese.el' を、中国語を使う場合には 
+えば、日本語を使う場合には `japanese.el' を、中国語を使う場合には
 `chinese.el' をロードします。これらにより、各言語に合わせて word や 
 syntax の定義を行なったり、入力文字変換システムの変換表を読み込んだりし
 ます。
@@ -109,8 +109,8 @@ syntax の定義を行なったり、入力文字変換システムの変換表を読み込んだりし
 言語特定ファイルを読み込むには、以下の方法があります。
 
   1. 必要な言語特定ファイルの読み込みを行なった状態の実行形式ファイルを
-     作る。 Mule 構築時に `site-init.el'(デフォルトではこのファイルは存
-     在していない)で、`(load "japanese")'などとして読み込む。詳しくは、 
+     作る。Mule 構築時に `site-init.el'(デフォルトではこのファイルは存在
+     していない)で、`(load "japanese")'などとして読み込む。詳しくは、
      `$MULE/INSTALL.Mule'を参照のこと。
   2. Mule の起動時に `~/.emacs' の中で読み込みを行う (`site-init.el' で
      読み込みが行なわれている場合は、`~/.emacs' で読み込む必要はない)。
@@ -238,7 +238,7 @@ File: egg-jp  Node: Dictionary, Prev: Server, Up: Initialization, Next: Input Tr
      初期設定ファイルの名前を指定する。標準設定では `.eggrc'。
 
 ## Global Variable: egg-startup-file-search-path
-     探索を行なうディレクトリのリストを指定する。`egg-startup-file' がディ
+     探索を行なうディレクトリのリストを指定する。`egg-startup-file'がディ
      レクトリを指定していない場合はこの探索パス上のファイルを探す。標準
      設定では、`("~" ".")'。
 
@@ -251,7 +251,7 @@ File: egg-jp  Node: Dictionary, Prev: Server, Up: Initialization, Next: Input Tr
 す。辞書指定には *add-wnn-dict* を使います。引数によって、辞書ファイル・
 頻度ファイルのオープンモードや、パスワードが付いている辞書ファイルを読み
 書きモードでオープンする場合のパスワードファイルなどが指定できます。なお、
-辞書指定は正変換用と逆変換用で独立して指定するので、 あらかじめ 
+辞書指定は正変換用と逆変換用で独立して指定するので、 あらかじめ
 *set-wnn-reverse* で、どちらの環境かを指定します。
 
 ## Function: set-wnn-reverse ARG
@@ -348,7 +348,7 @@ File: egg-jp  Node: Input Translation, Prev: Dictionary, Up: Customization, Next
 
 「たまご」は入力文字変換表に基づいてキー入力を変換します。この変換を行う
 部分を*入力文字変換系*(Input character Translation System: ITS)と呼びま
-す。デフォルトの変換表は、「たまご」システムに含まれる `its-*.el' ファイ
+す。デフォルトの変換表は、「たまご」システムに含まれる`its-*.el' ファイ
 ル中で定義されています。これを変更するためには、自分の好みの入力変換法を 
 `~/.emacs' ファイルの中に記述してやります。
 
@@ -358,8 +358,8 @@ File: egg-jp  Node: Input Translation, Prev: Dictionary, Up: Customization, Next
 ## Function: its-define-mode NAME &optional INDICATOR RESET
      これから *its-defrule* などが定義する入力文字変換モード NAME を定義
      選択する。INDICATOR が `non-nil' のときは、このモードが選択された時
-     にその文字列がモードラインに表示される。 RESET が `non-nil' のとき
-     には its-mode の初期化を行う。
+     にその文字列がモードラインに表示される。RESET が `non-nil' のときに
+     は its-mode の初期化を行う。
 
           	(its-define-mode "roma-kana" "あ" t)
 
@@ -416,7 +416,7 @@ File: egg-jp  Node: Input Translation, Prev: Dictionary, Up: Customization, Next
 
        (its-defrule "tch" nil nil nil "roma-kana")
 
-とします。変換表に登録されているすべての変換規則を削除するには、関数 
+とします。変換表に登録されているすべての変換規則を削除するには、関数
 *its-define-mode*を用います。たとえば
 
        (its-define-mode "roma-kana" nil t)
@@ -752,7 +752,7 @@ F8
 F9
      リージョンの仮名漢字変換(*henkan-region*)
 L1
-     buffer の内容を現在アクティブな buffer に挿入する (*insert-buffer*)
+     buffer の内容を現在アクティブな buffer に挿入する(*insert-buffer*)
 L2
      ファイルの内容を現在アクティブな buffer に挿入する(*insert-file*)
 L3
@@ -764,16 +764,14 @@ L5
 L6
      ウインドウの大きさを小さくする(*shrink-window*)
 L7
-     現在アクティブな buffer のテキストの変更を取り消す 
-     (*revert-buffer*)
+     現在アクティブな buffer のテキストの変更を取り消す(*revert-buffer*)
 L8
-     現在アクティブな buffer のテキストの変更を取り消す 
-     (*revert-buffer*)
+     現在アクティブな buffer のテキストの変更を取り消す(*revert-buffer*)
 L9
-     現在アクティブな buffer の先頭にカーソルをもっていく 
+     現在アクティブな buffer の先頭にカーソルをもっていく
      (*beggining-of-buffer*)
 L10
-     現在アクティブな buffer の最後にカーソルをもっていく 
+     現在アクティブな buffer の最後にカーソルをもっていく
      (*end-of-buffer*)
 
 

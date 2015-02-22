@@ -447,14 +447,14 @@ File: egg-jp  Node: Fence Mode, Prev: Input Mode, Up: Interactive Method, Next: 
 
 
 フェンスモードを示す方法(縦棒など)は、コマンド 
-*set-egg-fence-mode-format* で変えることができます。例えば、 
+*set-egg-fence-mode-format* で変えることができます。例えば、
 `(set-egg-fence-mode-format "" "" 'underline)' を実行すると、フェンス領
 域が下線で示されるようになります。
 
 ## Command: set-egg-fence-mode-format OPEN CLOSE &optional ATTR
-     OPEN, CLOSE はそれぞれ領域の始点と終点を示す文字列。 ATTR はフェン
-     ス領域に設定される属性(有効かどうかは端末の機能に依る)。標準の状態
-     では、 `(set-egg-fence-mode-format "|" "|" nil)' になっている。
+     OPEN, CLOSE はそれぞれ領域の始点と終点を示す文字列。ATTR はフェンス
+     領域に設定される属性(有効かどうかは端末の機能に依る)。標準の状態で
+     は、 `(set-egg-fence-mode-format "|" "|" nil)' になっている。
 ## Command: toggle-egg-mode
      透過モードと入力文字変換モードの切り替えを行なう。フェンスモード中
      では、ローマ字仮名入力モードと ASCII 文字入力モードを切り替える。
@@ -489,7 +489,7 @@ File: egg-jp  Node: Conversion Mode, Prev: Graphic Character, Up: Interactive Me
 漢字変換モード
 --------------
 
-フェンスモードでは、`SPC'、`C-@'、`C-w' のいづれかによって *漢字変換モー
+フェンスモードでは、`SPC'、`C-@'、`C-w' のいづれかによって*漢字変換モー
 ド*に入り、仮名漢字変換が開始されます。モードラインは次のようになります。
 
       [漢]-:-----Mule: *scratch*      (Lisp Interaction) ---All----------
@@ -584,10 +584,10 @@ File: egg-jp  Node: Conversion Command, Prev: Conversion Mode, Up: Conversion Mo
      小/大文節変換中に、小/大文節の前候補を表示する
 `M-s'
      カーソル位置の大文節の変換候補一覧をミニバッファに表示し、選択可能
-     にする (コマンド *henkan-select-kouho-dai*)
+     にする(コマンド *henkan-select-kouho-dai*)
 `M-z'
      カーソル位置の小文節の変換候補一覧をミニバッファに表示し、選択可能
-     にする (コマンド *henkan-select-kouho-sho*)
+     にする(コマンド *henkan-select-kouho-sho*)
 `C-v'
      カーソル位置の文節の変換情報を表示する(コマンド 
      *henkan-inspect-bunsetu*)
@@ -652,7 +652,7 @@ File: egg-jp  Node: Conversion Example, Prev: Conversion Command, Up: Conversion
 
      |私の 名前は 中田です|
 
-変換の候補を選ぶためには、この他にも `C-p' によって直前の候補に戻る、 
+変換の候補を選ぶためには、この他にも `C-p' によって直前の候補に戻る、
 `M-s', `M-z' によって ミニバッファ で候補一覧から選ぶなどの方法がありま
 す。
 
@@ -698,7 +698,7 @@ File: egg-jp  Node: Conversion Example, Prev: Conversion Command, Up: Conversion
 ## Command: set-egg-henkan-mode-format OPEN CLOSE KUGIRI-DAI KUGIRI-SHO &optional ATTR1 ATTR2 ATTR3
      変換モードの表示方法を設定する。OPEN, CLOSE はそれぞれ変換の始点、
      終点を示す文字列あるいは `nil'。KUGIRI-DAI, KUGIRI-SHO は大文節、小
-     文節の区切りを示す文字列または `nil'。 ATTR1, ATTR2, ATTR3 はそれぞ
+     文節の区切りを示す文字列または `nil'。ATTR1, ATTR2, ATTR3 はそれぞ
      れ変換区間、大文節区間、小文節区間に設定される属性あるいは `nil'(有
      効かどうかは端末の機能に依る)。標準の状態では、 
      `(set-egg-henkan-mode-format "|" "|" " " "-" nil nil nil)' 
@@ -714,9 +714,9 @@ File: egg-jp  Node: Menu Selection, Prev: Conversion Example, Up: Conversion Mod
 `M-z'(*henkan-select-kouho-sho*) を入力することによってミニバッファを利
 用したメニューシステムでの変換候補の選択が出来ます。
 
-候補が 1行に入りきらない場合には、`C-n' で次の候補一覧が、また `C-p' で
-前の候補一覧が表示されます。選択したい候補の番号を入力するか、カーソルを
-その候補に移動して RET を押すと、その候補が選択され候補一覧から抜けます。
+候補が 1行に入りきらない場合には、`C-n' で次の候補一覧が、また`C-p' で前
+の候補一覧が表示されます。選択したい候補の番号を入力するか、カーソルをそ
+の候補に移動して RET を押すと、その候補が選択され候補一覧から抜けます。
 `C-f' でカーソルが次候補に、`C-b' でカーソルが前の候補に移動します。変換
 を選択することなしに候補一覧の状態から抜けるには `C-g' を入力します。
 
@@ -766,7 +766,7 @@ File: egg-jp  Node: Input Translation Table, Prev: Menu Selection, Up: Kanji Inp
      全角(JIS X0208)小文字変換。入力を全角文字の小文字に変換する。モード
      の表示は `[ａ]' となる。
 *zenkaku-upcase*
-     全角大文字変換。入力を全角文字の大文字に変換する。モードの表示は `
+     全角大文字変換。入力を全角文字の大文字に変換する。モードの表示は`
      [Ａ]' となる。
 
 `chinese.el' がロードされている場合は、次の変換表が指定可能です。
@@ -818,7 +818,7 @@ File: egg-jp  Node: Selecting Translation Table, Prev: Input Translation Table, 
      コマンド *its:select-zenkaku-downcase*。全角小文字変換表 
      (zenkaku-downcase)を選択する。
 `C-x C-k Z'
-     コマンド *its:selct-zenkaku-upcase*。全角大文字変換表 
+     コマンド *its:selct-zenkaku-upcase*。全角大文字変換表
      (zenkaku-upcase)を選択する。
 
 
@@ -838,7 +838,7 @@ File: egg-jp  Node: Selecting in Fence, Prev: Selecting Translation Table, Up: I
 `M-Q'
      コマンド *its:select-upcase*。大文字変換表(upcase)を選択する。
 `M-z'
-     コマンド *its:select-zenkaku-downcase*。全角小文字変換表 
+     コマンド *its:select-zenkaku-downcase*。全角小文字変換表
      (zenkaku-downcase)を選択する。
 `M-Z'
      コマンド *its:select-zenaku-upcase*。全角大文字変換表 
@@ -850,17 +850,17 @@ File: egg-jp  Node: Kuten and Touten, Prev: Selecting in Fence, Up: Input Transl
 句点読点などの変換
 ------------------
 
-句点や読点、文字 *ん* がどのように変換されるかは、`~/.emacs' ファイル中
-などで以下の変数の値を設定することによって指定できます。
+句点や読点、文字 *ん* がどのように変換されるかは、`~/.emacs'ファイル中な
+どで以下の変数の値を設定することによって指定できます。
 
 ## Global variable: enable-double-n-syntax
      この変数が `t' の場合には、`nn' を *ん* に変換する。
 
-## Global variable: use-kuten-for-comma
+## Global variable: use-kuten-for-period
      この変数が `t' の場合には、`,' を `、' に、それ以外の場合は、
       `，' に変換する。
 
-## Global variable: use-touten-for-period
+## Global variable: use-touten-for-comma
      この変数が`t'の場合には、`.' を `。' に、それ以外の場合は、
       `．' に変換する。
 
@@ -1128,7 +1128,7 @@ File: egg-jp  Node: Isearch, Prev: Input in Minibuffer, Up: Kanji Input, Next: H
 インクリメンタルサーチでの漢字入力方法
 ======================================
 
-インクリメンタルサーチ(*isearch*)中に漢字文字列を入力するには、 `C-k' を
+インクリメンタルサーチ(*isearch*)中に漢字文字列を入力するには、`C-k' を
 タイプします。
 
 このモードではミニバッファでストリングの入力を行なうことができるので、通
@@ -1144,7 +1144,7 @@ File: egg-jp  Node: Hangul Input, Prev: Isearch, Up: Top, Next: Dictionary Manag
 「たまご」の入力文字変換系の機能を利用して、Mule でハングル文字の入力を
 行うことができます。ハングル文字のフォントは、X11R5 についています。
 
-ハングル入力を行うには、まず `korean.el' をロードします。 `korean.el' は、
+ハングル入力を行うには、まず `korean.el' をロードします。`korean.el' は、
 ハングルの変換表 "hangul" を定義する `its-hangul.el' を読み込み、「たま
 ご」のメニューに "hangul" を追加します。実際にハングル入力をはじめるには、
 `C-x C-k m' でメニューを出し、その中から "hangul" を選択してやります。モー
@@ -1281,7 +1281,7 @@ File: egg-jp  Node: Registration, Prev: Dictionary Management, Up: Dictionary Ma
      その項目を選択すると、一番上のノードに戻ります。
 
 
-また、漢字変換モードで単語を登録することもできます。この場合は、コマンド 
+また、漢字変換モードで単語を登録することもできます。この場合は、コマンド
 *toroku-henkan-mode* を用います。
 
 ## Command: toroku-henkan-mode

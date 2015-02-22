@@ -99,7 +99,11 @@ Caution 3: Mule does not like all emacslisp files compiled
 
 Caution 4: Modifying PURESIZE value in config.h doesn't
 	work.  You should do it after "puresize.h" is
-	included (usually at the tail of config.h). 
+	included (usually at the tail of config.h). The
+	default value of PURESIZE is enough only for loading
+	one language specific file (japanese.el, etc).  If
+	you want to make mule with more languages, you have
+	to increase PURESIZE.
 
 Caution 5: If you are installing Mule on MS-DOS, please read
 	dos/INSTALL.  You may also have to modify

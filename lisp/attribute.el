@@ -56,9 +56,9 @@
 Currently supported attributes are 'underline', 'inverse', and 'bold'.
 Called from program, takes two optional arguments FROM and TO.
 If FROM or TO is NIL, (point-min) or (point-max) is used instead.
-Information of attribute is stored in buffer local variables
-underlined-region and inversed-region, but manipulating these variabels
-directly may cause serious problems."
+Information of attribute is stored in a buffer local variable
+attributed-region, but manipulating this variabel directly may cause
+serious problems."
   (interactive
    (list (attribute-symbol-read) (mark) (point)))
   (attribute-on-off-region attr from to 'on))

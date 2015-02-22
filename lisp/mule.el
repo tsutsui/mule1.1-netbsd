@@ -167,10 +167,10 @@
 
 (provide 'mule)				;93.6.25 by T.Enami
 
-(defconst mule-version "1.1 (HAHAKIGI) PL02" "\
+(defconst mule-version "1.1 (HAHAKIGI) PL03" "\
 Version numbers of this version of Mule.")
 
-(defconst mule-version-date "1994.3.11" "\
+(defconst mule-version-date "1994.3.12" "\
 Distribution date of this version of Mule.")
 
 (defun mule-version () "\

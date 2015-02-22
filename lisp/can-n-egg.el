@@ -21,12 +21,12 @@
 
 ;; -*-mode: emacs-lisp-*-
 
-;; $Id: can-n-egg.el,v 1.5 1993/12/10 04:22:57 kon Exp $
+;; $Id: can-n-egg.el,v 1.6 1994/03/09 02:32:35 kon Exp $
 
-;; ¤³¤Îµ¡Ç½¤ò»È¤¦¤Ë¤Ï¡¢
-;; M-x load ¤³¤Î¥Õ¥¡¥¤¥ë
+;; $B$3$N5!G=$r;H$&$K$O!"(B
+;; M-x load $B$3$N%U%!%$%k(B
 ;; M-x can-n-egg
-;; ¤ò¼Â¹Ô¤·¤Þ¤¹¡£
+;; $B$r<B9T$7$^$9!#(B
 
 (require 'canna)
 
@@ -36,15 +36,15 @@
 
 (provide 'can-n-egg)
 
-;;; ¤³¤Î´Ø¿ô¤Ç¤Ï¡¢¸½ºß¤Î¥â¡¼¥É¤¬¡Ø¤«¤ó¤Ê¡Ù¤ÎÆüËÜ¸ìÆþÎÏ¥â¡¼¥É¤«
-;;; ¤É¤¦¤«¤ò¥Á¥§¥Ã¥¯¤·¤Æ¡¢¡Ø¤«¤ó¤Ê¡Ù¤ÎÆüËÜ¸ìÆþÎÏ¥â¡¼¥É¤Ç¤Ê¤¤¤Î
-;;; ¤Ç¤¢¤ì¤Ð¡¢¡Ø¤¿¤Þ¤´¡Ù¤Î egg-self-insert-command ¤ò¸Æ¤Ö¡£¡Ø¤«
-;;; ¤ó¤Ê¡Ù¤ÎÆüËÜ¸ìÆþÎÏ¥â¡¼¥É¤Ç¤¢¤ì¤Ð¡¢¡Ø¤«¤ó¤Ê¡Ù¤Î 
-;;; canna-self-insert-command ¤ò¸Æ¤Ö¡£
+;;; $B$3$N4X?t$G$O!"8=:_$N%b!<%I$,!X$+$s$J!Y$NF|K\8lF~NO%b!<%I$+(B
+;;; $B$I$&$+$r%A%'%C%/$7$F!"!X$+$s$J!Y$NF|K\8lF~NO%b!<%I$G$J$$$N(B
+;;; $B$G$"$l$P!"!X$?$^$4!Y$N(B egg-self-insert-command $B$r8F$V!#!X$+(B
+;;; $B$s$J!Y$NF|K\8lF~NO%b!<%I$G$"$l$P!"!X$+$s$J!Y$N(B 
+;;; canna-self-insert-command $B$r8F$V!#(B
 
-(defvar canna-exec-hook)
-(defvar canna-toggle-key)
-(defvar egg-toggle-key)
+(defvar canna-exec-hook nil)
+(defvar canna-toggle-key nil)
+(defvar egg-toggle-key nil)
 
 (defun can-n-egg-self-insert-command (arg)
   "Self insert pressed key and use it to assemble Romaji character."
@@ -67,3 +67,4 @@
    (if canna-toggle-key canna-toggle-key "\C-o") 'canna-toggle-japanese-mode)
   (global-set-key
    (if egg-toggle-key egg-toggle-key "\C-\\") 'toggle-egg-mode) )
+

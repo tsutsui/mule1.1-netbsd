@@ -26,7 +26,7 @@
 
 ;; -*-mode: emacs-lisp-*-
 
-(defconst canna-rcs-version "Canna/emacs 2.3p1, based on Canna 2.2. RCS $Id: canna.el,v 1.68 1993/11/19 16:46:15 kon Exp $")
+(defconst canna-rcs-version "Canna/emacs 2.3p2, based on Canna 2.2/3.2. RCS $Id: canna.el,v 1.71 1994/03/11 10:13:30 kon Exp $")
 
 (defun canna-version ()
   (interactive)
@@ -34,7 +34,7 @@
 
 (provide 'canna)
 
-;;; ¤«¤ó¤Ê¤ÎÊÑ¿ô
+;;; $B$+$s$J$NJQ?t(B
 
 (defvar canna-save-undo-text-predicate nil)
 (defvar canna-undo-hook nil)
@@ -52,24 +52,24 @@
 (if canna-underline (require 'attribute))
 
 ;;;
-;;; ¥â¡¼¥É¥é¥¤¥ó¤Î½¤À°
+;;; $B%b!<%I%i%$%s$N=$@0(B
 ;;;
 
-(defvar canna:*kanji-mode-string* "[ ¤¢ ]")
-(defvar canna:*alpha-mode-string* "¤«¤ó¤Ê")
-(defvar canna:*saved-mode-string* "[ ¤¢ ]")
+(defvar canna:*kanji-mode-string* "[ $B$"(B ]")
+(defvar canna:*alpha-mode-string* "$B$+$s$J(B")
+(defvar canna:*saved-mode-string* "[ $B$"(B ]")
 
 (defvar mode-line-canna-mode canna:*alpha-mode-string*)
 (defvar mode-line-canna-mode-in-minibuffer canna:*alpha-mode-string*)
 
 (defvar display-minibuffer-mode-in-minibuffer nil) ; same name as TAKANA
-; ¤¿¤«¤Ê¤Ç¤Ï t ¤¬¥Ç¥Õ¥©¥ë¥È¤À¤±¤É¡¢nil ¤ò¥Ç¥Õ¥©¥ë¥È¤Ë¤·¤Æ¤ª¤³¤¦¤«¤Ê¡£
+; $B$?$+$J$G$O(B t $B$,%G%U%)%k%H$@$1$I!"(Bnil $B$r%G%U%)%k%H$K$7$F$*$3$&$+$J!#(B
 
 (make-variable-buffer-local 'mode-line-canna-mode)
 
-; select-window-hook ¤Ï mule ¤«¤éÆþ¤Ã¤¿¤ó¤À¤È»×¤¦¤±¤É¡¢
-; ¤³¤ì¤¬Ìµ¤¤¤È preprompt ¤¬¤¢¤Ã¤Æ¤â¤É¤¦¤·¤è¤¦¤â¤Ê¤¤¤Î¤Ç¤Ê¤¤¤È¤­¤Ï
-; display-minibuffer-mode-in-minibuffer ¤ò nil ¤Ë¤¹¤ë¡£
+; select-window-hook $B$O(B mule $B$+$iF~$C$?$s$@$H;W$&$1$I!"(B
+; $B$3$l$,L5$$$H(B preprompt $B$,$"$C$F$b$I$&$7$h$&$b$J$$$N$G$J$$$H$-$O(B
+; display-minibuffer-mode-in-minibuffer $B$r(B nil $B$K$9$k!#(B
 
 (if (not (boundp 'select-window-hook))
     (setq display-minibuffer-mode-in-minibuffer nil))
@@ -83,11 +83,11 @@
 		  canna:*japanese-mode-in-minibuffer* nil) ))
     (setq minibuffer-window-selected nil) ))
 
-; egg:select-window-hook ¤Ç¤â½½Ê¬¤Ê¤Î¤Ç¡¢egg:select-window-hook ¤¬
-; ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç¤Î¤ßÄêµÁ¤¹¤ë¡£
+; egg:select-window-hook $B$G$b==J,$J$N$G!"(Begg:select-window-hook $B$,(B
+; $B@_Dj$5$l$F$$$J$$>l9g$N$_Dj5A$9$k!#(B
 
-; ÎÉ¤¯¹Í¤¨¤Æ¤ß¤ë¤È display-minibuffer-mode-in-minibuffer ¤¬ t ¤Î»þ¤Ï
-; ¤ä¤Ï¤ê¾åµ­¤Î canna:select-window-hook ¤¬É¬Í×¤À¤Ê¤¢¡£¤É¤¦¤·¤è¤¦¡£
+; $BNI$/9M$($F$_$k$H(B display-minibuffer-mode-in-minibuffer $B$,(B t $B$N;~$O(B
+; $B$d$O$j>e5-$N(B canna:select-window-hook $B$,I,MW$@$J$"!#$I$&$7$h$&!#(B
 
 (if (and (boundp 'select-window-hook)
 	 (not (eq select-window-hook 'egg:select-window-hook)))
@@ -103,13 +103,13 @@
     (setq mode-line-canna-mode str) )
   (set-buffer-modified-p (buffer-modified-p)) )
 
-;; memq ¤ò¶¯Ä´¤¹¤ë¤Ê¤é¡¢°Ê²¼¤À¤¬¡¢
+;; memq $B$r6/D4$9$k$J$i!"0J2<$@$,!"(B
 ;(defun canna:memq-recursive (a l)
 ;  (or (eq a l)
 ;      (and (consp l)
 ;	   (or (canna:memq-recursive a (car l))
 ;	       (canna:memq-recursive a (cdr l)) ))))
-;; ¼¡¤ÎÄêµÁ¤ò»È¤ª¤¦...
+;; $B<!$NDj5A$r;H$*$&(B...
 (defun canna:memq-recursive (a l)
   (if (atom l) (eq a l)
     (or (canna:memq-recursive a (car l))
@@ -170,10 +170,10 @@
 (defvar canna:*use-region-as-henkan-region* nil)
 
 ;;;
-;;; ¥­¡¼¥Þ¥Ã¥×¥Æ¡¼¥Ö¥ë
+;;; $B%-!<%^%C%W%F!<%V%k(B
 ;;;
 
-;; ¥Õ¥§¥ó¥¹¥â¡¼¥É¤Ç¤Î¥í¡¼¥«¥ë¥Þ¥Ã¥×
+;; $B%U%'%s%9%b!<%I$G$N%m!<%+%k%^%C%W(B
 (defvar canna-mode-map (make-keymap))
 
 (let ((ch 0))
@@ -181,7 +181,7 @@
     (aset canna-mode-map ch 'canna-functional-insert-command)
     (setq ch (1+ ch))))
 
-;; ¥ß¥Ë¥Ð¥Ã¥Õ¥¡¤Ë²¿¤«¤òÉ½¼¨¤·¤Æ¤¤¤ë»þ¤Î¥í¡¼¥«¥ë¥Þ¥Ã¥×
+;; $B%_%K%P%C%U%!$K2?$+$rI=<($7$F$$$k;~$N%m!<%+%k%^%C%W(B
 (defvar canna-minibuffer-mode-map (make-keymap))
 
 (let ((ch 0))
@@ -191,7 +191,7 @@
 
 
 ;;;
-;;; ¥°¥í¡¼¥Ð¥ë´Ø¿ô¤Î½ñ¤­ÂØ¤¨
+;;; $B%0%m!<%P%k4X?t$N=q$-BX$((B
 ;;;
 
 
@@ -249,7 +249,7 @@
 
 (defun canna:kill-emacs (&optional query)
   (interactive "P")
-  (message "¡Ø¤«¤ó¤Ê¡Ù¤Î¼­½ñ¤ò¥»¡¼¥Ö¤·¤Þ¤¹¡£")
+  (message "$B!X$+$s$J!Y$N<-=q$r%;!<%V$7$^$9!#(B")
   (canna:finalize)
   (canna-sys:kill-emacs query))
 
@@ -277,16 +277,16 @@ kana-to-kanji translation."
 
 (defun canna:functional-insert-command2 (ch arg)
   "This function actualy isert a converted Japanese string."
-  ;; ¤³¤Î´Ø¿ô¤ÏÍ¿¤¨¤é¤ì¤¿Ê¸»ú¤òÆüËÜ¸ìÆþÎÏ¤Î¤¿¤á¤Î¥­¡¼ÆþÎÏ¤È¤·¤Æ¼è¤ê°·
-  ;; ¤¤¡¢ÆüËÜ¸ìÆþÎÏ¤ÎÃæ´Ö·ë²Ì¤ò´Þ¤á¤¿½èÍý¤òEmacs¤Î¥Ð¥Ã¥Õ¥¡¤ËÈ¿±Ç¤µ¤»¤ë
-  ;; ´Ø¿ô¤Ç¤¢¤ë¡£
+  ;; $B$3$N4X?t$OM?$($i$l$?J8;z$rF|K\8lF~NO$N$?$a$N%-!<F~NO$H$7$F<h$j07(B
+  ;; $B$$!"F|K\8lF~NO$NCf4V7k2L$r4^$a$?=hM}$r(BEmacs$B$N%P%C%U%!$KH?1G$5$;$k(B
+  ;; $B4X?t$G$"$k!#(B
   (canna:display-candidates (canna-key-proc ch)) )
 
 (defun canna:delete-last-preedit ()
   (if (not (zerop canna:*last-kouho*))
       (progn
 	(if canna-underline
-        ; ¤Þ¤º¡¢Â°À­¤ò¾Ã¤¹¡£
+        ; $B$^$:!"B0@-$r>C$9!#(B
 	    (progn
 	      (attribute-off-region 'inverse
 				    canna:*region-start*
@@ -297,7 +297,7 @@ kana-to-kanji translation."
 	(delete-region canna:*region-start* canna:*region-end*)
 	(setq canna:*last-kouho* 0) )))
 
-(defun canna:insert-fixed ()
+(defun canna:insert-fixed (strs)
   (cond ((> strs 0)
 	 (cond ((and canna-kakutei-yomi
 		     (or (null canna-save-undo-text-predicate)
@@ -362,26 +362,26 @@ kana-to-kanji translation."
 	 (setq canna:*last-kouho* canna-henkan-length)
 	 ))
 
-	 ;; ¸õÊäÎÎ°è¤Ç¤Ï¶¯Ä´¤·¤¿¤¤Ê¸»úÎó¤¬Â¸ºß¤¹¤ë¤â¤Î¤È¹Í¤¨¤é
-	 ;; ¤ì¤ë¡£¶¯Ä´¤·¤¿¤¤Ê¸»ú¤ÏEmacs¤Ç¤Ï¥«¡¼¥½¥ë¥Ý¥¸¥·¥ç¥ó¤Ë¤ÆÉ½¼¨
-	 ;; ¤¹¤ë¤³¤È¤È¤¹¤ë¡£¶¯Ä´¤·¤¿¤¤Ê¸»ú¤¬¤Ê¤¤¤Î¤Ç¤¢¤ì¤Ð¡¢¥«¡¼¥½¥ë
-	 ;; ¤Ï°ìÈÖ¸å¤ÎÉôÊ¬(ÆþÎÏ¤¬¹Ô¤ï¤ì¤ë¥Ý¥¤¥ó¥È)¤ËÃÖ¤¤¤Æ¤ª¤¯¡£
+	 ;; $B8uJdNN0h$G$O6/D4$7$?$$J8;zNs$,B8:_$9$k$b$N$H9M$($i(B
+	 ;; $B$l$k!#6/D4$7$?$$J8;z$O(BEmacs$B$G$O%+!<%=%k%]%8%7%g%s$K$FI=<((B
+	 ;; $B$9$k$3$H$H$9$k!#6/D4$7$?$$J8;z$,$J$$$N$G$"$l$P!"%+!<%=%k(B
+	 ;; $B$O0lHV8e$NItJ,(B($BF~NO$,9T$o$l$k%]%$%s%H(B)$B$KCV$$$F$*$/!#(B
 
-	 ;; ¥«¡¼¥½¥ë¤ò°ÜÆ°¤¹¤ë¡£
+	 ;; $B%+!<%=%k$r0\F0$9$k!#(B
 	 (if (not canna-underline)
 	     (backward-char 
 	      (- canna:*last-kouho*
-		 ;; ¥«¡¼¥½¥ë°ÌÃÖ¤Ï¡¢È¿Å¾É½¼¨ÉôÊ¬¤¬Â¸ºß¤·¤Ê¤¤¤Î¤Ç¤¢¤ì¤Ð¡¢
-		 ;; ¸õÊäÊ¸»úÎó¤ÎºÇ¸å¤ÎÉôÊ¬¤È¤·¡¢È¿Å¾É½¼¨ÉôÊ¬¤¬Â¸ºß¤¹¤ë¤Î
-		 ;; ¤Ç¤¢¤ì¤Ð¡¢¤½¤ÎÉôÊ¬¤Î»Ï¤á¤È¤¹¤ë¡£
+		 ;; $B%+!<%=%k0LCV$O!"H?E>I=<(ItJ,$,B8:_$7$J$$$N$G$"$l$P!"(B
+		 ;; $B8uJdJ8;zNs$N:G8e$NItJ,$H$7!"H?E>I=<(ItJ,$,B8:_$9$k$N(B
+		 ;; $B$G$"$l$P!"$=$NItJ,$N;O$a$H$9$k!#(B
 		 (cond ((zerop canna-henkan-revlen)
 			canna:*last-kouho*)
 		       (t canna-henkan-revpos) )) )
 	   (if (and (> canna-henkan-revlen 0)
 		    (> canna-henkan-length 0))
-		    ; ¸õÊä¤ÎÄ¹¤µ¤¬0¤Ç¤Ê¤¯¡¢
-		    ; È¿Å¾É½¼¨¤ÎÄ¹¤µ¤¬0¤Ç¤Ê¤±¤ì¤Ð¡¢
-		    ; ¤½¤ÎÉôÊ¬¤òÊÑÅ¾É½¼¨¤¹¤ë¡£
+		    ; $B8uJd$ND9$5$,(B0$B$G$J$/!"(B
+		    ; $BH?E>I=<($ND9$5$,(B0$B$G$J$1$l$P!"(B
+		    ; $B$=$NItJ,$rJQE>I=<($9$k!#(B
 	       (let ((start (+ canna:*region-start*
 			       (if canna-with-fences 1 0)
 			       canna-henkan-revpos) ))
@@ -390,65 +390,68 @@ kana-to-kanji translation."
 	   ) )
 
 (defun canna:display-candidates (strs)
-  (cond ((stringp strs) ; ¥¨¥é¡¼¤¬µ¯¤³¤Ã¤¿¾ì¹ç
+  (cond ((stringp strs) ; $B%(%i!<$,5/$3$C$?>l9g(B
 	 (beep)
 	 (message strs) )
 	(canna-henkan-string
-	 ;; ¤â¤·¸õÊäÉ½¼¨¤¬Á°¤Î·ë²Ì¤«¤éÊÑ¤ï¤Ã¤Æ¤¤¤Ê¤¯¤Ê¤¤¤È¤­¤Ï......
+	 ;; $B$b$78uJdI=<($,A0$N7k2L$+$iJQ$o$C$F$$$J$/$J$$$H$-$O(B......
 
-	 ;; ¼è¤ê¹ç¤¨¤ººÇ½é¤ÏÁ°¤Ë½ñ¤¤¤Æ¤ª¤¤¤¿Ãæ´Ö·ë²Ì¤ò¾Ã¤¹¡£
+	 ;; $B<h$j9g$($::G=i$OA0$K=q$$$F$*$$$?Cf4V7k2L$r>C$9!#(B
 	 (canna:delete-last-preedit)
 
-	 ;; ³ÎÄê¤·¤¿Ê¸»úÎó¤¬¤¢¤ì¤Ð¤½¤ì¤òÁÞÆþ¤¹¤ë¡£
-	 (canna:insert-fixed)
+	 ;; $B3NDj$7$?J8;zNs$,$"$l$P$=$l$rA^F~$9$k!#(B
+	 (canna:insert-fixed strs)
 
-	 ;; ¼¡¤Ï¸õÊä¤Ë¤Ä¤¤¤Æ¤Îºî¶È¤Ç¤¢¤ë¡£
+	 ;; $B<!$O8uJd$K$D$$$F$N:n6H$G$"$k!#(B
 
-	 ;; ¸õÊä¤òÁÞÆþ¤¹¤ë¡£¸õÊä¤Ï½ÄËÀÆóËÜ¤Ë¤Æ¶´¤Þ¤ì¤ë¡£
+	 ;; $B8uJd$rA^F~$9$k!#8uJd$O=DK@FsK\$K$F64$^$l$k!#(B
 	 (canna:insert-preedit)
 	 ))
 
-  ;; ¥â¡¼¥É¤òÉ½¤¹Ê¸»úÎó¤¬Â¸ºß¤¹¤ì¤Ð¤½¤ì¤ò¥â¡¼¥É¤È¤·¤Æ¼è¤ê°·¤¦¡£
+  ;; $B%b!<%I$rI=$9J8;zNs$,B8:_$9$l$P$=$l$r%b!<%I$H$7$F<h$j07$&!#(B
   (if (stringp canna-mode-string)
       (mode-line-canna-mode-update canna-mode-string))
 
-  ;; ¸õÊäÉ½¼¨¤¬¤Ê¤±¤ì¤Ð¥Õ¥§¥ó¥¹¥â¡¼¥É¤«¤éÈ´¤±¤ë¡£
-  (cond ((zerop canna:*last-kouho*)
-	 (canna:quit-canna-mode) ) )
+  ;; $B8uJdI=<($,$J$1$l$P%U%'%s%9%b!<%I$+$iH4$1$k!#(B
+  (cond (canna-empty-info (canna:quit-canna-mode)))
 
-  ;; ¥ß¥Ë¥Ð¥Ã¥Õ¥¡¤Ë½ñ¤¯¤³¤È¤¬Â¸ºß¤¹¤ë¤Î¤Ç¤¢¤ì¤Ð¡¢¤½¤ì¤ò¥ß¥Ë¥Ð¥Ã¥Õ¥¡
-  ;; ¤ËÉ½¼¨¤¹¤ë¡£
+  ;; $B%_%K%P%C%U%!$K=q$/$3$H$,B8:_$9$k$N$G$"$l$P!"$=$l$r%_%K%P%C%U%!(B
+  ;; $B$KI=<($9$k!#(B
   (cond (canna-ichiran-string
 	 (canna:minibuffer-input canna-ichiran-string
 				 canna-ichiran-length
 				 canna-ichiran-revpos
-				 canna-ichiran-revlen) ) )
+				 canna-ichiran-revlen
+				 strs) )
+	(canna:*cursor-was-in-minibuffer*
+	 (select-window (minibuffer-window))
+	 (use-local-map canna-minibuffer-mode-map) ))
   )
 
-(defun canna:minibuffer-input (str len revpos revlen)
+(defun canna:minibuffer-input (str len revpos revlen nfixed)
   "Displaying misc informations for kana-to-kanji input."
 
-  ;; ºî¶È¤ò¥ß¥Ë¥Ð¥Ã¥Õ¥¡¤Ë°Ü¤¹¤Î¤ËºÝ¤·¤Æ¡¢¸½ºß¤Î¥¦¥£¥ó¥É¥¦¤Î¾ðÊó¤òÊÝÂ¸
-  ;; ¤·¤Æ¤ª¤¯¡£
+  ;; $B:n6H$r%_%K%P%C%U%!$K0\$9$N$K:]$7$F!"8=:_$N%&%#%s%I%&$N>pJs$rJ]B8(B
+  ;; $B$7$F$*$/!#(B
   (setq canna:*previous-window* (selected-window))
   (select-window (minibuffer-window))
 
-;; ¼«Ê¬¤ËÍè¤ëÁ°¤¬¥ß¥Ë¥Ð¥Ã¥Õ¥¡¤«¤É¤¦¤«¤òÊÑ¿ô¤Ë¤Ç¤â¤¤¤ì¤Æ¤ª¤¤¤¿Êý¤¬¤¤¤¤¤Ê¤¢¡£
+;; $B<+J,$KMh$kA0$,%_%K%P%C%U%!$+$I$&$+$rJQ?t$K$G$b$$$l$F$*$$$?J}$,$$$$$J$"!#(B
 
   (if (not canna:*cursor-was-in-minibuffer*)
       (progn
-	;; ¥ß¥Ë¥Ð¥Ã¥Õ¥¡¤ò¥¯¥ê¥¢¤¹¤ë¡£
+	;; $B%_%K%P%C%U%!$r%/%j%"$9$k!#(B
 	(if (eq canna:*previous-window* (selected-window))
 	    (progn
 	      (if canna-underline
 		  (attribute-off-region 'inverse (point-min) (point-max)))
 	      (canna:delete-last-preedit) ))
 
-        ;; ¥ß¥Ë¥Ð¥Ã¥Õ¥¡¥¦¥£¥ó¥É¥¦¤Ë¸õÊä°ìÍ÷ÍÑ¤Î¥Ð¥Ã¥Õ¥¡¤ò³ä¤êÅö¤Æ¤ë¡£
+        ;; $B%_%K%P%C%U%!%&%#%s%I%&$K8uJd0lMwMQ$N%P%C%U%!$r3d$jEv$F$k!#(B
 	(setq canna:*saved-minibuffer* (window-buffer (minibuffer-window)))
 	(set-window-buffer (minibuffer-window) canna:*menu-buffer*)
 
-	;; ¥ß¥Ë¥Ð¥Ã¥Õ¥¡¤Î¥­¡¼¥Þ¥Ã¥×¤òÊÝÂ¸¤·¤Æ¤ª¤¯¡£
+	;; $B%_%K%P%C%U%!$N%-!<%^%C%W$rJ]B8$7$F$*$/!#(B
 	(setq canna:*minibuffer-local-map-backup* (current-local-map))
 	))
 
@@ -463,24 +466,24 @@ kana-to-kanji translation."
 
   (insert str)
 
-  ;; ¥ß¥Ë¥Ð¥Ã¥Õ¥¡¤ÇÈ¿Å¾É½¼¨¤¹¤ë¤Ù¤­Ê¸»ú¤Î¤È¤³¤í¤Ë¥«¡¼¥½¥ë¤ò°ÜÆ°¤¹¤ë¡£
+  ;; $B%_%K%P%C%U%!$GH?E>I=<($9$k$Y$-J8;z$N$H$3$m$K%+!<%=%k$r0\F0$9$k!#(B
   (cond ((> revlen 0)
 	 (backward-char (- len revpos)) ))
 
-  ;; ¥ß¥Ë¥Ð¥Ã¥Õ¥¡¤ËÉ½¼¨¤¹¤ë¤Ù¤­Ê¸»úÎó¤¬¥Ì¥ëÊ¸»úÎó¤Ê¤Î¤Ç¤¢¤ì¤Ð¡¢Á°¤Î¥¦¥£
-  ;; ¥ó¥É¥¦¤ËÌá¤ë¡£
+  ;; $B%_%K%P%C%U%!$KI=<($9$k$Y$-J8;zNs$,%L%kJ8;zNs$J$N$G$"$l$P!"A0$N%&%#(B
+  ;; $B%s%I%&$KLa$k!#(B
   (if (or (zerop len) canna-empty-info)
       (progn
 	(setq canna:*cursor-was-in-minibuffer* nil)
 	(use-local-map canna:*minibuffer-local-map-backup*)
 
-	;; ¥ß¥Ë¥Ð¥Ã¥Õ¥¡¥¦¥£¥ó¥É¥¦¤Î¥Ð¥Ã¥Õ¥¡¤ò¸µ¤ËÌá¤¹¡£
+	;; $B%_%K%P%C%U%!%&%#%s%I%&$N%P%C%U%!$r85$KLa$9!#(B
 	(set-window-buffer (minibuffer-window) canna:*saved-minibuffer*)
 ;	(setq canna:*saved-minibuffer* nil)
-	; ¥ß¥Ë¥Ð¥Ã¥Õ¥¡¤ÇÆþÎÏ¤·¤Æ¤¤¤¿¤Î¤Ê¤é°Ê²¼¤â¤¹¤ë¡£
+	; $B%_%K%P%C%U%!$GF~NO$7$F$$$?$N$J$i0J2<$b$9$k!#(B
 	(if (eq canna:*previous-window* (selected-window))
 	    (progn
-	      (canna:insert-fixed)
+	      (canna:insert-fixed nfixed)
 	      (canna:insert-preedit) ))
 
 	(if canna-empty-info
@@ -499,13 +502,13 @@ kana-to-kanji translation, even if you are in the minibuffer."
   (canna:functional-insert-command2 last-command-char arg) )
 
 ;;;
-;;; ¤«¤ó¤Ê¥â¡¼¥É¤Î¼çÌò¤Ï¡¢¼¡¤Î canna-self-insert-command ¤Ç¤¢¤ë¡£¤³¤Î
-;;; ¥³¥Þ¥ó¥É¤ÏÁ´¤Æ¤Î¥°¥é¥Õ¥£¥Ã¥¯¥­¡¼¤Ë¥Ð¥¤¥ó¥É¤µ¤ì¤ë¡£
+;;; $B$+$s$J%b!<%I$N<gLr$O!"<!$N(B canna-self-insert-command $B$G$"$k!#$3$N(B
+;;; $B%3%^%s%I$OA4$F$N%0%i%U%#%C%/%-!<$K%P%$%s%I$5$l$k!#(B
 ;;;
-;;; ¤³¤Î´Ø¿ô¤Ç¤Ï¡¢¸½ºß¤Î¥â¡¼¥É¤¬ÆüËÜ¸ìÆþÎÏ¥â¡¼¥É¤«¤É¤¦¤«¤ò¥Á¥§¥Ã¥¯¤·¤Æ¡¢
-;;; ÆüËÜ¸ìÆþÎÏ¥â¡¼¥É¤Ç¤Ê¤¤¤Î¤Ç¤¢¤ì¤Ð¡¢¥·¥¹¥Æ¥à¤Î self-insert-command 
-;;; ¤ò¸Æ¤Ö¡£ÆüËÜ¸ìÆþÎÏ¥â¡¼¥É¤Ç¤¢¤ì¤Ð¡¢¥Õ¥§¥ó¥¹¥â¡¼¥É¤ËÆþ¤ê¡¢
-;;; canna-functional-insert-command ¤ò¸Æ¤Ö¡£
+;;; $B$3$N4X?t$G$O!"8=:_$N%b!<%I$,F|K\8lF~NO%b!<%I$+$I$&$+$r%A%'%C%/$7$F!"(B
+;;; $BF|K\8lF~NO%b!<%I$G$J$$$N$G$"$l$P!"%7%9%F%`$N(B self-insert-command 
+;;; $B$r8F$V!#F|K\8lF~NO%b!<%I$G$"$l$P!"%U%'%s%9%b!<%I$KF~$j!"(B
+;;; canna-functional-insert-command $B$r8F$V!#(B
 ;;;
 
 (if (not (boundp 'MULE)) ; for Nemacs
@@ -516,13 +519,13 @@ kana-to-kanji translation, even if you are in the minibuffer."
   (interactive "p")
   (adjust-minibuffer-mode)
   (if (and canna:*japanese-mode*
-	   ;; ¥Õ¥§¥ó¥¹¥â¡¼¥É¤À¤Ã¤¿¤é¤â¤¦°ìÅÙ¥Õ¥§¥ó¥¹¥â¡¼¥É¤ËÆþ¤Ã¤¿¤ê¤·
-	   ;; ¤Ê¤¤¡£
+	   ;; $B%U%'%s%9%b!<%I$@$C$?$i$b$&0lEY%U%'%s%9%b!<%I$KF~$C$?$j$7(B
+	   ;; $B$J$$!#(B
 	   (not canna:*fence-mode*) )
       (canna:enter-canna-mode-and-functional-insert)
     (progn
-      ;; °Ê²¼¤ÎÉôÊ¬¤Ï egg.el ¤Î 3.09 ¤Î egg-self-insert-command ¤ÎÉôÊ¬¤«¤é
-      ;; ¥³¥Ô¡¼¤·¡¢¼ê¤òÆþ¤ì¤Æ¤¤¤Þ¤¹¡£93.11.5 kon
+      ;; $B0J2<$NItJ,$O(B egg.el $B$N(B 3.09 $B$N(B egg-self-insert-command $B$NItJ,$+$i(B
+      ;; $B%3%T!<$7!"<j$rF~$l$F$$$^$9!#(B93.11.5 kon
       ;; treat continuous 20 self insert as a single undo chunk.
       ;; `20' is a magic number copied from keyboard.c
 ;      (if (or				;92.12.20 by T.Enami
@@ -568,7 +571,7 @@ kana-to-kanji translation, even if you are in the minibuffer."
 
 (defun canna:initialize ()
   (let ((init-val nil))
-    (cond (canna:*initialized*) ; initialize ¤µ¤ì¤Æ¤¤¤¿¤é²¿¤â¤·¤Ê¤¤
+    (cond (canna:*initialized*) ; initialize $B$5$l$F$$$?$i2?$b$7$J$$(B
 	  (t
 	   (setq canna:*initialized* t)
 	   (setq init-val (canna-initialize 
@@ -593,7 +596,7 @@ kana-to-kanji translation, even if you are in the minibuffer."
     init-val))
 
 (defun canna:finalize ()
-  (cond ((null canna:*initialized*)) ; initialize ¤µ¤ì¤Æ¤¤¤Ê¤«¤Ã¤¿¤é²¿¤â¤·¤Ê¤¤
+  (cond ((null canna:*initialized*)) ; initialize $B$5$l$F$$$J$+$C$?$i2?$b$7$J$$(B
 	(t
 	 (setq canna:*initialized* nil)
 	 (let ((init-val (canna-finalize)))
@@ -606,9 +609,9 @@ kana-to-kanji translation, even if you are in the minibuffer."
 (defun canna:enter-canna-mode ()
   (if (not canna:*initialized*)
       (progn 
-	(message "¡Ø¤«¤ó¤Ê¡Ù¤Î½é´ü²½¤ò¹Ô¤Ã¤Æ¤¤¤Þ¤¹....")
+	(message "$B!X$+$s$J!Y$N=i4|2=$r9T$C$F$$$^$9(B....")
 	(canna:initialize)
-	(message "¡Ø¤«¤ó¤Ê¡Ù¤Î½é´ü²½¤ò¹Ô¤Ã¤Æ¤¤¤Þ¤¹....done")
+	(message "$B!X$+$s$J!Y$N=i4|2=$r9T$C$F$$$^$9(B....done")
 	))
   (setq canna:*local-map-backup*  (current-local-map))
   (setq canna:*fence-mode* t)
@@ -669,10 +672,11 @@ dictionary."
   (if (canna-without-newline start end)
       (if canna:*japanese-mode*
 	  (progn
+	    (setq canna:*use-region-as-henkan-region* nil)
 	    (canna:enter-canna-mode)
 	    (canna:display-candidates
 	     (canna-touroku-string (buffer-substring start end))) ))
-    (message "¥ê¡¼¥¸¥ç¥ó¤¬ÉÔÀµ¤Ç¤¹¡£¥Ì¥ë¥ê¡¼¥¸¥ç¥ó¤«¡¢²þ¹Ô¤¬´Þ¤Þ¤ì¤Æ¤¤¤Þ¤¹¡£")
+    (message "$B%j!<%8%g%s$,IT@5$G$9!#%L%k%j!<%8%g%s$+!"2~9T$,4^$^$l$F$$$^$9!#(B")
     ))
 
 (defun canna-extend-mode ()
@@ -713,28 +717,28 @@ dictionary."
 
 (defun canna-reset ()
   (interactive)
-  (message "¡Ø¤«¤ó¤Ê¡Ù¤Î¼­½ñ¤ò¥»¡¼¥Ö¤·¤Þ¤¹¡£");
+  (message "$B!X$+$s$J!Y$N<-=q$r%;!<%V$7$^$9!#(B");
   (canna:finalize)
-  (message "¡Ø¤«¤ó¤Ê¡Ù¤ÎºÆ½é´ü²½¤ò¹Ô¤Ã¤Æ¤¤¤Þ¤¹....")
+  (message "$B!X$+$s$J!Y$N:F=i4|2=$r9T$C$F$$$^$9(B....")
   (canna:initialize)
-  (message "¡Ø¤«¤ó¤Ê¡Ù¤ÎºÆ½é´ü²½¤ò¹Ô¤Ã¤Æ¤¤¤Þ¤¹....done")
+  (message "$B!X$+$s$J!Y$N:F=i4|2=$r9T$C$F$$$^$9(B....done")
   )
   
 
 (defun canna ()
   (interactive)
-  (message "¡Ø¤«¤ó¤Ê¡Ù¤ò½é´ü²½¤·¤Æ¤¤¤Þ¤¹....")
+  (message "$B!X$+$s$J!Y$r=i4|2=$7$F$$$^$9(B....")
   (let (init-val)
     (cond ((and (fboundp 'canna-initialize)
 		(fboundp 'canna-change-mode) )
 
-	   ;; canna ¤¬»È¤¨¤ë»þ¤Ï¼¡¤Î½èÍý¤ò¤¹¤ë¡£
+	   ;; canna $B$,;H$($k;~$O<!$N=hM}$r$9$k!#(B
 	 
-	   ;; ¡Ø¤«¤ó¤Ê¡Ù¥·¥¹¥Æ¥à¤Î½é´ü²½
+	   ;; $B!X$+$s$J!Y%7%9%F%`$N=i4|2=(B
 
 	   (setq init-val (canna:initialize))
 
-	 ;; ¥­¡¼¤Î¥Ð¥¤¥ó¥Ç¥£¥ó¥°
+	 ;; $B%-!<$N%P%$%s%G%#%s%0(B
 
 	   (let ((ch 32))
 	     (while (< ch 127)
@@ -750,7 +754,7 @@ dictionary."
 			     (setq ok t) ))
 		      (setq keys (cdr keys))
 		      ) ok))
-		 (t ; ¥Ç¥Õ¥©¥ë¥È¤ÎÀßÄê
+		 (t ; $B%G%U%)%k%H$N@_Dj(B
 		  (global-set-key "\C-o" 'canna-toggle-japanese-mode) ))
 
 	   (if (not (keymapp (global-key-binding "\e[")))
@@ -770,12 +774,12 @@ dictionary."
 		 (global-set-key "\C-@" 'canna-set-mark-command)
 		 (global-set-key " " 'canna-henkan-region-or-self-insert) ))
 
-	 ;; ¥â¡¼¥É¹Ô¤ÎºîÀ®
+	 ;; $B%b!<%I9T$N:n@.(B
 
 	   (canna:create-mode-line)
 	   (mode-line-canna-mode-update canna:*alpha-mode-string*)
 
-	 ;; ¥·¥¹¥Æ¥à´Ø¿ô¤Î½ñ¤­ÂØ¤¨
+	 ;; $B%7%9%F%`4X?t$N=q$-BX$((B
 
 ;	   (fset 'abort-recursive-edit 
 ;		 (symbol-function 'canna:abort-recursive-edit))
@@ -789,18 +793,18 @@ dictionary."
 	  ((fboundp 'canna-initialize)
 	   (beep)
 	   (with-output-to-temp-buffer "*canna-warning*"
-	     (princ "¤³¤Î Emacs ¤Ç¤Ï new-canna ¤¬»È¤¨¤Þ¤»¤ó")
+	     (princ "$B$3$N(B Emacs $B$G$O(B new-canna $B$,;H$($^$;$s(B")
 	     (terpri)
 	     (print-help-return-message)) )
 
-	  (t ; ¡Ø¤«¤ó¤Ê¡Ù¥·¥¹¥Æ¥à¤¬»È¤¨¤Ê¤«¤Ã¤¿»þ¤Î½èÍý
+	  (t ; $B!X$+$s$J!Y%7%9%F%`$,;H$($J$+$C$?;~$N=hM}(B
 	   (beep)
 	   (with-output-to-temp-buffer "*canna-warning*"
-	     (princ "¤³¤Î Emacs ¤Ç¤Ï canna ¤¬»È¤¨¤Þ¤»¤ó")
+	     (princ "$B$3$N(B Emacs $B$G$O(B canna $B$,;H$($^$;$s(B")
 	     (terpri)
 	     (print-help-return-message))
 	   ))
-    (message "¡Ø¤«¤ó¤Ê¡Ù¤ò½é´ü²½¤·¤Æ¤¤¤Þ¤¹....done")
+    (message "$B!X$+$s$J!Y$r=i4|2=$7$F$$$^$9(B....done")
     ) )
 
 ;;;
@@ -833,7 +837,7 @@ dictionary."
 ;				  canna:*epos-undo-text*)
 	   )
       (progn
-	(message "ÆÉ¤ß¤ËÌá¤·¤Þ¤¹¡ª")
+	(message "$BFI$_$KLa$7$^$9!*(B")
 	(switch-to-buffer (marker-buffer canna:*spos-undo-text*))
 	(goto-char canna:*spos-undo-text*)
 	(delete-region canna:*spos-undo-text*
@@ -844,8 +848,8 @@ dictionary."
 	      (setq canna:*exit-japanese-mode* t) ))
 ;	      (canna-toggle-japanese-mode) ))
 	(if (not canna:*fence-mode*)
-	    ;; ¥Õ¥§¥ó¥¹¥â¡¼¥É¤À¤Ã¤¿¤é¤â¤¦°ìÅÙ¥Õ¥§¥ó¥¹¥â¡¼¥É¤ËÆþ¤Ã¤¿¤ê¤·
-	    ;; ¤Ê¤¤¡£
+	    ;; $B%U%'%s%9%b!<%I$@$C$?$i$b$&0lEY%U%'%s%9%b!<%I$KF~$C$?$j$7(B
+	    ;; $B$J$$!#(B
 	    (canna:enter-canna-mode) )
 	(canna:display-candidates 
 	 (let ((texts (canna-store-yomi (car canna:*undo-text-yomi*)
@@ -880,7 +884,7 @@ dictionary."
     (canna:display-candidates res) ))
 
 ;;;
-;;; ¥Þ¡¼¥¯¥³¥Þ¥ó¥É¡¤canna-henkan-region-or-self-insert ¤Ç»È¤¦¤«¤â
+;;; $B%^!<%/%3%^%s%I!$(Bcanna-henkan-region-or-self-insert $B$G;H$&$+$b(B
 ;;;
 
 (defun canna-set-mark-command (arg)
@@ -891,7 +895,7 @@ the japanese mode."
   (if canna:*japanese-mode*
       (progn
 	(setq canna:*use-region-as-henkan-region* t)
-	(message "Mark set(ÊÑ´¹ÎÎ°è³«»Ï)") )))
+	(message "Mark set($BJQ49NN0h3+;O(B)") )))
 
 (defun canna-henkan-region-or-self-insert (arg)
   "Do kana-to-kanji convert region if HENKAN region is defined,\n\
@@ -940,9 +944,9 @@ self insert otherwise."
   (if canna-underline (require 'attribute)
   t))
 
-;; ¥ê¡¼¥¸¥ç¥ó¤Ë¤¢¤ë¥í¡¼¥Þ»ú¤ò¡Ø¤«¤ó¤Ê¡Ù¤Ë¿©¤ï¤¹¡£
-;; ·ë²Ì¤È¤·¤Æ¡¢¡Ø¤«¤ó¤Ê¡Ù¤ÎÆÉ¤ß¥â¡¼¥É¤Ë¤Ê¤ë¡£
-;; ¥ê¡¼¥¸¥ç¥ó¤ËÂ¸ºß¤·¤Æ¤¤¤ë¶õÇòÊ¸»ú¤ÈÀ©¸æÊ¸»ú¤Ï¼Î¤Æ¤é¤ì¤ë¡£
+;; $B%j!<%8%g%s$K$"$k%m!<%^;z$r!X$+$s$J!Y$K?)$o$9!#(B
+;; $B7k2L$H$7$F!"!X$+$s$J!Y$NFI$_%b!<%I$K$J$k!#(B
+;; $B%j!<%8%g%s$KB8:_$7$F$$$k6uGrJ8;z$H@)8fJ8;z$O<N$F$i$l$k!#(B
 
 (defun canna-rk-region (start end)
   "Convert region into kana."
@@ -970,7 +974,7 @@ self insert otherwise."
     (canna:enter-canna-mode)
     (canna:display-candidates res) ))
 
-;; ¥«¡¼¥½¥ë¤Îº¸¤Ë¤¢¤ë arg ¥ï¡¼¥É¤Î¥í¡¼¥Þ»ú¤ò¡Ø¤«¤ó¤Ê¡Ù¤Ë¿©¤ï¤¹¡£
+;; $B%+!<%=%k$N:8$K$"$k(B arg $B%o!<%I$N%m!<%^;z$r!X$+$s$J!Y$K?)$o$9!#(B
 
 (defun canna-rk-trans (arg)
   (interactive "p")
