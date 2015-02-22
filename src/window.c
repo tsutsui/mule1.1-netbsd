@@ -1935,8 +1935,8 @@ Does not restore the value of point in current buffer.")
   record_unwind_protect (Fset_window_configuration,
 			 Fcurrent_window_configuration ());
   val = Fprogn (args);
-  unbind_to (count);
-  return val;
+
+  return unbind_to (count, val);
 }
 
 init_window_once ()

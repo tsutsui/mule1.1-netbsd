@@ -244,7 +244,7 @@ Return t if file exists.")
   record_unwind_protect (load_unwind, lispstream);
   load_in_progress++;
   readevalloop (Qget_file_char, stream, Feval, 0);
-  unbind_to (count);
+  unbind_to (count, Qnil);
   UNGCPRO;
 
   if (!noninteractive && NULL (nomessage))
@@ -448,7 +448,7 @@ readevalloop (readcharfun, stream, evalfun, printflag)
 	{
 	  record_unwind_protect (unreadpure, Qnil);
 	  val = read_list (-1, readcharfun);
-	  unbind_to (count + 1);
+	  unbind_to (count + 1, Qnil);
 	}
       else
 	{
@@ -470,7 +470,7 @@ readevalloop (readcharfun, stream, evalfun, printflag)
       unrch = xunrch;
     }
 
-  unbind_to (count);
+  unbind_to (count, Qnil);
 }
 
 #ifndef standalone
@@ -492,7 +492,8 @@ nil means discard it; anything else is stream for print.")
   record_unwind_protect (save_excursion_restore, save_excursion_save ());
   SET_PT (BEGV);
   readevalloop (Fcurrent_buffer (), 0, Feval, !NULL (printflag));
-  unbind_to (count);
+  unbind_to (count, Qnil);
+
   return Qnil;
 }
 
@@ -521,8 +522,8 @@ nil means discard it; anything else is stream for print.")
   Fgoto_char (b);
   Fnarrow_to_region (make_number (BEGV), e);
   readevalloop (Fcurrent_buffer (), 0, Feval, !NULL (printflag));
-  unbind_to (count);
-  return Qnil;
+
+  return unbind_to (count, Qnil);
 }
 
 #endif standalone

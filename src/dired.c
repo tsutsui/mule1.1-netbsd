@@ -368,7 +368,7 @@ file_name_completion (file, dirname, all_flag, ver_flag)
       closedir (d);
     }
 
-  unbind_to (count);
+  unbind_to (count, Qnil);
 
   if (all_flag || NULL (bestmatch))
     return bestmatch;

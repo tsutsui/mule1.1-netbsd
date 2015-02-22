@@ -1400,7 +1400,7 @@ load FILENAME.  FILENAME is optional and defaults to FEATURE.")
 
       /* Once loading finishes, don't undo it.  */
       Vautoload_queue = Qt;
-      unbind_to (count);
+      feature = unbind_to (count, feature);
     }
   return feature;
 }

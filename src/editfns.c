@@ -497,8 +497,8 @@ even in case of abnormal exit (throw or error).")
   record_unwind_protect (save_excursion_restore, save_excursion_save ());
 			 
   val = Fprogn (args);
-  unbind_to (count);
-  return val;
+
+  return unbind_to (count, val);
 }
 
 DEFUN ("buffer-size", Fbufsize, Sbufsize, 0, 0, 0,
@@ -1132,8 +1132,8 @@ use save-excursion outermost.")
 
   record_unwind_protect (save_restriction_restore, save_restriction_save ());
   val = Fprogn (body);
-  unbind_to (count);
-  return val;
+
+  return unbind_to (count, val);
 }
 
 DEFUN ("message", Fmessage, Smessage, 1, MANY, 0,

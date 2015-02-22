@@ -80,7 +80,7 @@ install: all mkdir lockdir
 			(rm -rf ${LIBDIR}/$$i/RCS; \
 			 rm -f ${LIBDIR}/$$i/\#*; \
 			 rm -f ${LIBDIR}/$$i/*~); \
-		done \
+		done; \
 	else true; \
 	fi
 	$(INSTALL) -c etc/emacsclient ${BINDIR}/emacsclient

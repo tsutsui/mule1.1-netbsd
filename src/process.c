@@ -2627,8 +2627,8 @@ read_process_output (proc, channel)
       filter_string = make_string (chars2, nchars2); /* 91.10.28 by K.Handa */
       call2 (this_filter, filter_process, filter_string);
       /*   internal_condition_case (run_filter, Qerror, Fidentity);  */
-      unbind_to (count);
-      return nchars;
+
+      return unbind_to (count, nchars);
     }
 
   /* If no filter, write into buffer if it isn't dead.  */
@@ -3406,7 +3406,7 @@ exec_sentinel (proc, reason)
   filter_string = reason;
   call2 (this_filter, filter_process, filter_string);
 /*   internal_condition_case (run_filter, Qerror, Fidentity);  */
-  unbind_to (count);
+  unbind_to (count, Qnil);
   p->sentinel = sentinel;
 }
 

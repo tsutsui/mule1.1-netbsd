@@ -912,7 +912,7 @@ extern Lisp_Object apply1 (), call0 (), call1 (), call2 (), call3 ();
 extern Lisp_Object apply_lambda ();
 extern Lisp_Object internal_catch ();
 extern Lisp_Object internal_condition_case ();
-extern void unbind_to ();
+extern Lisp_Object unbind_to ();
 extern void error ();
 extern Lisp_Object un_autoload ();
 

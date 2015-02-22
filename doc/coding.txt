@@ -98,7 +98,7 @@ the text.
 Mule provides a function `make-coding-system' to create a
 coding-system.
 
-FUNCTION make-coding-system: TYPE MNEMONIC DOC &optional EOL-TYPE FLAGS
+FUNCTION make-coding-system: NAME TYPE MNEMONIC DOC &optional EOL-TYPE FLAGS
 
 Register symbol NAME as a coding-system whose 'coding-system
 property is a vector [ TYPE MNEMONIC DOC nil FLAGS ] and

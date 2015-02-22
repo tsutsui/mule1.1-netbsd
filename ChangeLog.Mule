@@ -1,5 +1,16 @@
 ;;; -*-indented-text-*-
 
+Fri Mar 11 12:37:41 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
+    * The second patch for Ver.1.1.
+
+Fri Mar 11 12:37:03 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el (insert-file-contents):
+      Detected eol-type is handled properly.
+
+Fri Mar 11 09:48:16 JST 1994	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
+    * eval.c (unbind_to): unbind_to() has two argument and return Lisp_Object.
+    * Many files who are calling unbind_to() are changed.
+
 Thu Mar 10 11:03:48 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
     * The first patch for Ver.1.1.
 
@@ -7,9 +18,14 @@ Thu Mar 10 11:03:04 JST 1994	Tsugutomo ENAMI <enami@sys.ptg.sony.co.jp>
     * lisp/mule.el (write-region):
       `generate-new-buffer' is used for pre-write-conversion.
 
-Thu Mar 10 09:57:50 JST 1994	Fumio UENO <ueno@al.t.u-tokyo.ac.jp>
+Thu Mar 10 09:57:50 JST 1994	Fumihiro UENO <ueno@al.t.u-tokyo.ac.jp>
     * src/s-linux.h, src/s-malloc.c: Modified for Linux.
     * etc/server.c: `__const' should be defined before including <sys/types.h>.
+
+Wed Mar  9 22:40:42 JST 1994	Masayuki KUWADA <kuwada@soliton.ee.uec.ac.jp>
+    * lisp/its/hira.el, lisp/its/kata.el, lisp/its/han-kata.el:
+      use-kuten-for-comma -> use-kuten-for-period,
+      use-touten-for-period -> use-touten-for-comma
 
 Wed Mar  9 10:18:47 JST 1994	Yutaka NIIBE <gniibe@oz.etl.go.jp>
     * etc/bdf.c (bdf_load_font): fontp->extra->fs should not be set in emacs.

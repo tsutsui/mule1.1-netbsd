@@ -87,7 +87,7 @@ Caution 1: The latest version of Wnn (4.108 or higher) shoule be
 
 Caution 2: $(mule)/Makefile is a little different from the
 	standard GNU Emacs Makefile.  It tries to byte-compile all
-	patchedq emacs lisp files, then continues an ordinary make
+	patched emacs lisp files, then continues an ordinary make
 	procedure.
 
 Caution 3: Mule does not like all emacslisp files compiled

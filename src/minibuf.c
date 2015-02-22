@@ -169,7 +169,6 @@ read_minibuf (map, initial, prompt, expflag)
   /* Make minibuffer contents into a string */
   val = make_string (BEG_ADDR, Z - BEG);
   bcopy (GAP_END_ADDR, XSTRING (val)->data + GPT - BEG, Z - GPT);
-  unbind_to (count);
   UNGCPRO;
 
   /* VAL is the string of minibuffer text.  */
@@ -180,7 +179,7 @@ read_minibuf (map, initial, prompt, expflag)
   if (expflag)
     val = Fread (val);
 
-  return val;
+  return unbind_to (count, val);
 }
 
 /* Return a buffer to be used as the minibuffer at depth `depth'.
@@ -701,8 +700,7 @@ Case is ignored if ambient value of  completion-ignore-case  is non-nil.")
 		      ? Vminibuffer_local_completion_map
 		      : Vminibuffer_local_must_match_map,
 		      init, prompt, 0);
-  unbind_to (count);
-  return val;
+  return unbind_to (count, val);
 }
 
 temp_echo_area_contents (m)

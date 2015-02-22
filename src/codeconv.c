@@ -460,8 +460,7 @@ subsidieary coding-system accoding to a detected end-of-line type.")
   }
 /* end of patch */
 
-  unbind_to (count);		/* 92.10.2 by T.Enami */
-  return val;
+  return unbind_to (count, val);	/* 92.10.2 by T.Enami */
 }
 #endif /* emacs */
 

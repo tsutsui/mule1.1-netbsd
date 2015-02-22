@@ -162,13 +162,15 @@
 ;;;	Bug in set-file-coding-system fixed.
 ;;; 94.3.10  modified for Mule Ver.1.1 by T.Enami <enami@sys.ptg.sony.co.jp>
 ;;;	In write-region, generate-new-buffer is used for pre-write-conversion.
+;;; 94.3.10  modified for Mule Ver.1.1 by K.Handa <handa@etl.go.jp>
+;;;	In insert-file-contents, detected eol-type is handled properly.
 
 (provide 'mule)				;93.6.25 by T.Enami
 
-(defconst mule-version "1.1 (HAHAKIGI) PL01" "\
+(defconst mule-version "1.1 (HAHAKIGI) PL02" "\
 Version numbers of this version of Mule.")
 
-(defconst mule-version-date "1994.3.10" "\
+(defconst mule-version-date "1994.3.11" "\
 Distribution date of this version of Mule.")
 
 (defun mule-version () "\
@@ -880,15 +882,25 @@ See also insert-file-contents-pre-hook, insert-file-contents-error-hook,
 		  (progn
 		    (set-buffer-auto-saved)
 		    (set-buffer-modified-p nil)))))
-	(if (and coding-system ;; something found
-		 (or
-		  ;; no coding-system for this buffer
-		  (null file-coding-system)
-		  ;; still in auto-conversion mode
-		  (eq (aref (get-code file-coding-system) 0) t)
-		  ;; no local coding-system for this buffer
-		  (null (local-file-coding-system-p))))
-	    (set-file-coding-system coding-system)))
+	;; Now we try to set file-coding-system of the buffer.
+	(let ((prev-eol (get-code-eol file-coding-system))
+	      (new-eol (get-code-eol coding-system))
+	      (prev-auto (or (null file-coding-system)
+			     (eq (aref (get-code file-coding-system) 0) t)))
+	      (new-auto (or (null coding-system)
+			    (eq (aref (get-code coding-system) 0) t))))
+	  (if (and (or (null new-auto) (numberp new-eol)) ; something found
+		   (or prev-auto (vectorp prev-eol) ; something not yet decided
+		       (null (local-file-coding-system-p))))
+	      (progn
+		(if new-auto
+		    (if (and (numberp new-eol) (vectorp prev-eol))
+			(setq coding-system (aref prev-eol (1- new-eol)))
+		      (setq coding-system file-coding-system))
+		  (if (and prev-auto (numberp prev-eol) (vectorp new-eol))
+		      (setq coding-system (aref new-eol (1- prev-eol)))))
+		(set-file-coding-system coding-system)))
+	  ))
       (cdr return-val))))
 
 (defvar write-region-pre-hook nil
