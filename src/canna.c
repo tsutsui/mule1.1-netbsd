@@ -141,7 +141,7 @@
  */
 
 #ifndef lint
-static char rcs_id[] = "$Id: canna.c,v 1.34 1993/12/10 03:35:18 kon Exp $";
+static char rcs_id[] = "$Id: canna.c,v 1.35 1994/03/15 08:00:03 kon Exp $";
 #endif
 
 #include <stdio.h>
@@ -1194,7 +1194,7 @@ syms_of_canna ()
 /* EUC multibyte string to MULE internal string */
 
 static
-c2m(cp, l, mp)
+c2mu(cp, l, mp)
 char	*cp;
 int	l;
 char	*mp;
@@ -1261,7 +1261,7 @@ int l;
 {
   unsigned char cbuf[4096];
   
-  c2m(p,l,cbuf);
+  c2mu(p,l,cbuf);
   return (make_string(cbuf,strlen(cbuf)));
 }	
 

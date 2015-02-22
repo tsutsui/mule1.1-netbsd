@@ -115,6 +115,8 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 /* 94.3.9   modified for Mule Ver.1.1 by K.Handa <handa@etl.go.jp>
 	In code_detect_iso2022(), invalid esc-sequence is ignored,
 	and bug fixed. */
+/* 94.3.17  modified for Mule Ver.1.1 by O.Sasaki <osamu@shuugr.yinu.co.jp>
+	In g2s() and g2b(), bug of handling eol-type fixed. */
 
 #ifdef emacs
 #include "config.h"
@@ -893,8 +895,8 @@ g2s(src, dst, n, mccode)
     if (selective && c == '\r') /* 93.5.6 by K.Handa */
       c = '\n';
     if (c == '\n') {
-      if (eol != CODE_EOL_LF)	*dp++ = '\r';
-      if (eol != CODE_EOL_CRLF) *dp++ = c;
+      if (eol != CODE_EOL_LF) *dp++ = '\r';
+      if (eol != CODE_EOL_CR) *dp++ = c;
       ch = 0;
     } else if (ASCII_P(c))
       *dp++ = c, ch = 0;
@@ -935,8 +937,8 @@ g2b(src, dst, n, mccode)
     if (selective && c == '\r') /* 93.5.6 by K.Handa */
       c = '\n';
     if (c == '\n') {
-      if (eol != CODE_EOL_LF)	*dp++ = '\r';
-      if (eol != CODE_EOL_CRLF) *dp++ = c;
+      if (eol != CODE_EOL_LF) *dp++ = '\r';
+      if (eol != CODE_EOL_CR) *dp++ = c;
       ch = 0;
     } else if (ASCII_P(c))
       *dp++ = c, ch = 0;

@@ -164,13 +164,15 @@
 ;;;	In write-region, generate-new-buffer is used for pre-write-conversion.
 ;;; 94.3.10  modified for Mule Ver.1.1 by K.Handa <handa@etl.go.jp>
 ;;;	In insert-file-contents, detected eol-type is handled properly.
+;;; 94.3.22  modified for Mule Ver.1.1 by K.Handa <handa@etl.go.jp>
+;;;	In insert-file-contents, file-coding-system is set properly.
 
 (provide 'mule)				;93.6.25 by T.Enami
 
-(defconst mule-version "1.1 (HAHAKIGI) PL03" "\
+(defconst mule-version "1.1 (HAHAKIGI) PL04" "\
 Version numbers of this version of Mule.")
 
-(defconst mule-version-date "1994.3.12" "\
+(defconst mule-version-date "1994.3.22" "\
 Distribution date of this version of Mule.")
 
 (defun mule-version () "\
@@ -830,6 +832,59 @@ After successful reading, insert-file-contents calls it with arguments
  and RETURN-VALUE of si:insert-file-contents, which is a list of:
  coding-system used for reading, absoule pathname, length of data inserted.")
 
+;;94.3.22 by K.Handa
+(defvar insert-file-contents-set-coding-system-function
+  'insert-file-contents-set-coding-system)
+
+(defun insert-file-contents-set-coding-system (coding-system)
+  (if coding-system
+      (progn
+	(setq coding-system
+	      (find-new-file-coding-system file-coding-system
+					   (local-file-coding-system-p)
+					   coding-system))
+	(if coding-system
+	    (set-file-coding-system coding-system)))))
+
+(defun find-new-file-coding-system (current-coding local-flag found-coding)
+  (let ((local-coding current-coding)
+	(local-eol (get-code-eol current-coding))
+	(found-eol (get-code-eol found-coding))
+	default-coding default-eol new-coding new-eol)
+    (if local-coding
+	(progn
+	  (if (numberp local-eol)
+	      (setq local-coding (get local-coding 'coding-system)))
+	  (if (eq (aref (get-code local-coding) 0) t)
+	      (setq local-coding nil))
+	  (if (null local-flag)
+	      (setq default-coding local-coding default-eol local-eol
+		    local-coding nil local-eol nil))))
+    (if found-coding
+	(progn
+	  (if (numberp found-eol)
+	      (setq found-coding (get found-coding 'coding-system)))
+	  (if (eq (aref (get-code found-coding) 0) t)
+	      (setq found-coding nil))))
+    (if (and local-coding (null (vectorp local-eol)))
+	;; full of file-coding-system is already set locally.
+	nil
+      (if (and (null found-coding) (null (numberp found-eol)))
+	  ;; nothing found.
+	  nil
+	(setq new-coding
+	      (or local-coding found-coding default-coding))
+	(if (null new-coding)
+	    (setq new-coding '*autoconv*))
+	(setq new-eol
+	      (if (numberp local-eol) local-eol
+		(if (numberp found-eol) found-eol
+		  (if (numberp default-eol) default-eol))))
+	(if (and (vectorp (get-code-eol new-coding))
+		 (numberp new-eol))
+	    (setq new-coding (aref (get-code-eol new-coding) (1- new-eol))))
+	new-coding))))
+
 ;; 93.3.15 by K.Handa -- add optional third arg CODING-SYSTEM
 (defun insert-file-contents (filename &optional visit coding-system)
   "Insert contents of file FILENAME after point.
@@ -883,24 +938,8 @@ See also insert-file-contents-pre-hook, insert-file-contents-error-hook,
 		    (set-buffer-auto-saved)
 		    (set-buffer-modified-p nil)))))
 	;; Now we try to set file-coding-system of the buffer.
-	(let ((prev-eol (get-code-eol file-coding-system))
-	      (new-eol (get-code-eol coding-system))
-	      (prev-auto (or (null file-coding-system)
-			     (eq (aref (get-code file-coding-system) 0) t)))
-	      (new-auto (or (null coding-system)
-			    (eq (aref (get-code coding-system) 0) t))))
-	  (if (and (or (null new-auto) (numberp new-eol)) ; something found
-		   (or prev-auto (vectorp prev-eol) ; something not yet decided
-		       (null (local-file-coding-system-p))))
-	      (progn
-		(if new-auto
-		    (if (and (numberp new-eol) (vectorp prev-eol))
-			(setq coding-system (aref prev-eol (1- new-eol)))
-		      (setq coding-system file-coding-system))
-		  (if (and prev-auto (numberp prev-eol) (vectorp new-eol))
-		      (setq coding-system (aref new-eol (1- prev-eol)))))
-		(set-file-coding-system coding-system)))
-	  ))
+	(funcall insert-file-contents-set-coding-system-function
+		 coding-system))
       (cdr return-val))))
 
 (defvar write-region-pre-hook nil

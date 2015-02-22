@@ -1,5 +1,18 @@
 ;;; -*-indented-text-*-
 
+Tue Mar 22 15:30:36 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
+    * The fourth patch for Ver.1.1.
+
+Tue Mar 22 15:28:00 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
+    * lisp/mule.el (insert-file-contents-set-coding-system-function):
+      Called from insert-file-contents and set file-coding-system properly.
+
+Thu Mar 17 10:46:53 JST 1994	Akira Kon <kon@d1.bs2.mt.nec.co.jp>
+    * src/canna.c, lisp/can-n-egg.el: Updated.
+
+Thu Mar 17 10:42:38 JST 1994	Osamu SASAKI <osamu@shuugr.yinu.co.jp>
+    * src/codeconv.c (g2s, g2b): Bug of handling eol-type fixed.
+
 Fri Mar 11 23:26:56 JST 1994	Ken'ichi HANDA <handa@etl.go.jp>
     * The third patch for Ver.1.1.
 

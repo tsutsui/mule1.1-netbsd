@@ -21,7 +21,7 @@
 
 ;; -*-mode: emacs-lisp-*-
 
-;; $Id: can-n-egg.el,v 1.6 1994/03/09 02:32:35 kon Exp $
+;; $Id: can-n-egg.el,v 1.7 1994/03/16 07:24:15 kon Exp $
 
 ;; この機能を使うには、
 ;; M-x load このファイル
@@ -53,6 +53,15 @@
       (canna-self-insert-command arg)
     (egg-self-insert-command arg)))
 
+;; かんなだったら再変換、たまごだったら普通のキー入力。
+;;   by rtakigaw@jp.oracle.com, 1994.3.16
+(defun can-n-egg-henkan-region-or-self-insert (arg)
+  "Do Canna Kana-to-Kanji re-conversion in region or Egg self insert."
+  (interactive "p")
+  (if canna:*japanese-mode*
+      (canna-henkan-region-or-self-insert arg)
+    (egg-self-insert-command arg)))
+
 (defun can-n-egg ()
   "Start to use both Canna and Egg."
   (interactive)
@@ -63,6 +72,10 @@
     (while (< ch 127)
       (aset global-map ch 'can-n-egg-self-insert-command)
       (setq ch (1+ ch)) ))
+  (if canna-use-space-key-as-henkan-region
+      (progn
+	(global-set-key "\C-@" 'canna-set-mark-command)
+	(global-set-key " " 'can-n-egg-henkan-region-or-self-insert)))
   (global-set-key
    (if canna-toggle-key canna-toggle-key "\C-o") 'canna-toggle-japanese-mode)
   (global-set-key
