@@ -272,7 +272,7 @@ LD = $(CC)
 #define LINKER gcc -nostdlib
 #else
 #define LINKER ld
-#endif 
+#endif
 #endif /* not ORDINARY_LINK */
 #endif /* no LINKER */
 
@@ -302,8 +302,7 @@ LOCALCPP= localcpp
 SHORT= shortnames
 #endif /* SHORTNAMES */
 
-CFLAGS= C_DEBUG_SWITCH -Demacs $(MYCPPFLAG) C_SWITCH_MACHINE C_SWITCH_SYSTEM \
- C_SWITCH_X_MACHINE C_SWITCH_X_SYSTEM $(MCPATH_FLAGS)
+CFLAGS= C_DEBUG_SWITCH C_OPTIMIZE_SWITCH -Demacs $(MYCPPFLAG) C_SWITCH_MACHINE C_SWITCH_SYSTEM C_SWITCH_X_MACHINE C_SWITCH_X_SYSTEM $(MCPATH_FLAGS)
 /* DO NOT use -R.  There is a special hack described in lastfile.c
    which is used instead.  Some initialized data areas are modified
    at initial startup, then labeled as part of the text area when
@@ -332,7 +331,7 @@ CFLAGS= C_DEBUG_SWITCH -Demacs $(MYCPPFLAG) C_SWITCH_MACHINE C_SWITCH_SYSTEM \
 #endif
 
 #ifndef LIB_X11_LIB
-#define LIB_X11_LIB -lX11
+#define LIB_X11_LIB -L/usr/X11R6/lib -lX11
 #endif
 
 #ifdef HAVE_X_WINDOWS
@@ -390,7 +389,7 @@ GNULIB_VAR = LIB_GCC
 GNULIB_VAR = `if [ -f LIB_GCC ] ; then echo LIB_GCC; else echo; fi`
 #endif /* __GNUC__ <= 1 */
 #else
-GNULIB_VAR = 
+GNULIB_VAR =
 #endif
 
 #ifdef MAINTAIN_ENVIRONMENT
@@ -501,11 +500,12 @@ obj=    dispnew.o scroll.o xdisp.o window.o \
 	doprnt.o \
 	$(MULE_OBJ) $(MCPATH_OBJ)
 
+#define TERMINFO
 #ifdef TERMINFO
 /* Used to be -ltermcap here.  If your machine needs that,
    define LIBS_TERMCAP in the m- file.  */
 #ifndef LIBS_TERMCAP
-#define LIBS_TERMCAP -lcurses
+#define LIBS_TERMCAP -lncurses
 #endif
 termcapobj = terminfo.o
 #else
@@ -738,12 +738,12 @@ alloca.o : alloca.s config.h
    it is so often changed in ways that do not require any recompilation
    and so rarely changed in ways that do require any.  */
 
-abbrev.o : abbrev.c buffer.h commands.h config.h 
+abbrev.o : abbrev.c buffer.h commands.h config.h
 buffer.o : buffer.c syntax.h buffer.h commands.h window.h config.h $(MULE_H)
-callint.o : callint.c window.h commands.h buffer.h config.h 
+callint.o : callint.c window.h commands.h buffer.h config.h
 callproc.o : callproc.c paths.h buffer.h commands.h config.h $(MULE_H) \
         $(CC_H) $(MCPATH_H)
-casefiddle.o : casefiddle.c syntax.h commands.h buffer.h config.h 
+casefiddle.o : casefiddle.c syntax.h commands.h buffer.h config.h
 /* 91.11.1 by K.Handa */
 category.o : buffer.h category.h category.c config.h $(MULE_H)
 /* 93.5.14 by K.Handa */
@@ -766,16 +766,16 @@ environ.o : environ.c buffer.h commands.h config.h
 #endif /* MAINTAIN_ENVIRONMENT */
 fileio.o : fileio.c window.h buffer.h config.h $(MULE_H) $(CC_H) $(MCPATH_H)
 filelock.o : filelock.c buffer.h paths.h config.h  $(MCPATH_H)
-filemode.o : filemode.c 
+filemode.o : filemode.c
 indent.o : indent.c window.h indent.h buffer.h config.h termchar.h termopts.h $(MULE_H)
-insdel.o : insdel.c window.h buffer.h config.h 
+insdel.o : insdel.c window.h buffer.h config.h
 keyboard.o : keyboard.c termchar.h termhooks.h termopts.h buffer.h commands.h window.h macros.h config.h $(MULE_H)
 keymap.o : keymap.c buffer.h commands.h config.h $(MULE_H)
-lastfile.o : lastfile.c 
+lastfile.o : lastfile.c
 macros.o : macros.c window.h buffer.h commands.h macros.h config.h
 malloc.o : malloc.c config.h
-marker.o : marker.c buffer.h config.h 
-minibuf.o : minibuf.c syntax.h window.h buffer.h commands.h config.h 
+marker.o : marker.c buffer.h config.h
+minibuf.o : minibuf.c syntax.h window.h buffer.h commands.h config.h
 mocklisp.o : mocklisp.c buffer.h config.h
 /* 91.11.1 by K.Handa */
 mule.o : mule.c mule.h buffer.h config.h mconfig.h $(MULE_H) $(CC_H)
@@ -789,7 +789,7 @@ term.o : term.c termchar.h termhooks.h termopts.h config.h cm.h $(MULE_H) $(CC_H
 termcap.o : termcap.c config.h
 terminfo.o : terminfo.c config.h
 tparam.o : tparam.c config.h
-undo.o : undo.c buffer.h commands.h config.h 
+undo.o : undo.c buffer.h commands.h config.h
 UNEXEC : config.h getpagesize.h mconfig.h puresize.h $(MCPATH_H)
 window.o : window.c indent.h commands.h window.h buffer.h config.h termchar.h
 xdisp.o : xdisp.c macros.h commands.h indent.h buffer.h dispextern.h termchar.h window.h config.h $(MULE_H)
@@ -819,11 +819,11 @@ $(MCPATH_OBJ): mcpath.c $(MCPATH_h) $(CC_H)
 /* The files of Lisp proper */
 
 alloc.o : alloc.c window.h buffer.h config.h mconfig.h puresize.h
-bytecode.o : bytecode.c buffer.h config.h 
-data.o : data.c buffer.h config.h 
+bytecode.o : bytecode.c buffer.h config.h
+data.o : data.c buffer.h config.h
 eval.o : eval.c commands.h config.h
 fns.o : fns.c buffer.h commands.h config.h
-print.o : print.c process.h window.h buffer.h dispextern.h termchar.h config.h 
+print.o : print.c process.h window.h buffer.h dispextern.h termchar.h config.h
 lread.o : lread.c buffer.h paths.h config.h $(MULE_H) $(MCPATH_H)
 
 /* System-specific programs to be made.
