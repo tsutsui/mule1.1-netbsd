@@ -1428,7 +1428,7 @@ in that file are in octal!)\n")
 		rawshift = (((unsigned) (XINT (shift_mask))) & 15) << 11;
 		XRebindCode (rawkey, rawshift, rawstring, strsize);
 	}
-#endif notdef
+#endif /* notdef */
 	return Qnil;
 }
   
@@ -1462,11 +1462,11 @@ See the documentation of x-rebind-key for more information.")
 			XRebindCode (rawkey, i << 11, rawstring, strsize);
 		}
 	}
-#endif notdef
+#endif /* notdef */
 	return Qnil;
 }
 
-#endif foobar
+#endif /* foobar */
 
 XExitWithCoreDump ()
 {
@@ -1568,7 +1568,7 @@ The length is 128 and each element is indexed by (leading-char & 0x7F).");
   defsubr (&Sx_set_font);
 #ifdef notdef
   defsubr (&Sx_set_icon);
-#endif notdef
+#endif
   defsubr (&Scoordinates_in_window_p);
   defsubr (&Sx_mouse_events);
   defsubr (&Sx_proc_mouse_event);
@@ -1596,7 +1596,7 @@ The length is 128 and each element is indexed by (leading-char & 0x7F).");
 #ifdef notdef
   defsubr (&Sx_rebind_key);
   defsubr (&Sx_rebind_keys);
-#endif notdef
+#endif
   defsubr (&Sx_debug);
   defsubr (&Sx_set_ccl);	/* 93.5.20 by K.Handa */
 }

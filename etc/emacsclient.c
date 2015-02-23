@@ -33,8 +33,10 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #undef close
 #endif
 
+#include <stdlib.h>
+#include <string.h>
 
-#if !defined(BSD) && !defined(HAVE_SYSVIPC) && !defined(HAVE_SOCKETS)
+#if !defined(HAVE_SOCKETS) && !defined(HAVE_SYSVIPC)
 #include <stdio.h>
 
 main (argc, argv)
@@ -47,9 +49,9 @@ main (argc, argv)
   exit (1);
 }
 
-#else /* BSD or HAVE_SYSVIPC */
+#else /* HAVE_SOCKETS or HAVE_SYSVIPC */
 
-#if defined(BSD) && ! defined (HAVE_SYSVIPC) || defined(HAVE_SOCKETS)
+#if defined(HAVE_SOCKETS)
 /* BSD code is very different from SYSV IPC code */
 
 #include <sys/types.h>
@@ -57,10 +59,10 @@ main (argc, argv)
 #include <sys/un.h>
 #include <stdio.h>
 #include <errno.h>
+#include <unistd.h>
 #include <sys/stat.h>
 
 extern int sys_nerr;
-extern char *sys_errlist[];
 extern int errno;
 
 main (argc, argv)
@@ -74,8 +76,6 @@ main (argc, argv)
   char *homedir, *cwd, *str;
   char string[BUFSIZ];
   struct stat statbfr;
-
-  char *getenv (), *getwd (), *getcwd ();
 
   if (argc < 2)
     {
@@ -118,7 +118,8 @@ main (argc, argv)
   strcat (server.sun_path, "/.emacs_server");
 #endif
 
-  if (connect (s, &server, strlen (server.sun_path) + 2) < 0)
+  if (connect (s, (struct sockaddr *)&server,
+	       strlen (server.sun_path) + 2) < 0)
     {
       fprintf (stderr, "%s: ", argv[0]);
       perror ("connect");
@@ -131,16 +132,12 @@ main (argc, argv)
       exit (1);
     }
 
-#ifdef BSD
-  cwd = getwd (string);
-#else
   cwd = getcwd (string, sizeof string);
-#endif
 
   if (cwd == 0)
     {
-      /* getwd puts message in STRING if it fails.  */
-      fprintf (stderr, "%s: %s (%s)\n", argv[0], string,
+      fprintf (stderr, "%s: %s (%s)\n", argv[0],
+	       "Cannot get current working directory",
 	       (errno < sys_nerr) ? sys_errlist[errno] : "unknown error");
       exit (1);
     }
@@ -286,4 +283,4 @@ main (argc, argv)
 
 #endif /* HAVE_SYSVIPC */
 
-#endif /* BSD or HAVE_SYSVIPC */
+#endif /* HAVE_SOCKETS or HAVE_SYSVIPC */

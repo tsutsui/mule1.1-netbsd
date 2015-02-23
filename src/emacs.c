@@ -417,7 +417,7 @@ main (argc, argv, envp)
 #ifdef HIGHPRI
   setpriority (PRIO_PROCESS, getpid (), HIGHPRI);
   setuid (getuid ());
-#endif HIGHPRI
+#endif
 
   inhibit_window_system = 0;
 
@@ -550,7 +550,7 @@ main (argc, argv, envp)
 #endif
 #ifdef SIGXFSZ
       signal (SIGXFSZ, fatal_error_signal);
-#endif SIGXFSZ
+#endif
 #endif /* not MSDOS and GO32 */
 /* end of patch */
 
@@ -654,7 +654,7 @@ main (argc, argv, envp)
       syms_of_alloc ();
 #ifdef MAINTAIN_ENVIRONMENT
       syms_of_environ ();
-#endif MAINTAIN_ENVIRONMENT
+#endif /* MAINTAIN_ENVIRONMENT */
       syms_of_read ();
       syms_of_print ();
       syms_of_eval ();

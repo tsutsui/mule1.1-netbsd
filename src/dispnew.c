@@ -714,15 +714,15 @@ direct_output_for_insert (c)
 {
 #ifndef COMPILER_REGISTER_BUG
   register
-#endif COMPILER_REGISTER_BUG
+#endif
     struct window *w = XWINDOW (selected_window);
 #ifndef COMPILER_REGISTER_BUG
   register
-#endif COMPILER_REGISTER_BUG
+#endif
     int hpos = cursor_hpos;
 #ifndef COMPILER_REGISTER_BUG
   register
-#endif COMPILER_REGISTER_BUG
+#endif
     int vpos = cursor_vpos;
   Lisp_Object apositions;	/* 92.1.28 by K.Handa */
 

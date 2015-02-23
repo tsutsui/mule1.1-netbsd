@@ -1053,14 +1053,6 @@ extern int immediate_quit;	    /* Nonzero means ^G can quit instantly */
 
 extern void debugger ();
 
-#ifndef malloc
-/* 91.10.16 by S.Hirano, 93.2.25 by M.Higashida */
-#if !(defined(MSDOS) && defined(GO32)) && !defined(WIN32)
-extern char *malloc (), *realloc ();
-#endif
-/* end of patch */
-#endif
-extern char *getenv (), *ctime (), *getwd ();
 extern long *xmalloc (), *xrealloc ();
 
 #ifdef MAINTAIN_ENVIRONMENT

@@ -143,7 +143,7 @@ init_syntax_once ()
 
 #ifndef NFAILURES
 #define NFAILURES 80
-#endif NFAILURES
+#endif
 
 /* width of a byte in bits */
 
@@ -888,7 +888,7 @@ re_compile_pattern (pattern, size, bufp)
 	      PATPUSH (c);
 	      break;
 /* end of patch */
-#endif emacs
+#endif /* emacs */
 
 	    case 'w':
 	      laststart = b;
@@ -1235,7 +1235,7 @@ re_compile_fastmap (bufp)
 	  bufp->can_be_null = 1;
 	  return;
 /* end of patch */
-#endif emacs
+#endif /* emacs */
 
 /* 92.11.12 by enami */
 /* bitmap and range table are merged. */
@@ -2363,7 +2363,7 @@ re_match_2 (pbufp, string1, size1, string2, size2, pos, regs, mstop, backward)
 	  FETCHn;
 	  if (SYNTAX_AT (dtemp, char_bytes[*dtemp]) != 0) goto fail;
 	  break;
-#endif not emacs
+#endif /* not emacs */
 
 	case begbuf:
 	  if (d == string1)	/* Note, d cannot equal string2 */
@@ -2616,5 +2616,5 @@ error (string)
   exit (1);
 }
 
-#endif test
+#endif /* test */
 
