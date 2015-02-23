@@ -620,7 +620,7 @@ put_entries(node)
 
   if (eflag)
     {
-      fprintf (outf, "%s%c%d,%d\n",
+      fprintf (outf, "%s%c%d,%ld\n",
 	       node->pat, 0177, node->lno, node->cno);
     }
   else if (!xflag)
@@ -844,9 +844,9 @@ C_entries ()
 		      if (linestart != linecharno)
 			{
 #ifdef VMS
-			  getline (vmslinestart);
+			  etags_getline (vmslinestart);
 #else
-			  getline (linestart);
+			  etags_getline (linestart);
 #endif
 			  strncpy (tok, token + (lb1.buffer - buf),
 				   tp-token+1);
@@ -1003,7 +1003,7 @@ ret:
   return !bad && win;
 }
 
-getline (atchar)
+etags_getline (atchar)
      long atchar;
 {
   long saveftell = ftell (inf);
