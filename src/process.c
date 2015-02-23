@@ -272,10 +272,14 @@ extern Lisp_Object Qexit;
 
 extern errno;
 extern sys_nerr;
+#if defined(LINUX) && !(defined (__GLIBC__) && (__GLIBC__ >= 2))
 extern char *sys_errlist[];
+#endif
 
 #if !defined(BSD4_1) && !defined(WIN32) /* 93.2.17 by M.Higashida */
+#ifndef SYS_SIGLIST_DECLARED
 extern char *sys_siglist[];
+#endif /* ! SYS_SYGLIST_DECLARED */
 #else
 char *sys_siglist[] =
   {
@@ -1601,8 +1605,8 @@ create_process (process, new_argv)
 #ifdef TIOCSCTTY
 #ifndef linux			/* 93.7.17 by S.Komeda */
 	/* Make the pty's terminal the controlling terminal.  */
-	if (pty_flag && (ioctl (xforkin, TIOCSCTTY, 0) < 0))
-	  abort ();
+	if (pty_flag)
+          ioctl (xforkin, TIOCSCTTY, 0);  /* ignore errors for linux */
 #endif
 #endif
 #else /* not HAVE_SETSID */
