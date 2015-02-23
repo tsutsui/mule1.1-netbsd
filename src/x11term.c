@@ -1821,6 +1821,10 @@ internal_socket_read(bufp, numchars)
 	  strcpy(mapping_buf,"\016");
 	  nbytes = 1;
 	  break;
+	case XK_BackSpace:
+	  strcpy(mapping_buf,"\177");
+	  nbytes = 1;
+	  break;
 #ifdef nec_ews					/* hir@nec, 1992.10.5 */
 	case XK_KP_F1:
 	  strcpy(mapping_buf,"\033OP");
