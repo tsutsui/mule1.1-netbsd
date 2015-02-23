@@ -55,7 +55,7 @@ quote = '
 xmakefile: ymakefile config.h mconfig.h
 	-rm -f xmakefile junk.c
 	cp ymakefile junk.c
-	$(CPP) junk.c | \
+	$(CPP) -P junk.c | \
 	sed -e $(quote)s/^#.*//$(quote) \
 	    -e $(quote)s/^[ 	][ 	]*$$//$(quote) \
 	    -e $(quote)s/^ /	/$(quote) | \
