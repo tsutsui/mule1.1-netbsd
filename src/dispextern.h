@@ -176,13 +176,15 @@ extern struct matrix *temp_screen;
 /* Get ready to display on screen line VPOS at column HPOS
    and return the string where the text of that line is stored.  */
 
-unsigned int *get_display_line (); /* 91.10.19 by K.Handa */
+unsigned int *get_display_line (int, int); /* 91.10.19 by K.Handa */
 
 /* 92.12.7 by K.Handa */
 /* Store a composite character to cmp_char_table.
    If the area is not allocated, allocate it.
    The return value is a pointer to the stored composite char. */
-unsigned int store_composite_char();
+unsigned int store_composite_char(struct matrix *, int, int, unsigned char *, int);
+
+int timeval_subtract (struct timeval *, struct timeval, struct timeval);
 
 /* Buffer used by `message' for formatting a message, and by print.c.  */
 extern char *message_buf;
