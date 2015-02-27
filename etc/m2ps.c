@@ -44,6 +44,8 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 	Bug in find_encoding() fixed. */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <ctype.h>
 #include <fcntl.h>
 #include <sys/types.h>
@@ -84,8 +86,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 #ifndef ShortMemory
 #define ShortMemory 0
 #endif
-
-extern char *malloc (), *realloc ();
 
 char *psheader = PSHeader;
 int dpi = DPI;
