@@ -323,7 +323,6 @@ error (s1, s2, s3)
 pfatal_with_name (name)
      char *name;
 {
-  extern int errno, sys_nerr;
   char *s;
 
   if (errno < sys_nerr)
@@ -336,7 +335,6 @@ pfatal_with_name (name)
 pfatal_and_delete (name)
      char *name;
 {
-  extern int errno, sys_nerr;
   char *s;
 
   if (errno < sys_nerr)

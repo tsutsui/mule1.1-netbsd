@@ -67,11 +67,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 
 #if !(defined(MSDOS) && defined(GO32))
 /* 93.1.13 by T.Furuhata */
-#ifndef AIX
-extern char *malloc (), *realloc ();
-#else
 #include <stdlib.h>
-#endif
 /* end of patch */
 #endif
 
