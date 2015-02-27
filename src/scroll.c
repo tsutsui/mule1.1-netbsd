@@ -21,6 +21,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #include <stdio.h>
 #include "config.h"
 #include "termchar.h"
+#include "lisp.h"
 #if defined(WIN32) && defined(USE_FATFS) /* 93.2.25 by M.Higashida */
 #include "termhook.h"
 #include "dispexte.h"
