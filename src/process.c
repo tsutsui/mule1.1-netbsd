@@ -2876,6 +2876,34 @@ process_send_signal (process, signo, current_group, nomsg)
 	 on other kinds of USG systems, not just on the IRIS.
 	 This should be tried in Emacs 19.  */
 #ifdef SIGNALS_VIA_CHARACTERS
+      /* TERMIOS is the latest and bestest, and seems most likely to
+	 work.  If the system has it, use it.  */
+#ifdef HAVE_TERMIOS
+      struct termios t;
+
+      switch (signo)
+	{
+	case SIGINT:
+	  tcgetattr (XINT (p->infd), &t);
+	  send_process (proc, &t.c_cc[VINTR], 1, Qnil);
+	  return;
+
+	case SIGQUIT:
+	  tcgetattr (XINT (p->infd), &t);
+	  send_process (proc, &t.c_cc[VQUIT], 1, Qnil);
+	  return;
+
+	case SIGTSTP:
+	  tcgetattr (XINT (p->infd), &t);
+#if defined (VSWTCH) && !defined (PREFER_VSUSP)
+	  send_process (proc, &t.c_cc[VSWTCH], 1, Qnil);
+#else
+	  send_process (proc, &t.c_cc[VSUSP], 1, Qnil);
+#endif
+	  return;
+	}
+
+#else /* ! HAVE_TERMIOS */
       struct termio t;
       switch (signo)
 	{
@@ -2906,6 +2934,7 @@ process_send_signal (process, signo, current_group, nomsg)
 	  return Qnil;
 #endif
 	}
+#endif /* HAVE_TERMIOS */
 #endif /* SIGNALS_VIA_CHARACTERS */
 /* 92.10.30 by K.Furuhata */
 #if defined (USG) && defined (HAVE_TCATTR) && !defined(AIX) && !defined(nec_ews_svr4) && !defined(sun) /* hir@nec, 1992.11.24 */
