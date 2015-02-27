@@ -1004,6 +1004,7 @@ Returns the window displaying BUFFER.")
   return window;
 }
 
+void
 temp_output_buffer_show (buf)
      register Lisp_Object buf;
 {

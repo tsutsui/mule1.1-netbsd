@@ -191,7 +191,9 @@ typedef struct {
 #define CODE_ASCII_CNTL	0x20
 #define CODE_SEVEN	0x10
 #define CODE_LOCK_SHIFT 0x08
-/* #define CODE_ASCII_EOT	0x04	/* not used now */
+#if 0
+#define CODE_ASCII_EOT	0x04	/* not used now */
+#endif
 #define CODE_USE_ROMAN	0x02
 #define CODE_USE_OLDJIS 0x01
 
