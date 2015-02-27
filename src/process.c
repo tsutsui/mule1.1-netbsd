@@ -1121,6 +1121,7 @@ DEFUN ("start-process", Fstart_process, Sstart_process, 5, MANY, 0, "")
 }
 /* end of patch */
 
+void
 create_process_1 (signo)
      int signo;
 {
@@ -2657,6 +2658,7 @@ This is intended for use by asynchronous process output filters and sentinels.")
 
 jmp_buf send_process_frame;
 
+void
 send_process_trap ()
 {
 #ifndef WIN32 /* 93.2.17 by M.Higashida */
@@ -3171,6 +3173,7 @@ kill_buffer_processes (buffer)
  the queue is empty".  Invoking signal() causes the kernel to reexamine
  the SIGCLD queue.   Fred Fish, UniSoft Systems Inc. */
 
+void
 sigchld_handler (signo)
      int signo;
 {

@@ -826,7 +826,7 @@ setpgrp_of_tty (pid)
 struct save_signal
 {
   int code;
-  int (*handler) ();
+  void (*handler) ();
 };
 
 /* Suspend the Emacs process; give terminal to its superior.  */

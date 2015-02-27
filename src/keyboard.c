@@ -868,6 +868,7 @@ int echo_flag;
 int echo_now;
 
 /* Alarm interrupt calls this and requests echoing at earliest safe time. */
+void
 request_echo ()
 {
   int old_errno = errno;
@@ -975,7 +976,6 @@ read_command_char (commandflag)
   int count;
   Lisp_Object tem;
   jmp_buf save_jump;
-  extern request_echo ();
 
   if (unread_command_char >= 0)
     {
@@ -1528,6 +1528,7 @@ gobble_input ()
     }
 }
 
+void
 input_available_signal (signo)
      int signo;
 {
@@ -2203,6 +2204,7 @@ clear_waiting_for_input ()
  This causes  eval  to throw, when it gets a chance.
  If  quit-flag  is already non-nil, it stops the job right away.  */
 
+void
 interrupt_signal ()
 {
   char c;

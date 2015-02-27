@@ -1448,6 +1448,7 @@ DEFUN ("screen-width", Fscreen_width, Sscreen_width, 0, 0, 0,
 }
 
 #ifdef SIGWINCH
+void
 window_change_signal ()
 {
   int width, height;
