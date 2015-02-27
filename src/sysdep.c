@@ -854,7 +854,7 @@ sys_suspend ()
 /* end of patch */
 #ifdef SIGTSTP
 #ifdef BSD
-  killpg (getpgrp (0), SIGTSTP);
+  killpg (getpgrp (), SIGTSTP);
 #else
   kill (-getpgrp (0), SIGTSTP);
 #endif
