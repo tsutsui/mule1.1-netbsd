@@ -304,7 +304,7 @@
 
 #ifdef NULL
 #undef NULL
-#endif NULL
+#endif
 #include "lisp.h"
 #include "buffer.h"
 #include "window.h"
@@ -315,6 +315,9 @@ static struct wnn_env *wnnfns_env_norm[NSERVER];
 static struct wnn_env *wnnfns_env_rev[NSERVER];
 static int wnnfns_norm;
 static unsigned char lc_wnn_server_type[NSERVER] = {LCJP, LCCN, LCINV, LCKR};
+
+static int yes_or_no();
+static void puts2();
 
 /* Lisp Variables and Constants Definition */
 Lisp_Object	Qjserver;
@@ -424,8 +427,6 @@ Specify password files of dictionary and frequency, PW1 and PW2, if needed.")
      int			nargs;
      register Lisp_Object	*args;
 {
-  static int yes_or_no();
-  static void puts2();
   struct gcpro gcpro1;
   int	snum;
   CHECK_STRING (args[0], 0);
