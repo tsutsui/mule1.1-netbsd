@@ -2167,7 +2167,6 @@ x_term_init ()
 	char *ptr;
 	XColor cdef;
 
-	extern char *getenv ();
 	extern XTinterrupt_signal ();
 	extern Lisp_Object Vxterm, Vxterm1, Qt;
 	extern int XIgnoreError();
@@ -3047,8 +3046,6 @@ static int
 XT_Set_Class_Hints(w)
     Window  w;
 {
-    extern char  *getenv();
-
 
     if (XXidentity == (char *) NULL)
 	XXidentity = "";	/* XSCH() doesn't like NULL pointers! */

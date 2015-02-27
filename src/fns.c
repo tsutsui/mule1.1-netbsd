@@ -96,7 +96,6 @@ If optional argument is supplied as  t,\n\
   (arg)
      Lisp_Object arg;
 {
-  extern long time ();
 
   if (EQ (arg, Qt))
     srandom (getpid () + time (0));

@@ -261,7 +261,6 @@ static void
 morecore (nu)			/* ask system for more memory */
      register int nu;		/* size index to get more of  */
 {
-  char *sbrk ();
   register char *cp;
   register int nblks;
   register unsigned int siz;
@@ -391,7 +390,6 @@ static void
 getpool ()
 {
   register int nu;
-  char * sbrk ();
   register char *cp = sbrk (0);
 
   if ((int) cp & 0x3ff)	/* land on 1K boundaries */
