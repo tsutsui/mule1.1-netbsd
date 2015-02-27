@@ -43,7 +43,7 @@ static int stack_idx;
 #define REGCOUNT 10
 int ccl_reg[REGCOUNT];
 
-static long elapsed_time;
+static clock_t elapsed_time;
 
 enum ccl_code {
   CCLrestart,
@@ -363,7 +363,7 @@ ccl_driver(src, dst, nsrc, ndst, mccode, encode)
 {
   Lisp_Object ccl_prog;
   Lisp_Object regs, body;
-  long etime, clock();
+  clock_t etime;
   int i, ip;
   unsigned char *prog;
      
