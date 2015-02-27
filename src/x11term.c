@@ -447,9 +447,6 @@ int (*handler)();
 static void x_init_1 ();
 static int XInitWindow ();
 
-char *rindex();
-char *index();
-
 /* HLmode -- Changes the GX function for output strings.  Could be used to
  * change font.  Check an XText library function call.
  */
