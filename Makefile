@@ -28,7 +28,7 @@ SHELL = /bin/sh
 # but there was no explanation of why, so it seems better to keep this stable.
 LIBDIR= /usr/local/mule
 BINDIR= /usr/local/bin
-MANDIR= /usr/man/man1
+MANDIR= /usr/local/man/man1
 
 # Flags passed down to subdirectory makefiles.
 MFLAGS=
