@@ -67,7 +67,6 @@
 
 #define UNEXEC unexelf.o
 #define UNEXEC_USE_MAP_PRIVATE
-#define DATA_SEG_BITS 0x08000000
 
 #define HAVE_TEXT_START
 #define START_FILES pre-crt0.o /usr/lib/crt0.o /usr/lib/crti.o /usr/lib/crtbegin.o
