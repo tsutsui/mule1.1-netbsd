@@ -18,9 +18,6 @@
 #define INTERRUPT_INPUT
 #define SIGNALS_VIA_CHARACTERS
 
-#define A_TEXT_OFFSET(x) (sizeof(struct exec))
-#define A_TEXT_SEEK(hdr) (N_TXTOFF(hdr) + A_TEXT_OFFSET(hdr))
-
 /* NetBSD uses GNU C.  */
 
 #define C_COMPILER gcc
