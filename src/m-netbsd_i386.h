@@ -85,5 +85,4 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 /* If compiling with GCC, let GCC implement alloca.  */
 #if defined(__GNUC__) && !defined(alloca)
 #define alloca(n) __builtin_alloca(n)
-#define HAVE_ALLOCA
 #endif
