@@ -1,4 +1,4 @@
-CFLAGS= -g
+CFLAGS= -g -O -fno-strict-aliasing
 # For Solaris2. Needed for emacsclient
 #  LOADLIBES= -lsocket -lnsl -lelf
 # For Xenix.  Needed for movemail
