@@ -171,6 +171,8 @@ extern unsigned char vms_file_written[];	/* set in rename_sans_version */
 #endif
 /* end of patch */
 
+extern void make_gap (int);
+
 #ifndef O_WRONLY
 #define O_WRONLY 1
 #endif
