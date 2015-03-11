@@ -1618,7 +1618,7 @@ re_match_2 (pbufp, string1, size1, string2, size2, pos, regs, mstop, backward)
   unsigned char *regend[RE_NREGS];
   unsigned char regstart_seg1[RE_NREGS], regend_seg1[RE_NREGS];
 
-  enum syntaxcode s;		/* 92.7.16 by K.Handa */
+  enum syntaxcode s, s1;		/* 92.7.16 by K.Handa */
 
   /* Set up pointers to ends of strings.
      Don't allow the second string to be empty unless both are empty.  */
@@ -1979,8 +1979,13 @@ re_match_2 (pbufp, string1, size1, string2, size2, pos, regs, mstop, backward)
 	case casen:		/* new code */
 	  {
 	    register int c, j;
-	    register unsigned char *offset = p + 1 + ((*p--) << 1);
-	    register unsigned char from = *offset++, to = *offset++;
+	    register unsigned char *offset;
+	    register unsigned char from, to;
+
+	    offset = p + 1 + ((*p) << 1);
+	    p--;
+	    from = *offset++;
+	    to = *offset++;
 
 	    PREFETCH;
 	    if (translate)
@@ -2161,8 +2166,8 @@ re_match_2 (pbufp, string1, size1, string2, size2, pos, regs, mstop, backward)
 	  if ((d != string1
 	       && ((s = SYNTAX (d[-1])) == Sword || s == Sextword))
 	      != (d != end2 && !(d == end1 && size2 == 0)
-		  && ((s = SYNTAX (d == end1 ? *string2 : *d)) == Sword
-		      || s == Sextword))) /* 92.7.16 by K.Handa */
+		  && ((s1 = SYNTAX (d == end1 ? *string2 : *d)) == Sword
+		      || s1 == Sextword))) /* 92.7.16 by K.Handa */
 	    break;
 	  goto fail;
 
@@ -2197,8 +2202,8 @@ re_match_2 (pbufp, string1, size1, string2, size2, pos, regs, mstop, backward)
 	  if (wordbuf[0])	/* 91.10.19 by K.Handa */
 	    goto dynamic_notwordbound;
 	  if (((s = SYNTAX (d[-1])) == Sword || s == Sextword)
-	      != ((s = SYNTAX (d == end1 ? *string2 : *d)) == Sword
-		  || s == Sextword)) /* 92.7.16 by K.Handa */
+	      != ((s1 = SYNTAX (d == end1 ? *string2 : *d)) == Sword
+		  || s1 == Sextword)) /* 92.7.16 by K.Handa */
 	    goto fail;
 	  break;
 

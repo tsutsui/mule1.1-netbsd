@@ -2003,7 +2003,10 @@ display_text_line (w, start, vpos, hpos, taboffset)
       else {
 	p1prev = startp + 1;
 	while (p1prev < p1 && *p1prev & MTRX_REST)
-	  *p1prev++ = (*p1prev & MTRX_ATTR_MASK) | '$';
+	  {
+	    *p1prev = (*p1prev & MTRX_ATTR_MASK) | '$';
+	    p1prev++;
+	  }
       }
 /* end of patch */
     }
