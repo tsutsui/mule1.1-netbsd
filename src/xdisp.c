@@ -209,6 +209,9 @@ int clip_changed;
 int windows_or_buffers_changed;
 
 char *decode_mode_spec ();
+
+Lisp_Object_Int display_string (struct window *, int, unsigned char *, int, char, Lisp_Object_Int, Lisp_Object_Int);
+
 
 DEFUN ("redraw-display", Fredraw_display, Sredraw_display, 0, 0, "",
   "Clear the screen and output again what is supposed to appear on it.")
@@ -2677,6 +2680,7 @@ decode_mode_spec (w, c, maxwidth)
 
   Returns ending hpos */
 
+Lisp_Object_Int
 display_string (w, vpos, string, hpos, truncate, mincol, maxcol)
      struct window *w;
      int vpos;
