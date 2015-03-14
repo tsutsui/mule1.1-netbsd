@@ -123,11 +123,10 @@ int debug_on_quit;
 Lisp_Object Vdebugger;
 
 void specbind (), record_unwind_protect ();
-Lisp_Object unbind_to ();
 
 Lisp_Object funcall_lambda ();
 extern Lisp_Object ml_apply (); /* Apply a mocklisp function to unevaluated argument list */
-Lisp_Object call4 ();		/* 93.7.8 by T.Atsushiba */
+Lisp_Object call4 (Lisp_Object, Lisp_Object, Lisp_Object, Lisp_Object, Lisp_Object);		/* 93.7.8 by T.Atsushiba */
 
 init_eval_once ()
 {

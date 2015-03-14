@@ -334,7 +334,7 @@ Lisp_Object	Vwnn_uniq_level;
 int		lc_sisheng;
 
 /* Lisp functions definition */
-
+Lisp_Object Fwnn_set_param (int, Lisp_Object *);
 
 
 DEFUN ("wnn-server-open", Fwnn_open, Swnn_open,
