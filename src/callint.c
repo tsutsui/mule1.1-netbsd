@@ -193,7 +193,7 @@ Otherwise, this is done only if an arg is read using the minibuffer.")
       if (!string)
 	{
 	lose:
-	  function = wrong_type_argument (Qcommandp, function, 0);
+	  function = wrong_type_argument (Qcommandp, function);
 	  goto retry;
 	}
       else if ((int) string == 1)

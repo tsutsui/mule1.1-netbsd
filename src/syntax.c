@@ -73,7 +73,7 @@ check_syntax_table (obj)
   register Lisp_Object tem;
   while (tem = Fsyntax_table_p (obj),
 	 NULL (tem))
-    obj = wrong_type_argument (Qsyntax_table_p, obj, 0);
+    obj = wrong_type_argument (Qsyntax_table_p, obj);
   return obj;
 }   
 

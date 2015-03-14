@@ -69,7 +69,7 @@ check_category_table (obj)
   if (NULL (obj)) return current_buffer->category_table;
   tem = Fcategory_table_p (obj);
   if (NULL (tem))
-    obj = wrong_type_argument (Qcategory_table_p, obj, 0);
+    obj = wrong_type_argument (Qcategory_table_p, obj);
   return obj;
 }   
 

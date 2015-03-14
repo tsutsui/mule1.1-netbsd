@@ -1402,7 +1402,7 @@ LIST should have been created by calling match-data previously.")
   register Lisp_Object marker;
 
   if (!CONSP (list) && !NULL (list))
-    list = wrong_type_argument (Qconsp, list, 0);
+    list = wrong_type_argument (Qconsp, list);
 
   for (i = 0; i < RE_NREGS; i++)
     {
