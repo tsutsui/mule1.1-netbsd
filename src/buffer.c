@@ -130,8 +130,6 @@ struct buffer buffer_local_symbols;
 /* A Lisp_Object pointer to the above, used for staticpro */
 static Lisp_Object Vbuffer_local_symbols;
 
-Lisp_Object Fset_buffer ();
-
 /* Alist of all buffer names vs the buffers. */
 /* This used to be a variable, but is no longer,
  to prevent lossage due to user rplac'ing this alist or its elements.  */

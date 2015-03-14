@@ -533,7 +533,7 @@ init_strings ()
   large_string_blocks = 0;
 }
 
-static Lisp_Object make_uninit_string ();
+static Lisp_Object make_uninit_string (int);
 
 DEFUN ("make-string", Fmake_string, Smake_string, 2, 2, 0,
   "Return a newly created string of length LENGTH, with each element being INIT.\n\

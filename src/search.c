@@ -380,6 +380,7 @@ matched by parenthesis constructs in the pattern.")
   return make_number (val);
 }
 
+int
 scan_buffer (target, pos, cnt, shortage)
      int *shortage, pos;
      register int cnt, target;

@@ -33,9 +33,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 Lisp_Object Qwindowp;
 
-Lisp_Object Fnext_window (), Fdelete_window (), Fselect_window ();
-Lisp_Object Fset_window_buffer (), Fsplit_window (), Frecenter ();
-
 static void replace_window (), unshow_buffer ();
 static int save_window_save ();
 
@@ -1942,7 +1939,6 @@ Does not restore the value of point in current buffer.")
 
 init_window_once ()
 {
-  extern Lisp_Object get_minibuffer ();
   register Lisp_Object root_window;
 
   root_window = make_window ();

@@ -778,7 +778,6 @@ the appropriate function to act upon this event.")
 	register char key_mask;
 	register Lisp_Object tempx;
 	register Lisp_Object tempy;
-	extern Lisp_Object get_keyelt ();
 	extern int meta_prefix_char;
 	
 	check_xterm ();

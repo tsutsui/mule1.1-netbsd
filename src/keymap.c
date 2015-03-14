@@ -950,7 +950,7 @@ Argument is a command definition, usually a symbol with a function definition.")
   return Qnil;
 }
 
-Lisp_Object describe_buffer_bindings ();
+Lisp_Object describe_buffer_bindings (Lisp_Object);
 
 DEFUN ("describe-bindings", Fdescribe_bindings, Sdescribe_bindings, 0, 0, "",
   "Show a list of all defined keys, and their definitions.\n\

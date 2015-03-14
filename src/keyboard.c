@@ -427,8 +427,8 @@ record_auto_save ()
   last_auto_save = num_input_chars;
 }
 
-Lisp_Object recursive_edit_unwind (), command_loop ();
-Lisp_Object recursive_edit_1 (); /* 93.7.8 by T.Atsushiba */
+Lisp_Object recursive_edit_unwind (Lisp_Object), command_loop (void);
+Lisp_Object recursive_edit_1 (void); /* 93.7.8 by T.Atsushiba */
 
 DEFUN ("recursive-edit", Frecursive_edit, Srecursive_edit, 0, 0, "",
   "Invoke the editor command loop recursively.\n\
@@ -559,10 +559,10 @@ cmd_error (data)
   return make_number (0);
 }
 
-Lisp_Object command_loop_1 ();
-Lisp_Object command_loop_2 ();
-Lisp_Object cmd_error ();
-Lisp_Object top_level_1 ();
+Lisp_Object command_loop_1 (void);
+Lisp_Object command_loop_2 (void);
+Lisp_Object cmd_error (Lisp_Object);
+Lisp_Object top_level_1 (void);
 
 /* Entry to editor-command-loop.
    This level has the catches for exiting/returning to editor command loop.
@@ -648,8 +648,6 @@ DEFUN ("abort-recursive-edit", Fabort_recursive_edit, Sabort_recursive_edit, 0, 
 
 /* This is the actual command reading loop,
  sans error-handling encapsulation */
-
-Lisp_Object Fcommand_execute ();
 
 Lisp_Object
 command_loop_1 ()
@@ -863,7 +861,7 @@ command_loop_1 ()
 
 /* Input of single characters from keyboard */
 
-Lisp_Object print_help ();
+Lisp_Object print_help (Lisp_Object);
 
 int echo_flag;
 int echo_now;
@@ -1921,7 +1919,6 @@ Otherwise, this is done only if an arg is read using the minibuffer.")
   return Qnil;
 }
 
-Lisp_Object Fthis_command_keys(); /* 93.7.8 by T.Atsushiba */
 
 DEFUN ("execute-extended-command", Fexecute_extended_command, Sexecute_extended_command,
   1, 1, "P",

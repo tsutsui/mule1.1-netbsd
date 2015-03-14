@@ -699,7 +699,6 @@ cancel_my_columns (w)
       new_screen->used[vpos] = start;
 }
 
-extern Lisp_Object current_attribute (); /* 92.1.28 by K.Handa */
 
 /* These functions try to perform directly and immediately on the screen
    the necessary output for one change in the buffer.

@@ -341,7 +341,6 @@ self_insert_internal (c1, noautofill)
      int c1;			/* 92.1.16 by K.Handa */
      int noautofill;
 {				/* 92.1.16 by K.Handa */
-  extern Lisp_Object Fexpand_abbrev ();
   int hairy = 0;
   Lisp_Object tem;
   register enum syntaxcode synt;

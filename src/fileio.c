@@ -2607,7 +2607,6 @@ DEFUN ("recent-auto-save-p", Frecent_auto_save_p, Srecent_auto_save_p,
 }
 
 /* Reading and completing file names */
-extern Lisp_Object Ffile_name_completion (), Ffile_name_all_completions ();
 
 DEFUN ("read-file-name-internal", Fread_file_name_internal, Sread_file_name_internal,
   3, 3, 0,

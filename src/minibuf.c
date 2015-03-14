@@ -89,9 +89,7 @@ extern int minibuf_prompt_width;
 
 /* Actual minibuffer invocation. */
 
-void read_minibuf_unwind ();
-Lisp_Object get_minibuffer ();
-Lisp_Object read_minibuf ();
+void read_minibuf_unwind (void);
 
 Lisp_Object
 read_minibuf (map, initial, prompt, expflag)
@@ -192,7 +190,6 @@ get_minibuffer (depth)
 {
   Lisp_Object tail, num, buf;
   char name[14];
-  extern Lisp_Object nconc2 ();
 
   XFASTINT (num) = depth;
   tail = Fnthcdr (num, Vminibuffer_list);
@@ -256,7 +253,7 @@ If fourth arg READ is non-nil, then interpret the result as a lisp object\n\
   if (NULL (keymap))
     keymap = Vminibuffer_local_map;
   else
-    keymap = get_keymap (keymap,2);
+    keymap = get_keymap (keymap);
   return read_minibuf (keymap, initial_input, prompt, !NULL(read));
 }
 
@@ -724,8 +721,7 @@ temp_echo_area_contents (m)
   Vinhibit_quit = oinhibit;
 }
 
-Lisp_Object Fminibuffer_completion_help ();
-Lisp_Object assoc_for_completion ();
+Lisp_Object assoc_for_completion (Lisp_Object, Lisp_Object);
 
 /* returns:
  * 0 no possible completion
@@ -770,7 +766,6 @@ do_completion ()
   else if (XTYPE (Vminibuffer_completion_table) == Lisp_Vector)
     {
       /* the primitive used by Fintern_soft */
-      extern Lisp_Object oblookup ();
 
       tem = Fbuffer_string ();
       /* Bypass intern-soft as that loses for nil */

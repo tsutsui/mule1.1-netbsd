@@ -148,7 +148,6 @@ If MATCH is non-NIL, only pathnames containing that regexp are returned.")
   return Fsort (Fnreverse (list), Qstring_lessp);
 }
 
-Lisp_Object file_name_completion ();
 
 DEFUN ("file-name-completion", Ffile_name_completion, Sfile_name_completion,
   2, 2, 0,

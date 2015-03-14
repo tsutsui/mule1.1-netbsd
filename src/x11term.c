@@ -2089,7 +2089,7 @@ x_io_error_handler ()
   int save_errno = errno;
   if (errno == EPIPE)
     kill (0, SIGHUP);
-  Fdo_auto_save ();
+  Fdo_auto_save (0);
   errno = save_errno;
   perror ("Fatal X-windows I/O error");
   kill (0, SIGILL);

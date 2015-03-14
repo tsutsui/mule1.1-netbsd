@@ -346,7 +346,7 @@ Lisp_Object Vprocess_alist;
 
 Lisp_Object Qprocessp;
 
-Lisp_Object get_process ();
+Lisp_Object get_process (Lisp_Object);
 
 /* Buffered-ahead input char from process, indexed by channel.
    -1 means empty (no char is buffered).
@@ -369,7 +369,7 @@ Lisp_Object filter_process, filter_string;
 /* Compute the Lisp form of the process status, p->status,
    from the numeric status that was returned by `wait'.  */
 
-Lisp_Object status_convert();	/* 93.7.8 by T.Atsushiba */
+Lisp_Object status_convert(WAITTYPE);	/* 93.7.8 by T.Atsushiba */
 
 update_status (p)
      struct Lisp_Process *p;

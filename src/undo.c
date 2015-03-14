@@ -33,8 +33,6 @@ Lisp_Object last_undo_buffer;
    (It is possible to record an insertion before or after the fact
    because we don't need to record the contents.)  */
 
-Lisp_Object Fundo_boundary();	/* 93.7.8 by T.Atsushiba */
-
 record_insert (beg, length)
      Lisp_Object beg, length;
 {

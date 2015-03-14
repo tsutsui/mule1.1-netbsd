@@ -1463,7 +1463,6 @@ char *s;
   Lisp_Object		args[1];
   char			mbuf[512];
   unsigned char		lc;
-  extern Lisp_Object 	Fmessage();
   int			snum;
   if ((snum = check_wnn_server_type()) == -1) return;
   lc = lc_wnn_server_type[snum];

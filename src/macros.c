@@ -36,7 +36,6 @@ Lisp_Object Vlast_kbd_macro;
 Lisp_Object Vexecuting_macro;
 int executing_macro_index;
 
-Lisp_Object Fexecute_kbd_macro ();
 
 DEFUN ("start-kbd-macro", Fstart_kbd_macro, Sstart_kbd_macro, 1, 1, "P",
   "Record subsequent keyboard input, defining a keyboard macro.\n\
