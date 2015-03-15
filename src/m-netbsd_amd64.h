@@ -35,6 +35,8 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #define LISP_OBJECT_BITS 64
 
+#define PNTR_COMPARISON_TYPE unsigned long
+
 /*
  * Undefine some constants defined in s-netbsd.h so that lisp.h
  * picks up appropriate one.
