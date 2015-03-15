@@ -314,4 +314,5 @@ extern struct buffer buffer_local_symbols;
 
 #define BufferSafeFloor(n) (BEGV <= GPT && GPT <= (n) ? GPT : BEGV)
 
-extern void reset_buffer ();
+extern void reset_buffer (struct buffer *);
+extern void set_buffer_internal (struct buffer *);

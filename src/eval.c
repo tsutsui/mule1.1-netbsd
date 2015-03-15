@@ -122,8 +122,6 @@ int debug_on_quit;
 
 Lisp_Object Vdebugger;
 
-void specbind (Lisp_Object, Lisp_Object), record_unwind_protect (Lisp_Object (*)(), Lisp_Object);
-
 Lisp_Object funcall_lambda (Lisp_Object, int, Lisp_Object *);
 
 init_eval_once ()

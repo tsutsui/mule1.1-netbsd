@@ -234,6 +234,8 @@ int r2l_double_cursor;
 
 struct matrix *make_screen_structure ();
 
+void safe_bcopy (char *, char *, int);
+
 unsigned char **cmp_char_table;	/* 93.6.21 by K.Handa */
 int cmp_char_idx_max;		/* 93.6.21 by K.Handa */
 
@@ -613,6 +615,7 @@ rotate_vector (vector, size, distance)
 
 /* Like bcopy except never gets confused by overlap.  */
 
+void
 safe_bcopy (from, to, size)
      char *from, *to;
      int size;

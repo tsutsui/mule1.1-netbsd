@@ -1098,6 +1098,9 @@ extern Lisp_Object unbind_to (int, Lisp_Object);
 extern void error ();
 extern Lisp_Object un_autoload (Lisp_Object);
 
+extern void specbind (Lisp_Object, Lisp_Object);
+extern void record_unwind_protect (Lisp_Object (*)(), Lisp_Object);
+
 extern void defvar_int (char *, int *, char *);
 extern void defvar_bool (char *, int *, char *);
 extern void defvar_lisp (char *, Lisp_Object *, char *);
