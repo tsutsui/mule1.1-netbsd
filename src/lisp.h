@@ -954,6 +954,8 @@ extern Lisp_Object Fset_screen_width (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fsit_for (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fsleep_for (Lisp_Object);
 
+extern int scroll_screen_lines (Lisp_Object, Lisp_Object, Lisp_Object);
+
 /* Defined in fns.c */
 extern Lisp_Object Qstring_lessp;
 extern Lisp_Object Vfeatures;
