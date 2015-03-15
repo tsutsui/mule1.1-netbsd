@@ -109,6 +109,7 @@ counting the definition just completed as the first repetition.")
 
 /* Store character c into kbd macro being defined */
 
+void
 store_kbd_macro_char (c)
      unsigned char c;
 {
@@ -128,6 +129,7 @@ store_kbd_macro_char (c)
 /* Declare that all chars stored so far in the kbd macro being defined
  really belong to it.  This is done in between editor commands.  */
 
+void
 finalize_kbd_macro_chars ()
 {
   kbd_macro_end = kbd_macro_ptr;

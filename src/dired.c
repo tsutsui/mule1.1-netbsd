@@ -62,6 +62,9 @@ extern struct direct *readdir ();
 #include "regex.h"
 #include "filetypes.h"
 
+Lisp_Object file_name_completion (Lisp_Object, Lisp_Object, int, int);
+int file_name_completion_stat (Lisp_Object, DIRENTRY *, struct stat *);
+
 #define min(a, b) ((a) < (b) ? (a) : (b))
 
 /* if system does not have symbolic links, it does not have lstat.
@@ -100,7 +103,7 @@ If MATCH is non-NIL, only pathnames containing that regexp are returned.")
 #ifdef VMS
       compile_pattern (match, &searchbuf, (char *) downcase_table);
 #else
-      compile_pattern (match, &searchbuf, 0);
+      compile_pattern (match, &searchbuf, 0, 0);
 #endif
     }
 

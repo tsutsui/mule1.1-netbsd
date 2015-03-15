@@ -526,7 +526,7 @@ DEFUN ("re-compile", Fre_compile, Sre_compile, 1, 1, 0,
 {
   CHECK_STRING (re, 0);
   last_regexp = Qnil;
-  compile_pattern(re, &searchbuf, 0);
+  compile_pattern(re, &searchbuf, 0, 0);
   return make_string(searchbuf.buffer, searchbuf.used);
 }
 

@@ -220,6 +220,7 @@ STREAM defaults to the value of `standard-output' (which see).")
   return ch;
 }
 
+void
 write_string (data, size)
      char *data;
      int size;
@@ -237,6 +238,7 @@ write_string (data, size)
   PRINTFINISH;
 }
 
+void
 write_string_1 (data, size, printcharfun)
      char *data;
      int size;

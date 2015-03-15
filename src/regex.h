@@ -248,6 +248,10 @@ extern void re_compile_fastmap ();
 extern int re_search (), re_search_2 ();
 extern int re_match (), re_match_2 ();
 
+extern int compile_charset (struct compile_charset_information *);
+extern void init_compile_charset_information (struct compile_charset_information *, unsigned char *, unsigned char *, unsigned char *, unsigned char *, unsigned int, unsigned int);
+extern int lookup_charset (unsigned char *, int, int, unsigned char **);
+
 /* 4.2 bsd compatibility (yuck) */
 extern char *re_comp ();
 extern int re_exec ();

@@ -55,6 +55,10 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #include "config.h"
 
+#ifdef BSD
+#include <sys/resource.h>
+#endif
+
 #define PRIO_PROCESS 0
 #include <sys/file.h>
 #ifdef USG5
@@ -782,6 +786,7 @@ child_setup (in, out, err, new_argv, env)
 
 #else /* not WIN32 */
 
+void
 child_setup (in, out, err, new_argv, env)
      int in, out, err;
      register char **new_argv;

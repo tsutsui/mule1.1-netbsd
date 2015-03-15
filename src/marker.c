@@ -225,6 +225,7 @@ DEFUN ("marker-point-type", Fmarker_point_type, Smarker_point_type, 1, 1, 0,
  so we must be careful to ignore and preserve mark bits,
  including those in chain fields of markers.  */
 
+void
 unchain_marker (marker)
      register Lisp_Object marker;
 {

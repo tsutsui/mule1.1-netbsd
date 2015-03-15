@@ -316,8 +316,14 @@ static struct wnn_env *wnnfns_env_rev[NSERVER];
 static int wnnfns_norm;
 static unsigned char lc_wnn_server_type[NSERVER] = {LCJP, LCCN, LCINV, LCKR};
 
-static int yes_or_no();
-static void puts2();
+static int yes_or_no(unsigned char *);
+static void puts2(char *);
+int check_wnn_server_type(void);
+void w2m(w_char *, unsigned char *, unsigned char);
+void m2w(unsigned char *, w_char *);
+void w2y(w_char *);
+int dai_end(int, int);
+void c2m(unsigned char *, unsigned char *, unsigned char);
 
 /* Lisp Variables and Constants Definition */
 Lisp_Object	Qjserver;
@@ -1283,6 +1289,7 @@ syms_of_wnn()
   }
 }
 
+void
 w2m(wp, mp, lc)
      w_char		*wp;
      unsigned char	*mp;
@@ -1336,6 +1343,7 @@ w2m(wp, mp, lc)
   *mp = 0;
 }
 
+void
 m2w(mp, wp)
      unsigned char	*mp;
      w_char		*wp;
@@ -1379,7 +1387,7 @@ int x;
     printf("%x\n", x); fflush(stdout);
 }
 
-/* static void */
+/* static */ void
 w2y(w)
 w_char *w;
 {
@@ -1408,6 +1416,7 @@ w_char *w;
   }
 }
 
+void
 c2m(cp, mp, lc)
      unsigned char	*cp;
      unsigned char	*mp;

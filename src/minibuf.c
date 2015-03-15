@@ -43,8 +43,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #define min(a, b) ((a) < (b) ? (a) : (b))
 
-int scmp (unsigned char *, unsigned char *, int);
-
 /* List of buffers for use as minibuffers.
   The first element of the list is used for the outermost minibuffer invocation,
   the next element is used for a recursive minibuffer invocation, etc.

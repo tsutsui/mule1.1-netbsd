@@ -193,6 +193,9 @@ int vms_stmlf_recfm;
 
 Lisp_Object Qfile_error, Qfile_already_exists;
 
+int e_write (int, char *, int, coding_type *);
+
+void
 report_file_error (string, data)
      char *string;
      Lisp_Object data;

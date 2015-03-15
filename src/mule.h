@@ -195,3 +195,5 @@ extern char *char_description[128];
 /* end of patch */
 
 #endif /* emacs */
+
+extern int strwidth (unsigned char *);

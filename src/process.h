@@ -83,3 +83,4 @@ struct Lisp_Process
 #define ChannelMask(n) (1<<(n))
 
 extern void wait_reading_process_input (int, Lisp_Object_Int, int);
+extern void kill_buffer_processes (Lisp_Object);

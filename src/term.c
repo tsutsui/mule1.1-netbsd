@@ -228,7 +228,16 @@ int standout_mode;			/* Nonzero when in standout mode.  */
 int specified_window;
 
 char *tparam ();
+void turn_on_insert (void);
+void turn_off_insert (void);
+void turn_on_highlight (void);
+void turn_off_highlight (void);
+void background_highlight (void);
+void set_scroll_region (int, int);
+void clear_end_of_line_raw (int);
+
 
+void
 ring_bell ()
 {
   if (ring_bell_hook)
@@ -239,6 +248,7 @@ ring_bell ()
   OUTPUT (TS_visible_bell && visible_bell ? TS_visible_bell : TS_bell);
 }
 
+void
 set_terminal_modes ()
 {
   if (set_terminal_modes_hook)
@@ -252,6 +262,7 @@ set_terminal_modes ()
   losecursor ();
 }
 
+void
 reset_terminal_modes ()
 {
   if (reset_terminal_modes_hook)
@@ -267,12 +278,14 @@ reset_terminal_modes ()
   OUTPUT_IF (TS_end_termcap_modes);
 }
 
+void
 update_begin ()
 {
   if (update_begin_hook)
     (*update_begin_hook) ();
 }
 
+void
 update_end ()
 {
   if (update_end_hook)
@@ -285,6 +298,7 @@ update_end ()
   standout_requested = 0;
 }
 
+void
 set_terminal_window (size)
      int size;
 {
@@ -299,6 +313,7 @@ set_terminal_window (size)
   set_scroll_region (0, specified_window);
 }
 
+void
 set_scroll_region (start, stop)
      int start, stop;
 {
@@ -321,6 +336,7 @@ set_scroll_region (start, stop)
   losecursor ();
 }
 
+void
 turn_on_insert ()
 {
   if (!insert_mode)
@@ -328,6 +344,7 @@ turn_on_insert ()
   insert_mode = 1;
 }
 
+void
 turn_off_insert ()
 {
   if (insert_mode)
@@ -342,6 +359,7 @@ turn_off_insert ()
    These functions are called on all terminals, but do nothing
    on terminals whose standout mode does not work that way.  */
 
+void
 turn_off_highlight ()
 {
   if (TN_standout_width < 0)
@@ -352,6 +370,7 @@ turn_off_highlight ()
     }
 }
 
+void
 turn_on_highlight ()
 {
   if (TN_standout_width < 0)
@@ -366,6 +385,7 @@ turn_on_highlight ()
    empty space inside windows.  What this is,
    depends on the user option inverse-video.  */
 
+void
 background_highlight ()
 {
   if (TN_standout_width >= 0)
@@ -417,6 +437,7 @@ write_standout_marker (flag, vpos)
    Call this when about to modify line at position VPOS
    and not change whether it is highlighted.  */
 
+void
 reassert_line_highlight (highlight, vpos)
      int highlight;
      int vpos;
@@ -438,6 +459,7 @@ reassert_line_highlight (highlight, vpos)
 /* Call this when about to modify line at position VPOS
    and change whether it is highlighted.  */
 
+void
 change_line_highlight (new_highlight, vpos, first_unused_hpos)
      int new_highlight, vpos, first_unused_hpos;
 {
@@ -473,6 +495,7 @@ change_line_highlight (new_highlight, vpos, first_unused_hpos)
 
 /* Move to absolute position, specified origin 0 */
 
+void
 move_cursor (row, col)
 {
   col += chars_wasted[row] & 077;
@@ -538,6 +561,7 @@ clear_to_end ()
 
 /* Clear entire screen */
 
+void
 clear_screen ()
 {
   if (clear_screen_hook)
@@ -566,6 +590,7 @@ clear_screen ()
 
    Note that the cursor may be moved.  */
 
+void
 clear_end_of_line (first_unused_hpos)
      int first_unused_hpos;
 {
@@ -580,6 +605,7 @@ clear_end_of_line (first_unused_hpos)
 
    Note that the cursor may be moved, on terminals lacking a `ce' string.  */
 
+void
 clear_end_of_line_raw (first_unused_hpos)
      int first_unused_hpos;
 {
@@ -723,6 +749,7 @@ linecode_conversion(len, src, dst)
 /* len = actual_column_length, len2 = converted_string_length
    string2 = converted_string */
 /* I gave up using TS_repeat...K.Handa */
+void
 output_chars (string, len)
      register int *string;
      int len;
@@ -781,7 +808,7 @@ output_chars (string, len)
 
 /* If start is zero, insert blanks instead of a string at start */
 
-
+void
 insert_chars (start, len)
      register int *start;
      int len;
@@ -842,6 +869,7 @@ insert_chars (start, len)
 }
 /* end of patch */
 
+void
 delete_chars (n)
      register int n;
 {
@@ -879,6 +907,7 @@ delete_chars (n)
 
 /* Insert N lines at vpos VPOS.  If N is negative, delete -N lines.  */
 
+void
 ins_del_lines (vpos, n)
      int vpos, n;
 {
@@ -1060,6 +1089,7 @@ calculate_ins_del_char_costs ()
     *p++ = (ins_startup_cost += ins_cost_per_char);
 }
 
+void
 calculate_costs ()
 {
   register char *s
@@ -1110,6 +1140,7 @@ calculate_costs ()
   cmcostinit ();		/* set up cursor motion costs */
 }
 
+void
 term_init (terminal_type)
      char *terminal_type;
 {

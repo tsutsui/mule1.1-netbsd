@@ -228,7 +228,8 @@ static int gotpool;
 
 char *_malloc_base;
 
-static void getpool ();
+static void getpool (void);
+void get_lim_data (void);
 
 /* Cause reinitialization based on job parameters;
   also declare where the end of pure storage is. */
@@ -806,6 +807,7 @@ get_lim_data ()
 
 #else /* not BSD4_1 and not VMS */
 
+void
 get_lim_data ()
 {
   struct rlimit XXrlimit;

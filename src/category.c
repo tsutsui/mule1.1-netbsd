@@ -370,6 +370,7 @@ char_category(c, ctbl)
   return &temp_category;
 }
 
+void
 pack_mnemonic_string(category, str)
      struct Lisp_Category *category;
      char *str;
@@ -460,6 +461,7 @@ On success, returns T, else returns NIL.")
 
 /* Dump category table to buffer in human-readable format */
 
+void
 insert_character_description(i)	/* 94.2.23 by K.Handa */
      unsigned int i;
 {				/* 93.6.7 by K.Handa */

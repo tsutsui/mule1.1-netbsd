@@ -84,6 +84,7 @@ what you give them.   Help stamp out software-hoarding!  */
 #include "lisp.h"
 #include "buffer.h"
 #include "syntax.h"
+#include "category.h"
 #include "mule.h"		/* 91.12.12 by K.Handa */
 #ifdef REGEX_ASSERT
 #include <assert.h>
@@ -273,6 +274,7 @@ static unsigned char *put_range_entry (b, c1, c2)
 /* 92.11.14 by enami */
 #define MASK_BITMAP(b,c) ((b)[(c) / BYTEWIDTH] |= 1 << ((c) % BYTEWIDTH))
 
+void
 init_compile_charset_information (ip, b, p, pend, translate, mc_flag, skip)
      struct compile_charset_information *ip;
      unsigned char *b;

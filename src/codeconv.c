@@ -1387,6 +1387,7 @@ If not valid, coding-system-error is signaled.")
     Fsignal (Qcoding_system_error, code);
 }
 
+void
 encode_code(code, mccode)
      Lisp_Object code;
      coding_type *mccode;

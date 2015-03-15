@@ -36,6 +36,9 @@ struct position
     int vir_hpos;		/* 92.8.2 by Y.Niibe */
   };
 
-struct position *compute_motion ();
-struct position *vmotion ();
-int *char_width_dir_on (); /* 93.5.22 Y.Niibe */
+int *char_width_dir_on (int, int); /* 93.5.22 Y.Niibe */
+struct position *compute_motion (Lisp_Object_Int, int, int, Lisp_Object_Int, Lisp_Object_Int, Lisp_Object_Int, Lisp_Object_Int, Lisp_Object_Int, int, int);
+void invalidate_current_column (void);
+int position_indentation (int);
+int pos_tab_offset (struct window *, int);
+struct position *vmotion (int, int, int, int, Lisp_Object);

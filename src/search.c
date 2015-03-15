@@ -89,9 +89,13 @@ static struct re_registers search_regs;
 
 Lisp_Object Qinvalid_regexp;
 
+void set_pattern (Lisp_Object, struct re_pattern_buffer *, char *);
+void skip_chars (int, Lisp_Object, Lisp_Object);
+
 /* 92.11.12 Modified by enami */
 /* Now, set_pattern() is done in compile_pattern() */
 /* Compile a regexp and signal a Lisp error if anything goes wrong.  */
+void
 compile_pattern (pattern, bufp, translate, backward)
      Lisp_Object pattern;
      struct re_pattern_buffer *bufp;
@@ -159,6 +163,7 @@ compile_pattern (pattern, bufp, translate, backward)
 /* Set a pre-compiled pattern into a pattern buffer */
 /* pattern is a list of strings:
 	compiled_code, fastmap, syntax_fastmap, category_fastmap */
+void
 set_pattern (pattern, bufp, translate)
      Lisp_Object pattern;
      struct re_pattern_buffer *bufp;
@@ -490,6 +495,7 @@ See skip-chars-forward for details.")
 /* 92.11.14 by enami */
 /* The way of handling mc is changed. */
 /* Now, don't to use search_buffer not to modify match-data */
+void
 skip_chars (forwardp, string, lim)
      int forwardp;
      Lisp_Object string, lim;

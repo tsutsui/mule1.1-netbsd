@@ -61,6 +61,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #include "lisp.h"
 #include "buffer.h"
 #include "window.h"
+#include "indent.h"
 #include "mule.h"		/* 91.11.14 by K.Handa */
 
 #define min(a, b) ((a) < (b) ? (a) : (b))
@@ -72,6 +73,8 @@ static Lisp_Object Vsystem_name;
 static Lisp_Object Vuser_real_name;  /* login name of current user ID */
 static Lisp_Object Vuser_full_name;  /* full name of current user */
 static Lisp_Object Vuser_name;	/* user name from USER or LOGNAME.  */
+
+void insert_with_specified_function (int (*)(), int (*)(), int, Lisp_Object *);
 
 void
 init_editfns ()
@@ -737,12 +740,8 @@ DEFUN ("current-time-string", Fcurrent_time_string, Scurrent_time_string, 0, 0, 
   return build_string (tem);
 }
 
-/* 89.11.30, 91.11.15, 92.4.16 patch for point_type_marker by K.Handa */
-extern int insert (), insert_before_markers (), insert2 ();
-extern int insert_from_string (), insert_from_string_before_markers ();
-extern int insert_from_string2 ();
-/* end of patch */
 
+void
 insert1 (arg)
      Lisp_Object arg;
 {
@@ -760,6 +759,7 @@ DEFUN ("insert", Finsert, Sinsert, 0, MANY, 0,
   return Qnil;
 }
 
+void
 insert_with_specified_function (func, func_str, nargs, args)
      int (*func)(), (*func_str)(), nargs;
      register Lisp_Object *args;

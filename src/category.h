@@ -50,4 +50,7 @@ struct Lisp_Category
 
 extern unsigned int category_table_version; /* 93.7.12 by K.Handa */
 
-struct Lisp_Category *char_category();
+struct Lisp_Category *char_category(unsigned int, Lisp_Object);
+int check_category_at(unsigned char *, unsigned int, Lisp_Object, unsigned int, unsigned int);
+void insert_character_description (unsigned int);
+void pack_mnemonic_string(struct Lisp_Category *, char *);

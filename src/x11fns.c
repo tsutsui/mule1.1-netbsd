@@ -95,6 +95,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #include "gettime.h"
 #include <setjmp.h>
 
+#include "process.h"
 #include "window.h"
 
 #ifdef HAVE_X_WINDOWS
@@ -1278,7 +1279,7 @@ void HandleSelectionRequest(event)
 				 (unsigned char*) 1L, 1);
 		goto success;
         } else if (event->xselectionrequest.target == XA_HOSTNAME()) {
-		char* name = (char*) get_system_name ();
+		char* name = get_system_name ();
 		XChangeProperty (XXdisplay,
 				 event->xselectionrequest.requestor,
 				 event->xselectionrequest.property,
@@ -1493,11 +1494,13 @@ DEFUN ("x-debug", Fx_debug, Sx_debug, 1, 1, 0,
 	return (Qnil);
 }
 
+void
 XRedrawDisplay ()
 {
 	Fredraw_display ();
 }
 
+void
 XCleanUp ()
 {
 	Fdo_auto_save (Qt);

@@ -33,8 +33,10 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 Lisp_Object Qwindowp;
 
-static void replace_window (), unshow_buffer ();
-static int save_window_save ();
+static void replace_window (Lisp_Object, Lisp_Object), unshow_buffer (struct window *);
+static int save_window_save (Lisp_Object, struct Lisp_Vector *, int, int);
+void change_window_height (int, int);
+int window_height (Lisp_Object);
 
 extern int minibuf_prompt_width;
 
@@ -708,6 +710,7 @@ DEFUN ("replace-buffer-in-windows", Freplace_buffer_in_windows,
    nodelete nonzero means do not do this.
    (The caller should check later and do so if appropriate)  */
 
+void
 set_window_height (window, height, nodelete)
      Lisp_Object window;
      int height;
@@ -773,6 +776,7 @@ set_window_height (window, height, nodelete)
 
 /* Recursively set width of WINDOW and its inferiors. */
 
+void
 set_window_width (window, width, nodelete)
      Lisp_Object window;
      int width;
@@ -1219,6 +1223,7 @@ window_width (window)
  also changes the heights of the siblings so as to
  keep everything consistent. */
 
+void
 change_window_height (delta, widthflag)
      register int delta;
      int widthflag;

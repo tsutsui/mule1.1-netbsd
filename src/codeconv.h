@@ -284,11 +284,13 @@ typedef struct {
 #define CONV_BUF_SIZE(n,type) \
   (((type) == ITNCODE ? (n) * 3 : (type) == LINECODE ? (n) * 10 : (type) == ISO2022 ? (n) * 5 : (n)) + CONV_BUF_EXTRA)
 
-extern int encode();
-extern int decode();
+extern int encode(coding_type *, unsigned char *, unsigned char *, unsigned int, Lisp_Object *);
+extern int decode(coding_type *, unsigned char *, unsigned char *, unsigned int);
+extern void encode_code(Lisp_Object, coding_type *);
 
-extern char *get_conversion_buffer();
-extern Lisp_Object check_code();
+extern char *get_conversion_buffer(int, int);
+
+extern int ccl_driver(unsigned char *, unsigned char *, int, int, coding_type *, int);
 
 #define CONVERSION_BUFFER_SIZE 1024
 extern char conversion_buffer[CONVERSION_BUFFER_SIZE];

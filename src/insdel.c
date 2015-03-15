@@ -36,6 +36,12 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 /* Move gap to position `pos'.
    Note that this can quit!  */
 
+void gap_left (int, int);
+void gap_right (int);
+void adjust_markers (int, int, int);
+void adjust_markers2 (int, int, int, int);
+
+void
 move_gap (pos)
      int pos;
 {
@@ -48,6 +54,7 @@ move_gap (pos)
 /* Move the gap to POS, which is less than the current GPT.
    If NEWGAP is nonzero, then don't update beg_unchanged and end_unchanged.  */
 
+void
 gap_left (pos, newgap)
      register int pos;
      int newgap;
@@ -111,6 +118,7 @@ gap_left (pos, newgap)
   QUIT;
 }
 
+void
 gap_right (pos)
      register int pos;
 {
@@ -174,12 +182,14 @@ gap_right (pos)
    and then adjusted by `amount'.  */
 
 /* 89.11.30 by K.Handa */
+void
 adjust_markers (from, to, amount)
      register int from, to, amount;
 {
   adjust_markers2 (from, to, amount, MARKER_ALL_TYPE);
 }
 
+void
 adjust_markers2 (from, to, amount, marker_type)
      int from, to;
      register int amount, marker_type;
@@ -211,6 +221,7 @@ adjust_markers2 (from, to, amount, marker_type)
 
 /* Make the gap INCREMENT characters longer.  */
 
+void
 make_gap (increment)
      int increment;
 {
@@ -250,6 +261,7 @@ make_gap (increment)
 
 /* Insert the character c before point */
 
+void
 insert_char (c)
      unsigned char c;
 {
@@ -258,6 +270,7 @@ insert_char (c)
 
 /* Insert the null-terminated string s before point */
 
+void
 InsStr (s)
      char *s;
 {
@@ -268,6 +281,7 @@ InsStr (s)
    DO NOT use this for the contents of a Lisp string!
    prepare_to_modify_buffer could relocate the string.  */
 
+void
 insert (string, length)
      register unsigned char *string;
      register length;
@@ -278,6 +292,7 @@ insert (string, length)
   adjust_markers2 (opoint - 1, opoint, length, MARKER_POINT_TYPE);
 }
 
+void
 insert2 (string, length)
      register unsigned char *string;
      register length;
@@ -318,6 +333,7 @@ insert2 (string, length)
    It does not work to use `insert' for this, becase a GC could happen
    before we bcopy the stuff into the buffer, and relocate the string
    without insert noticing.  */
+void
 insert_from_string (string, pos, length)
      Lisp_Object string;
      register int pos, length;
@@ -328,6 +344,7 @@ insert_from_string (string, pos, length)
   adjust_markers2 (opoint - 1, opoint, length, MARKER_POINT_TYPE);
 }
 
+void
 insert_from_string2 (string, pos, length)
      Lisp_Object string;
      register int pos, length;
@@ -371,6 +388,7 @@ insert_from_string2 (string, pos, length)
    Don't use this function to insert part of a Lisp string,
    since gc could happen and relocate it.  */
 
+void
 insert_before_markers (string, length)
      unsigned char *string;
      register int length;
@@ -382,6 +400,7 @@ insert_before_markers (string, length)
 
 /* Insert part of a Lisp string, relocating markers after.  */
 
+void
 insert_from_string_before_markers (string, pos, length)
      Lisp_Object string;
      register int pos, length;
@@ -394,6 +413,7 @@ insert_from_string_before_markers (string, pos, length)
 /* Delete characters in current buffer
   from `from' up to (but not incl) `to' */
 
+void
 del_range (from, to)
      register int from, to;
 {
@@ -442,6 +462,7 @@ del_range (from, to)
     end_unchanged = Z - GPT;
 }
 
+void
 modify_region (start, end)
      int start, end;
 {
@@ -454,6 +475,7 @@ modify_region (start, end)
   MODIFF++;
 }
 
+void
 prepare_to_modify_buffer ()
 {
   if (!NULL (current_buffer->read_only))

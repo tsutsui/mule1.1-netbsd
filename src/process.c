@@ -97,6 +97,7 @@ static dummy () {}
 #include <sys/socket.h>
 #include <netdb.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #endif /* HAVE_SOCKETS */
 
 #if defined(BSD) || defined(STRIDE)
@@ -370,6 +371,12 @@ Lisp_Object filter_process, filter_string;
    from the numeric status that was returned by `wait'.  */
 
 Lisp_Object status_convert(WAITTYPE);	/* 93.7.8 by T.Atsushiba */
+
+void deactivate_process (Lisp_Object);
+void status_notify (void);
+void create_process (Lisp_Object, char **);
+int read_process_output (Lisp_Object, int);
+void exec_sentinel (Lisp_Object, Lisp_Object);
 
 update_status (p)
      struct Lisp_Process *p;
@@ -1401,6 +1408,7 @@ create_process (process, new_argv)
 
 #else /* not WIN32 */
 
+void
 create_process (process, new_argv)
      Lisp_Object process;
      char **new_argv;
@@ -1913,6 +1921,7 @@ DEFUN ("open-network-stream", Fopen_network_stream, Sopen_network_stream,
 
 #endif	/* HAVE_SOCKETS */
 
+void
 deactivate_process (proc)
      Lisp_Object proc;
 {
@@ -1958,6 +1967,7 @@ deactivate_process (proc)
    with subprocess.  This is used in a newly-forked subprocess
    to get rid of irrelevant descriptors.  */
 
+void
 close_process_descs ()
 {
   int i;
@@ -2021,6 +2031,7 @@ static int waiting_for_user_input_p;
  do_display means redisplay should be done to show
  subprocess output that arrives.  */
 
+void
 wait_reading_process_input (time_limit, read_kbd, do_display)
      int time_limit;
      Lisp_Object_Int read_kbd;
@@ -3132,6 +3143,7 @@ nil or no arg means current buffer's process.")
 /* Kill all processes associated with `buffer'.
  If `buffer' is nil, kill all processes  */
 
+void
 kill_buffer_processes (buffer)
      Lisp_Object buffer;
 {
@@ -3301,6 +3313,7 @@ sigchld_handler (signo)
    (either run the sentinel or output a message).
    This is done while Emacs is waiting for keyboard input.  */
 
+void
 status_notify ()
 {
   register Lisp_Object proc, buffer;
@@ -3401,6 +3414,7 @@ status_notify ()
   UNGCPRO;
 }
 
+void
 exec_sentinel (proc, reason)
      Lisp_Object proc, reason;
 {

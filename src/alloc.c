@@ -105,6 +105,8 @@ int pureptr;
 /* If nonzero, this is a warning delivered by malloc and not yet displayed.  */
 char *pending_malloc_warning;
 
+void truncate_all_undos (void);
+
 Lisp_Object
 malloc_warning_1 (str)
      Lisp_Object str;
@@ -123,6 +125,7 @@ malloc_warning (str)
   pending_malloc_warning = str;
 }
 
+void
 display_malloc_warning ()
 {
   register Lisp_Object val;
@@ -133,6 +136,7 @@ display_malloc_warning ()
 }
 
 /* Called if malloc returns zero */
+void
 memory_full ()
 {
   while (1)
@@ -1500,6 +1504,7 @@ compact_strings ()
     }
 }
 
+void
 truncate_all_undos ()
 {
   register struct buffer *nextb = all_buffers;

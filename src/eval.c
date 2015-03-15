@@ -1247,6 +1247,7 @@ un_autoload (oldqueue)
   return Qnil;
 }
 
+void
 do_autoload (fundef, funname)
      Lisp_Object fundef, funname;
 {

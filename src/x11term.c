@@ -444,8 +444,16 @@ static struct _xdeftab xDefaultsValueTable[]
 
 int (*handler)();
 
-static void x_init_1 ();
-static int XInitWindow ();
+static void x_init_1 (void);
+static int XInitWindow (void);
+void XTmove_cursor (int, int);
+void x_clear_end_of_line (int);
+void XTclear_screen (void);
+void MCDrawText(Display *, Drawable, GC, int, int, unsigned int *, int);
+void stufflines (int);
+void scraplines (int);
+int internal_socket_read(unsigned char *, int);
+void MCSetXChar2b(unsigned char, unsigned char, unsigned char, XChar2b *);
 
 /* HLmode -- Changes the GX function for output strings.  Could be used to
  * change font.  Check an XText library function call.
@@ -513,6 +521,7 @@ XTset_terminal_modes ()
  * update is in progress in order to toggle it on.
  */
 
+void
 XTmove_cursor (row, col)
      register int row, col;
 {
@@ -606,6 +615,7 @@ XTclear_end_of_line (end)
 /* Erase current line from column START to right margin.
    Leave cursor at START.  */
 
+void
 x_clear_end_of_line (start)
      register int start;
 {
@@ -654,6 +664,7 @@ XTreset_terminal_modes ()
 	XTclear_screen ();
 }
 
+void
 XTclear_screen ()
 {
 	BLOCK_INPUT_DECLARE ();
@@ -1371,6 +1382,7 @@ XTdelete_chars (n)
 	updateline (0);
 }
 
+void
 stufflines (n)
      register int n;
 {
@@ -1411,6 +1423,7 @@ stufflines (n)
 	UNBLOCK_INPUT ();
 }
 
+void
 scraplines (n)
      register int n;
 {
@@ -1929,6 +1942,7 @@ XIgnoreError ()
 
 static int server_ping_timer;
 
+void
 xfixscreen ()
 {
 	BLOCK_INPUT_DECLARE ();
@@ -2131,6 +2145,7 @@ x_get_lc_from_arg(arg)
    str -> "a+b", "+b", "a+", or "l",
    where a(bove) and b(elow) defaults to 1 and l defaults to 2.
    It also updates XXfonth, XXfontw, and XXbase. */
+void
 x_set_linespace(str)
      char *str;
 {
@@ -2158,6 +2173,7 @@ x_set_linespace(str)
 }
 /* end of patch */
 
+void
 x_term_init ()
 {
 	register char *vardisplay;
@@ -2702,11 +2718,13 @@ x_init_1 ()
 	Fset_input_mode (Qt, Qnil, Qnil);
 }
 
+void
 XSetFlash ()
 {
 	ring_bell_hook = XTflash;
 }
 
+void
 XSetFeep ()
 {
 	ring_bell_hook = XTfeep;
@@ -2831,6 +2849,7 @@ XNewFont (newname)
 }
 
 /* 92.12.10 by K.Handa */
+void
 x_set_fontname(lc)
      unsigned int lc;
 {
@@ -2985,6 +3004,7 @@ MCNewFont (newname, lc, encoding)
 
 /* Flip foreground/background colors */
 
+void
 XFlipColor ()
 {
 	Lisp_Object_Int tempcolor;
@@ -3356,6 +3376,7 @@ XT_Set_WM_Hints(w)
 /* ------------------------------------------------------------
  *  Change just the size of the window.
  */
+void
 XSetWindowSize(rows, cols)
     int rows, cols;
 {
@@ -3407,10 +3428,11 @@ MCSetChar(p, fsp, charp)
   c1 = bytes >= 3 ? *p++ : 0;
   c2 = *p++;
   if (!(*fsp = fonts[lc & 0x7F].fs)) *fsp = MCLoadFont(lc);
-  MCSetXChar2b(lc, c1, c2, charp, fsp);
+  MCSetXChar2b(lc, c1, c2, charp);
   return p;
 }
 
+void
 MCSetXChar2b(lc, c1, c2, charp)
      unsigned char lc, c1, c2;
      XChar2b *charp;
@@ -3442,6 +3464,7 @@ MCSetXChar2b(lc, c1, c2, charp)
 }
 /* end of patch */
 
+void
 MCDrawText(display, window, gc, x, y, lp, count)
      Display *display;
      Drawable window;

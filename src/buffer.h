@@ -314,5 +314,7 @@ extern struct buffer buffer_local_symbols;
 
 #define BufferSafeFloor(n) (BEGV <= GPT && GPT <= (n) ? GPT : BEGV)
 
+extern void record_buffer (Lisp_Object);
 extern void reset_buffer (struct buffer *);
 extern void set_buffer_internal (struct buffer *);
+extern int validate_position (int, int);

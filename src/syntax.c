@@ -46,6 +46,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #include "commands.h"
 #include "buffer.h"
 #include "syntax.h"
+#include "category.h"
 #include "regex.h"		/* 92.7.17 by K.Handa */
 #include "mule.h"		/* 91.12.22 by K.Handa */
 
@@ -54,6 +55,9 @@ Lisp_Object Qsyntax_table_p;
 /* 93.7.12 by K.Handa */
 /* The version of the syntax_table created or modified lastly. */
 unsigned int syntax_table_version;
+
+void describe_syntax_2 (Lisp_Object, unsigned int);
+int char_quoted (int);
 
 DEFUN ("syntax-table-p", Fsyntax_table_p, Ssyntax_table_p, 1, 1, 0,
   "Return t if ARG is a syntax table.\n\
@@ -533,6 +537,7 @@ describe_syntax (value, parent)	/* 93.6.7, 94.2.23 by K.Handa */
   InsStr ("\n");
 }
 
+void
 describe_syntax_2 (vector, parent) /* 93.6.7, 94.2.23 by K.Handa */
      Lisp_Object vector;
      unsigned int parent;

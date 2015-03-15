@@ -941,6 +941,7 @@ extern Lisp_Object make_number (int);
 extern void args_out_of_range (Lisp_Object, Lisp_Object);
 extern void args_out_of_range_3 (Lisp_Object, Lisp_Object, Lisp_Object);
 extern Lisp_Object wrong_type_argument (Lisp_Object, Lisp_Object);
+extern void store_symval_forwarding (Lisp_Object, Lisp_Object, Lisp_Object);
 
 /* Defined in dispnew.c */
 extern Lisp_Object Fbaud_rate (void);
@@ -967,6 +968,7 @@ extern Lisp_Object Fload_average (void);
 extern Lisp_Object Fidentity (Lisp_Object);
 extern Lisp_Object Frandom (Lisp_Object);
 extern Lisp_Object Flength (Lisp_Object);
+extern Lisp_Object Fmapconcat (Lisp_Object, Lisp_Object, Lisp_Object);
 extern Lisp_Object Fnth (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fappend (int, Lisp_Object *);
 extern Lisp_Object Fconcat (int, Lisp_Object *);
@@ -1016,6 +1018,7 @@ extern Lisp_Object make_pure_string (char *, int);
 extern Lisp_Object pure_cons (Lisp_Object, Lisp_Object);
 extern Lisp_Object make_pure_vector (int);
 extern Lisp_Object Fgarbage_collect (void);
+extern int free_cons (struct Lisp_Cons *);
 
 /* Defined in print.c */
 extern Lisp_Object Vprin1_to_string_buffer;
@@ -1027,6 +1030,9 @@ extern Lisp_Object Fprint (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fwrite_char (Lisp_Object, Lisp_Object);
 extern Lisp_Object Vstandard_output, Qstandard_output;
 extern void temp_output_buffer_setup (char *);
+extern void write_string_1 (char *, int, Lisp_Object);
+extern Lisp_Object internal_with_output_to_temp_buffer (char *, Lisp_Object (*)(), Lisp_Object);
+
 
 /* Defined in lread.c */
 extern Lisp_Object Qvariable_documentation, Qstandard_input;
@@ -1044,6 +1050,8 @@ extern Lisp_Object Feval_current_buffer (Lisp_Object);
 extern Lisp_Object Feval_region (Lisp_Object, Lisp_Object, Lisp_Object);
 extern Lisp_Object intern (char *);
 extern Lisp_Object oblookup (Lisp_Object, char *, int);
+extern void map_obarray (Lisp_Object, int (*)(), Lisp_Object);
+extern int openp (Lisp_Object, Lisp_Object, char *, Lisp_Object *, int);
 
 /* Defined in eval.c */
 extern Lisp_Object Qautoload, Qexit, Qinteractive, Qcommandp, Qdefun, Qmacro;
@@ -1107,6 +1115,8 @@ extern void defvar_lisp (char *, Lisp_Object *, char *);
 extern void defvar_lisp_nopro (char *, Lisp_Object *, char *);
 extern void defvar_per_buffer (char *, Lisp_Object *, char *);
 
+extern void do_autoload (Lisp_Object, Lisp_Object);
+
 /* Defined in editfns.c */
 extern Lisp_Object Vprefix_arg, Qminus, Vcurrent_prefix_arg;
 extern Lisp_Object Fchar_equal (Lisp_Object, Lisp_Object);
@@ -1161,6 +1171,7 @@ extern Lisp_Object save_restriction_save (void);
 extern Lisp_Object save_excursion_restore (Lisp_Object);
 extern Lisp_Object save_restriction_restore (Lisp_Object);
 extern Lisp_Object Fchar_to_string (Lisp_Object);
+extern void insert1 (Lisp_Object);
 
 /* defined in buffer.c */
 extern Lisp_Object Vbuffer_alist;
@@ -1189,6 +1200,7 @@ extern Lisp_Object Fswitch_to_buffer (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fpop_to_buffer (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fother_buffer (Lisp_Object);
 extern struct buffer *all_buffers;
+extern void validate_region (Lisp_Object *, Lisp_Object *);
 
 /* defined in marker.c */
 
@@ -1198,7 +1210,9 @@ extern Lisp_Object Fmarker_buffer (Lisp_Object);
 extern Lisp_Object Fcopy_marker (Lisp_Object);
 extern Lisp_Object Fset_marker (Lisp_Object, Lisp_Object, Lisp_Object);
 extern Lisp_Object Fset_marker_type (Lisp_Object, Lisp_Object);
+extern Lisp_Object set_marker_restricted (Lisp_Object, Lisp_Object, Lisp_Object);
 extern int marker_position (Lisp_Object);
+extern void unchain_marker (Lisp_Object);
 
 /* Defined in fileio.c */
 
@@ -1237,6 +1251,8 @@ extern Lisp_Object Ffile_name_nondirectory (Lisp_Object);
 extern Lisp_Object Fsubstitute_in_file_name (Lisp_Object);
 extern Lisp_Object Ffile_symlink_p (Lisp_Object);
 
+extern void report_file_error (char *, Lisp_Object);
+
 /* Defined in abbrev.c */
 
 extern Lisp_Object Vfundamental_mode_abbrev_table;
@@ -1272,6 +1288,9 @@ extern Lisp_Object Fstore_match_data (Lisp_Object);
 extern Lisp_Object Fword_search_backward (Lisp_Object, Lisp_Object, Lisp_Object, Lisp_Object);
 extern Lisp_Object Fword_search_forward (Lisp_Object, Lisp_Object, Lisp_Object, Lisp_Object);
 extern int scan_buffer (int, int, int, int *);
+struct re_pattern_buffer;
+extern void compile_pattern (Lisp_Object, struct re_pattern_buffer *, char *, int);
+extern int search_buffer (Lisp_Object, int, int, int, int, unsigned char *);
 
 /* defined in minibuf.c */
 
@@ -1320,6 +1339,7 @@ extern Lisp_Object Fdowncase_region (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fdowncase_word (Lisp_Object);
 extern Lisp_Object Fupcase_region (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fupcase_word (Lisp_Object);
+extern Lisp_Object upcase_initials_region (Lisp_Object, Lisp_Object);
 
 /* defined in keyboard.c */
 
@@ -1340,6 +1360,9 @@ extern Lisp_Object Fdiscard_input (void);
 extern Lisp_Object Frecursive_edit (void);
 extern Lisp_Object Fcommand_execute (Lisp_Object, Lisp_Object);
 extern Lisp_Object Finput_pending_p (void);
+extern Lisp_Object command_loop_1 (void);
+extern void stuff_buffered_input (Lisp_Object);
+extern Lisp_Object recursive_edit_1 (void);
 extern int poll_suppress_count;
 
 /* defined in keymap.c */
@@ -1379,6 +1402,12 @@ extern Lisp_Object access_keymap (Lisp_Object, int);
 extern Lisp_Object store_in_keymap (Lisp_Object, int, Lisp_Object);
 extern Lisp_Object get_keyelt (Lisp_Object);
 extern Lisp_Object get_keymap (Lisp_Object);
+extern void ndefkey (Lisp_Object, int, char *);
+extern void describe_map_tree (Lisp_Object, int, Lisp_Object);
+extern void describe_map (Lisp_Object, Lisp_Object, int, Lisp_Object);
+extern void describe_alist (Lisp_Object, Lisp_Object, int (*)(), int, Lisp_Object);
+extern void describe_vector (Lisp_Object, Lisp_Object, int (*)(), int, Lisp_Object);
+extern Lisp_Object get_keymap_1 (Lisp_Object, int);
 
 /* defined in indent.c */
 extern Lisp_Object Fcurrent_indentation (void);
@@ -1495,6 +1524,8 @@ extern Lisp_Object file_name_completion (Lisp_Object, Lisp_Object, int, int);
 extern Lisp_Object Ffile_locked_p (Lisp_Object);
 extern Lisp_Object Flock_buffer (Lisp_Object);
 extern Lisp_Object Funlock_buffer (void);
+extern void lock_file (Lisp_Object);
+extern void unlock_file (Lisp_Object);
 
 #ifdef MAINTAIN_ENVIRONMENT
 /* defined in environ.c */
@@ -1514,6 +1545,11 @@ extern Lisp_Object Fsnarf_documentation (Lisp_Object);
 /* defined in bytecode.c */
 extern Lisp_Object Qbytecode;
 extern Lisp_Object Fbyte_code (Lisp_Object, Lisp_Object, Lisp_Object);
+
+/* defined in insdel.c */
+extern void insert_from_string (Lisp_Object, int, int);
+extern void insert_from_string2 (Lisp_Object, int, int);
+extern void insert_from_string_before_markers (Lisp_Object, int, int);
 
 /* defined in macros.c */
 extern Lisp_Object Fcall_last_kbd_macro (Lisp_Object);
@@ -1552,6 +1588,8 @@ extern Lisp_Object Fsyntax_table_p (Lisp_Object);
 /* defined in undo.c */
 extern Lisp_Object Fprimitive_undo (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fundo_boundary (void);
+extern void record_insert (Lisp_Object, Lisp_Object);
+extern Lisp_Object truncate_undo_list (Lisp_Object, int, int);
 
 /* defined in xdisp.c */
 extern Lisp_Object Fredraw_display (void);

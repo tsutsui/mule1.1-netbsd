@@ -95,6 +95,12 @@ extern short ospeed;		/* Output speed (from sg_ospeed) */
 			   {if (Wcm.cm_losewrap) curY = -1; \
 			      else if (AutoWrap) curX = 0, curY++; else curX--;}}
 
-extern void cmputc ();
+extern void cmputc (char);
 
 #endif
+
+extern void Wcm_clear (void);
+extern int Wcm_init (void);
+extern void cmcostinit (void);
+extern void cmgoto (int, int);
+extern void losecursor (void);
