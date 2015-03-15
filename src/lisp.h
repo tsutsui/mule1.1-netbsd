@@ -674,16 +674,16 @@ extern void defsubr ();
 /* Macros we use to define forwarded Lisp variables.
    These are used in the syms_of_FILENAME functions.  */
 
-#define DEFVARLISP(lname, vname, doc) defvar_lisp (lname, vname)
-#define DEFVARBOOL(lname, vname, doc) defvar_bool (lname, vname)
-#define DEFVARINT(lname, vname, doc) defvar_int (lname, vname)
+#define DEFVARLISP(lname, vname, doc) defvar_lisp (lname, vname, doc)
+#define DEFVARBOOL(lname, vname, doc) defvar_bool (lname, vname, doc)
+#define DEFVARINT(lname, vname, doc) defvar_int (lname, vname, doc)
 #define DEFVARPERBUFFER(lname, vname, doc)  \
  defvar_per_buffer (lname, vname, 0)
 
-#define DEFVAR_LISP(lname, vname, doc) defvar_lisp (lname, vname)
-#define DEFVAR_LISP_NOPRO(lname, vname, doc) defvar_lisp_nopro (lname, vname)
-#define DEFVAR_BOOL(lname, vname, doc) defvar_bool (lname, vname)
-#define DEFVAR_INT(lname, vname, doc) defvar_int (lname, vname)
+#define DEFVAR_LISP(lname, vname, doc) defvar_lisp (lname, vname, doc)
+#define DEFVAR_LISP_NOPRO(lname, vname, doc) defvar_lisp_nopro (lname, vname, doc)
+#define DEFVAR_BOOL(lname, vname, doc) defvar_bool (lname, vname, doc)
+#define DEFVAR_INT(lname, vname, doc) defvar_int (lname, vname, doc)
 #define DEFVAR_PER_BUFFER(lname, vname, doc)  \
  defvar_per_buffer (lname, vname, 0)
 
@@ -1096,6 +1096,12 @@ extern Lisp_Object unbind_to (int, Lisp_Object);
 extern void error ();
 extern Lisp_Object un_autoload (Lisp_Object);
 
+extern void defvar_int (char *, int *, char *);
+extern void defvar_bool (char *, int *, char *);
+extern void defvar_lisp (char *, Lisp_Object *, char *);
+extern void defvar_lisp_nopro (char *, Lisp_Object *, char *);
+extern void defvar_per_buffer (char *, Lisp_Object *, char *);
+
 /* Defined in editfns.c */
 extern Lisp_Object Vprefix_arg, Qminus, Vcurrent_prefix_arg;
 extern Lisp_Object Fchar_equal (Lisp_Object, Lisp_Object);
@@ -1187,6 +1193,7 @@ extern Lisp_Object Fmarker_buffer (Lisp_Object);
 extern Lisp_Object Fcopy_marker (Lisp_Object);
 extern Lisp_Object Fset_marker (Lisp_Object, Lisp_Object, Lisp_Object);
 extern Lisp_Object Fset_marker_type (Lisp_Object, Lisp_Object);
+extern int marker_position (Lisp_Object);
 
 /* Defined in fileio.c */
 

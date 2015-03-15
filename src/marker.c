@@ -270,6 +270,7 @@ unchain_marker (marker)
   XMARKER (marker)->buffer = 0;
 }
 
+int
 marker_position (marker)
      Lisp_Object marker;
 {
