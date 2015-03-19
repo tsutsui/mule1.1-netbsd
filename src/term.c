@@ -51,6 +51,9 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #include <stdio.h>
 #include <ctype.h>
 #include "config.h"
+#ifdef HAVE_TERMCAP_H
+#include <termcap.h>
+#endif
 #if defined(WIN32) && defined(USE_FATFS) /* 93.2.25 by M.Higashida */
 #include "termhook.h"
 #else
