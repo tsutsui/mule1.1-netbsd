@@ -1308,7 +1308,7 @@ defvar_per_buffer (namestring, address, doc)
   XSET (XSYMBOL (sym)->value, Lisp_Buffer_Objfwd,
 	(Lisp_Object *) offset);
   *(Lisp_Object *)(offset + (char *)&buffer_local_symbols) = sym;
-  if (*(int *)(offset + (char *)&buffer_local_flags) == 0)
+  if (*(Lisp_Object_Int *)(offset + (char *)&buffer_local_flags) == 0)
     /* Did a DEFVAR_PER_BUFFER without initializing the corresponding
        slot of buffer_local_flags */
     abort ();
