@@ -86,12 +86,12 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 
 Lisp_Object VMULE, VEGG, VWNN4, VSJ3; /* 92.7.8 by K.Handa and Y.Kawabe */
 
-Lisp_Object Vlc_ascii, Vlc_ltn1, Vlc_ltn2, Vlc_ltn3, Vlc_ltn4, Vlc_grk;
-Lisp_Object Vlc_arb, Vlc_hbw, Vlc_kana, Vlc_roman, Vlc_crl, Vlc_ltn5;
-Lisp_Object Vlc_jpold, Vlc_cn, Vlc_jp, Vlc_jp2, Vlc_kr, Vlc_big5_1, Vlc_big5_2;
-Lisp_Object Vlc_cns1, Vlc_cns2, Vlc_cns14; /* 93.4.29, 93.7.25 by K.Handa */
-Lisp_Object Vlc_prv11, Vlc_prv12, Vlc_prv21, Vlc_prv22, Vlc_prv3;
-Lisp_Object Vlc_invalid, Vlc_composite; /* 92.11.14 by K.Handa */
+int Vlc_ascii, Vlc_ltn1, Vlc_ltn2, Vlc_ltn3, Vlc_ltn4, Vlc_grk;
+int Vlc_arb, Vlc_hbw, Vlc_kana, Vlc_roman, Vlc_crl, Vlc_ltn5;
+int Vlc_jpold, Vlc_cn, Vlc_jp, Vlc_jp2, Vlc_kr, Vlc_big5_1, Vlc_big5_2;
+int Vlc_cns1, Vlc_cns2, Vlc_cns14; /* 93.4.29, 93.7.25 by K.Handa */
+int Vlc_prv11, Vlc_prv12, Vlc_prv21, Vlc_prv22, Vlc_prv3;
+int Vlc_invalid, Vlc_composite; /* 92.11.14 by K.Handa */
 
 Lisp_Object Vre_word;
 
