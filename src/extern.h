@@ -29,9 +29,6 @@ extern void memory_full (void);
 /* callproc.c */
 extern void child_setup (int, int, int, char **, char **);
 
-/* cm.c */
-extern void cmputc (char);
-
 /* cmds.c */
 extern int forward_point (int);
 extern int self_insert_internal (int, int);
