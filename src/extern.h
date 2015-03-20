@@ -111,7 +111,7 @@ extern int scrolling_max_lines_saved (int, int, int *, int *, int *);
 extern int scroll_cost (int, int, int);
 
 /* search.c */
-int find_next_newline (int, int);
+extern int find_next_newline (int, int);
 
 /* sysdep.c */
 extern void child_setup_tty (int);
