@@ -354,8 +354,6 @@ echo_prompt (str)
 echo_char (c)
      int c;
 {
-  extern char *push_key_description ();
-
   if (immediate_echo)
     {
       char *ptr = echoptr;
