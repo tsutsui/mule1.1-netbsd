@@ -402,6 +402,7 @@ background_highlight ()
 /* Set standout mode to the mode specified for the text to be output.  */
 
 static
+void
 highlight_if_desired ()
 {
   if (TN_standout_width >= 0)
@@ -423,6 +424,7 @@ highlight_if_desired ()
 /* Write a standout marker or end-standout marker at the front of the line
    at vertical position vpos.  */
 
+void
 write_standout_marker (flag, vpos)
      int flag, vpos;
 {
@@ -518,6 +520,7 @@ move_cursor (row, col)
 
 /* Similar but don't take any account of the wasted characters.  */
 
+void
 raw_move_cursor (row, col)
 {
   if (raw_move_cursor_hook)
@@ -537,6 +540,7 @@ raw_move_cursor (row, col)
 /* Erase operations */
 
 /* clear from cursor to end of screen */
+void
 clear_to_end ()
 {
   register int i;
@@ -647,7 +651,7 @@ clear_end_of_line_raw (first_unused_hpos)
 
 static unsigned char *dest;
 
-static
+static void
 attr_cpy(ch)
      unsigned char ch;
 {
@@ -995,10 +999,10 @@ ins_del_lines (vpos, n)
 }
 
 extern int cost;		/* In cm.c */
-extern evalcost ();
 
 /* Compute cost of sending "str", in characters,
    not counting any line-dependent padding.  */
+int
 string_cost (str)
      char *str;
 {
@@ -1010,6 +1014,7 @@ string_cost (str)
 
 /* Compute cost of sending "str", in characters,
    counting any line-dependent padding at one line.  */
+int
 string_cost_one_line (str)
      char *str;
 {
@@ -1021,6 +1026,7 @@ string_cost_one_line (str)
 
 /* Compute per line amount of line-dependent padding,
    in tenths of characters.  */
+int
 per_line_cost (str)
      register char *str;
 {
@@ -1034,6 +1040,7 @@ per_line_cost (str)
 }
 
 /* ARGSUSED */
+void
 calculate_ins_del_char_costs ()
 {
   int ins_startup_cost, del_startup_cost;
@@ -1409,6 +1416,7 @@ It may be necessary to do `unsetenv TERMCAP' as well.\n",
 }
 
 /* VARARGS 1 */
+void
 fatal (str, arg1, arg2)
      char *str;
      Lisp_Object_Int arg1, arg2;

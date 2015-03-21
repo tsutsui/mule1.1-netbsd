@@ -171,8 +171,6 @@ extern unsigned char vms_file_written[];	/* set in rename_sans_version */
 #endif
 /* end of patch */
 
-extern void make_gap (int);
-
 #ifndef O_WRONLY
 #define O_WRONLY 1
 #endif
@@ -388,6 +386,7 @@ On VMS, converts \"[X]FOO.DIR\" to \"[X.FOO]\", etc.")
  * Value is nonzero if the string output is different from the input.
  */
 
+int
 directory_file_name (src, dst)
      char *src, *dst;
 {
@@ -1260,6 +1259,7 @@ expand_and_dir_to_file (filename, defdir)
   return abspath;
 }
 
+void
 barf_or_query_if_file_exists (absname, querystring, interactive)
      Lisp_Object absname;
      unsigned char *querystring;
@@ -1846,6 +1846,7 @@ otherwise, if FILE2 does not exist, the answer is t.")
   return (mtime1 > st.st_mtime) ? Qt : Qnil;
 }
 
+void
 close_file_unwind (fd)
      Lisp_Object fd;
 {
@@ -2773,6 +2774,7 @@ DEFUN ("update-visited-file-modtime", Fupdate_visited_file_modtime,
 }
 /* end of patch */
 
+void
 syms_of_fileio ()
 {
   Qfile_error = intern ("file-error");

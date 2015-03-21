@@ -357,7 +357,7 @@ display_echo_area_contents ()
 
 /* 92.8.2, 93.5.22 Y.Niibe */
 
-static
+static void
 r2l_double_cursor_set (pos_p,w,p)
      struct position *pos_p;
      struct window *w;
@@ -480,7 +480,6 @@ redisplay ()
   int all_windows;
   register Lisp_Object_Int tlbufpos, tlendpos;
   struct position pos;
-  extern int input_pending;
 
   if (noninteractive)
     return;
@@ -714,6 +713,7 @@ update:
 /* Redisplay, but leave alone any recent echo area message
    unless another message has been requested in its place.  */
 
+void
 redisplay_preserve_echo_area ()
 {
   if (echo_area_contents == 0 && prev_echo_area_contents != 0)
@@ -1089,6 +1089,7 @@ static struct position debug_bp, debug_ep, debug_xp, debug_pp;
 static int debug_start_vpos, debug_stop_vpos, debug_scroll_amount;
 static int debug_dont_scroll;
 
+int
 try_window_id (window)
      Lisp_Object window;
 {
@@ -2488,6 +2489,7 @@ display_mode_element (w, vpos, hpos, depth, minendcol, maxendcol, elt)
 }
 
 /* 92.2.20 by K.Handa */
+void
 decode_mode_spec_coding(code, buf, eol)
      Lisp_Object code;
      char *buf;
@@ -2886,6 +2888,7 @@ DEFUN ("update-mode-lines", Fupdate_mode_lines, Supdate_mode_lines, 0, 0, 0,
 }
 /* end of patch */
 
+void
 syms_of_xdisp ()
 {
   staticpro (&last_arrow_position);
@@ -2941,6 +2944,7 @@ for terminal, use 'md (bold or extra bright)' of termcap.");
 }
 
 /* initialize the window system */
+void
 init_xdisp ()
 {
   Lisp_Object root_window;

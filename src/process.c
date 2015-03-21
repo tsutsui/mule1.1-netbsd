@@ -378,6 +378,7 @@ void create_process (Lisp_Object, char **);
 int read_process_output (Lisp_Object, int);
 void exec_sentinel (Lisp_Object, Lisp_Object);
 
+void
 update_status (p)
      struct Lisp_Process *p;
 {
@@ -480,7 +481,7 @@ int
 allocate_pty ()
 {
   struct stat stb;
-  register c, i;
+  register int c, i;
   int fd;
 
   /* Some systems name their pseudoterminals so that there are gaps in
@@ -624,6 +625,7 @@ make_process (name)
   return val;
 }
 
+void
 remove_process (proc)
      register Lisp_Object proc;
 {
@@ -2051,7 +2053,6 @@ wait_reading_process_input (time_limit, read_kbd, do_display)
   SELECT_TYPE Atemp;
   int wait_channel = 0;
   struct Lisp_Process *wait_proc = 0;
-  extern kbd_count;
 
   /* Detect when read_kbd is really the address of a Lisp_Process.  */
   if (read_kbd > 10 || read_kbd < -1)
@@ -2532,6 +2533,7 @@ win32_write (handle, buf, numWrite, numWritten)
 
 #endif
 
+int
 read_process_output (proc, channel)
      Lisp_Object proc;
      register int channel;
@@ -2681,6 +2683,7 @@ send_process_trap ()
   longjmp (send_process_frame, 1);
 }
 
+void
 send_process (proc, buf, len)
      Lisp_Object proc;
      char *buf;
@@ -2812,6 +2815,7 @@ PROCESS may be a process name.")
    If NOMSG is zero, insert signal-announcements into process's buffers
    right away.  */
 
+void
 process_send_signal (process, signo, current_group, nomsg)
      Lisp_Object process;
      int signo;
@@ -3474,6 +3478,7 @@ If PROCESS is nil, current buffer's process is applied.")
 }
 /* end of patch */
 
+void
 init_process ()
 {
   register int i;
@@ -3524,6 +3529,7 @@ init_process ()
     }
 }
 
+void
 syms_of_process ()
 {
   Qprocessp = intern ("processp");

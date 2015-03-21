@@ -459,6 +459,7 @@ void MCSetXChar2b(unsigned char, unsigned char, unsigned char, XChar2b *);
  * change font.  Check an XText library function call.
  */
 
+void
 HLmode (new)
      int new;
 {
@@ -471,6 +472,7 @@ HLmode (new)
    Call this when about to modify line at position VPOS
    and not change whether it is highlighted.  */
 
+void
 XTreassert_line_highlight (highlight, vpos)
      int highlight, vpos;
 {
@@ -480,6 +482,7 @@ XTreassert_line_highlight (highlight, vpos)
 /* Call this when about to modify line at position VPOS
    and change whether it is highlighted.  */
 
+void
 XTchange_line_highlight (new_highlight, vpos, first_unused_hpos)
      int new_highlight, vpos, first_unused_hpos;
 {
@@ -494,6 +497,7 @@ XTchange_line_highlight (new_highlight, vpos, first_unused_hpos)
  * with a call to redisplay.
  */
 
+void
 XTset_terminal_modes ()
 {
 	int stuffpending;
@@ -564,6 +568,7 @@ XTmove_cursor (row, col)
  * used when restarting suspended or waiting emacs
  */
 
+void
 cleanup ()
 {
 	inverse_video = 0;
@@ -573,6 +578,7 @@ cleanup ()
 /* Erase current line from current column to column END.
    Leave cursor at END.  */
 
+void
 XTclear_end_of_line (end)
      register int end;
 {
@@ -655,6 +661,7 @@ x_clear_end_of_line (start)
   UNBLOCK_INPUT ();
 }
 
+void
 XTreset_terminal_modes ()
 {
 #ifdef XDEBUG
@@ -699,6 +706,7 @@ XTclear_screen ()
  * events which come from bit blt's or moving an obscuring opaque window
  */
 
+void
 dumpchars (active_screen, numcols, tempX, tempY, tempHL)
      register struct matrix *active_screen;
      register int numcols;
@@ -734,6 +742,7 @@ dumpchars (active_screen, numcols, tempX, tempY, tempHL)
  * new text.
  */
 
+void
 updateline (first)
 	int first;
 {
@@ -777,6 +786,7 @@ updateline (first)
 	UNBLOCK_INPUT ();
 }
 
+void
 writechars (start, end)
 	register int *start, *end; /* 91.11.28 by K.Handa */
 {
@@ -839,7 +849,7 @@ writechars (start, end)
   UNBLOCK_INPUT ();
 }
 
-static
+static void
 XToutput_chars (start, len)
      register unsigned int *start; /* 91.11.28 by K.Handa */
      register int len;
@@ -851,6 +861,7 @@ XToutput_chars (start, len)
 	writechars (start, start+len-1);
 }
 
+void
 XTflash ()
 {
 #ifdef HAVE_TIMEVAL
@@ -915,6 +926,7 @@ XTflash ()
 #endif
 }	
 
+void
 XTfeep ()
 {
 	BLOCK_INPUT_DECLARE ();
@@ -935,6 +947,7 @@ XTfeep ()
  * finishes.
  */
 
+int
 CursorToggle ()
 {
 	register struct matrix *active_screen;
@@ -1029,7 +1042,7 @@ CursorToggle ()
 }
 
 /* 93.5.22 Y.Niibe */
-static
+static int
 CursorToggleRev ()
 {
 	register struct matrix *active_screen;
@@ -1129,7 +1142,7 @@ CursorToggleRev ()
 /* toggle it back into existance if dumprectangle is invoked when not in */
 /* the midst of a screen update. */
 
-static
+static void
 ClearCursor ()
 {
 	BLOCK_INPUT_DECLARE ();
@@ -1159,6 +1172,7 @@ ClearCursor ()
 	UNBLOCK_INPUT ();
 }
 
+void
 XTupdate_begin ()
 {
 	BLOCK_INPUT_DECLARE ();
@@ -1192,6 +1206,7 @@ XTupdate_begin ()
 	UNBLOCK_INPUT ();
 }
 
+void
 XTupdate_end ()
 {	
 	BLOCK_INPUT_DECLARE ();
@@ -1245,6 +1260,7 @@ XTupdate_end ()
  * back into the newly blank areas.
  */
 
+void
 dumprectangle (top, left, rows, cols)
      register int top, left, rows, cols;
 {
@@ -1316,6 +1332,7 @@ dumprectangle (top, left, rows, cols)
  * used only during dellines and inslines routines (scraplines and stufflines)
  */
 
+void
 XTset_terminal_window (n)
      register int n;
 {
@@ -1329,6 +1346,7 @@ XTset_terminal_window (n)
 		flexlines = n;
 }
 
+void
 XTins_del_lines (vpos, n)
      int vpos, n;
 {
@@ -1347,7 +1365,7 @@ XTins_del_lines (vpos, n)
    of the character cells copied if black and white,
    or half of those characters if color.  */
 
-static
+static void
 XTcalculate_costs (extra, costvec, ncostvec)
      int extra;
      int *costvec, *ncostvec;
@@ -1357,7 +1375,7 @@ XTcalculate_costs (extra, costvec, ncostvec)
   CalcLID (0, screen_width / (color_p ? 2 : 5), 0, 0, costvec, ncostvec);
 }
 
-static
+static void
 XTinsert_chars (start, len)
      register unsigned int *start; /* 91.11.28 by K.Handa */
      register int len;
@@ -1369,7 +1387,7 @@ XTinsert_chars (start, len)
 	updateline (0);
 }
 
-static
+static void
 XTdelete_chars (n)
      register int n;
 {
@@ -1467,6 +1485,7 @@ scraplines (n)
  * bytes but rather individual packets.
  */
 
+int
 XTread_socket (sd, bufp, numchars)
      register int sd;
      register char *bufp;
@@ -1643,6 +1662,7 @@ char *stringFuncVal(keycode)
 #endif /* not AIX */
 #endif /* not sun */
 
+int
 internal_socket_read(bufp, numchars)
 	register unsigned char *bufp;
 	register int numchars;
@@ -1935,6 +1955,7 @@ XExitGracefully ()
 	exit (70);
 }
 
+int
 XIgnoreError ()
 {
 	return 0;
@@ -2087,6 +2108,7 @@ XT_GetDefaults (class)
   return 0;
 }
 
+void
 x_error_handler (disp, event)
      Display *disp;
      XErrorEvent *event;
@@ -2110,6 +2132,7 @@ x_io_error_handler ()
 }
 
 /* 92.10.13 by K.Handa */
+int
 x_get_lc_from_arg(arg)
      char *arg;
 {
@@ -2182,7 +2205,6 @@ x_term_init ()
 	char *ptr;
 	XColor cdef;
 
-	extern XTinterrupt_signal ();
 	extern Lisp_Object Vxterm, Vxterm1, Qt;
 	extern int XIgnoreError();
 	int  ix;
@@ -2815,6 +2837,7 @@ XT_CalcForFont(fontname)
 
 /* ------------------------------------------------------------
  */
+int
 XNewFont (newname)
      register char *newname;
 {
@@ -2861,6 +2884,7 @@ x_set_fontname(lc)
 }
 
 /* 93.6.25 by K.Handa */
+void
 x_set_encoding(lc)
      unsigned int lc;
 {
@@ -2963,6 +2987,7 @@ MCLoadFont(lc)
 }
 
 /* 92.9.11 by K.Handa */
+int
 MCNewFont (newname, lc, encoding)
      register char *newname;
      register unsigned char lc, encoding;
@@ -3071,7 +3096,7 @@ XFlipColor ()
 static XClassHint  class_hint;
 
 
-static int
+static void
 XT_Set_Class_Hints(w)
     Window  w;
 {
@@ -3089,7 +3114,7 @@ XT_Set_Class_Hints(w)
 
 /* ------------------------------------------------------------
  */
-static int
+static void
 XT_Set_Command_Line(w)
     Window  w;
 {
@@ -3102,7 +3127,7 @@ XT_Set_Command_Line(w)
  */
 static char  hostname[100];
 
-static int
+static void
 XT_Set_Host(w)
     Window  w;
 {
@@ -3120,7 +3145,7 @@ XT_Set_Host(w)
  *  Set header title to window-name (from '-wn'), or if none,
  *  "optional-id: class-of-appl @ host"
  */
-static int
+static void
 XT_Set_Title(w)
     Window  w;
 {
@@ -3160,7 +3185,7 @@ XT_Set_Title(w)
  *  or if none, to "invocation-or-class @ host".
  *
  */
-static int
+static void
 XT_Set_Icon_Title(w)
     Window  w;
 {
@@ -3193,7 +3218,7 @@ XT_Set_Icon_Title(w)
 
 /* Arg PR carries value returned by XGeometry at startup, or 0.  */
 
-static int
+static void
 XT_Set_Size_Hints(w, x, y, width, height, do_resize, pr)
     int  x, y;			/* only used at Startup: do_resize == FALSE */
     int  width, height;
@@ -3328,7 +3353,7 @@ XT_Set_Size_Hints(w, x, y, width, height, do_resize, pr)
 /* ------------------------------------------------------------
  */
 /*ARGSUSED*/
-static int
+static void
 XT_Set_Zoom_Sizes(w)
     Window  w;
 {
@@ -3338,7 +3363,7 @@ XT_Set_Zoom_Sizes(w)
 /* ------------------------------------------------------------
  *  Set our state and icon parameters.
  */
-static int
+static void
 XT_Set_WM_Hints(w)
     Window  w;
 {

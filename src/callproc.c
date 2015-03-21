@@ -886,6 +886,7 @@ child_setup (in, out, err, new_argv, env)
 #endif /* not MSDOS */
 /* end of patch */
 
+void
 init_callproc ()
 {
   register char * sh;
@@ -947,6 +948,7 @@ init_callproc ()
 #endif /* MAINTAIN_ENVIRONMENT */
 }
 
+void
 syms_of_callproc ()
 {
   DEFVAR_LISP ("shell-file-name", &Vshell_file_name,

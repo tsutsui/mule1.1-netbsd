@@ -1034,7 +1034,7 @@ temp_output_buffer_show (buf)
     }
 }
 
-static
+static void
 make_dummy_parent (window)
      Lisp_Object window;
 {
@@ -1404,6 +1404,7 @@ window_scroll (window, n, noerror)
     }
 }
 
+void
 scroll_command (n, direction)
      register Lisp_Object n;
      int direction;
@@ -1942,6 +1943,7 @@ Does not restore the value of point in current buffer.")
   return unbind_to (count, val);
 }
 
+void
 init_window_once ()
 {
   register Lisp_Object root_window;
@@ -1972,6 +1974,7 @@ init_window_once ()
   XFASTINT (XWINDOW (selected_window)->use_time) = ++window_select_count;
 }
 
+void
 syms_of_window ()
 {
   Qwindowp = intern ("windowp");
@@ -2061,6 +2064,7 @@ If there is only one window, it is split regardless of this value.");
   defsubr (&Ssave_window_excursion);
 }
 
+void
 keys_of_window ()
 {
   ndefkey (Vctl_x_map, '1', "delete-other-windows");

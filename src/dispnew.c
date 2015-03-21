@@ -235,7 +235,7 @@ int r2l_double_cursor;
 
 /* Free and reallocate current_screen and new_screen.  */
 
-struct matrix *make_screen_structure ();
+struct matrix *make_screen_structure (int);
 
 void free_screen_structure (struct matrix *);
 int count_blanks (int *);
@@ -251,7 +251,8 @@ void bell (void);
 unsigned char **cmp_char_table;	/* 93.6.21 by K.Handa */
 int cmp_char_idx_max;		/* 93.6.21 by K.Handa */
 
-remake_screen_structures ()
+void
+remake_screen_structures (void)
 {
   int i;
 
@@ -822,6 +823,7 @@ direct_output_forward_char (n)
    Value is nonzero if redisplay stopped due to pending input.
    FORCE nonzero means do not stop for pending input.  */
 
+int
 update_screen (force, inhibit_hairy_id)
      int force;
      int inhibit_hairy_id;
@@ -831,7 +833,6 @@ update_screen (force, inhibit_hairy_id)
   register int i;
   int pause;
   int preempt_count = baud_rate / 2400 + 1;
-  extern input_pending;
 
   if (screen_height == 0) abort (); /* Some bug zeros some core */
 
@@ -959,6 +960,7 @@ quit_error_check ()
 
 /* Decide what insert/delete line to do, and do it */
 
+int
 scrolling ()
 {
   int unchanged_at_top, unchanged_at_bottom;
@@ -1371,6 +1373,7 @@ update_line (vpos)
 /* end of patch */
 }
 
+int
 count_blanks (str)
      int *str;			/* 91.10.21 by K.Handa */
 {
@@ -1379,6 +1382,7 @@ count_blanks (str)
   return str - p - 1;
 }
 
+int
 count_match (str1, str2)
      int *str1, *str2;          /* 91.10.21 by K.Handa */
 {
@@ -1389,6 +1393,7 @@ count_match (str1, str2)
 }
 
 /* 92.12.7 by K.Handa */
+int
 compare_char (c1, c2)
      unsigned int c1, c2;
 {
@@ -1802,6 +1807,7 @@ char *terminal_type;
 /* Then invoke its decoding routine to set up variables
   in the terminal package */
 
+void
 init_display ()
 {
 /* 92.3.31 by K.Handa, 92.10.17, 93.2.17 by M.Higashida */
@@ -1921,6 +1927,7 @@ For types not defined in VMS, use  define emacs_term \"TYPE\".\n\
 #endif /* SIGWINCH */
 }
 
+void
 syms_of_display ()
 {
   defsubr (&Sopen_termscript);

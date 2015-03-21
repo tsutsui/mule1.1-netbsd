@@ -676,6 +676,7 @@ search_command (string, bound, noerror, count, direction, RE)
 /* INTERFACE CHANGE ALERT!!!!  search_buffer now returns -x if only */
 /* n-x occurences are found. */
 
+int
 search_buffer (string, pos, lim, n, RE, trt)
      Lisp_Object string;
      int pos;
@@ -1537,6 +1538,7 @@ compute_trt_inverse (trt)
 }
 */
   
+void
 syms_of_search ()
 {
   register int i;

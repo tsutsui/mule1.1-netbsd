@@ -119,6 +119,7 @@ malloc_warning_1 (str)
 }
 
 /* malloc calls this if it finds we are near exhausting storage */
+void
 malloc_warning (str)
      char *str;
 {
@@ -207,6 +208,7 @@ init_cons ()
 }
 
 /* Explicitly free a cons cell.  */
+void
 free_cons (ptr)
      struct Lisp_Cons *ptr;
 {
@@ -808,9 +810,9 @@ you lose
 int total_conses, total_markers, total_symbols, total_string_size, total_vector_size;
 int total_free_conses, total_free_markers, total_free_symbols;
 
-static void mark_object (), mark_buffer ();
-static void clear_marks (), gc_sweep ();
-static void compact_strings ();
+static void mark_object (Lisp_Object *), mark_buffer (Lisp_Object);
+static void clear_marks (void), gc_sweep (void);
+static void compact_strings (void);
 
 DEFUN ("garbage-collect", Fgarbage_collect, Sgarbage_collect, 0, 0, "",
   "Reclaim storage for Lisp objects no longer needed.\n\
@@ -1527,6 +1529,7 @@ truncate_all_undos ()
 
 /* Initialization */
 
+void
 init_alloc_once ()
 {
   /* Used to do Vpurify_flag = Qt here, but Qt isn't set up yet!  */
@@ -1546,6 +1549,7 @@ init_alloc_once ()
 #endif /* VIRT_ADDR_VARIES */
 }
 
+void
 init_alloc ()
 {
   gcprolist = 0;

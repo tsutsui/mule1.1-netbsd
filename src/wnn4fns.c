@@ -1216,6 +1216,7 @@ DEFUN ("wnn-server-hinsi-number", Fwnn_hinsi_number, Swnn_hinsi_number,
   return make_number(no);
 }
 
+void
 syms_of_wnn()
 {
   int i;
@@ -1381,6 +1382,7 @@ m2w(mp, wp)
   *wp = 0;
 }
 
+void
 _xp(x)
 int x;
 {
@@ -1447,7 +1449,6 @@ static int
 yes_or_no(s)
 unsigned char *s;
 {
-  extern Lisp_Object	Fy_or_n_p();
   unsigned char		mbuf[512];
   unsigned char		lc;
   int			len;

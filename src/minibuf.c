@@ -537,6 +537,7 @@ The argument given to PREDICATE is the alist element or the symbol from the obar
    Return -1 if strings match,
    else number of chars that match at the beginning.  */
 
+int
 scmp (s1, s2, len)
      register unsigned char *s1, *s2; /* 92.9.20 by T.Enami */
      int len;
@@ -700,6 +701,7 @@ Case is ignored if ambient value of  completion-ignore-case  is non-nil.")
   return unbind_to (count, val);
 }
 
+void
 temp_echo_area_contents (m)
      char *m;
 {
@@ -1116,12 +1118,14 @@ DEFUN ("minibuffer-extend-prompt", Fminibuffer_extend_prompt,
 }
 
 
+void
 init_minibuf_once ()
 {
   Vminibuffer_list = Qnil;
   staticpro (&Vminibuffer_list);
 }
 
+void
 syms_of_minibuf ()
 {
   minibuf_level = 0;
@@ -1205,6 +1209,7 @@ recursive minibuffers.");
   defsubr (&Sminibuffer_extend_prompt);
 }
 
+void
 keys_of_minibuf ()
 {
   ndefkey (Vminibuffer_local_map, Ctl ('g'), "abort-recursive-edit");

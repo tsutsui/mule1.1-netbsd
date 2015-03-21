@@ -101,6 +101,7 @@ static enum ccl_error_code ccl_error;
 #define SWITCH_VAL(val) val
 #endif
 
+int
 ccl_interpreter(src, dst, nsrc, ndst, cmds, ip, endflag)
      unsigned char *src, *dst;
      int nsrc, ndst, *ip;
@@ -356,6 +357,7 @@ ccl_interpreter(src, dst, nsrc, ndst, cmds, ip, endflag)
 
 unsigned char *ccl_buf;
 
+int
 ccl_driver(src, dst, nsrc, ndst, mccode, encode)
      unsigned char *src, *dst;
      int nsrc, ndst, encode;
@@ -482,6 +484,7 @@ DEFUN ("ccl-elapsed-time", Fccl_etime, Sccl_etime, 0, 0, 0,
 		make_number ((int)(elapsed_time % 1000)));
 }
 
+void
 syms_of_ccl ()
 {
   defsubr (&Sccl_stack_size);

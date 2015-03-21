@@ -306,6 +306,7 @@ If there's no match character defined in the syntax of CHAR, 0 is returned.")
 }
 /* end of patch */
 
+void
 modify_syntax_entry(c, tbl, syntax)
      register unsigned int c;
      Lisp_Object tbl, syntax;
@@ -419,6 +420,7 @@ DEFUN ("modify-syntax-entry", Fmodify_syntax_entry, Smodify_syntax_entry, 2, 3,
 
 /* Dump syntax table to buffer in human-readable format */
 
+void
 describe_syntax (value, parent)	/* 93.6.7, 94.2.23 by K.Handa */
      Lisp_Object value;
      unsigned int parent;
@@ -590,6 +592,7 @@ The descriptions are inserted in a buffer, which is selected so you can see it."
    If that many words cannot be found before the end of the buffer, return 0.
    `count' negative means scan backward and stop at word beginning.  */
 
+int
 scan_words (from, count)
      register int from, count;
 {
@@ -995,6 +998,7 @@ scan_lists (from, count, depth, sexpflag)
   /* NOTREACHED */
 }
 
+int
 char_quoted (pos)
      register int pos;
 {
@@ -1362,6 +1366,7 @@ DEFUN ("parse-partial-sexp", Fparse_partial_sexp, Sparse_partial_sexp, 2, 5, 0,
 			  Fcons (make_number (state.mindepth), Qnil)))))));
 }
 
+void
 init_syntax_once ()
 {
   register int i;
@@ -1401,6 +1406,7 @@ init_syntax_once ()
 
 }
 
+void
 syms_of_syntax ()
 {
   Qsyntax_table_p = intern ("syntax-table-p");

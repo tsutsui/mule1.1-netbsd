@@ -284,7 +284,7 @@ InsStr (s)
 void
 insert (string, length)
      register unsigned char *string;
-     register length;
+     register int length;
 /* 89.11.30 patch for point_type_marker by K.Handa */
 {
   register int opoint = point;
@@ -295,7 +295,7 @@ insert (string, length)
 void
 insert2 (string, length)
      register unsigned char *string;
-     register length;
+     register int length;
 {
 /* end of patch */
   register Lisp_Object temp;

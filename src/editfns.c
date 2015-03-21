@@ -83,7 +83,6 @@ init_editfns ()
   register unsigned char *p, *q;
   struct passwd *pw;		/* password entry for the current user */
   Lisp_Object tem;
-  extern char *index ();
 
   /* Turn off polling so the SIGALRM won't bother getpwuid.  */
   stop_polling ();
@@ -154,6 +153,7 @@ init_editfns ()
    Use macro CHARtoSTR (c,str) instead of calling mchar_to_string() directly.
 */
 /* 92.1.16 by K.Handa */
+int
 mchar_to_string (c, str)
      register unsigned int c;
      register unsigned char *str;
@@ -179,6 +179,7 @@ mchar_to_string (c, str)
 /* 93.5.27 by K.Handa
    Use macro STRtoCHAR(str,size) instead of calling string_to_mchar() directly.
 */
+int
 string_to_mchar (str, size)
      register unsigned char *str;
      register int size;
@@ -1173,7 +1174,6 @@ the argument used by %d, %b, %o, %x or %c must be a number.")
   char *buf;
   register unsigned char *format;
   register unsigned char **strings;
-  extern char *index ();
   /* It should not be necessary to GCPRO ARGS, because
      the caller in the interpreter should take care of that.  */
 

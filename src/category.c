@@ -47,6 +47,8 @@ unsigned int category_table_version; /* 93.7.12 by K.Handa */
 
 Lisp_Object Qcategory_table_p;
 
+Lisp_Object check_category_table (Lisp_Object);
+
 DEFUN ("category-table-p", Fcategory_table_p, Scategory_table_p, 1, 1, 0,
   "Return t if ARG is a category table.\n\
 Any vector of 257 elements will do as far as the last element\n\
@@ -92,6 +94,7 @@ This is the one used for new buffers.")
 
 struct Lisp_Category temp_category;
 
+void
 init_category(category)
      struct Lisp_Category *category;
 {
@@ -108,6 +111,7 @@ make_init_category()
   return Fmake_string (size, init);
 }
 
+void
 update_category(src, mask)
      struct Lisp_Category *src;
      Lisp_Object mask;
@@ -272,6 +276,7 @@ One argument, a category table.")
 }
 
 /* 93.7.13 by K.Handa */
+int
 check_category(category, mnemonic, not)
      struct Lisp_Category *category;
      char mnemonic;
@@ -408,6 +413,7 @@ TABLE defaults to the current buffer's category table.")
   return build_string(str);
 }
 
+void
 modify_category_entry(c, maskbit, ctbl, reset)
      register unsigned int c, reset, maskbit;
      Lisp_Object ctbl;
@@ -493,6 +499,7 @@ insert_character_description(i)	/* 94.2.23 by K.Handa */
   }
 }
 
+void
 describe_category (ctbl, parent) /* 94.2.23 by K.Handae */
      Lisp_Object ctbl;
      int parent;
@@ -543,6 +550,7 @@ describe_category (ctbl, parent) /* 94.2.23 by K.Handae */
   }
 }
 
+void
 describe_mnemonic(description)
      Lisp_Object description;
 {
@@ -585,6 +593,7 @@ The descriptions are inserted in a buffer, which is selected so you can see it."
   return Qnil;
 }
 
+void
 init_category_once ()
 {
   temp_category.size = 12;
@@ -595,6 +604,7 @@ init_category_once ()
   Vstandard_category_table = Fcopy_category_table (Qnil);
 }
 
+void
 syms_of_category ()
 {
   Qcategory_table_p = intern ("category-table-p");

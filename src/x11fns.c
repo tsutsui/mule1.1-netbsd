@@ -179,6 +179,7 @@ extern Lisp_Object Vx_default_fonts, Vx_default_encoding;
 extern int x_horizontal_bold_style; /* 93.4.11 by K.Handa */
 extern Lisp_Object Vx_ccl_programs; /* 93.5.28 by K.Handa */
 
+void
 check_xterm ()
 {
 	if (NULL (Vxterm))
@@ -1468,6 +1469,7 @@ See the documentation of x-rebind-key for more information.")
 
 #endif /* foobar */
 
+void
 XExitWithCoreDump ()
 {
 	XCleanUp ();
@@ -1510,6 +1512,7 @@ XCleanUp ()
 #endif				/* subprocesses */
 }
 
+void
 syms_of_xfns ()
 {
   /* If not dumping, init_display ran before us, so don't override it.  */

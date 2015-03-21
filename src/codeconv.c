@@ -225,6 +225,7 @@ lookup(c, lcg0, lcg1, lcg2, lcg3, esc_cntl)
 }
 /* end of patch */
 
+int
 code_detect_iso2022(buf, endp)
      unsigned char *buf, *endp;
 {
@@ -279,6 +280,7 @@ code_detect_iso2022(buf, endp)
   return mask;
 }
 
+int
 code_detect_internal(buf, endp)
      unsigned char *buf, *endp;
 {
@@ -299,6 +301,7 @@ code_detect_internal(buf, endp)
   return M_INT;
 }
 
+int
 code_detect_sjis(buf, endp)
      unsigned char *buf, *endp;
 {
@@ -317,6 +320,7 @@ code_detect_sjis(buf, endp)
   return M_SJIS;
 }
 
+int
 code_detect_big5(buf, endp)
      unsigned char *buf, *endp;
 {
@@ -339,6 +343,7 @@ code_detect_big5(buf, endp)
    If only ASCII, M_ALL is returned.
    If there's no possible coding system, M_BIN is returned. */
 
+int
 code_detect(buf, n)
      unsigned char *buf;
      int n;
@@ -382,6 +387,7 @@ code_detect(buf, n)
   return mask;
 }
 
+int
 eol_detect(buf, n)
      unsigned char *buf;
      int n;
@@ -604,6 +610,7 @@ b2g(src, dst, n, mccode)
 }
 
 /* ISO2022 Interpreter */
+int
 i2g(src, dst, n, mccode)
      register unsigned char *src, *dst;
      unsigned int n;
@@ -1047,6 +1054,7 @@ designate(dp, oldlc, lc, graphic, form)
   cntl = (cntl & ~CC_GRAPHIC_MASK) | CC_IN_G3; \
 }
 
+int
 g2i(src, dst, n, mccode)
      register unsigned char *src, *dst;
      unsigned int n;
@@ -1617,12 +1625,14 @@ If fails, return nil.")
 }
 #endif /* 0 */
 
+void
 init_codeconv()
 {
   current_conv_buf_size = CONVERSION_BUFFER_SIZE;
   current_conv_buf = conversion_buffer;
 }
 
+void
 syms_of_codeconv ()
 {
   Lisp_Object val;

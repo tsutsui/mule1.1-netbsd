@@ -338,6 +338,7 @@ DEFUN ("unexpand-abbrev", Funexpand_abbrev, Sunexpand_abbrev, 0, 0, "",
 }
 
 static
+void
 write_abbrev (sym, stream)
      Lisp_Object sym, stream;
 {
@@ -356,7 +357,7 @@ write_abbrev (sym, stream)
   insert (")\n", 2);
 }
 
-static
+static void
 describe_abbrev (sym, stream)
      Lisp_Object sym, stream;
 {
@@ -456,6 +457,7 @@ of the form (ABBREVNAME EXPANSION HOOK USECOUNT).")
   return Qnil;
 }
 
+void
 syms_of_abbrev ()
 {
   DEFVAR_LISP ("abbrev-table-name-list", &Vabbrev_table_name_list,

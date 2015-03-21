@@ -25,11 +25,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 /* 93.7.27  modified for Mule Ver.0.9.8 by K.Handa <handa@etl.go.jp>
 	Modified for 64bit architecture machine. */
 
-extern Lisp_Object Qcategory_table_p, Qcategoryp, Qmnemonicp;
-extern Lisp_Object Fcategory_table_p ();
-extern Lisp_Object Fcategory_table (), Fset_category_table ();
-extern Lisp_Object check_category_table ();
-
 /* The standard category table is stored where it will automatically
    be used in all new buffers.  */
 #define Vstandard_category_table buffer_defaults.category_table

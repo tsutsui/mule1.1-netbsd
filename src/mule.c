@@ -117,6 +117,7 @@ unsigned char lc_table[4][128];
 unsigned char rev_lc_table[256];
 
 /* Add direction, 92.8.2 Y.Niibe */
+void
 update_mc_table(lc, bytes, clm, type, graphic, final, direction, doc)
      unsigned char lc, bytes, clm, type, graphic, final, direction;
      char *doc;
@@ -144,6 +145,7 @@ update_mc_table(lc, bytes, clm, type, graphic, final, direction, doc)
 #ifdef emacs
 
 /* 92.9.16 by K.Handa */
+int
 undefined_private_charset(bytes, width)
      int bytes, width;
 {
@@ -359,6 +361,7 @@ You can specify a character set to be concerned\n\
 }
 
 /* 93.6.17 by K.Handa */
+int
 charwidth (c)
      unsigned int c;
 {
@@ -383,6 +386,7 @@ charwidth (c)
   return (int)c;
 }
 
+int
 strwidth (s)
      unsigned char *s;
 {
@@ -570,6 +574,7 @@ accept a pattern compiled by 'regexp-compile' with word-option t.")
 
 #endif /* emacs */
 
+void
 init_mc_once()
 {
   int i,j;
@@ -613,6 +618,7 @@ init_mc_once()
 
 #ifdef emacs
 
+void
 syms_of_mc ()
 {
   defsubr (&Snew_character_set);
@@ -777,6 +783,7 @@ syms_of_mc ()
 
 char inspect_str[1024];
 
+void
 inspect(obj)			/* Inspect Lisp Data */
      Lisp_Object obj;
 {
@@ -798,6 +805,7 @@ inspect(obj)			/* Inspect Lisp Data */
   fflush(stdout);
 }
 
+void
 inspect_vector(obj,idx)
      Lisp_Object obj;
      int idx;
@@ -815,6 +823,7 @@ inspect_vector(obj,idx)
   fflush(stdout);
 }
 
+void
 inspect_array(p, n)
      unsigned char *p;
      int n;
