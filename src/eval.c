@@ -1711,17 +1711,25 @@ Lisp_Object
 call4 (fn, arg, arg1, arg2, arg3)
      Lisp_Object fn, arg, arg1, arg2, arg3;
 {
+  Lisp_Object val;
+  struct gcpro gcpro1;
 #ifdef NO_ARG_ARRAY
   Lisp_Object args[5];
+#endif
+  GCPRO1 (fn);
+  gcpro1.nvars = 5;
+#ifdef NO_ARG_ARRAY
   args[0] = fn;
   args[1] = arg;
   args[2] = arg1;
   args[3] = arg2;
   args[4] = arg3;
-  return Ffuncall (5, args);
+  val = Ffuncall (5, args);
 #else /* not NO_ARG_ARRAY */
-  return Ffuncall (5, &fn);
+  val = Ffuncall (5, &fn);
 #endif /* not NO_ARG_ARRAY */
+  UNGCPRO;
+  return val;
 }
 /* end of patch */
 
