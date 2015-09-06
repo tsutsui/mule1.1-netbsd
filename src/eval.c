@@ -1386,7 +1386,7 @@ DEFUN ("eval", Feval, Seval, 1, 1, 0,
       if (XSUBR (fun)->max_args == UNEVALLED)
 	{
 	  backtrace.evalargs = 0;
-	  func1 = (*XSUBR (fun)->function);
+	  func1 = XSUBR (fun)->function;
 	  val = func1 (args_left);
 	  goto done;
 	}
@@ -1413,7 +1413,7 @@ DEFUN ("eval", Feval, Seval, 1, 1, 0,
 	  backtrace.args = vals;
 	  backtrace.nargs = XINT (numargs);
 
-	  funcm = (*XSUBR (fun)->function);
+	  funcm = XSUBR (fun)->function;
 	  val = funcm (XINT (numargs), vals);
 	  UNGCPRO;
 	  goto done;
@@ -1438,27 +1438,27 @@ DEFUN ("eval", Feval, Seval, 1, 1, 0,
       switch (i)
 	{
 	case 0:
-	  func0 = (*XSUBR (fun)->function);
+	  func0 = XSUBR (fun)->function;
 	  val = func0 ();
 	  goto done;
 	case 1:
-	  func1 = (*XSUBR (fun)->function);
+	  func1 = XSUBR (fun)->function;
 	  val = func1 (argvals[0]);
 	  goto done;
 	case 2:
-	  func2 = (*XSUBR (fun)->function);
+	  func2 = XSUBR (fun)->function;
 	  val = func2 (argvals[0], argvals[1]);
 	  goto done;
 	case 3:
-	  func3 = (*XSUBR (fun)->function);
+	  func3 = XSUBR (fun)->function;
 	  val = func3 (argvals[0], argvals[1], argvals[2]);
 	  goto done;
 	case 4:
-	  func4 = (*XSUBR (fun)->function);
+	  func4 = XSUBR (fun)->function;
 	  val = func4 (argvals[0], argvals[1], argvals[2], argvals[3]);
 	  goto done;
 	case 5:
-	  func5 = (*XSUBR (fun)->function);
+	  func5 = XSUBR (fun)->function;
 	  val = func5 (argvals[0], argvals[1], argvals[2],
 		       argvals[3], argvals[4]);
 	  goto done;
@@ -1810,7 +1810,7 @@ Thus,  (funcall 'cons 'x 'y)  returns  (x . y).")
 
       if (XSUBR (fun)->max_args == MANY)
 	{
-	  funcm = (*XSUBR (fun)->function);
+	  funcm = XSUBR (fun)->function;
 	  val = funcm (numargs, args + 1);
 	  goto done;
 	}
@@ -1827,28 +1827,28 @@ Thus,  (funcall 'cons 'x 'y)  returns  (x . y).")
       switch (XSUBR (fun)->max_args)
 	{
 	case 0:
-	  func0 = (*XSUBR (fun)->function);
+	  func0 = XSUBR (fun)->function;
 	  val = func0 ();
 	  goto done;
 	case 1:
-	  func1 = (*XSUBR (fun)->function);
+	  func1 = XSUBR (fun)->function;
 	  val = func1 (internal_args[0]);
 	  goto done;
 	case 2:
-	  func2 = (*XSUBR (fun)->function);
+	  func2 = XSUBR (fun)->function;
 	  val = func2 (internal_args[0], internal_args[1]);
 	  goto done;
 	case 3:
-	  func3 = (*XSUBR (fun)->function);
+	  func3 = XSUBR (fun)->function;
 	  val = func3 (internal_args[0], internal_args[1], internal_args[2]);
 	  goto done;
 	case 4:
-	  func4 = (*XSUBR (fun)->function);
+	  func4 = XSUBR (fun)->function;
 	  val = func4 (internal_args[0], internal_args[1],
 		       internal_args[2], internal_args[3]);
 	  goto done;
 	case 5:
-	  func5 = (*XSUBR (fun)->function);
+	  func5 = XSUBR (fun)->function;
 	  val = func5 (internal_args[0], internal_args[1],
 		       internal_args[2], internal_args[3],
 		       internal_args[4]);
