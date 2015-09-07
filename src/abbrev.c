@@ -75,6 +75,9 @@ Lisp_Object Vlast_abbrev_text;
 
 int last_abbrev_point;
 
+static void describe_abbrev (Lisp_Object, Lisp_Object);
+static void write_abbrev (Lisp_Object, Lisp_Object);
+
 
 DEFUN ("make-abbrev-table", Fmake_abbrev_table, Smake_abbrev_table, 0, 0, 0,
   "Create a new, empty abbrev table object.")
@@ -337,8 +340,7 @@ DEFUN ("unexpand-abbrev", Funexpand_abbrev, Sunexpand_abbrev, 0, 0, "",
   return Qnil;
 }
 
-static
-void
+static void
 write_abbrev (sym, stream)
      Lisp_Object sym, stream;
 {

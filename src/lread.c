@@ -1123,7 +1123,7 @@ hash_string (ptr, len)
 void
 map_obarray (obarray, fn, arg)
      Lisp_Object obarray;
-     int (*fn) (Lisp_Object, Lisp_Object);
+     void (*fn) (Lisp_Object, Lisp_Object);
      Lisp_Object arg;
 {
   register int i;

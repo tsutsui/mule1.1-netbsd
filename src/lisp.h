@@ -1050,7 +1050,7 @@ extern Lisp_Object Feval_current_buffer (Lisp_Object);
 extern Lisp_Object Feval_region (Lisp_Object, Lisp_Object, Lisp_Object);
 extern Lisp_Object intern (char *);
 extern Lisp_Object oblookup (Lisp_Object, char *, int);
-extern void map_obarray (Lisp_Object, int (*)(Lisp_Object, Lisp_Object), Lisp_Object);
+extern void map_obarray (Lisp_Object, void (*)(Lisp_Object, Lisp_Object), Lisp_Object);
 extern int openp (Lisp_Object, Lisp_Object, char *, Lisp_Object *, int);
 
 /* Defined in eval.c */
