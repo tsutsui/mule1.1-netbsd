@@ -177,7 +177,8 @@ ccl_interpreter(src, dst, nsrc, ndst, cmds, ip, endflag)
       sp--;
       break;
     case CCLdup:		/* duplicate top value of stack */
-      *sp++ = *(sp - 1);
+      *sp = *(sp - 1);
+      sp++;
       break;
     case CCLexch:		/* exchange top two values */
       /* 93.11.22 by K.Handa */
