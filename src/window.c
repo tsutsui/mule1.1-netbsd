@@ -1232,8 +1232,8 @@ change_window_height (delta, widthflag)
   Lisp_Object window;
   register struct window *p;
   int *sizep;
-  int (*sizefun) () = widthflag ? window_width : window_height;
-  register int (*setsizefun) () = widthflag ? set_window_width : set_window_height;
+  int (*sizefun) (Lisp_Object) = widthflag ? window_width : window_height;
+  register void (*setsizefun) (Lisp_Object, int, int) = widthflag ? set_window_width : set_window_height;
 
   if (window_min_height < 2)
     window_min_height = 2;

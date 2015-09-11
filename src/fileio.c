@@ -191,6 +191,7 @@ int vms_stmlf_recfm;
 
 Lisp_Object Qfile_error, Qfile_already_exists;
 
+void close_file_unwind (Lisp_Object fd);
 int e_write (int, char *, int, coding_type *);
 
 void

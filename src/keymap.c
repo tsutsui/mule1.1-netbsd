@@ -72,6 +72,9 @@ Lisp_Object Qkeymapp, Qkeymap;
 
 extern int meta_prefix_char;
 
+Lisp_Object describe_buffer_bindings (Lisp_Object);
+void describe_command (Lisp_Object);
+
 static void insert_first_line (char *, Lisp_Object);
 
 DEFUN ("make-keymap", Fmake_keymap, Smake_keymap, 0, 0, 0,
@@ -950,7 +953,6 @@ Argument is a command definition, usually a symbol with a function definition.")
   return Qnil;
 }
 
-Lisp_Object describe_buffer_bindings (Lisp_Object);
 
 DEFUN ("describe-bindings", Fdescribe_bindings, Sdescribe_bindings, 0, 0, "",
   "Show a list of all defined keys, and their definitions.\n\
@@ -1099,7 +1101,7 @@ void
 describe_alist (alist, elt_prefix, elt_describer, partial, shadow)
      register Lisp_Object alist;
      Lisp_Object elt_prefix;
-     int (*elt_describer) (Lisp_Object);
+     void (*elt_describer) (Lisp_Object);
      int partial;
      Lisp_Object shadow;
 {
@@ -1156,7 +1158,7 @@ void
 describe_vector (vector, elt_prefix, elt_describer, partial, shadow)
      register Lisp_Object vector;
      Lisp_Object elt_prefix;
-     int (*elt_describer) (Lisp_Object);
+     void (*elt_describer) (Lisp_Object);
      int partial;
      Lisp_Object shadow;
 {

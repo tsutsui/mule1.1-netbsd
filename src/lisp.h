@@ -1405,8 +1405,8 @@ extern Lisp_Object get_keymap (Lisp_Object);
 extern void ndefkey (Lisp_Object, int, char *);
 extern void describe_map_tree (Lisp_Object, int, Lisp_Object);
 extern void describe_map (Lisp_Object, Lisp_Object, int, Lisp_Object);
-extern void describe_alist (Lisp_Object, Lisp_Object, int (*)(Lisp_Object), int, Lisp_Object);
-extern void describe_vector (Lisp_Object, Lisp_Object, int (*)(Lisp_Object), int, Lisp_Object);
+extern void describe_alist (Lisp_Object, Lisp_Object, void (*)(Lisp_Object), int, Lisp_Object);
+extern void describe_vector (Lisp_Object, Lisp_Object, void (*)(Lisp_Object), int, Lisp_Object);
 extern Lisp_Object get_keymap_1 (Lisp_Object, int);
 
 /* defined in indent.c */

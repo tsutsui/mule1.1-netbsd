@@ -835,7 +835,7 @@ setpgrp_of_tty (pid)
 struct save_signal
 {
   int code;
-  void (*handler) ();
+  void (*handler) (int);
 };
 
 /* Suspend the Emacs process; give terminal to its superior.  */
@@ -975,7 +975,7 @@ save_signal_handlers (saved_handlers)
   while (saved_handlers->code)
     {
       saved_handlers->handler
-	= (int (*) ()) signal (saved_handlers->code, SIG_IGN);
+	= signal (saved_handlers->code, SIG_IGN);
       saved_handlers++;
     }
 }
