@@ -196,10 +196,10 @@ static Lisp_Object kanjiYomiList();
 
 #ifdef CANNA_MULE
 #if __STDC__
-static m2c(unsigned char *, int, unsigned char *);
+static void m2c(unsigned char *, int, unsigned char *);
 static Lisp_Object mule_make_string(unsigned char *, int);
-static mule_strlen(unsigned char *, int);
-static count_char(unsigned char *,int, int, int, int *, int *, int *);
+static int mule_strlen(unsigned char *, int);
+static void count_char(unsigned char *,int, int, int, int *, int *, int *);
 #else
 static m2c();
 static Lisp_Object mule_make_string();
@@ -401,8 +401,9 @@ Lisp_Object num, server, rcfile;
     return Fcons(Qnil, val);
   }
   else {
-    extern (*jrBeepFunc)();
-    Lisp_Object Fding(), CANNA_mode_keys();
+    extern Lisp_Object (*jrBeepFunc)(Lisp_Object);
+    Lisp_Object Fding(Lisp_Object);
+    Lisp_Object CANNA_mode_keys(void);
 
     jrBeepFunc = Fding;
 
@@ -655,7 +656,8 @@ DEFUN ("canna-query-mode", Fcanna_query_mode, Scanna_query_mode,
 static unsigned char yomibuf[RKBUFSIZE];
 static short kugiri[RKBUFSIZE / 2];
 
-static confirmContext()
+static int
+confirmContext()
 {
   if (IRCP_context < 0) {
     int context;
@@ -668,7 +670,8 @@ static confirmContext()
   return 1;
 }
 
-static byteLen(bun, len)
+static int
+byteLen(bun, len)
 int bun, len;
 {
   int i = 0, offset = 0, ch;
@@ -973,6 +976,7 @@ static int Vcanna_key_Cntrl_Down = IROHA_KEY_Cntrl_Down;
 
 static Lisp_Object VCANNA;				/* hir@nec, 1992.5.21 */
 
+void
 syms_of_canna ()
 {
   DEFVAR_LISP ("CANNA", &VCANNA, "");		/* hir@nec, 1992.5.21 */
@@ -1193,7 +1197,7 @@ syms_of_canna ()
 
 /* EUC multibyte string to MULE internal string */
 
-static
+static void
 c2mu(cp, l, mp)
 char	*cp;
 int	l;
@@ -1222,7 +1226,7 @@ char	*mp;
 
 /* MULE internal string to EUC multibyte string */
 
-static
+static void
 m2c(mp, l, cp)
 unsigned char	*mp;
 int	l;
@@ -1266,7 +1270,7 @@ int l;
 }	
 
 /* return the MULE internal string length of EUC string */
-static
+static int
 mule_strlen(p,l)
 unsigned char *p;
 int l;
@@ -1296,7 +1300,7 @@ int l;
 }
 
 /* count number of characters */
-static
+static void
 count_char(p,len,pos,rev,clen,cpos,crev)
 unsigned char *p;	
 int len,pos,rev,*clen,*cpos,*crev;

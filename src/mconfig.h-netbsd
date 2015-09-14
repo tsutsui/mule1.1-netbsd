@@ -77,8 +77,8 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 /* 92.11.10 by <ka-harad@ccs.mt.nec.co.jp> */
 #define CANNA_MULE
 #ifdef CANNA2
-#define INCCANNA2 -I/usr/local/canna/include
-#define LIBCANNA2 -L/usr/local/lib -lcanna
+#define INCCANNA2 -I/usr/pkg/include
+#define LIBCANNA2 -L/usr/pkg/lib -Wl,-R/usr/pkg/lib -lcanna
 #else
 #define INCCANNA -I/src/X11R5/SPARC/contrib/im/Canna/include
 #define LIBCANNA /src/X11R5/SPARC/contrib/im/Canna/lib/iroha/libiroha.a
