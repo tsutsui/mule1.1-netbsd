@@ -228,8 +228,7 @@ Lisp_Object ch;
   return storeResults(buf, len, &ks);
 }
 
-static
-Lisp_Object
+static Lisp_Object
 storeResults(buf, len, ks)
 unsigned char *buf;
 int len;
@@ -1257,8 +1256,7 @@ unsigned char	*cp;
 #undef make_string
 
 /* make_string after converting EUC string to MULE internal string */
-static
-Lisp_Object
+static Lisp_Object
 mule_make_string(p,l)
 unsigned char *p;
 int l;

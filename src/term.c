@@ -401,8 +401,7 @@ background_highlight ()
 
 /* Set standout mode to the mode specified for the text to be output.  */
 
-static
-void
+static void
 highlight_if_desired ()
 {
   if (TN_standout_width >= 0)

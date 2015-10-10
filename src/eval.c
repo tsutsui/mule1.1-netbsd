@@ -124,6 +124,14 @@ Lisp_Object Vdebugger;
 
 Lisp_Object funcall_lambda (Lisp_Object, int, Lisp_Object *);
 
+typedef Lisp_Object (*func0_t) (void);
+typedef Lisp_Object (*func1_t) (Lisp_Object);
+typedef Lisp_Object (*func2_t) (Lisp_Object, Lisp_Object);
+typedef Lisp_Object (*func3_t) (Lisp_Object, Lisp_Object, Lisp_Object);
+typedef Lisp_Object (*func4_t) (Lisp_Object, Lisp_Object, Lisp_Object, Lisp_Object);
+typedef Lisp_Object (*func5_t) (Lisp_Object, Lisp_Object, Lisp_Object, Lisp_Object, Lisp_Object);
+typedef Lisp_Object (*funcmany_t) (int, Lisp_Object *);
+
 void
 init_eval_once ()
 {
@@ -132,14 +140,6 @@ init_eval_once ()
   max_specpdl_size = 600;
   max_lisp_eval_depth = 300;	/* 92.7.10 by K.Handa - to compile regexp.el */
 }
-
-typedef Lisp_Object (*func0_t) (void);
-typedef Lisp_Object (*func1_t) (Lisp_Object);
-typedef Lisp_Object (*func2_t) (Lisp_Object, Lisp_Object);
-typedef Lisp_Object (*func3_t) (Lisp_Object, Lisp_Object, Lisp_Object);
-typedef Lisp_Object (*func4_t) (Lisp_Object, Lisp_Object, Lisp_Object, Lisp_Object);
-typedef Lisp_Object (*func5_t) (Lisp_Object, Lisp_Object, Lisp_Object, Lisp_Object, Lisp_Object);
-typedef Lisp_Object (*funcmany_t) (int, Lisp_Object *);
 
 void
 init_eval ()
