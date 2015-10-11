@@ -135,7 +135,7 @@ but another undo command will undo to the previous boundary.")
   if (EQ (current_buffer->undo_list, Qt))
     return Qnil;
   tem = Fcar (current_buffer->undo_list);
-  if (!NULL (tem))
+  if (!NILP (tem))
     current_buffer->undo_list = Fcons (Qnil, current_buffer->undo_list);
   return Qnil;
 }
@@ -167,7 +167,7 @@ truncate_undo_list (list, minsize, maxsize)
 	 either before or after it.  The lower threshold, MINSIZE,
 	 tells us to truncate after it.  If its size pushes past
 	 the higher threshold MAXSIZE as well, we truncate before it.  */
-      if (NULL (elt))
+      if (NILP (elt))
 	{
 	  if (size_so_far > maxsize)
 	    break;
@@ -191,11 +191,11 @@ truncate_undo_list (list, minsize, maxsize)
     }
 
   /* If we scanned the whole list, it is short enough; don't change it.  */
-  if (NULL (next))
+  if (NILP (next))
     return list;
 
   /* Truncate at the boundary where we decided to truncate.  */
-  if (!NULL (save_prev))
+  if (!NILP (save_prev))
     {
       XCONS (save_prev)->cdr = Qnil;
       return list;
@@ -218,7 +218,7 @@ Return what remains of the list.")
   /* If the head of the list is a boundary, it is the boundary
      preceding this command.  Get rid of it and don't count it.  */
   tem = Fcar (list);
-  if (NULL (tem))
+  if (NILP (tem))
     list = Fcdr (list);
 #endif
 
@@ -229,7 +229,7 @@ Return what remains of the list.")
 	  Lisp_Object next, car, cdr;
 	  next = Fcar (list);
 	  list = Fcdr (list);
-	  if (NULL (next))
+	  if (NILP (next))
 	    break;
 	  car = Fcar (next);
 	  cdr = Fcdr (next);

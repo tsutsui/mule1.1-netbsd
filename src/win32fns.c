@@ -25,9 +25,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 #ifdef WIN32
 /* The entire file is within this conditional */
 
-#ifdef NULL
-#undef NULL
-#endif
 #include "lisp.h"
 
 #include <windows.h>

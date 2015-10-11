@@ -69,7 +69,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #include "config.h"
 #include <stdio.h>
 /*#include <ctype.h>*/
-#undef NULL
 #include "lisp.h"
 #include "window.h"
 #include "termchar.h"
@@ -365,7 +364,7 @@ r2l_double_cursor_set (pos_p,w,p)
 {
   int *ip;
   int c_width, dir;
-  int display_direction = NULL(XBUFFER(w->buffer)->display_direction)?
+  int display_direction = NILP(XBUFFER(w->buffer)->display_direction)?
     LEFT_TO_RIGHT: RIGHT_TO_LEFT;
 
   ip = char_width_dir_on (p,display_direction);
@@ -524,11 +523,11 @@ redisplay ()
 
   tlbufpos = this_line_bufpos;
   tlendpos = this_line_endpos;
-  if (!all_windows && tlbufpos > 0 && NULL (w->update_mode_line)
+  if (!all_windows && tlbufpos > 0 && NILP (w->update_mode_line)
       /* Make sure recorded data applies to current buffer, etc */
       && this_line_buffer == current_buffer
       && current_buffer == XBUFFER (w->buffer)
-      && NULL (w->force_start)
+      && NILP (w->force_start)
       /* Point must be on the line that we have info recorded about */
       && point >= tlbufpos
       && point <= Z - tlendpos
@@ -650,7 +649,7 @@ update:
   if (pause)
     {
       this_line_bufpos = 0;
-      if (!NULL (last_arrow_position))
+      if (!NILP (last_arrow_position))
 	{
 	  last_arrow_position = Qt;
 	  last_arrow_string = Qt;
@@ -733,19 +732,19 @@ mark_window_display_accurate (window, flag)
 {
   register struct window *w;
 
-  for (;!NULL (window); window = w->next)
+  for (;!NILP (window); window = w->next)
     {
       w = XWINDOW (window);
 
-      if (!NULL (w->buffer))
+      if (!NILP (w->buffer))
 	XFASTINT (w->last_modified)
 	  = !flag ? 0 : BUF_MODIFF (XBUFFER (w->buffer));
       w->window_end_valid = Qt;
       w->update_mode_line = Qnil;
 
-      if (!NULL (w->vchild))
+      if (!NILP (w->vchild))
 	mark_window_display_accurate (w->vchild, flag);
-      if (!NULL (w->hchild))
+      if (!NILP (w->hchild))
 	mark_window_display_accurate (w->hchild, flag);
     }
 
@@ -782,7 +781,7 @@ void
 redisplay_windows (window)
      Lisp_Object window;
 {
-  for (; !NULL (window); window = XWINDOW (window)->next)
+  for (; !NILP (window); window = XWINDOW (window)->next)
     redisplay_window (window, 0);
 }
 
@@ -806,17 +805,17 @@ redisplay_window (window, just_this_one)
 
   /* If this is a combination window, do its children; that's all.  */
 
-  if (!NULL (w->vchild))
+  if (!NILP (w->vchild))
     {
       redisplay_windows (w->vchild);
       return;
     }
-  if (!NULL (w->hchild))
+  if (!NILP (w->hchild))
     {
       redisplay_windows (w->hchild);
       return;
     }
-  if (NULL (w->buffer))
+  if (NILP (w->buffer))
     abort ();
 
   if (update_mode_lines)
@@ -857,7 +856,7 @@ redisplay_window (window, just_this_one)
 
   /* Handle case where place to start displaying has been specified */
 
-  if (!NULL (w->force_start))
+  if (!NILP (w->force_start))
     {
       w->update_mode_line = Qt;
       w->force_start = Qnil;
@@ -940,7 +939,7 @@ redisplay_window (window, just_this_one)
     }
   /* If current starting point was originally the beginning of a line
      but no longer is, find a new starting point.  */
-  else if (!NULL (w->start_at_line_beg)
+  else if (!NILP (w->start_at_line_beg)
 	   && !(startp == BEGV
 		|| FETCH_CHAR (startp - 1) == '\n'))
     {
@@ -1023,7 +1022,7 @@ recenter:
 done:
   /* If window not full width, must redo its mode line
      if the window to its side is being redone */
-  if ((!NULL (w->update_mode_line)
+  if ((!NILP (w->update_mode_line)
        || (!just_this_one && width < screen_width - 1))
       && !EQ (window, minibuf_window))
     display_mode_line (w);
@@ -1477,12 +1476,12 @@ current_attribute(pos)
   register unsigned int i, attr = 0;
   Lisp_Object p1, p2;
 
-  if (NULL (p1 = current_buffer->attributed_region))
+  if (NILP (p1 = current_buffer->attributed_region))
     return Qnil;
   do {
     p2 = p1;
     p1 = XCONS (p1)->cdr;
-  } while (!NULL (p1)
+  } while (!NILP (p1)
 	   && marker_position (XCONS (XCONS (p1)->car)->car) <= pos);
   return p2;
 }
@@ -1522,8 +1521,8 @@ display_text_line (w, start, vpos, hpos, taboffset)
   register unsigned int *startp; /* 91.11.1 by K.Handa */
   register unsigned int *p1prev = 0; /* 91.10.19 by K.Handa */
   int tab_width = XINT (current_buffer->tab_width);
-  int ctl_arrow = !NULL (current_buffer->ctl_arrow);
-  int ctl_hexa = !NULL (current_buffer->ctl_hexa); /* 92.4.9 by K.Handa */
+  int ctl_arrow = !NILP (current_buffer->ctl_arrow);
+  int ctl_hexa = !NILP (current_buffer->ctl_hexa); /* 92.4.9 by K.Handa */
   char *hexa = "0123456789ABCDEF"; /* 92.4.9 by K.Handa */
   int width = XFASTINT (w->width) - 1
     - (XFASTINT (w->width) + XFASTINT (w->left) != screen_width);
@@ -1534,13 +1533,13 @@ display_text_line (w, start, vpos, hpos, taboffset)
   int truncate = hscroll
     || (truncate_partial_width_windows
 	&& XFASTINT (w->width) < screen_width)
-    || !NULL (current_buffer->truncate_lines);
+    || !NILP (current_buffer->truncate_lines);
   int selective
     = XTYPE (current_buffer->selective_display) == Lisp_Int
       ? XINT (current_buffer->selective_display)
-	: !NULL (current_buffer->selective_display) ? -1 : 0;
-  int selective_e = selective && !NULL (current_buffer->selective_display_ellipses);
-  int mc_flag = !NULL(current_buffer->mc_flag); /* 91.10.19 by K.Handa */
+	: !NILP (current_buffer->selective_display) ? -1 : 0;
+  int selective_e = selective && !NILP (current_buffer->selective_display_ellipses);
+  int mc_flag = !NILP(current_buffer->mc_flag); /* 91.10.19 by K.Handa */
 /* patch for attribute of characters by K.Handa  89.11.21, 91.10.19, 92.3.21 */
   unsigned int attribute_bits = 0;
   Lisp_Object apositions;
@@ -1548,7 +1547,7 @@ display_text_line (w, start, vpos, hpos, taboffset)
 /* 92.9.7, 92.11.10 by K.Handa, 93.5.22 Y.Niibe */
   unsigned char mc_chars[CMP_CHAR_SIZE];
   register int mc_bytes;
-  int display_direction = NULL(XBUFFER(w->buffer)->display_direction)?
+  int display_direction = NILP(XBUFFER(w->buffer)->display_direction)?
     LEFT_TO_RIGHT: RIGHT_TO_LEFT;
 /* end of patch */
 
@@ -1565,7 +1564,7 @@ display_text_line (w, start, vpos, hpos, taboffset)
 				 hpos, !truncate ? '\\' : '$', -1, -1);
 	else if (XTYPE (Vminibuf_preprompt) == Lisp_Cons) {
 	  Lisp_Object temp = Vminibuf_preprompt;
-	  while (!NULL (temp)) {
+	  while (!NILP (temp)) {
 	    if (XTYPE (Fcar (temp)) == Lisp_String)
 	      hpos = display_string (w, vpos, XSTRING (Fcar (temp))->data,
 				     hpos, !truncate ? '\\' : '$', -1, -1);
@@ -1586,14 +1585,14 @@ display_text_line (w, start, vpos, hpos, taboffset)
   endp = startp + width;
 
 /* patch for attribute by K.Handa 89.11.24, 91.10.19 */
-  if (NULL (apositions = current_attribute(start))) {
+  if (NILP (apositions = current_attribute(start))) {
     attribute_bits = 0;
     apos = end;
   } else {
     attribute_bits = XFASTINT (XCONS (XCONS (apositions)->car)->cdr);
     attribute_bits <<= 26;	/* See dispextern.h, 92.11.10 */
     apositions = XCONS (apositions)->cdr;
-    if (NULL (apositions))
+    if (NILP (apositions))
       apos = end;
     else
       apos = marker_position (XCONS (XCONS (apositions)->car)->car);
@@ -1632,7 +1631,7 @@ display_text_line (w, start, vpos, hpos, taboffset)
 	attribute_bits = XFASTINT (XCONS (XCONS (apositions)->car)->cdr);
 	attribute_bits <<= 26;	/* See dispextern.h, 92.11.10 */
 	apositions = XCONS (apositions)->cdr;
-	if (NULL (apositions))
+	if (NILP (apositions))
 	  apos = end;
 	else
 	  apos = marker_position (XCONS (XCONS (apositions)->car)->car);
@@ -2382,7 +2381,7 @@ display_mode_element (w, vpos, hpos, depth, minendcol, maxendcol, elt)
       {
 	register Lisp_Object tem;
 	tem = Fboundp (elt);
-	if (!NULL (tem))
+	if (!NILP (tem))
 	  {
 	    tem = Fsymbol_value (elt);
 	    /* If value is a string, output that string literally:
@@ -2418,17 +2417,17 @@ display_mode_element (w, vpos, hpos, depth, minendcol, maxendcol, elt)
 	      goto invalid;
 	    /* elt is now the cdr, and we know it is a cons cell.
 	       Use its car if CAR has a non-nil value.  */
-	    if (!NULL (tem))
+	    if (!NILP (tem))
 	      {
 		tem = Fsymbol_value (car);
-		if (!NULL (tem))
+		if (!NILP (tem))
 		  { elt = XCONS (elt)->car; goto tail_recurse; }
 	      }
 	    /* Symbol's value is nil (or symbol is unbound)
 	       Get the cddr of the original list
 	       and if possible find the caddr and use that.  */
 	    elt = XCONS (elt)->cdr;
-	    if (NULL (elt))
+	    if (NILP (elt))
 	      break;
 	    else if (XTYPE (elt) != Lisp_Cons)
 	      goto invalid;
@@ -2495,19 +2494,19 @@ decode_mode_spec_coding(code, buf, eol)
      char *buf;
      int eol;
 {
-  if (NULL (code)) {
+  if (NILP (code)) {
     *buf = '-';
     if (eol) *++buf = '-';
   } else {
     Lisp_Object val = code;
 
-    while (!NULL (val) && XTYPE (val) == Lisp_Symbol)
+    while (!NILP (val) && XTYPE (val) == Lisp_Symbol)
       val = Fget (val, Qcoding_system);
     *buf = XFASTINT (XVECTOR (val)->contents[1]);
     if (eol) {
       val = Fget (code, Qeol_type);
       *++buf =
-	NULL (val) ? '-' :
+	NILP (val) ? '-' :
 	  XTYPE (val) == Lisp_Vector ? '_'
 	    : XFASTINT (val) == 1 ? '.' : XFASTINT (val) == 2 ? ':' : '\'';
     }
@@ -2560,7 +2559,7 @@ decode_mode_spec (w, c, maxwidth)
 /* 92.5.18 by M.Higashida */
 #ifdef subprocesses
       obj = Fget_buffer_process(Fcurrent_buffer ());
-      if (!NULL(obj)) {
+      if (!NILP(obj)) {
 	decode_mode_spec_coding(XPROCESS (obj)->incode,
 				decode_mode_spec_buf + i, 1);
 	decode_mode_spec_coding(XPROCESS (obj)->outcode,
@@ -2596,7 +2595,7 @@ decode_mode_spec (w, c, maxwidth)
       break;
 
     case '*':
-      if (!NULL (current_buffer->read_only))
+      if (!NILP (current_buffer->read_only))
 	return "%";
       if (MODIFF > current_buffer->save_modified)
 	return "*";
@@ -2606,7 +2605,7 @@ decode_mode_spec (w, c, maxwidth)
       /* status of process */
 #ifdef subprocesses
       obj = Fget_buffer_process (Fcurrent_buffer ());
-      if (NULL (obj))
+      if (NILP (obj))
 	return "no process";
       obj = Fsymbol_name (Fprocess_status (obj));
       break;
@@ -2720,14 +2719,14 @@ display_string (w, vpos, string, hpos, truncate, mincol, maxcol)
 				/* 91.10.21 by K.Handa */
   int window_width = XFASTINT (w->width);
   /* 91.10.21 by K.Handa, 92.4.30 by Y.Niibe */
-  int mc_flag = !NULL(XBUFFER (w->buffer)->mc_flag);
+  int mc_flag = !NILP(XBUFFER (w->buffer)->mc_flag);
   /* 92.3.21, 92.9.7 by K.Handa */
   register unsigned char *mc_start;
   register unsigned char *endp = string + strlen(string);
   register int mc_bytes = 0, resumed_bytes;
   char *hexa = "0123456789ABCDEF"; /* 92.4.9 by K.Handa */
   /* 92.4.9 by K.Handa, 92.4.30 by Y.Niibe */
-  int ctl_hexa = !NULL (XBUFFER (w->buffer)->ctl_hexa);
+  int ctl_hexa = !NILP (XBUFFER (w->buffer)->ctl_hexa);
   int last_mc;
   unsigned int *prev;
 

@@ -47,7 +47,7 @@ On reaching end of buffer, stop and signal error.")
   (n)
      Lisp_Object n;
 {
-  if (NULL (n))
+  if (NILP (n))
     XFASTINT (n) = 1;
   else
     CHECK_NUMBER (n, 0);
@@ -73,7 +73,7 @@ On reaching end of buffer, stop and signal error.")
   (n)
      Lisp_Object n;
 {
-  if (NULL (n))
+  if (NILP (n))
     XFASTINT (n) = 1;
   else
     CHECK_NUMBER (n, 0);
@@ -98,7 +98,7 @@ On attempt to pass beginning or end of buffer, stop and signal error.")
   (n)
      Lisp_Object n;
 {
-  if (NULL (n))
+  if (NILP (n))
     XFASTINT (n) = 1;
   else
     CHECK_NUMBER (n, 0);
@@ -115,7 +115,7 @@ forward_point(n)
 {
   int pos = point, c;
 
-  if (NULL(current_buffer->mc_flag))
+  if (NILP(current_buffer->mc_flag))
     pos += n;
   else {
     if (n > 0) while (n--) INC_POS (pos);
@@ -132,7 +132,7 @@ On attempt to pass beginning or end of buffer, stop and signal error.")
   (n)
      Lisp_Object n;
 {
-  if (NULL (n))
+  if (NILP (n))
     XFASTINT (n) = 1;
   else
     CHECK_NUMBER (n, 0);
@@ -154,7 +154,7 @@ With positive ARG, a non-empty line traversed at end of buffer \n\
   int pos;
   int count, shortage, negp;
 
-  if (NULL (n))
+  if (NILP (n))
     count = 1;
   else
     {
@@ -181,7 +181,7 @@ If scan reaches end of buffer, stop there without error.")
   (n)
      Lisp_Object n;
 {
-  if (NULL (n))
+  if (NILP (n))
     XFASTINT (n) = 1;
   else
     CHECK_NUMBER (n, 0);
@@ -201,7 +201,7 @@ If scan reaches end of buffer, stop there without error.")
   register int pos;
   register int stop;
 
-  if (NULL (n))
+  if (NILP (n))
     XFASTINT (n) = 1;
   else
     CHECK_NUMBER (n, 0);
@@ -230,7 +230,7 @@ ARG was explicitly specified.")
   CHECK_NUMBER (n, 0);
 
   pos = forward_point(XINT (n)); /* 91.10.28 by K.Handa */
-  if (NULL (killflag))
+  if (NILP (killflag))
     {
       if (XINT (n) < 0)
 	{
@@ -307,7 +307,7 @@ In Auto Fill mode, can break the preceding line if no numeric arg.")
 
   arg = Fprefix_numeric_value (arg1);
 
-  if (!NULL (current_buffer->read_only))
+  if (!NILP (current_buffer->read_only))
     Fsignal (Qbuffer_read_only, Qnil);
 
   /* Inserting a newline at the end of a line
@@ -327,7 +327,7 @@ In Auto Fill mode, can break the preceding line if no numeric arg.")
       if (flag)
 	insert (&c1, 1);
       else
-	self_insert_internal ('\n', !NULL (arg1));
+	self_insert_internal ('\n', !NILP (arg1));
       XFASTINT (arg)--;		/* Ok since old and new vals both nonneg */
     }
 
@@ -351,7 +351,7 @@ self_insert_internal (c1, noautofill)
 
   len = CHARtoSTR (c1, str);
 
-  if (!NULL (current_buffer->overwrite_mode)
+  if (!NILP (current_buffer->overwrite_mode)
       && point < ZV
       && c != '\n') {		/* 92.11.30 by K.Handa */
     int clm1 = current_column() + char_width[str[0]], clm2;
@@ -372,9 +372,9 @@ self_insert_internal (c1, noautofill)
       hairy = 1;
     }
   }
-  if (!NULL (current_buffer->abbrev_mode)
+  if (!NILP (current_buffer->abbrev_mode)
       && SYNTAX (c) != Sword
-      && NULL (current_buffer->read_only)
+      && NILP (current_buffer->read_only)
       && point > BEGV) {
     pos = point;
     DEC_POS (pos);
@@ -382,13 +382,13 @@ self_insert_internal (c1, noautofill)
     if (SYNTAX (c1) == Sword)
     {
       tem = Fexpand_abbrev ();
-      if (!NULL (tem))
+      if (!NILP (tem))
 	hairy = 1;
     }
   }
   if ((c == ' ' || c == '\n')
       && !noautofill
-      && !NULL (current_buffer->auto_fill_hook)
+      && !NILP (current_buffer->auto_fill_hook)
       && current_column () > XFASTINT (current_buffer->fill_column))
     {
       if (c != '\n')
@@ -402,7 +402,7 @@ self_insert_internal (c1, noautofill)
     insert (str, len);
   synt = SYNTAX (c);
   if ((synt == Sclose || synt == Smath)
-      && !NULL (Vblink_paren_hook) && FROM_KBD)
+      && !NILP (Vblink_paren_hook) && FROM_KBD)
     {
       call0 (Vblink_paren_hook);
       hairy = 1;

@@ -37,9 +37,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 #include <stdio.h>
 #include <dos.h>
 
-#ifdef NULL
-#undef NULL
-#endif
 #include "lisp.h"
 #include "buffer.h"
 #include "termchar.h"

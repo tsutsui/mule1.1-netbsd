@@ -35,7 +35,6 @@ what you give them.   Help stamp out software-hoarding!  */
 #ifdef emacs
 #include "config.h"
 #include "lisp.h"
-#undef NULL
 #endif
 
 #ifndef BUFSIZE

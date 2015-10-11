@@ -56,8 +56,6 @@ extern struct direct *readdir ();
 
 #endif
 
-#undef NULL
-
 #include "lisp.h"
 #include "buffer.h"
 
@@ -90,7 +88,7 @@ static void mcpath_encode_code (cp)
 
   coding_system = Fsymbol_value (Qpathname_coding_system);
 #ifndef MCPATH_NO_BACKWARD_COMPATIBILITY
-  if (NULL(coding_system))
+  if (NILP(coding_system))
     coding_system = Fsymbol_value (Qfile_system_coding_system);
 #endif
 

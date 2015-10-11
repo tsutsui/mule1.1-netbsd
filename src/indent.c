@@ -117,8 +117,8 @@ current_column ()
   register int tab_seen;
   register int post_tab;
   register int tab_width = XINT (current_buffer->tab_width);
-  int ctl_arrow = !NULL (current_buffer->ctl_arrow);
-  int mc_flag = !NULL(current_buffer->mc_flag); /* 91.10.27 by K.Handa */
+  int ctl_arrow = !NILP (current_buffer->ctl_arrow);
+  int mc_flag = !NILP(current_buffer->mc_flag); /* 91.10.27 by K.Handa */
   int non_ascii = 0;		/* 92.3.21 by K.Handa */
   int last_non_ascii;		/* 92.11.11 by K.Handa */
 
@@ -271,7 +271,7 @@ by default, MIN is zero.")
   register int tab_width = XINT (current_buffer->tab_width);
 
   CHECK_NUMBER (col, 0);
-  if (NULL (minimum))
+  if (NILP (minimum))
     XFASTINT (minimum) = 0;
   CHECK_NUMBER (minimum, 1);
 
@@ -376,8 +376,8 @@ passed values greater than (screen-width)")
   register int goal;
   register int end = ZV;
   register int tab_width = XINT (current_buffer->tab_width);
-  register int ctl_arrow = !NULL (current_buffer->ctl_arrow);
-  int mc_flag = !NULL(current_buffer->mc_flag); /* 91.10.27 by K.Handa */
+  register int ctl_arrow = !NILP (current_buffer->ctl_arrow);
+  int mc_flag = !NILP(current_buffer->mc_flag); /* 91.10.27 by K.Handa */
   Lisp_Object val;
 
   if (tab_width <= 0 || tab_width > 20) tab_width = 8;
@@ -569,26 +569,26 @@ compute_motion (from, fromvpos, fromhpos, to, tovpos, tohpos, width, hscroll, ta
   register Lisp_Object_Int pos;
   register unsigned int c;	/* 92.3.21 by K.Handa */
   register Lisp_Object_Int tab_width = XFASTINT (current_buffer->tab_width);
-  register int ctl_arrow = !NULL (current_buffer->ctl_arrow);
+  register int ctl_arrow = !NILP (current_buffer->ctl_arrow);
   int selective
     = XTYPE (current_buffer->selective_display) == Lisp_Int
       ? XINT (current_buffer->selective_display)
-	: !NULL (current_buffer->selective_display) ? -1 : 0;
+	: !NILP (current_buffer->selective_display) ? -1 : 0;
   int prev_vpos, prev_hpos;
   /* 92.9.9, 92.11.12 by K.Handa, 93.5.22 by Y.Niibe*/
   register int mc_bytes;
   int last_mc = 0;		/* 92.3.21 by K.Handa */
-  int mc_flag = !NULL(current_buffer->mc_flag); /* 91.10.27 by K.Handa */
+  int mc_flag = !NILP(current_buffer->mc_flag); /* 91.10.27 by K.Handa */
 /* 92.4.1 by Y.Niibe */
   int truncate = hscroll
     || (truncate_partial_width_windows
 	&& width + 1 < screen_width)
-    || !NULL (current_buffer->truncate_lines); /* 92.4.1 by Y.Niibe */
+    || !NILP (current_buffer->truncate_lines); /* 92.4.1 by Y.Niibe */
   int lastpos;
 /* end of patch */
 /* 92.8.2, 93.5.22 by Y.Niibe */
   int display_direction =
-    NULL(current_buffer->display_direction)? LEFT_TO_RIGHT: RIGHT_TO_LEFT;
+    NILP(current_buffer->display_direction)? LEFT_TO_RIGHT: RIGHT_TO_LEFT;
   int vir_hpos; /* virtual hpos */
 /* end of patch */
 
@@ -639,7 +639,7 @@ compute_motion (from, fromvpos, fromhpos, to, tovpos, tohpos, width, hscroll, ta
 	      while (pos < to && position_indentation (pos + 1) >= selective);
 	      pos--;
 	      /* Allow for the " ..." that is displayed for them. */
-	      if (!NULL (current_buffer->selective_display_ellipses))
+	      if (!NILP (current_buffer->selective_display_ellipses))
 		{
 		  hpos += 4;
 		  if (hpos >= width)
@@ -667,7 +667,7 @@ compute_motion (from, fromvpos, fromhpos, to, tovpos, tohpos, width, hscroll, ta
 	  /* Stop *before* the real newline.  */
 	  pos--;
 	  /* Allow for the " ..." that is displayed for them. */
-	  if (!NULL (current_buffer->selective_display_ellipses))
+	  if (!NILP (current_buffer->selective_display_ellipses))
 	    {
 	      hpos += 4;
 	      if (hpos >= width)
@@ -1140,7 +1140,7 @@ vmotion (from, vtarget, width, hscroll, window)
   int selective
     = XTYPE (current_buffer->selective_display) == Lisp_Int
       ? XINT (current_buffer->selective_display)
-	: !NULL (current_buffer->selective_display) ? -1 : 0;
+	: !NILP (current_buffer->selective_display) ? -1 : 0;
   int start_hpos = (EQ (window, minibuf_window) ? minibuf_prompt_width : 0);
 
  retry:

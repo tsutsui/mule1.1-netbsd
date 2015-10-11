@@ -39,7 +39,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/file.h>
-#undef NULL
 #include "config.h"
 #include "lisp.h"
 #include "mule.h"
@@ -148,7 +147,7 @@ static int readchar (readcharfun)
 
   tem = call0 (readcharfun);
 
-  if (NULL (tem))
+  if (NILP (tem))
     return -1;
   return XINT (tem);
 }
@@ -217,11 +216,11 @@ Return t if file exists.")
      since it would try to load a directory as a Lisp file */
   if (XSTRING (str)->size > 0)
     {
-      fd = openp (Vload_path, str, !NULL (nosuffix) ? "" : ".elc:.el:", 0, 0);
+      fd = openp (Vload_path, str, !NILP (nosuffix) ? "" : ".elc:.el:", 0, 0);
     }
 
   if (fd < 0)
-    if (NULL (noerror))
+    if (NILP (noerror))
       while (1)
 	Fsignal (Qfile_error, Fcons (build_string ("Cannot open load file"),
 				     Fcons (str, Qnil)));
@@ -234,7 +233,7 @@ Return t if file exists.")
       error ("Failure to create stdio stream for %s", XSTRING (str)->data);
     }
 
-  if (NULL (nomessage))
+  if (NILP (nomessage))
     message ("Loading %s...", XSTRING (str)->data);
 
   GCPRO1 (str);
@@ -247,7 +246,7 @@ Return t if file exists.")
   unbind_to (count, Qnil);
   UNGCPRO;
 
-  if (!noninteractive && NULL (nomessage))
+  if (!noninteractive && NILP (nomessage))
     message ("Loading %s...done", XSTRING (str)->data);
   return Qt;
 }
@@ -278,7 +277,7 @@ On success, returns a file name string, or else returns NIL.")
 
   CHECK_STRING (str, 0);
   str = Fsubstitute_in_file_name (str);	/* 92.12.22 by M.Higashida */
-  fd = openp(Vload_path, str, NULL (nosuffix) ? ".elc:.el:" : "", &fn, 0);
+  fd = openp(Vload_path, str, NILP (nosuffix) ? ".elc:.el:" : "", &fn, 0);
   if (fd > 0) close(fd);
   return fn;
 }
@@ -336,7 +335,7 @@ openp (path, str, suffix, storeptr, exec_only)
   if (absolute_filename_p (str))
     absolute = 1;
 
-  for (; !NULL (path); path = Fcdr (path))
+  for (; !NILP (path); path = Fcdr (path))
     {
       char *nsuffix;
 
@@ -444,7 +443,7 @@ readevalloop (readcharfun, stream, evalfun, printflag)
       if (c < 0) break;
       if (c == ' ' || c == '\t' || c == '\n' || c == '\f') continue;
 
-      if (!NULL (Vpurify_flag) && c == '(')
+      if (!NILP (Vpurify_flag) && c == '(')
 	{
 	  record_unwind_protect (unreadpure, Qnil);
 	  val = read_list (-1, readcharfun);
@@ -484,14 +483,14 @@ nil means discard it; anything else is stream for print.")
 {
   int count = specpdl_ptr - specpdl;
   Lisp_Object tem;
-  if (NULL (printflag))
+  if (NILP (printflag))
     tem = Qsymbolp;
   else
     tem = printflag;
   specbind (Qstandard_output, tem);
   record_unwind_protect (save_excursion_restore, save_excursion_save ());
   SET_PT (BEGV);
-  readevalloop (Fcurrent_buffer (), 0, Feval, !NULL (printflag));
+  readevalloop (Fcurrent_buffer (), 0, Feval, !NILP (printflag));
   unbind_to (count, Qnil);
 
   return Qnil;
@@ -510,18 +509,18 @@ nil means discard it; anything else is stream for print.")
   int count = specpdl_ptr - specpdl;
   Lisp_Object tem;
 
-  if (NULL (printflag))
+  if (NILP (printflag))
     tem = Qsymbolp;
   else
     tem = printflag;
   specbind (Qstandard_output, tem);
-  if (NULL (printflag))
+  if (NILP (printflag))
     record_unwind_protect (save_excursion_restore, save_excursion_save ());
   record_unwind_protect (save_restriction_restore, save_restriction_save ());
   /* This both uses b and checks its type.  */
   Fgoto_char (b);
   Fnarrow_to_region (make_number (BEGV), e);
-  readevalloop (Fcurrent_buffer (), 0, Feval, !NULL (printflag));
+  readevalloop (Fcurrent_buffer (), 0, Feval, !NILP (printflag));
 
   return unbind_to (count, Qnil);
 }
@@ -543,7 +542,7 @@ STREAM or standard-input may be:\n\
 
   unrch = -1;	/* Allow buffering-back only within a read. */
 
-  if (NULL (readcharfun))
+  if (NILP (readcharfun))
     readcharfun = Vstandard_input;
   if (EQ (readcharfun, Qt))
     readcharfun = Qread_char;
@@ -572,7 +571,7 @@ START and END optionally delimit a substring of STRING from which to read;\n\
 
   CHECK_STRING (string,0);
 
-  if (NULL (end))
+  if (NILP (end))
     endval = XSTRING (string)->size;
   else
     { CHECK_NUMBER (end,2);
@@ -581,7 +580,7 @@ START and END optionally delimit a substring of STRING from which to read;\n\
 	args_out_of_range (string, end);
     }
 
-  if (NULL (start))
+  if (NILP (start))
     startval = 0;
   else
     { CHECK_NUMBER (start,1);
@@ -717,7 +716,7 @@ read1 (readcharfun)
 	/* If purifying, and string starts with \ newline,
 	   return zero instead.  This is for doc strings
 	   that we are really going to find in etc/DOC.nn.nn  */
-	if (!NULL (Vpurify_flag) && NULL (Vdoc_file_name) && cancel)
+	if (!NILP (Vpurify_flag) && NILP (Vdoc_file_name) && cancel)
 	  return make_number (0);
 
 	if (read_pure)
@@ -859,7 +858,7 @@ read_list (flag, readcharfun)
 	  if (XINT (elt) == '.')
 	    {
 	      GCPRO2 (val, tail);
-	      if (!NULL (tail))
+	      if (!NILP (tail))
 		XCONS (tail)->cdr = read0 (readcharfun);
 	      else
 		val = read0 (readcharfun);
@@ -874,7 +873,7 @@ read_list (flag, readcharfun)
       tem = (read_pure && flag <= 0
 	     ? pure_cons (elt, Qnil)
 	     : Fcons (elt, Qnil));
-      if (!NULL (tail))
+      if (!NILP (tail))
 	XCONS (tail)->cdr = tem;
       else
 	val = tem;
@@ -1008,7 +1007,7 @@ intern (str)
   tem = oblookup (obarray, str, len);
   if (XTYPE (tem) == Lisp_Symbol)
     return tem;
-  return Fintern ((!NULL (Vpurify_flag)
+  return Fintern ((!NILP (Vpurify_flag)
 		   ? make_pure_string (str, len)
 		   : make_string (str, len)),
 		  obarray);
@@ -1023,7 +1022,7 @@ it defaults to the value of  obarray.")
 {
   register Lisp_Object tem, sym, *ptr;
 
-  if (NULL (obarray)) obarray = Vobarray;
+  if (NILP (obarray)) obarray = Vobarray;
   obarray = check_obarray (obarray);
 
   CHECK_STRING (str, 0);
@@ -1032,7 +1031,7 @@ it defaults to the value of  obarray.")
   if (XTYPE (tem) != Lisp_Int)
     return tem;
 
-  if (!NULL (Vpurify_flag))
+  if (!NILP (Vpurify_flag))
     str = Fpurecopy (str);
   sym = Fmake_symbol (str);
 
@@ -1054,7 +1053,7 @@ it defaults to the value of  obarray.")
 {
   register Lisp_Object tem;
 
-  if (NULL (obarray)) obarray = Vobarray;
+  if (NILP (obarray)) obarray = Vobarray;
   obarray = check_obarray (obarray);
 
   CHECK_STRING (str, 0);
@@ -1158,7 +1157,7 @@ OBARRAY defaults to the value of  obarray.")
 {
   Lisp_Object tem;
 
-  if (NULL (obarray)) obarray = Vobarray;
+  if (NILP (obarray)) obarray = Vobarray;
   obarray = check_obarray (obarray);
 
   map_obarray (obarray, mapatoms_1, function);
@@ -1345,11 +1344,11 @@ init_read ()
   Vload_path = normal_path;
 
   /* Warn if dirs in the *standard* path don't exist.  */
-  for (; !NULL (normal_path); normal_path = XCONS (normal_path)->cdr)
+  for (; !NILP (normal_path); normal_path = XCONS (normal_path)->cdr)
     {
       Lisp_Object dirfile;
       dirfile = Fcar (normal_path);
-      if (!NULL (dirfile))
+      if (!NILP (dirfile))
 	{
 	  dirfile = Fdirectory_file_name (dirfile);
 	  if (access (XSTRING (dirfile)->data, 0) < 0)
@@ -1361,7 +1360,7 @@ init_read ()
   if (egetenv ("EMACSLOADPATH"))
     Vload_path = decode_env_path ("EMACSLOADPATH", normal);
 #ifndef CANNOT_DUMP
-  if (!NULL (Vpurify_flag))
+  if (!NILP (Vpurify_flag))
     Vload_path = Fcons (build_string ("../lisp"), Vload_path);
 #endif				/* not CANNOT_DUMP */
 

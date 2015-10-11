@@ -57,7 +57,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #include "config.h"
 #include <stdio.h>
-#undef NULL
 #include "termchar.h"
 #include "termopts.h"
 #if defined(WIN32) && defined(USE_FATFS)
@@ -86,10 +85,6 @@ extern int errno;
 /* 91.10.16 by S.Hirano, 93.2.25 by M.Higashida */
 #ifdef MSDOS
 #include <time.h>
-#ifdef NULL
-#undef NULL
-#endif
-#define NULL(x)  (XFASTINT (x) == XFASTINT (Qnil))
 #ifdef EMX
 #include <sys/ioctl.h>
 #endif
@@ -422,7 +417,7 @@ echo ()
   message1 (echobuf);
   echoing = 0;
 
-  if (waiting_for_input && !NULL (Vquit_flag))
+  if (waiting_for_input && !NILP (Vquit_flag))
     quit_throw_to_read_command_char ();
 }
 
@@ -491,7 +486,7 @@ Lisp_Object
 recursive_edit_unwind (buffer)
      Lisp_Object buffer;
 {
-  if (!NULL (buffer))
+  if (!NILP (buffer))
     Fset_buffer (buffer);
   command_loop_level--;
   update_mode_lines = 1;
@@ -542,7 +537,7 @@ cmd_error (data)
 
   /* For file-error, make error message by concatenating
      all the data items.  They are all strings.  */
-  if (!NULL (file_error))
+  if (!NILP (file_error))
     errmsg = XCONS (tail)->car, tail = XCONS (tail)->cdr;
 
   if (XTYPE (errmsg) == Lisp_String)
@@ -553,7 +548,7 @@ cmd_error (data)
   for (i = 0; CONSP (tail); tail = Fcdr (tail), i++)
     {
       write_string_1 (i ? ", " : ": ", 2, Qt);
-      if (!NULL (file_error))
+      if (!NILP (file_error))
 	Fprinc (Fcar (tail), Qt);
       else
 	Fprin1 (Fcar (tail), Qt);
@@ -609,7 +604,7 @@ command_loop_2 ()
   register Lisp_Object val;
   do
     val = internal_condition_case (command_loop_1, Qerror, cmd_error);
-  while (!NULL (val));
+  while (!NILP (val));
   return Qnil;
 }
 
@@ -623,9 +618,9 @@ Lisp_Object
 top_level_1 ()
 {
   /* On entry to the outer level, run the startup file */
-  if (!NULL (Vtop_level))
+  if (!NILP (Vtop_level))
     internal_condition_case (top_level_2, Qerror, cmd_error);
-  else if (!NULL (Vpurify_flag))
+  else if (!NILP (Vpurify_flag))
     message ("Bare impure Emacs (standard Lisp code not loaded)");
   else
     message ("Bare Emacs (standard Lisp code not loaded)");
@@ -676,7 +671,7 @@ command_loop_1 ()
   cancel_echoing ();
 
   /* Don't clear out last_command at the beginning of a macro.  */
-  if (NULL (Vexecuting_macro)
+  if (NILP (Vexecuting_macro)
       || XTYPE (Vexecuting_macro) != Lisp_String)
     last_command = Qt;
   nonundocount = 0;
@@ -686,7 +681,7 @@ command_loop_1 ()
   while (1)
     {
       /* Install chars successfully executed in kbd macro */
-      if (defining_kbd_macro && NULL (Vprefix_arg))
+      if (defining_kbd_macro && NILP (Vprefix_arg))
 	finalize_kbd_macro_chars ();
 
       /* Make sure current window's buffer is selected.  */
@@ -713,7 +708,7 @@ command_loop_1 ()
 
 	  echo_area_contents = 0;
 	  no_direct = 1;
-	  if (!NULL (Vquit_flag))
+	  if (!NILP (Vquit_flag))
 	    {
 	      Vquit_flag = Qnil;
 	      unread_command_char = quit_char;
@@ -752,9 +747,9 @@ command_loop_1 ()
 	(unsigned char)keybuf[i - 1];
       
       cmd = read_key_sequence_cmd;
-      if (!NULL (Vexecuting_macro))
+      if (!NILP (Vexecuting_macro))
 	{
-	  if (!NULL (Vquit_flag))
+	  if (!NILP (Vquit_flag))
 	    {
 	      Vexecuting_macro = Qt;
 	      QUIT;		/* Make some noise. */
@@ -768,7 +763,7 @@ command_loop_1 ()
 
       /* Execute the command.  */
 
-      if (NULL (cmd))
+      if (NILP (cmd))
 	{
 	  /* nil means key is undefined.  */
 	  bell ();
@@ -779,7 +774,7 @@ command_loop_1 ()
       else
 	{
 	  this_command = cmd;
-	  if (NULL (Vprefix_arg) && ! no_direct)
+	  if (NILP (Vprefix_arg) && ! no_direct)
 	    {
 	      if (EQ (cmd, Qforward_char) && point < ZV)
 		{
@@ -793,7 +788,7 @@ command_loop_1 ()
 		      && !windows_or_buffers_changed
 		      && EQ (current_buffer->selective_display, Qnil)
 		      && !detect_input_pending ()
-		      && NULL (Vexecuting_macro))
+		      && NILP (Vexecuting_macro))
 		    no_redisplay = direct_output_forward_char (1);
 		  goto directly_done;
 		}
@@ -809,13 +804,13 @@ command_loop_1 ()
 		      && !windows_or_buffers_changed
 		      && EQ (current_buffer->selective_display, Qnil)
 		      && !detect_input_pending ()
-		      && NULL (Vexecuting_macro))
+		      && NILP (Vexecuting_macro))
 		    no_redisplay = direct_output_forward_char (-1);
 		  goto directly_done;
 		}
 	      else if (EQ (cmd, Qself_insert_command))
 		{
-		  if (NULL (Vexecuting_macro) &&
+		  if (NILP (Vexecuting_macro) &&
 		      !EQ (minibuf_window, selected_window))
 		    {
 		      if (!DisableUndo && /* by Y.Ishikawa */
@@ -834,7 +829,7 @@ command_loop_1 ()
 		    || windows_or_buffers_changed
 		    || !EQ (current_buffer->selective_display, Qnil)
 		    || detect_input_pending ()
-		    || !NULL (Vexecuting_macro);
+		    || !NILP (Vexecuting_macro);
 		  if (self_insert_internal (last_command_char, 0))
 		    {
 		      lose = 1;
@@ -853,7 +848,7 @@ command_loop_1 ()
 	  /* Here for a command that isn't executed directly */
 
 	  nonundocount = 0;
-	  if (!DisableUndo && NULL (Vprefix_arg)) /* by Y.Ishikawa */
+	  if (!DisableUndo && NILP (Vprefix_arg)) /* by Y.Ishikawa */
 	    Fundo_boundary ();
 	  Fcommand_execute (cmd, Qnil);
 	}
@@ -861,7 +856,7 @@ command_loop_1 ()
 	 but moving it is said to avoid a compiler bug on SCO V.3.2v2.  */
     directly_done: ;
 
-      if (NULL (Vprefix_arg))
+      if (NILP (Vprefix_arg))
 	{
 	  last_command = this_command;
 	  this_command_key_count = 0;
@@ -999,7 +994,7 @@ read_command_char (commandflag)
       goto reread;
     }
 
-  if (!NULL (Vexecuting_macro))
+  if (!NILP (Vexecuting_macro))
     {
       if (XTYPE (Vexecuting_macro) != Lisp_String
 	  || XSTRING (Vexecuting_macro)->size <= executing_macro_index)
@@ -1143,7 +1138,7 @@ read_command_char (commandflag)
   num_input_chars++;
 
   /* Process the help character specially if enabled */
-  if (c == help_char && !NULL (Vhelp_form))
+  if (c == help_char && !NILP (Vhelp_form))
     {
       count = specpdl_ptr - specpdl;
 
@@ -1230,7 +1225,7 @@ kbd_buffer_read_command_char ()
   /* Either ordinary input buffer or C-g buffered means we can return.  */
   while (!kbd_count)
     {
-      if (!NULL (Vquit_flag))
+      if (!NILP (Vquit_flag))
 	quit_throw_to_read_command_char ();
 
       /* One way or another, wait until input is available; then, if
@@ -1302,10 +1297,10 @@ get_input_pending (addr)
   /* On VMS, we always have something in the buffer
      if any input is available.  */
   /*** It might be simpler to make interrupt_input 1 on VMS ***/
-  *addr = kbd_count | !NULL (Vquit_flag);
+  *addr = kbd_count | !NILP (Vquit_flag);
 #else
   /* First of all, have we already counted some input?  */
-  *addr = kbd_count | !NULL (Vquit_flag);
+  *addr = kbd_count | !NILP (Vquit_flag);
   /* If input is being read as it arrives, and we have none, there is none.  */
   if (*addr > 0 || (interrupt_input && ! interrupts_deferred && ! force_input))
     return;
@@ -1376,7 +1371,7 @@ you lose!
   /* If we can't count the input, read it (if any) and see what we got.  */
   read_avail_input (*addr);
 #endif
-  *addr = kbd_count | !NULL (Vquit_flag);
+  *addr = kbd_count | !NILP (Vquit_flag);
 #endif
 }
 
@@ -1653,7 +1648,7 @@ fast_read_one_key (keybuf)
     }
 
   XSET (map, Lisp_Vector, global_map);
-  tem = !NULL (map)
+  tem = !NILP (map)
     ? get_keyelt (access_keymap (map, c))
       : Qnil;
 
@@ -1661,7 +1656,7 @@ fast_read_one_key (keybuf)
 
   /* trace symbols to their function definitions */
 
-  while (XTYPE (tem) == Lisp_Symbol && !NULL (tem)
+  while (XTYPE (tem) == Lisp_Symbol && !NILP (tem)
 	 && !EQ (tem, Qunbound))
     tem = XSYMBOL (tem)->function;
 
@@ -1719,7 +1714,7 @@ read_key_sequence (keybuf, bufsize, prompt, nodisplay)
   XSET (nextglobal, Lisp_Vector, global_map);
 
   i = 0;
-  while (!NULL (nextfront) || !NULL (nextlocal) || !NULL (nextglobal))
+  while (!NILP (nextfront) || !NILP (nextlocal) || !NILP (nextglobal))
     {
       if (i == bufsize)
 	error ("key sequence too long");
@@ -1744,15 +1739,15 @@ read_key_sequence (keybuf, bufsize, prompt, nodisplay)
 
       keybuf[i] = c;
 
-      global = !NULL (nextglobal)
+      global = !NILP (nextglobal)
 	? get_keyelt (access_keymap (nextglobal, c))
 	  : Qnil;
 
-      local = !NULL (nextlocal)
+      local = !NILP (nextlocal)
 	? get_keyelt (access_keymap (nextlocal, c))
 	  : Qnil;
 
-      front = !NULL (nextfront)
+      front = !NILP (nextfront)
 	? get_keyelt (access_keymap (nextfront, c))
 	  : Qnil;
 
@@ -1760,20 +1755,20 @@ read_key_sequence (keybuf, bufsize, prompt, nodisplay)
 	 and it is an uppercase letter, try corresponding lowercase.  */
       /* ... but not with front map. */
 
-      if (NULL (front) && NULL (global) && NULL (local) && UPPERCASEP (c))
+      if (NILP (front) && NILP (global) && NILP (local) && UPPERCASEP (c))
 	{
-	  global = !NULL (nextglobal)
+	  global = !NILP (nextglobal)
 	    ? get_keyelt (access_keymap (nextglobal, DOWNCASE (c)))
 	      : Qnil;
 
-	  local = !NULL (nextlocal)
+	  local = !NILP (nextlocal)
 	    ? get_keyelt (access_keymap (nextlocal, DOWNCASE (c)))
 	      : Qnil;
 
 	  /* If that has worked better that the original char,
 	     downcase it permanently.  */
 
-	  if (!NULL (global) || !NULL (local))
+	  if (!NILP (global) || !NILP (local))
 	    {
 	      keybuf[i] = c = DOWNCASE (c);
 	    }
@@ -1786,17 +1781,17 @@ read_key_sequence (keybuf, bufsize, prompt, nodisplay)
       nextglobal = Qnil;
 
       read_key_sequence_cmd =
-	!NULL (front) ? front : !NULL (local) ? local : global;
+	!NILP (front) ? front : !NILP (local) ? local : global;
 
       /* trace symbols to their function definitions */
 
-      while (XTYPE (global) == Lisp_Symbol && !NULL (global)
+      while (XTYPE (global) == Lisp_Symbol && !NILP (global)
 	     && !EQ (global, Qunbound))
 	global = XSYMBOL (global)->function;
-      while (XTYPE (local) == Lisp_Symbol && !NULL (local)
+      while (XTYPE (local) == Lisp_Symbol && !NILP (local)
 	     && !EQ (local, Qunbound))
 	local = XSYMBOL (local)->function;
-      while (XTYPE (front) == Lisp_Symbol && !NULL (front)
+      while (XTYPE (front) == Lisp_Symbol && !NILP (front)
 	     && !EQ (front, Qunbound))
 	front = XSYMBOL (front)->function;
 
@@ -1813,7 +1808,7 @@ read_key_sequence (keybuf, bufsize, prompt, nodisplay)
 	     Let a global prefix definition override a local non-prefix.
 	     This is for minibuffers that redefine Escape for completion.
 	     A real Escape gets completion, but Meta bits get ESC-prefix.  */
-	  ((NULL (local) || nextc >= 0)
+	  ((NILP (local) || nextc >= 0)
 	   && (XTYPE (global) == Lisp_Vector ||
 	       (CONSP (global) && EQ (XCONS (global)->car, Qkeymap)))))
 	{
@@ -1836,7 +1831,7 @@ read_key_sequence (keybuf, bufsize, prompt, nodisplay)
 	    nextglobal = Qnil;
 /* 91.11.29, 93.3.3 by M.Higashida */
 #if (defined(MSDOS) && defined(FEPCTRL)) || (defined(WIN32) && defined(USE_IME))
-          if (!NULL (FEPstat)) Ffep_force_off ();
+          if (!NILP (FEPstat)) Ffep_force_off ();
 #endif
 /* end of patch */
 	}
@@ -1844,7 +1839,7 @@ read_key_sequence (keybuf, bufsize, prompt, nodisplay)
 
 /* 91.11.29, 93.3.3 by M.Higashida */
 #if (defined(MSDOS) && defined(FEPCTRL)) || (defined(WIN32) && defined(USE_IME))
-  if (!NULL (FEPstat)) Ffep_force_on ();
+  if (!NILP (FEPstat)) Ffep_force_on ();
 #endif
 /* end of patch */
   return i;
@@ -1863,13 +1858,13 @@ One arg, PROMPT, a prompt string or  nil, meaning do not prompt specially.")
   char keybuf[30];
   register int i;
 
-  if (!NULL (prompt))
+  if (!NILP (prompt))
     CHECK_STRING (prompt, 0);
   QUIT;
 
   this_command_key_count = 0;
   i = read_key_sequence (keybuf, sizeof keybuf,
-			 (NULL (prompt)) ? 0 : XSTRING (prompt)->data,
+			 (NILP (prompt)) ? 0 : XSTRING (prompt)->data,
 			 0);
   return make_string (keybuf, i);
 }
@@ -1896,7 +1891,7 @@ Otherwise, this is done only if an arg is read using the minibuffer.")
   if (XTYPE (cmd) == Lisp_Symbol)
     {
       tem = Fget (cmd, Qdisabled);
-      if (!NULL (tem))
+      if (!NILP (tem))
 	return call0 (Vdisabled_command_hook);
     }
 
@@ -2062,7 +2057,7 @@ Use nil as an argument to close the dribble file.")
   if (dribble != 0)
     fclose (dribble);
   dribble = 0;
-  if (!NULL (file))
+  if (!NILP (file))
     {
       file = Fexpand_file_name (file, Qnil);
       dribble = fopen (XSTRING (file)->data, "w");
@@ -2106,7 +2101,7 @@ Otherwise, suspend normally and after resumption call\n\
   struct gcpro gcpro1;
   extern void init_sys_modes (void);
 
-  if (!NULL (stuffstring))
+  if (!NILP (stuffstring))
     CHECK_STRING (stuffstring, 0);
   GCPRO1 (stuffstring);
 
@@ -2190,7 +2185,7 @@ set_waiting_for_input (word_to_clear)
 
   /* If interrupt_signal was called before and buffered a C-g,
      make it run again now, to avoid timing error.  */
-  if (!NULL (Vquit_flag))
+  if (!NILP (Vquit_flag))
     quit_throw_to_read_command_char ();
 
   /* Tell alarm signal to echo right away */
@@ -2247,7 +2242,7 @@ interrupt_signal ()
 
   cancel_echoing ();
 
-  if (!NULL (Vquit_flag) && NULL (Vwindow_system))
+  if (!NILP (Vquit_flag) && NILP (Vwindow_system))
     {
       fflush (stdout);
       reset_sys_modes ();
@@ -2299,7 +2294,7 @@ interrupt_signal ()
       /* If executing a function that wants to be interrupted out of
 	     and the user has not deferred quitting by binding `inhibit-quit'
 	     then quit right away.  */
-      if (immediate_quit && NULL (Vinhibit_quit))
+      if (immediate_quit && NILP (Vinhibit_quit))
 	{
 	  immediate_quit = 0;
           sigfree ();
@@ -2354,12 +2349,12 @@ Note that the arguments will change incompatibly in version 19.")
     interrupt_input = 0;	/* No interrupts if reading from a socket.  */
   else
 #endif /* NO_SOCK_SIGIO */
-    interrupt_input = !NULL (interrupt);
+    interrupt_input = !NILP (interrupt);
 #else /* not SIGIO */
   interrupt_input = 0;
 #endif /* not SIGIO */
-  flow_control = !NULL (flow);
-  if (!NULL (quit))
+  flow_control = !NILP (flow);
+  if (!NILP (quit))
     {
       CHECK_NUMBER (quit, 2);
       quit_char = XINT (quit);

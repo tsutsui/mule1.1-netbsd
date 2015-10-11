@@ -120,7 +120,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #ifdef emacs
 #include "config.h"
-#undef NULL
 #include "lisp.h"
 #include "buffer.h"
 #endif /* emacs */
@@ -1331,11 +1330,11 @@ DEFUN ("coding-system-p", Fcoding_system_p, Scoding_system_p, 1, 1, 0,
   (obj)
      register Lisp_Object obj;
 {
-  if (NULL (obj))
+  if (NILP (obj))
     return Qt;
-  while (!NULL (obj) && XTYPE (obj) == Lisp_Symbol)
+  while (!NILP (obj) && XTYPE (obj) == Lisp_Symbol)
     obj = Fget (obj, Qcoding_system);
-  if (NULL (obj))
+  if (NILP (obj))
     return Qnil;
 
   if (XTYPE (obj) == Lisp_Vector
@@ -1352,7 +1351,7 @@ DEFUN ("non-nil-coding-system-p", Fnon_nil_coding_system_p, Snon_nil_coding_syst
   (obj)
      register Lisp_Object obj;
 {
-  if (NULL (obj))
+  if (NILP (obj))
     return Qnil;
   return Fcoding_system_p (obj);
 }
@@ -1388,7 +1387,7 @@ If not valid, coding-system-error is signaled.")
 
   CHECK_SYMBOL (code, 0);
 
-  if (!NULL (Fcoding_system_p (code)))
+  if (!NILP (Fcoding_system_p (code)))
     return code;
 
   while (1)
@@ -1407,7 +1406,7 @@ encode_code(code, mccode)
   CODE_FORM (mccode) = 0;
 
   prop = code;
-  while (!NULL (prop) && XTYPE (prop) == Lisp_Symbol)
+  while (!NILP (prop) && XTYPE (prop) == Lisp_Symbol)
     prop = Fget (prop, Qcoding_system);
 
   if (XTYPE (prop) == Lisp_Vector
@@ -1416,7 +1415,7 @@ encode_code(code, mccode)
     eol_type = Fget(code, Qeol_type);
     CODE_FORM (mccode) =
       XTYPE (eol_type) == Lisp_Vector ? CODE_EOL_AUTO
-	: NULL (eol_type) ? CODE_EOL_NOCONV
+	: NILP (eol_type) ? CODE_EOL_NOCONV
 	  : XFASTINT (eol_type) == 1 ? CODE_EOL_LF
 	    : XFASTINT (eol_type) == 2 ? CODE_EOL_CRLF : CODE_EOL_CR;
     CODE_CHAR_SET (mccode, 0);
@@ -1433,10 +1432,10 @@ encode_code(code, mccode)
 	break;
       CODE_TYPE_SET (mccode, ISO2022);
       flags = XVECTOR (prop)->contents;
-      lcg0 = NULL (flags[0]) ? LCASCII : XINT (flags[0]);
-      lcg1 = NULL (flags[1]) ? LCASCII : XINT (flags[1]);
-      lcg2 = NULL (flags[2]) ? LCASCII : XINT (flags[2]);
-      lcg3 = NULL (flags[3]) ? LCASCII : XINT (flags[3]);
+      lcg0 = NILP (flags[0]) ? LCASCII : XINT (flags[0]);
+      lcg1 = NILP (flags[1]) ? LCASCII : XINT (flags[1]);
+      lcg2 = NILP (flags[2]) ? LCASCII : XINT (flags[2]);
+      lcg3 = NILP (flags[3]) ? LCASCII : XINT (flags[3]);
       CODE_LC_SET (mccode, lcg0, lcg1, lcg2, lcg3);
       CODE_FORM_SET (mccode,
 		     flags[4], flags[5], flags[6], flags[7],
@@ -1501,7 +1500,7 @@ If ETEN is nil, HKU type is assumed.")
 
   CHECK_NUMBER (big5, 0);
   a1 = (XFASTINT (big5)) >> 8, a2 = (XFASTINT (big5)) & 0xFF;
-  B2G (!NULL (eten), a1, a2, str[0], str[1], str[2]);
+  B2G (!NILP (eten), a1, a2, str[0], str[1], str[2]);
   str[3] = 0;
   XSET (ch, Lisp_Int, string_to_mchar (str, 4));
   return ch;
@@ -1523,7 +1522,7 @@ If CHAR is not a Big5 character, nil is returned. ")
   CHARtoSTR(c, str);
   if (str[0] != LCBIG5_1 && str[0] != LCBIG5_2)
     return Qnil;
-  G2B (str[0], str[1], str[2], !NULL (eten), a1, a2);
+  G2B (str[0], str[1], str[2], !NILP (eten), a1, a2);
   XSET (big5, Lisp_Int, (a1 << 8) | a2);
   return big5;
 }

@@ -73,9 +73,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #include <sys/stat.h>
 #include <sys/param.h>
 #include <errno.h>
-#ifdef NULL
-#undef NULL
-#endif
 #endif /* MSDOS */
 #ifdef WIN32
 #include <sys/param.h>
@@ -200,7 +197,7 @@ If you quit, the process is killed with SIGKILL.")
 
   CHECK_STRING (args[0], 0);
 
-  if (nargs <= 1 || NULL (args[1]))
+  if (nargs <= 1 || NILP (args[1]))
 #ifdef VMS
     args[1] = build_string ("NLA0:");
 #else
@@ -257,7 +254,7 @@ If you quit, the process is killed with SIGKILL.")
   openp (Vexec_path, args[0], "", &path, 1);
 #endif
 /* end of patch */
-  if (NULL (path))
+  if (NILP (path))
     {
       close (filefd);
       report_file_error ("Searching for program", Fcons (args[0], Qnil));
@@ -442,7 +439,7 @@ If you quit, the process is killed with SIGKILL.")
 	if (nread <= 0) state = 0;
 /* end of patch */
 	immediate_quit = 0;
-	if (!NULL (buffer)) {	/* 91.10.28 by K.Handa */
+	if (!NILP (buffer)) {	/* 91.10.28 by K.Handa */
 	  if (CODE_TYPE(&mccode) == AUTOCONV || CODE_TYPE(&mccode) > ITNCODE) {
 	    /* 93.2.10 by K.Handa */
 	    if (state)
@@ -459,7 +456,7 @@ If you quit, the process is killed with SIGKILL.")
 	      insert (buf, nread);
 	  }
 	}
-	if (!NULL (display) && FROM_KBD)
+	if (!NILP (display) && FROM_KBD)
 	  redisplay_preserve_echo_area ();
 	immediate_quit = 1;
 	QUIT;
@@ -538,7 +535,7 @@ If you quit, the process is killed with SIGKILL.")
   end = args[1];
   Fwrite_region (start, end, filename_string, Qnil, Qlambda);
 
-  if (!NULL (args[3]))
+  if (!NILP (args[3]))
     Fdelete_region (start, end);
 
   args[3] = filename_string;

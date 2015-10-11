@@ -77,12 +77,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 /* 93.5.20 by K.Handa */
 /* Now we have to include "lisp.h" before "x11term.h" */
 #include "lisp.h"
-/* but "x11term.h" sometimes include "stddef.h", so .. */
-#undef NULL
 #include "x11term.h"
-/* and here again define NULL just as the same way as in "lisp.h" */
-#undef NULL
-#define NULL(x)  (XFASTINT (x) == XFASTINT (Qnil))
 /* end of patch */
 
 #include "dispextern.h"
@@ -182,7 +177,7 @@ extern Lisp_Object Vx_ccl_programs; /* 93.5.28 by K.Handa */
 void
 check_xterm ()
 {
-	if (NULL (Vxterm))
+	if (NILP (Vxterm))
 		error ("Terminal does not understand X protocol.");
 }
 
@@ -196,7 +191,7 @@ With non-nil argument (prefix arg), use visible bell; otherwise, audible bell.")
 
 	check_xterm ();
 	BLOCK_INPUT ();
-	if (!NULL (arg))
+	if (!NILP (arg))
 		XSetFlash ();
 	else
 		XSetFeep ();
@@ -654,7 +649,7 @@ If CCL-PROGMAM is nill, unset any CCL program of LC.")
 
   if (lc < 0 || (lc > 0 && lc < 0x81) || lc >= 0x100)
     error ("Invalid LEADING-CHAR (%d).", lc);
-  if (!NULL (ccl_prog) && XTYPE (ccl_prog) != Lisp_String)
+  if (!NILP (ccl_prog) && XTYPE (ccl_prog) != Lisp_String)
     error ("Invalid CCL program format.");
   XVECTOR (Vx_ccl_programs)->contents[lc & 0x7F] = ccl_prog;
 
@@ -817,7 +812,7 @@ the appropriate function to act upon this event.")
 		Vx_mouse_item = make_number (com_letter);
 		mouse_cmd
 		  = get_keyelt (access_keymap (MouseMap, com_letter));
-		if (NULL (mouse_cmd)) {
+		if (NILP (mouse_cmd)) {
 			if (event.type != ButtonRelease)
 				bell ();
 			Vx_mouse_pos = Qnil;
@@ -845,7 +840,7 @@ otherwise, wait for an event.")
 	
 	check_xterm ();
 
-	if (NULL (arg))
+	if (NILP (arg))
 		while (!XXm_queue_num)
 		  {
 		    consume_available_input ();
@@ -1180,7 +1175,7 @@ DEFUN ("x-get-compound-text", Fx_get_compound_text, Sx_get_compound_text,
 		UNBLOCK_INPUT ();
 		return make_string(0, 0);
 	}
-	if (!NULL(XCONS (table->data)->cdr)) {
+	if (!NILP(XCONS (table->data)->cdr)) {
 		UNBLOCK_INPUT ();
 		return XCONS (table->data)->cdr;
 	}
@@ -1188,12 +1183,12 @@ DEFUN ("x-get-compound-text", Fx_get_compound_text, Sx_get_compound_text,
 			  XXwindow, CurrentTime);
 	text = XWaitRequestSelection();
 
-	if (NULL (text)) {
+	if (NILP (text)) {
 		XConvertSelection(XXdisplay, table->atom,
 				  XA_STRING, XA_STRING, XXwindow, CurrentTime);
 		text = XWaitRequestSelection();
 		UNBLOCK_INPUT ();
-		if (NULL (text)) return make_string(0, 0);
+		if (NILP (text)) return make_string(0, 0);
 	}
 	UNBLOCK_INPUT ();
 	return text;
@@ -1221,7 +1216,7 @@ void HandleSelectionRequest(event)
 	
 	if (event->xselectionrequest.target == XA_STRING) {
 		register Lisp_Object text = XCONS (table->data)->cdr;
-		if (NULL(text) || table->escp) goto fail;
+		if (NILP(text) || table->escp) goto fail;
 		XChangeProperty (XXdisplay, 
 				 event->xselectionrequest.requestor,
 				 event->xselectionrequest.property,
@@ -1232,7 +1227,7 @@ void HandleSelectionRequest(event)
 	} else if (event->xselectionrequest.target == XA_TEXT()) {
 		register Lisp_Object text = XCONS (table->data)->cdr;
 		Atom atom = (table->escp) ?  XA_COMPOUND_TEXT() : XA_STRING;
-		if (NULL(text)) goto fail;
+		if (NILP(text)) goto fail;
 		XChangeProperty (XXdisplay,
 				 event->xselectionrequest.requestor,
 				 event->xselectionrequest.property,
@@ -1242,7 +1237,7 @@ void HandleSelectionRequest(event)
 		goto success;
 	} else if (event->xselectionrequest.target == XA_COMPOUND_TEXT()) {
 		register Lisp_Object text = XCONS (table->data)->cdr;
-		if (NULL(text)) goto fail;
+		if (NILP(text)) goto fail;
 		XChangeProperty (XXdisplay,
 				 event->xselectionrequest.requestor,
 				 event->xselectionrequest.property,
@@ -1256,7 +1251,7 @@ void HandleSelectionRequest(event)
 		Atom targets[10];
 		register Lisp_Object text = XCONS (table->data)->cdr;
 		
-		if (!NULL(text)) {
+		if (!NILP(text)) {
 			targets[i++] = XA_TEXT();
 			targets[i++] = XA_COMPOUND_TEXT();
 			if (table->escp) targets[i++] = XA_STRING;
@@ -1414,14 +1409,14 @@ in that file are in octal!)\n")
 	int strsize;
 
 	CHECK_NUMBER (keycode, 1);
-	if (!NULL (shift_mask))
+	if (!NILP (shift_mask))
 		CHECK_NUMBER (shift_mask, 2);
 	CHECK_STRING (newstring, 3);
 	strsize = XSTRING (newstring) ->size;
 	rawstring = (char *) xmalloc (strsize);
 	bcopy (XSTRING (newstring)->data, rawstring, strsize);
 	rawkey = ((unsigned) (XINT (keycode))) & 255;
-	if (NULL (shift_mask))
+	if (NILP (shift_mask))
 		for (i = 0; i <= 15; i++)
 			XRebindCode (rawkey, i<<11, rawstring, strsize);
 	else
@@ -1454,7 +1449,7 @@ See the documentation of x-rebind-key for more information.")
 	for (i = 0; i <= 15; strings = Fcdr (strings), i++)
 	{
 		item = Fcar (strings);
-		if (!NULL (item))
+		if (!NILP (item))
 		{
 			CHECK_STRING (item, 2);
 			strsize = XSTRING (item)->size;
@@ -1484,7 +1479,7 @@ DEFUN ("x-debug", Fx_debug, Sx_debug, 1, 1, 0,
 	int (*handler)();
 
 	check_xterm ();
-	if (!NULL (arg))
+	if (!NILP (arg))
 		handler = XExitWithCoreDump;
 	else
 	{

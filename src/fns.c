@@ -66,9 +66,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #undef vector
 #define vector *****
 
-#ifdef NULL
-#undef NULL
-#endif
 #include "lisp.h"
 #include "commands.h"
 
@@ -117,7 +114,7 @@ DEFUN ("length", Flength, Slength, 1, 1, 0,
     return Farray_length (obj);
   else if (CONSP (obj))
     {
-      for (i = 0, tail = obj; !NULL(tail); i++)
+      for (i = 0, tail = obj; !NILP(tail); i++)
 	{
 	  QUIT;
 	  tail = Fcdr (tail);
@@ -126,7 +123,7 @@ DEFUN ("length", Flength, Slength, 1, 1, 0,
       XFASTINT (val) = i;
       return val;
     }
-  else if (NULL(obj))
+  else if (NILP(obj))
     {
       XFASTINT (val) = 0;
       return val;
@@ -243,7 +240,7 @@ DEFUN ("copy-sequence", Fcopy_sequence, Scopy_sequence, 1, 1, 0,
   (arg)
      Lisp_Object arg;
 {
-  if (NULL (arg)) return arg;
+  if (NILP (arg)) return arg;
   if (!CONSP (arg) && XTYPE (arg) != Lisp_Vector && XTYPE (arg) != Lisp_String)
     arg = wrong_type_argument (Qsequencep, arg);
   return concat (1, &arg, CONSP (arg) ? Lisp_Cons : XTYPE (arg), 0);
@@ -278,7 +275,7 @@ concat (nargs, args, target_type, last_special)
   for (argnum = 0; argnum < nargs; argnum++)
     {
       this = args[argnum];
-      if (!(CONSP (this) || NULL (this)
+      if (!(CONSP (this) || NILP (this)
           || XTYPE (this) == Lisp_Vector || XTYPE (this) == Lisp_String))
 	{
 	  if (XTYPE (this) == Lisp_Int)
@@ -330,7 +327,7 @@ concat (nargs, args, target_type, last_special)
 	  register Lisp_Object elt;
 
 	  /* Fetch next element of `this' arg into `elt', or break if `this' is exhausted. */
-	  if (NULL (this)) break;
+	  if (NILP (this)) break;
 	  if (CONSP (this))
 	    elt = Fcar (this), this = Fcdr (this);
 	  else
@@ -368,7 +365,7 @@ concat (nargs, args, target_type, last_special)
 	    }
 	}
     }
-  if (!NULL (prev))
+  if (!NILP (prev))
     XCONS (prev)->cdr = last_tail;
 
   return val;  
@@ -386,7 +383,7 @@ are shared, however.")
   register Lisp_Object tem;
 
   CHECK_LIST (alist, 0);
-  if (NULL (alist))
+  if (NILP (alist))
     return alist;
   alist = concat (1, &alist, Lisp_Cons, 0);
   for (tem = alist; CONSP (tem); tem = XCONS (tem)->cdr)
@@ -410,7 +407,7 @@ If FROM or TO is negative, it counts from the end.")
 {
   CHECK_STRING (string, 0);
   CHECK_NUMBER (from, 1);
-  if (NULL (to))
+  if (NILP (to))
     to = Flength (string);
   else
     CHECK_NUMBER (to, 2);
@@ -436,7 +433,7 @@ DEFUN ("nthcdr", Fnthcdr, Snthcdr, 2, 2, 0,
   register int i, num;
   CHECK_NUMBER (n, 0);
   num = XINT (n);
-  for (i = 0; i < num && !NULL (list); i++)
+  for (i = 0; i < num && !NILP (list); i++)
     {
       QUIT;
       list = Fcdr (list);
@@ -461,7 +458,7 @@ DEFUN ("elt", Felt, Selt, 2, 2, 0,
   CHECK_NUMBER (n, 0);
   while (1)
     {
-      if (XTYPE (seq) == Lisp_Cons || NULL (seq))
+      if (XTYPE (seq) == Lisp_Cons || NILP (seq))
 	return Fcar (Fnthcdr (n, seq));
       else if (XTYPE (seq) == Lisp_String ||
 	       XTYPE (seq) == Lisp_Vector)
@@ -479,7 +476,7 @@ The value is actually the tail of LIST whose car is ELT.")
      Lisp_Object list;
 {
   register Lisp_Object tail;
-  for (tail = list; !NULL (tail); tail = Fcdr (tail))
+  for (tail = list; !NILP (tail); tail = Fcdr (tail))
     {
       register Lisp_Object tem;
       tem = Fcar (tail);
@@ -497,7 +494,7 @@ The value is actually the element of LIST whose car is ELT.")
      Lisp_Object list;
 {
   register Lisp_Object tail;
-  for (tail = list; !NULL (tail); tail = Fcdr (tail))
+  for (tail = list; !NILP (tail); tail = Fcdr (tail))
     {
       register Lisp_Object elt, tem;
       elt = Fcar (tail);
@@ -537,13 +534,13 @@ The value is actually the element of LIST whose car is ELT.")
      Lisp_Object list;
 {
   register Lisp_Object tail;
-  for (tail = list; !NULL (tail); tail = Fcdr (tail))
+  for (tail = list; !NILP (tail); tail = Fcdr (tail))
     {
       register Lisp_Object elt, tem;
       elt = Fcar (tail);
       if (!CONSP (elt)) continue;
       tem = Fequal (Fcar (elt), key);
-      if (!NULL (tem)) return elt;
+      if (!NILP (tem)) return elt;
       QUIT;
     }
   return Qnil;
@@ -557,7 +554,7 @@ The value is actually the element of LIST whose cdr is ELT.")
      Lisp_Object list;
 {
   register Lisp_Object tail;
-  for (tail = list; !NULL (tail); tail = Fcdr (tail))
+  for (tail = list; !NILP (tail); tail = Fcdr (tail))
     {
       register Lisp_Object elt, tem;
       elt = Fcar (tail);
@@ -583,12 +580,12 @@ therefore, write  (setq foo (delq element foo))  to be sure of changing  foo.")
 
   tail = list;
   prev = Qnil;
-  while (!NULL (tail))
+  while (!NILP (tail))
     {
       tem = Fcar (tail);
       if (EQ (elt, tem))
 	{
-	  if (NULL (prev))
+	  if (NILP (prev))
 	    list = Fcdr (tail);
 	  else
 	    Fsetcdr (prev, Fcdr (tail));
@@ -608,10 +605,10 @@ DEFUN ("nreverse", Fnreverse, Snreverse, 1, 1, 0,
 {
   register Lisp_Object prev, tail, next;
 
-  if (NULL (list)) return list;
+  if (NILP (list)) return list;
   prev = Qnil;
   tail = list;
-  while (!NULL (tail))
+  while (!NILP (tail))
     {
       QUIT;
       next = Fcdr (tail);
@@ -697,24 +694,24 @@ merge (org_l1, org_l2, pred)
 
   while (1)
     {
-      if (NULL (l1))
+      if (NILP (l1))
 	{
 	  UNGCPRO;
-	  if (NULL (tail))
+	  if (NILP (tail))
 	    return l2;
 	  Fsetcdr (tail, l2);
 	  return value;
 	}
-      if (NULL (l2))
+      if (NILP (l2))
 	{
 	  UNGCPRO;
-	  if (NULL (tail))
+	  if (NILP (tail))
 	    return l1;
 	  Fsetcdr (tail, l1);
 	  return value;
 	}
       tem = call2 (pred, Fcar (l2), Fcar (l1));
-      if (NULL (tem))
+      if (NILP (tem))
 	{
 	  tem = l1;
 	  l1 = Fcdr (l1);
@@ -726,7 +723,7 @@ merge (org_l1, org_l2, pred)
 	  l2 = Fcdr (l2);
 	  org_l2 = l2;
 	}
-      if (NULL (tail))
+      if (NILP (tail))
 	value = tem;
       else
 	Fsetcdr (tail, tem);
@@ -742,7 +739,7 @@ This is the last VALUE stored with  (put SYMBOL PROPNAME VALUE).")
      register Lisp_Object prop;
 {
   register Lisp_Object tail;
-  for (tail = Fsymbol_plist (sym); !NULL (tail); tail = Fcdr (Fcdr (tail)))
+  for (tail = Fsymbol_plist (sym); !NILP (tail); tail = Fcdr (Fcdr (tail)))
     {
       register Lisp_Object tem;
       tem = Fcar (tail);
@@ -763,7 +760,7 @@ It can be retrieved with  (get SYMBOL PROPNAME).")
   register Lisp_Object tail, prev;
   Lisp_Object newcell;
   prev = Qnil;
-  for (tail = Fsymbol_plist (sym); !NULL (tail); tail = Fcdr (Fcdr (tail)))
+  for (tail = Fsymbol_plist (sym); !NILP (tail); tail = Fcdr (Fcdr (tail)))
     {
       register Lisp_Object tem;
       tem = Fcar (tail);
@@ -772,7 +769,7 @@ It can be retrieved with  (get SYMBOL PROPNAME).")
       prev = tail;
     }
   newcell = Fcons (prop, Fcons (val, Qnil));
-  if (NULL (prev))
+  if (NILP (prev))
     Fsetplist (sym, newcell);
   else
     Fsetcdr (Fcdr (prev), newcell);
@@ -796,7 +793,7 @@ do_cdr:
     {
       Lisp_Object v1;
       v1 = Fequal (Fcar (o1), Fcar (o2));
-      if (NULL (v1))
+      if (NILP (v1))
 	return v1;
       o1 = Fcdr (o1), o2 = Fcdr (o2);
       goto do_cdr;
@@ -818,7 +815,7 @@ do_cdr:
 	  v1 = XVECTOR (o1)->contents [index];
 	  v2 = XVECTOR (o2)->contents [index];
 	  v = Fequal (v1, v2);
-	  if (NULL (v)) return v;
+	  if (NILP (v)) return v;
 	}
       return Qt;
     }
@@ -894,9 +891,9 @@ Only the last argument is not altered, and need not be a list.")
   for (argnum = 0; argnum < nargs; argnum++)
     {
       tem = args[argnum];
-      if (NULL (tem)) continue;
+      if (NILP (tem)) continue;
 
-      if (NULL (val))
+      if (NILP (val))
 	val = tem;
 
       if (argnum + 1 == nargs) break;
@@ -913,7 +910,7 @@ Only the last argument is not altered, and need not be a list.")
 
       tem = args[argnum + 1];
       Fsetcdr (tail, tem);
-      if (NULL (tem))
+      if (NILP (tem))
 	args[argnum + 1] = tail;
     }
 
@@ -1352,7 +1349,7 @@ This function looks at the value of the variable  features.")
   register Lisp_Object tem;
   CHECK_SYMBOL (feature, 0);
   tem = Fmemq (feature, Vfeatures);
-  return (NULL (tem)) ? Qnil : Qt;
+  return (NILP (tem)) ? Qnil : Qt;
 }
 
 DEFUN ("provide", Fprovide, Sprovide, 1, 1, 0,
@@ -1362,10 +1359,10 @@ DEFUN ("provide", Fprovide, Sprovide, 1, 1, 0,
 {
   register Lisp_Object tem;
   CHECK_SYMBOL (feature, 0);
-  if (!NULL (Vautoload_queue))
+  if (!NILP (Vautoload_queue))
     Vautoload_queue = Fcons (Fcons (Vfeatures, Qnil), Vautoload_queue);
   tem = Fmemq (feature, Vfeatures);
-  if (NULL (tem))
+  if (NILP (tem))
     Vfeatures = Fcons (feature, Vfeatures);
   return feature;
 }
@@ -1379,7 +1376,7 @@ load FILENAME.  FILENAME is optional and defaults to FEATURE.")
   register Lisp_Object tem;
   CHECK_SYMBOL (feature, 0);
   tem = Fmemq (feature, Vfeatures);
-  if (NULL (tem))
+  if (NILP (tem))
     {
       int count = specpdl_ptr - specpdl;
 
@@ -1387,11 +1384,11 @@ load FILENAME.  FILENAME is optional and defaults to FEATURE.")
       record_unwind_protect (un_autoload, Vautoload_queue);
       Vautoload_queue = Qt;
 
-      call4 (Qload, NULL (file_name) ? Fsymbol_name (feature) : file_name,
+      call4 (Qload, NILP (file_name) ? Fsymbol_name (feature) : file_name,
 	     Qnil, Qt, Qnil);	/* 91.10.30 by K.Handa */
 
       tem = Fmemq (feature, Vfeatures);
-      if (NULL (tem))
+      if (NILP (tem))
 	error ("Required feature %s was not provided",
 	       XSYMBOL (feature)->name->data );
 

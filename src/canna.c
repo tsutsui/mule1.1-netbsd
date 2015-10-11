@@ -147,7 +147,6 @@ static char rcs_id[] = "$Id: canna.c,v 1.35 1994/03/15 08:00:03 kon Exp $";
 #include <stdio.h>
 
 #include "config.h"
-#undef NULL
 #include "lisp.h"
 #include "buffer.h"
 #ifdef CANNA_MULE
@@ -323,7 +322,7 @@ Lisp_Object num;
 {
   int kugiri; /* 文節区切りをするか？ */
 
-  kugiri = NULL(num) ? 0 : 1;
+  kugiri = NILP(num) ? 0 : 1;
 
   jrKanjiControl(0, KC_SETBUNSETSUKUGIRI, (char *)kugiri);
 }
@@ -347,7 +346,7 @@ Lisp_Object num, server, rcfile;
 
   IRCP_context = -1;
 
-  if (NULL(num)) {
+  if (NILP(num)) {
     kugiri = 1;
   }
   else {
@@ -356,7 +355,7 @@ Lisp_Object num, server, rcfile;
     kugiri = (kugiri == 1) ? 1 : 0;
   }
 
-  if (NULL(server)) {
+  if (NILP(server)) {
     jrKanjiControl(0, KC_SETSERVERNAME, (char *)0);
   }
   else {
@@ -368,7 +367,7 @@ Lisp_Object num, server, rcfile;
     jrKanjiControl(0, KC_SETSERVERNAME, servername);
   }
 
-  if (NULL(rcfile)) {
+  if (NILP(rcfile)) {
     jrKanjiControl(0, KC_SETINITFILENAME, (char *)0);
   }
   else {
@@ -548,7 +547,7 @@ Lisp_Object yomi, roma;
   ks.length = strlen(buf);
 #endif /* CANNA_MULE */
 
-  if (NULL(roma)) {
+  if (NILP(roma)) {
     ks.mode = 0;
   }
   else {
@@ -587,7 +586,7 @@ Lisp_Object num, ch;
 
   CHECK_NUMBER(num, 0);
 
-  if (NULL(ch)) {
+  if (NILP(ch)) {
     *buf = '@';
   }
   else {

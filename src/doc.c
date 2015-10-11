@@ -31,10 +31,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #include <sys/file.h>	/* Must be after sys/types.h for USG and BSD4_1*/
 /* 92.10.21 by M.Higashida */
 #if defined(MSDOS) && defined(GO32)
-#ifdef NULL
-#undef NULL
-#endif
-#define NULL(x)  (XFASTINT (x) == XFASTINT (Qnil))
+#define NILP(x)  (XFASTINT (x) == XFASTINT (Qnil))
 #endif
 
 #ifdef USG5
@@ -312,7 +309,7 @@ thus, \\=\\=\\=\\= puts \\=\\= into the output, and \\=\\=\\=\\[ puts \\=\\[ int
   int length;
   struct gcpro gcpro1; 
 
-  if (NULL (str))
+  if (NILP (str))
     return Qnil;
 
   CHECK_STRING (str, 0);
@@ -351,7 +348,7 @@ thus, \\=\\=\\=\\= puts \\=\\= into the output, and \\=\\=\\=\\[ puts \\=\\[ int
 	  tem = Fintern (make_string (start, length), Qnil);
 	  tem = Fwhere_is_internal (tem, keymap, Qt);
 
-	  if (NULL (tem))	/* but not on any keys */
+	  if (NILP (tem))	/* but not on any keys */
 	    {
 	      new = (unsigned char *) xrealloc (buf, bsize += 4);
 	      bufp += new - buf;
@@ -389,9 +386,9 @@ thus, \\=\\=\\=\\= puts \\=\\= into the output, and \\=\\=\\=\\[ puts \\=\\[ int
 	  oldbuf = current_buffer;
 	  set_buffer_internal (XBUFFER (Vprin1_to_string_buffer));
 	  name = Fintern (make_string (start, length), Qnil);
-	  if ((tem = (Fboundp (name)), NULL (tem)) ||
-	      (tem = (Fsymbol_value (name)), NULL (tem)) ||
-	      (tem = (get_keymap_1 (tem, 0)), NULL (tem)))
+	  if ((tem = (Fboundp (name)), NILP (tem)) ||
+	      (tem = (Fsymbol_value (name)), NILP (tem)) ||
+	      (tem = (get_keymap_1 (tem, 0)), NILP (tem)))
 	    {
 	      name = Fsymbol_name (name);
 	      InsStr ("\nUses keymap \"");

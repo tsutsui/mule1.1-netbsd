@@ -70,7 +70,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 #ifdef emacs
 
 #include "config.h"
-#undef NULL
 #include "lisp.h"
 #include "buffer.h"
 #include "syntax.h"
@@ -223,7 +222,7 @@ Optional arg DIRECTION specifies writing direction (0:normal, 1:r2l).")
      Lisp_Object type, final, direction;
 {				/* 93.6.2 by K.Handa */
   Lisp_Object val;
-  int dir = (NULL (direction) || XFASTINT (direction) == 0) ? 0 : 1;
+  int dir = (NILP (direction) || XFASTINT (direction) == 0) ? 0 : 1;
 
   CHECK_NUMBER (type, 0);
   CHECK_NUMBER (final, 0);
@@ -286,11 +285,11 @@ LEADING-CHAR should be a leading-char or an extended leading-char.")
 	lc < LCPRV22EXT ? LCPRV21 : LCPRV22;
     buf[i++] = lc;
   }
-  if (!NULL (arg1))
+  if (!NILP (arg1))
     buf[i++] = XFASTINT (arg1) | 0x80;
-  if (!NULL (arg2))
+  if (!NILP (arg2))
     buf[i++] = XFASTINT (arg2) | 0x80;
-  if (!NULL (arg3))
+  if (!NILP (arg3))
     buf[i++] = XFASTINT (arg3) | 0x80;
 
   return make_number (STRtoCHAR (buf, i));
@@ -372,16 +371,16 @@ charwidth (c)
   else if (c == ' ')
     c = 1;
   else if (C0_P(c))
-    c = !NULL (current_buffer->ctl_arrow) ? 2 : 4;
+    c = !NILP (current_buffer->ctl_arrow) ? 2 : 4;
   else if (ASCII_P(c))
     c = 1;
-  else if (LC_P (c) && !NULL (current_buffer->mc_flag))
+  else if (LC_P (c) && !NILP (current_buffer->mc_flag))
     c = char_width[c];
   else if (c <= 0xFF)
     c = 4;
   else {
     c = LEADING_CHAR(c);
-    c = NULL (current_buffer->mc_flag) ? char_bytes[c] * 4 : char_width[c];
+    c = NILP (current_buffer->mc_flag) ? char_bytes[c] * 4 : char_width[c];
   }
   return (int)c;
 }
@@ -485,7 +484,7 @@ If POS is out of range or not at character boundary, NIL is returned.")
   register unsigned char c;
   register int n;
 
-  if (NULL (current_buffer->mc_flag))
+  if (NILP (current_buffer->mc_flag))
     XSET (val, Lisp_Int, 0);
   else {
     CHECK_NUMBER_COERCE_MARKER (pos, 0);

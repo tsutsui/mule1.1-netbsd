@@ -302,9 +302,6 @@
 #define WNNSERVER_T 2
 #define WNNSERVER_K 3
 
-#ifdef NULL
-#undef NULL
-#endif
 #include "lisp.h"
 #include "buffer.h"
 #include "window.h"

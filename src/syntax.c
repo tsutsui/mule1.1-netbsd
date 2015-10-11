@@ -76,7 +76,7 @@ check_syntax_table (obj)
 {
   register Lisp_Object tem;
   while (tem = Fsyntax_table_p (obj),
-	 NULL (tem))
+	 NILP (tem))
     obj = wrong_type_argument (Qsyntax_table_p, obj);
   return obj;
 }   
@@ -132,9 +132,9 @@ It is a copy of the TABLE, which defaults to the standard syntax table.")
   XFASTINT (size) = 0400;
   XFASTINT (val) = 0;
   val = Fmake_vector (size, val);
-  if (!NULL (table))
+  if (!NILP (table))
     table = check_syntax_table (table);
-  else if (NULL (Vstandard_syntax_table))
+  else if (NILP (Vstandard_syntax_table))
     /* Can only be null during initialization */
     return val;
   else table = Vstandard_syntax_table;
@@ -244,7 +244,7 @@ char_syntax_at(p, len)
       len--, c = *p++ & 0x7F;
   }
   val = XVECTOR (current_buffer->syntax_table)->contents[c];
-  if (NULL (current_buffer->mc_flag)) {
+  if (NILP (current_buffer->mc_flag)) {
     if (XTYPE (val) != Lisp_Int)
       XSET (val, Lisp_Int, 0);
   } else {
@@ -374,7 +374,7 @@ DEFUN ("modify-syntax-entry", Fmodify_syntax_entry, Smodify_syntax_entry, 2, 3,
 
   CHECK_CHARACTER (c, 0);	/* 92.1.10 by K.Handa */
   CHECK_STRING (newentry, 1);
-  if (NULL (syntax_table))
+  if (NILP (syntax_table))
     syntax_table = current_buffer->syntax_table;
   else
     syntax_table = check_syntax_table (syntax_table);
@@ -680,8 +680,8 @@ and nil is returned.")
 
 /* 92.7.17 by K.Handa */
   if (wordbuf[0]		/* 93.7.13 by K.Handa */
-      && !NULL (Vforward_word_regexp)
-      && !NULL (Vbackward_word_regexp)) {
+      && !NILP (Vforward_word_regexp)
+      && !NILP (Vbackward_word_regexp)) {
     Lisp_Object re;
     int np, lim;
 
@@ -1117,7 +1117,7 @@ scan_sexps_forward (from, end, targetdepth, stopbefore, oldstate)
   immediate_quit = 1;
   QUIT;
 
-  if (NULL (oldstate))
+  if (NILP (oldstate))
     {
       depth = 0;
       state.instring = -1;
@@ -1126,7 +1126,7 @@ scan_sexps_forward (from, end, targetdepth, stopbefore, oldstate)
   else
     {
       tem = Fcar (oldstate);
-      if (!NULL (tem))
+      if (!NILP (tem))
 	depth = XINT (tem);
       else
 	depth = 0;
@@ -1135,15 +1135,15 @@ scan_sexps_forward (from, end, targetdepth, stopbefore, oldstate)
       oldstate = Fcdr (oldstate);
       oldstate = Fcdr (oldstate);
       tem = Fcar (oldstate);
-      state.instring = !NULL (tem) ? XINT (tem) : -1;
+      state.instring = !NILP (tem) ? XINT (tem) : -1;
 
       oldstate = Fcdr (oldstate);
       tem = Fcar (oldstate);
-      state.incomment = !NULL (tem);
+      state.incomment = !NILP (tem);
 
       oldstate = Fcdr (oldstate);
       tem = Fcar (oldstate);
-      start_quoted = !NULL (tem);
+      start_quoted = !NILP (tem);
     }
   state.quoted = 0;
   mindepth = depth;
@@ -1343,7 +1343,7 @@ DEFUN ("parse-partial-sexp", Fparse_partial_sexp, Sparse_partial_sexp, 2, 5, 0,
   struct lisp_parse_state state;
   int target;
 
-  if (!NULL (targetdepth))
+  if (!NILP (targetdepth))
     {
       CHECK_NUMBER (targetdepth, 3);
       target = XINT (targetdepth);
@@ -1353,7 +1353,7 @@ DEFUN ("parse-partial-sexp", Fparse_partial_sexp, Sparse_partial_sexp, 2, 5, 0,
 
   validate_region (&from, &to);
   state = *scan_sexps_forward (XINT (from), XINT (to),
-			       target, !NULL (stopbefore), oldstate);
+			       target, !NILP (stopbefore), oldstate);
 
   SET_PT (state.location);
   

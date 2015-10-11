@@ -105,7 +105,7 @@ quotify_arg (exp)
      register Lisp_Object exp;
 {
   if (XTYPE (exp) != Lisp_Int && XTYPE (exp) != Lisp_String
-      && !NULL (exp) && !EQ (exp, Qt))
+      && !NILP (exp) && !EQ (exp, Qt))
     return Fcons (Qquote, Fcons (exp, Qnil));
 
   return exp;
@@ -133,7 +133,7 @@ static void
 check_mark ()
 {
   Lisp_Object tem = Fmarker_buffer (current_buffer->mark);
-  if (NULL (tem) || (XBUFFER (tem) != current_buffer))
+  if (NILP (tem) || (XBUFFER (tem) != current_buffer))
     error ("The mark is not set now");
 }
 
@@ -207,7 +207,7 @@ Otherwise, this is done only if an arg is read using the minibuffer.")
   else if (EQ (funcar, Qlambda))
     {
       specs = Fassq (Qinteractive, Fcdr (Fcdr (fun)));
-      if (NULL (specs))
+      if (NILP (specs))
 	goto lose;
       specs = Fcar (Fcdr (specs));
       if (XTYPE (specs) == Lisp_String)
@@ -221,7 +221,7 @@ Otherwise, this is done only if an arg is read using the minibuffer.")
 	{
 	  i = num_input_chars;
 	  specs = Feval (specs);
-	  if (i != num_input_chars || !NULL (record))
+	  if (i != num_input_chars || !NILP (record))
 	    Vcommand_history
 	      = Fcons (Fcons (function, quotify_args (Fcopy_sequence (specs))),
 		       Vcommand_history);
@@ -239,7 +239,7 @@ Otherwise, this is done only if an arg is read using the minibuffer.")
   if (*string == '*')
     {
       string++;
-      if (!NULL (current_buffer->read_only))
+      if (!NILP (current_buffer->read_only))
 	Fbarf_if_buffer_read_only ();
     }
 
@@ -369,7 +369,7 @@ Otherwise, this is done only if an arg is read using the minibuffer.")
 	  break;
 
 	case 'N':		/* Prefix arg, else number from minibuffer */
-	  if (!NULL (prefix_arg))
+	  if (!NILP (prefix_arg))
 	    goto have_prefix_arg;
 	case 'n':		/* Read number from minibuffer.  */
 	  do
@@ -434,7 +434,7 @@ Otherwise, this is done only if an arg is read using the minibuffer.")
 
 /* 92.12.21 by K.Handa */
 	case 'Z':		/* Coding-system symbol or nil if no prefix */
-	  if (NULL (prefix_arg)) {
+	  if (NILP (prefix_arg)) {
 	    args[i] = Qnil;
 	    varies[i] = -1;
 	  } else {
@@ -458,7 +458,7 @@ Otherwise, this is done only if an arg is read using the minibuffer.")
       if (varies[i] == 0)
 	arg_from_tty = 1;
 
-      if (NULL (visargs[i]) && XTYPE (args[i]) == Lisp_String)
+      if (NILP (visargs[i]) && XTYPE (args[i]) == Lisp_String)
 	visargs[i] = args[i];
 
       tem = (unsigned char *) index (tem, '\n');
@@ -470,7 +470,7 @@ Otherwise, this is done only if an arg is read using the minibuffer.")
 
   args[0] = function;
 
-  if (arg_from_tty || !NULL (record))
+  if (arg_from_tty || !NILP (record))
     {
       visargs[0] = function;
       for (i = 1; i < count + 1; i++)
@@ -496,7 +496,7 @@ A raw prefix argument is what you get from (interactive \"P\").")
 {
   Lisp_Object val;
   
-  if (NULL (raw))
+  if (NILP (raw))
     XFASTINT (val) = 1;
   else if (XTYPE (raw) == Lisp_Symbol)
     {

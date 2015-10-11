@@ -28,7 +28,6 @@ what you give them.   Help stamp out software-hoarding!  */
 
 #include "config.h"
 #include "lisp.h"
-#undef NULL
 #include <sys/types.h>
 #include <sys/file.h>
 #include <sys/stat.h>

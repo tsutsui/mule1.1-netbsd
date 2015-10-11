@@ -171,9 +171,6 @@ typedef  unsigned short wchar_t;
 #endif WNN3
 #endif WNN4V3
 
-#ifdef NULL
-#undef NULL
-#endif NULL
 #include "lisp.h"
 #include "buffer.h"
 #include "window.h"

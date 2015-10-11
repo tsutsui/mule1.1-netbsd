@@ -31,7 +31,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #include "config.h"
 #include <stdio.h>
-#undef NULL
 #include "lisp.h"
 #include "commands.h"
 #include "buffer.h"
@@ -189,7 +188,7 @@ get_keyelt (object)
 
   while (map = get_keymap_1 (Fcar_safe (object), 0),
 	 tem = Fkeymapp (map),
-	 !NULL (tem))
+	 !NILP (tem))
       /*(XTYPE (object) == Lisp_Cons && !EQ (XCONS (object)->car, Qkeymap))*/
     {
       object = Fcdr (object);
@@ -233,7 +232,7 @@ store_in_keymap (keymap, idx, def)
   if (CONSP (keymap))
     {
       tem = Fassq (make_number (idx), Fcdr (keymap));
-      if (!NULL (tem))
+      if (!NILP (tem))
 	Fsetcdr (tem, def);
       else
 	Fsetcdr (keymap, Fcons (Fcons (make_number (idx), def),
@@ -264,7 +263,7 @@ is not copied.")
       copy = Fcopy_sequence (keymap);
       for (i = 0; i < XVECTOR (copy)->size; i++)
 	if (XTYPE (XVECTOR (copy)->contents[i]) != Lisp_Symbol)
-	  if (tem = Fkeymapp (XVECTOR (copy)->contents[i]), !NULL (tem))
+	  if (tem = Fkeymapp (XVECTOR (copy)->contents[i]), !NILP (tem))
 	    XVECTOR (copy)->contents[i]
 	      = Fcopy_keymap (XVECTOR (copy)->contents[i]);
     }
@@ -278,7 +277,7 @@ is not copied.")
 	  elt = XCONS (tail)->car;
 	  if (CONSP (elt)
 	      && XTYPE (XCONS (elt)->cdr) != Lisp_Symbol
-	      && (tem = Fkeymapp (XCONS (elt)->cdr), !NULL (tem)))
+	      && (tem = Fkeymapp (XCONS (elt)->cdr), !NILP (tem)))
 	    XCONS (elt)->cdr = Fcopy_keymap (XCONS (elt)->cdr);
 	}
     }
@@ -322,7 +321,7 @@ to ESC + CHAR.")
     {
       c = XSTRING (key)->data[idx];
       /* 91.10.29, 92.3.23 by K.Handa */
-      if (c >= 0200 && !metized && NULL (nonmeta))
+      if (c >= 0200 && !metized && NILP (nonmeta))
 	{
 	  c = meta_prefix_char;
 	  metized = 1;
@@ -338,13 +337,13 @@ to ESC + CHAR.")
 	return store_in_keymap (keymap, c, def);
 
       cmd = get_keyelt (access_keymap (keymap, c));
-      if (NULL (cmd))
+      if (NILP (cmd))
 	{
 	  cmd = Fmake_sparse_keymap ();
 	  store_in_keymap (keymap, c, cmd);
 	}
       tem = Fkeymapp (cmd);
-      if (NULL (tem))
+      if (NILP (tem))
 	error ("Key sequence %s uses invalid prefix characters",
 	       XSTRING (key)->data);
 
@@ -402,7 +401,7 @@ it takes to reach a non-prefix command.")
 	return cmd;
 
       tem = Fkeymapp (cmd);
-      if (NULL (tem))
+      if (NILP (tem))
 	return make_number (idx);
 
       keymap = get_keymap (cmd);
@@ -426,9 +425,9 @@ The definition is probably a symbol with a function definition.")
   map[1] = current_buffer->keymap;
   XSET (map[2], Lisp_Vector, global_map);
   for (i = 0; i < 3; i++) {
-    if (!NULL (map[i])) {
+    if (!NILP (map[i])) {
       value = Flookup_key (map[i], keys);
-      if (!NULL (value) && XTYPE (value) != Lisp_Int)
+      if (!NILP (value) && XTYPE (value) != Lisp_Int)
 	return value;
     }
   }
@@ -445,7 +444,7 @@ The definition is probably a symbol with a function definition.")
 {
   register Lisp_Object map;
   map = current_buffer->frontmap;
-  if (NULL (map))
+  if (NILP (map))
     return Qnil;
   return Flookup_key (map, keys);
 }
@@ -460,7 +459,7 @@ The definition is probably a symbol with a function definition.")
 {
   register Lisp_Object map;
   map = current_buffer->keymap;
-  if (NULL (map))
+  if (NILP (map))
     return Qnil;
   return Flookup_key (map, keys);
 }
@@ -506,7 +505,7 @@ which is shared with other buffers in the same major mode.")
 {
   register Lisp_Object map;
   map = current_buffer->keymap;
-  if (NULL (map))
+  if (NILP (map))
     {
       map = Fmake_sparse_keymap ();
       current_buffer->keymap = map;
@@ -530,7 +529,7 @@ which is shared with other buffers using the same front map.")
 {
   register Lisp_Object map;
   map = current_buffer->frontmap;
-  if (NULL (map))
+  if (NILP (map))
     {
       map = Fmake_sparse_keymap ();
       current_buffer->frontmap = map;
@@ -559,7 +558,7 @@ KEY is a string representing a sequence of keystrokes.")
   (keys)
      Lisp_Object keys;
 {
-  if (!NULL (current_buffer->keymap))
+  if (!NILP (current_buffer->keymap))
     Flocal_set_key (keys, Qnil);
   return Qnil;
 }
@@ -591,7 +590,7 @@ nil for KEYMAP means no local keymap.")
   (keymap)
      Lisp_Object keymap;
 {
-  if (!NULL (keymap))
+  if (!NILP (keymap))
     keymap = get_keymap (keymap);
 
   current_buffer->keymap = keymap;
@@ -606,7 +605,7 @@ nil for KEYMAP means no front keymap.")
   (keymap)
      Lisp_Object keymap;
 {
-  if (!NULL (keymap))
+  if (!NILP (keymap))
     keymap = get_keymap (keymap);
 
   current_buffer->frontmap = keymap;
@@ -659,20 +658,20 @@ so that the KEYS increase in length.  The first element is (\"\" . KEYMAP).")
      look at any other maps it points to
      and stick them at the end if they are not already in the list */
 
-  while (!NULL (tail))
+  while (!NILP (tail))
     {
       thisseq = Fcar (Fcar (tail));
       thismap = Fcdr (Fcar (tail));
       for (i = 0; i < 0400; i++) /* 91.10.29 by K.Handa */
 	{
 	  cmd = get_keyelt (access_keymap (thismap, i));
-	  if (NULL (cmd)) continue;
+	  if (NILP (cmd)) continue;
 	  tem = Fkeymapp (cmd);
-	  if (!NULL (tem))
+	  if (!NILP (tem))
 	    {
 	      cmd = get_keymap (cmd);
 	      tem = Frassq (cmd, maps);
-	      if (NULL (tem))
+	      if (NILP (tem))
 		{
 		  XFASTINT (dummy) = i;
 		  dummy = concat2 (thisseq, Fchar_to_string (dummy));
@@ -840,7 +839,7 @@ sequence found, rather than a list of all possible key sequences.")
 
   XSET (start1, Lisp_Vector, global_map);
 
-  if (!NULL (local_keymap))
+  if (!NILP (local_keymap))
     maps = nconc2 (Faccessible_keymaps (get_keymap (local_keymap)),
 		   Faccessible_keymaps (start1));
   else
@@ -848,7 +847,7 @@ sequence found, rather than a list of all possible key sequences.")
 
   found = Qnil;
 
-  for (; !NULL (maps); maps = Fcdr (maps))
+  for (; !NILP (maps); maps = Fcdr (maps))
     {
       register Lisp_Object this = Fcar (Fcar (maps)); /* Key sequence to reach map */
       register Lisp_Object map = Fcdr (Fcar (maps)); /* The map that it reaches */
@@ -860,7 +859,7 @@ sequence found, rather than a list of all possible key sequences.")
       /* If the MAP is a vector, I increments and eventually reaches 0200.
 	 Otherwise I remains 0; MAP is cdr'd and eventually becomes nil.  */
 
-      while (!NULL (map) && i < 0200)
+      while (!NILP (map) && i < 0200)
 	{
 	  register Lisp_Object elt, dummy;
 
@@ -888,7 +887,7 @@ sequence found, rather than a list of all possible key sequences.")
 	    {
 	      Lisp_Object tem;
 	      tem = Fequal (elt, definition);
-	      if (NULL (tem))
+	      if (NILP (tem))
 		continue;
 	    }
 	  else
@@ -909,15 +908,15 @@ sequence found, rather than a list of all possible key sequences.")
 	     Either nil or number as value from Flookup_key
 	     means undefined.  */
 
-	  if (!NULL (local_keymap))
+	  if (!NILP (local_keymap))
 	    elt = Flookup_key (local_keymap, dummy);
-	  if (!NULL (elt) && XTYPE (elt) != Lisp_Int)
+	  if (!NILP (elt) && XTYPE (elt) != Lisp_Int)
 	    {
 	      if (XTYPE (definition) == Lisp_Cons)
 		{
 		  Lisp_Object tem;
 		  tem = Fequal (elt, definition);
-		  if (NULL (tem))
+		  if (NILP (tem))
 		    continue;
 		}
 	      else
@@ -927,7 +926,7 @@ sequence found, rather than a list of all possible key sequences.")
 
 	  /* It is a true unshadowed match  Record it.  */
 
-	  if (!NULL (firstonly))
+	  if (!NILP (firstonly))
 	    return dummy;
 	  found = Fcons (dummy, found);
 	}
@@ -976,7 +975,7 @@ describe_buffer_bindings (descbuf)
 
   /* 93.7.7 by K.Handa */
   start1 = XBUFFER (descbuf)->frontmap;
-  if (!NULL (start1))
+  if (!NILP (start1))
     {
       InsStr ("Front Bindings:\n");
       InsStr (heading);
@@ -987,7 +986,7 @@ describe_buffer_bindings (descbuf)
   /* end of patch */
 
   start1 = XBUFFER (descbuf)->keymap;
-  if (!NULL (start1))
+  if (!NILP (start1))
     {
       InsStr ("Local Bindings:\n");
       if (heading)		/* 93.7.7 by K.Handa */
@@ -1026,11 +1025,11 @@ describe_map_tree (startmap, partial, shadow)
   maps = Faccessible_keymaps (startmap);
   GCPRO1 (maps);
 
-  for (; !NULL (maps); maps = Fcdr (maps))
+  for (; !NILP (maps); maps = Fcdr (maps))
     {
       elt = Fcar (maps);
       sh = Fcar (elt);
-      if (NULL (shadow))
+      if (NILP (shadow))
 	sh = Qnil;
       else if (XTYPE (sh) == Lisp_String &&
 	       XSTRING (sh)->size == 0)
@@ -1041,7 +1040,7 @@ describe_map_tree (startmap, partial, shadow)
 	  if (XTYPE (sh) == Lisp_Int)
 	    sh = Qnil;
 	}
-      if (NULL (sh) || !NULL (Fkeymapp (sh)))
+      if (NILP (sh) || !NILP (Fkeymapp (sh)))
 	describe_map (Fcdr (elt), Fcar (elt), partial, sh);
     }
 
@@ -1065,7 +1064,7 @@ describe_command (definition)
   else
     {
       tem1 = Fkeymapp (definition);
-      if (!NULL (tem1))
+      if (!NILP (tem1))
 	InsStr ("Prefix Command\n");
       else
 	InsStr ("??\n");
@@ -1084,7 +1083,7 @@ describe_map (map, string, partial, shadow)
 {
   register Lisp_Object keysdesc;
 
-  if (!NULL (string) && XSTRING (string)->size > 0)
+  if (!NILP (string) && XSTRING (string)->size > 0)
     keysdesc = concat2 (Fkey_description (string), build_string (" "));
   else
     keysdesc = Qnil;
@@ -1120,21 +1119,21 @@ describe_alist (alist, elt_prefix, elt_describer, partial, shadow)
       QUIT;
       tem1 = Fcar (Fcar (alist));
       tem2 = get_keyelt (Fcdr (Fcar (alist)));
-      if (NULL (tem2)) continue;
+      if (NILP (tem2)) continue;
       if (XTYPE (tem2) == Lisp_Symbol && partial)
 	{
 	  this = Fget (tem2, suppress);
-	  if (!NULL (this))
+	  if (!NILP (this))
 	    continue;
 	}
 
-      if (!NULL (shadow))
+      if (!NILP (shadow))
 	{
 	  Lisp_Object tem;
-	  if (NULL (kludge)) kludge = build_string ("x");
+	  if (NILP (kludge)) kludge = build_string ("x");
 	  XSTRING (kludge)->data[0] = XINT (tem1);
 	  tem = Flookup_key (shadow, kludge);
-	  if (!NULL (tem)) continue;
+	  if (!NILP (tem)) continue;
 	}
 
       if (first)
@@ -1144,7 +1143,7 @@ describe_alist (alist, elt_prefix, elt_describer, partial, shadow)
 	}
 
       GCPRO2 (elt_prefix, tem2);
-      if (!NULL (elt_prefix))
+      if (!NILP (elt_prefix))
 	insert1 (elt_prefix);
 
       insert1 (Fsingle_key_description (tem1));
@@ -1182,21 +1181,21 @@ describe_vector (vector, elt_prefix, elt_describer, partial, shadow)
     {
       QUIT;
       tem1 = get_keyelt (XVECTOR (vector)->contents[i]);
-      if (NULL (tem1)) continue;      
+      if (NILP (tem1)) continue;      
       if (XTYPE (tem1) == Lisp_Symbol && partial)
 	{
 	  this = Fget (tem1, suppress);
-	  if (!NULL (this))
+	  if (!NILP (this))
 	    continue;
 	}
 
-      if (!NULL (shadow))
+      if (!NILP (shadow))
 	{
 	  Lisp_Object tem;
-	  if (NULL (kludge)) kludge = build_string ("x");
+	  if (NILP (kludge)) kludge = build_string ("x");
 	  XSTRING (kludge)->data[0] = XINT (i);
 	  tem = Flookup_key (shadow, kludge);
-	  if (!NULL (tem)) continue;
+	  if (!NILP (tem)) continue;
 	}
 
       if (first)
@@ -1205,7 +1204,7 @@ describe_vector (vector, elt_prefix, elt_describer, partial, shadow)
 	  first = 0;
 	}
 
-      if (!NULL (elt_prefix))
+      if (!NILP (elt_prefix))
 	insert1 (elt_prefix);
 
       XFASTINT (dummy) = i;
@@ -1219,7 +1218,7 @@ describe_vector (vector, elt_prefix, elt_describer, partial, shadow)
       if (i != XINT (dummy))
 	{
 	  insert (" .. ", 4);
-	  if (!NULL (elt_prefix))
+	  if (!NILP (elt_prefix))
 	    insert1 (elt_prefix);
 
 	  XFASTINT (dummy) = i;
@@ -1243,9 +1242,9 @@ apropos_accum (symbol, string)
   register Lisp_Object tem;
 
   tem = Fstring_match (string, Fsymbol_name (symbol), Qnil);
-  if (!NULL (tem) && !NULL (apropos_predicate))
+  if (!NILP (tem) && !NILP (apropos_predicate))
     tem = call1 (apropos_predicate, symbol);
-  if (!NULL (tem))
+  if (!NILP (tem))
     apropos_accumulate = Fcons (symbol, apropos_accumulate);
 }
 
@@ -1256,7 +1255,7 @@ apropos1 (list)
   struct buffer *old = current_buffer;
   register Lisp_Object symbol, col, tem;
 
-  while (!NULL (list))
+  while (!NILP (list))
     {
       Lisp_Object min_cols;
 
@@ -1276,7 +1275,7 @@ apropos1 (list)
       Fprinc (tem, Qnil);
       Fterpri (Qnil);
       tem = Ffboundp (symbol);
-      if (!NULL (tem))
+      if (!NILP (tem))
         tem = Fdocumentation (symbol);
       if (XTYPE (tem) == Lisp_String)
 	insert_first_line ("  Function: ", tem);
@@ -1333,7 +1332,7 @@ does not display them, just returns the list.")
   apropos_accumulate = Qnil;
   map_obarray (Vobarray, apropos_accum, string);
   apropos_accumulate = Fsort (apropos_accumulate, Qstring_lessp);
-  if (NULL (noprint))
+  if (NILP (noprint))
     internal_with_output_to_temp_buffer ("*Help*", apropos1,
 					 apropos_accumulate);
   UNGCPRO;

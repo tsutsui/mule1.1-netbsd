@@ -49,7 +49,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #ifdef hpux
 /* needed by <pwd.h> */
 #include <stdio.h>
-#undef NULL
 #endif
 
 #ifdef VMS
@@ -122,7 +121,7 @@ init_editfns ()
   /* If the user name claimed in the environment vars differs from
      the real uid, use the claimed name to find the full name.  */
   tem = Fstring_equal (Vuser_name, Vuser_real_name);
-  if (NULL (tem))
+  if (NILP (tem))
     pw = (struct passwd *) getpwnam (XSTRING (Vuser_name)->data);
   
   p = (unsigned char *) (pw ? USER_FULL_NAME : "unknown");
@@ -364,7 +363,7 @@ If mc-flag of the current buffer is non-nil and the target position\n\
   register int charno;
   CHECK_NUMBER_COERCE_MARKER (n, 0);
   charno = clip_to_bounds (BEGV, XINT (n), ZV);
-  if (!NULL (current_buffer->mc_flag)) /* 91.12.26 by K.Handa */
+  if (!NILP (current_buffer->mc_flag)) /* 91.12.26 by K.Handa */
     charno = validate_position (charno, 0);
   SET_PT (charno);
   return n;
@@ -376,7 +375,7 @@ region_limit (beginningp)
 {
   register Lisp_Object m;
   m = Fmarker_position (current_buffer->mark);
-  if (NULL (m)) error ("There is no region now");
+  if (NILP (m)) error ("There is no region now");
   if ((point < XFASTINT (m)) == beginningp)
     return (make_number (point));
   else
@@ -437,14 +436,14 @@ store it in a Lisp variable.  Example:\n\
   (pos)
      Lisp_Object pos;
 {
-  if (NULL (pos))
+  if (NILP (pos))
     {
       current_buffer->mark = Qnil;
       return Qnil;
     }
   CHECK_NUMBER_COERCE_MARKER (pos, 0);
 
-  if (NULL (current_buffer->mark))
+  if (NILP (current_buffer->mark))
     current_buffer->mark = Fmake_marker ();
 
   Fset_marker (current_buffer->mark, pos, Qnil);
@@ -472,7 +471,7 @@ save_excursion_restore (info)
   /* Otherwise could get error here while unwinding to top level
      and crash */
   /* In that case, Fmarker_buffer returns nil now.  */
-  if (NULL (tem))
+  if (NILP (tem))
     return Qnil;
   Fset_buffer (tem);
   tem = Fcar (info);
@@ -483,7 +482,7 @@ save_excursion_restore (info)
   if (XMARKER (tem)->buffer)
     unchain_marker (tem);
   tem = Fcdr (Fcdr (info));
-  if (!NULL (tem) && current_buffer != XBUFFER (XWINDOW (selected_window)->buffer))
+  if (!NILP (tem) && current_buffer != XBUFFER (XWINDOW (selected_window)->buffer))
     Fswitch_to_buffer (Fcurrent_buffer (), Qnil);
   return Qnil;
 }
@@ -561,7 +560,7 @@ If mc-flag of the current buffer is not nil, the returned character\n\
   if (point >= ZV)
     XFASTINT (temp) = 0;
   else {			/* 91.11.14 by K.Handa */
-    if (NULL (current_buffer->mc_flag))
+    if (NILP (current_buffer->mc_flag))
       XFASTINT (temp) = FETCH_CHAR (point);
     else
       FETCH_MC_CHAR (XFASTINT (temp), point);
@@ -579,7 +578,7 @@ If mc-flag of the current buffer is not nil, the returned character\n\
   if (point <= BEGV)
     XFASTINT (temp) = 0;
   else {			/* 91.11.14 by K.Handa */
-    if (NULL (current_buffer->mc_flag))
+    if (NILP (current_buffer->mc_flag))
       XFASTINT (temp) = FETCH_CHAR (point - 1);
     else {
       register int pos = point;
@@ -646,7 +645,7 @@ If mc-flag of the current buffer is not nil, the returned character\n\
   n = XINT (pos);
   if (n < BEGV || n >= ZV) return Qnil;
 
-  if (NULL (current_buffer->mc_flag)) /* 91.11.14 by K.Handa */
+  if (NILP (current_buffer->mc_flag)) /* 91.11.14 by K.Handa */
     XFASTINT (val) = FETCH_CHAR (n);
   else
     FETCH_MC_CHAR (XFASTINT (val), n);
@@ -672,9 +671,9 @@ In case that there's a multi-byte character at POS,\n\
   if (n <= BEGV || n > ZV) return Qnil;
 
   XFASTINT (val) = FETCH_CHAR (n - 1);
-  if (!NULL (current_buffer->mc_flag)
+  if (!NILP (current_buffer->mc_flag)
       && !ASCII_P (XFASTINT (val))
-      && NULL (byte_unit)) {	/* 93.5.27 by K.Handa */
+      && NILP (byte_unit)) {	/* 93.5.27 by K.Handa */
     unsigned char *str;
     int len;
 
@@ -900,14 +899,14 @@ They default to the beginning and the end of BUFFER.")
   buf = Fget_buffer (buf);
   bp = XBUFFER (buf);
 
-  if (NULL (b))
+  if (NILP (b))
     beg = BUF_BEGV (bp);
   else
     {
       CHECK_NUMBER_COERCE_MARKER (b, 0);
       beg = XINT (b);
     }
-  if (NULL (e))
+  if (NILP (e))
     end = BUF_ZV (bp);
   else
     {
@@ -971,7 +970,7 @@ doesn't alter the length of buffer.")
 
   if (i != j) error ("Can't substitute different byte-size characters.");
 
-  if (! NULL (noundo))
+  if (! NILP (noundo))
     {
       if (MODIFF - 1 == current_buffer->save_modified)
 	current_buffer->save_modified++;
@@ -994,7 +993,7 @@ doesn't alter the length of buffer.")
 		  && (i == 2 || (p[2] == fromstr[2] /* 92.9.5 by K.Handa */
 				 && (i == 3 || p[3] == fromstr[3])))))) {
 	int k;
-	if (NULL (noundo))
+	if (NILP (noundo))
 	  record_change (pos, i);
 	for (k = 0; k < i; k++) *p++ = tostr[k];
 	pos += i;
@@ -1283,7 +1282,7 @@ Case is ignored if the current buffer specifies to do so.")
   CHECK_CHARACTER (c1, 0);	/* 91.11.17 by K.Handa */
   CHECK_CHARACTER (c2, 1);	/* 91.11.17 by K.Handa */
 
-  if (!NULL (current_buffer->case_fold_search)
+  if (!NILP (current_buffer->case_fold_search)
       && !MC_CHAR_P(c1) /* 91.11.17 by K.Handa */
       ? downcase_table[0xff & XFASTINT (c1)] == downcase_table[0xff & XFASTINT (c2)]
       : XINT (c1) == XINT (c2))

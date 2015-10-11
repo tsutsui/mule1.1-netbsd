@@ -189,7 +189,7 @@ If all args return NIL, return NIL.")
   Lisp_Object args_left;
   struct gcpro gcpro1;
 
-  if (NULL(args))
+  if (NILP(args))
     return Qnil;
 
   args_left = args;
@@ -198,11 +198,11 @@ If all args return NIL, return NIL.")
   do
     {
       val = Feval (Fcar (args_left));
-      if (!NULL (val))
+      if (!NILP (val))
 	break;
       args_left = Fcdr (args_left);
     }
-  while (!NULL(args_left));
+  while (!NILP(args_left));
 
   UNGCPRO;
   return val;
@@ -219,7 +219,7 @@ If no arg yields NIL, return the last arg's value.")
   Lisp_Object args_left;
   struct gcpro gcpro1;
 
-  if (NULL(args))
+  if (NILP(args))
     return Qt;
 
   args_left = args;
@@ -228,11 +228,11 @@ If no arg yields NIL, return the last arg's value.")
   do
     {
       val = Feval (Fcar (args_left));
-      if (NULL (val))
+      if (NILP (val))
 	break;
       args_left = Fcdr (args_left);
     }
-  while (!NULL(args_left));
+  while (!NILP(args_left));
 
   UNGCPRO;
   return val;
@@ -252,7 +252,7 @@ There may be no E's; then if C yields NIL, the value is NIL.")
   cond = Feval (Fcar (args));
   UNGCPRO;
 
-  if (!NULL (cond))
+  if (!NILP (cond))
     return Feval (Fcar (Fcdr (args)));
   return Fprogn (Fcdr (Fcdr (args)));
 }
@@ -272,11 +272,11 @@ If no clause succeeds, cond returns nil.")
   struct gcpro gcpro1;
 
   GCPRO1 (args);
-  while (!NULL (args))
+  while (!NILP (args))
     {
       clause = Fcar (args);
       val = Feval (Fcar (clause));
-      if (!NULL (val))
+      if (!NILP (val))
 	{
 	  if (!EQ (XCONS (clause)->cdr, Qnil))
 	    val = Fprogn (XCONS (clause)->cdr);
@@ -303,14 +303,14 @@ DEFUN ("progn", Fprogn, Sprogn, 0, UNEVALLED, 0,
   if (!EQ (Vmocklisp_arguments, Qt))
     {
       val = make_number (0);
-      while (!NULL (args) && (tem = Fcar (args), XTYPE (tem) == Lisp_Symbol))
+      while (!NILP (args) && (tem = Fcar (args), XTYPE (tem) == Lisp_Symbol))
 	{
 	  QUIT;
 	  specbind (tem, val), args = Fcdr (args);
 	}
     }
 
-  if (NULL(args))
+  if (NILP(args))
     return Qnil;
 
   args_left = args;
@@ -321,7 +321,7 @@ DEFUN ("progn", Fprogn, Sprogn, 0, UNEVALLED, 0,
       val = Feval (Fcar (args_left));
       args_left = Fcdr (args_left);
     }
-  while (!NULL(args_left));
+  while (!NILP(args_left));
 
   UNGCPRO;
   return val;
@@ -339,7 +339,7 @@ whose values are discarded.")
   struct gcpro gcpro1, gcpro2;
   register int argnum = 0;
 
-  if (NULL(args))
+  if (NILP(args))
     return Qnil;
 
   args_left = args;
@@ -354,7 +354,7 @@ whose values are discarded.")
 	Feval (Fcar (args_left));
       args_left = Fcdr (args_left);
     }
-  while (!NULL(args_left));
+  while (!NILP(args_left));
 
   UNGCPRO;
   return val;
@@ -374,7 +374,7 @@ whose values are discarded.")
 
   val = Qnil;
 
-  if (NULL(args))
+  if (NILP(args))
     return Qnil;
 
   args_left = args;
@@ -389,7 +389,7 @@ whose values are discarded.")
 	Feval (Fcar (args_left));
       args_left = Fcdr (args_left);
     }
-  while (!NULL(args_left));
+  while (!NILP(args_left));
 
   UNGCPRO;
   return val;
@@ -406,7 +406,7 @@ Each SYM is set before the next VAL is computed.")
   register Lisp_Object val, sym;
   struct gcpro gcpro1;
 
-  if (NULL(args))
+  if (NILP(args))
     return Qnil;
 
   args_left = args;
@@ -419,7 +419,7 @@ Each SYM is set before the next VAL is computed.")
       Fset (sym, val);
       args_left = Fcdr (Fcdr (args_left));
     }
-  while (!NULL(args_left));
+  while (!NILP(args_left));
 
   UNGCPRO;
   return val;
@@ -494,7 +494,7 @@ See also the function  interactive .")
 
   fn_name = Fcar (args);
   defn = Fcons (Qlambda, Fcdr (args));
-  if (!NULL (Vpurify_flag))
+  if (!NILP (Vpurify_flag))
     defn = Fpurecopy (defn);
   Ffset (fn_name, defn);
   return fn_name;
@@ -515,7 +515,7 @@ and the result should be a form to be evaluated instead of the original.")
 
   fn_name = Fcar (args);
   defn = Fcons (Qmacro, Fcons (Qlambda, Fcdr (args)));
-  if (!NULL (Vpurify_flag))
+  if (!NILP (Vpurify_flag))
     defn = Fpurecopy (defn);
   Ffset (fn_name, defn);
   return fn_name;
@@ -535,16 +535,16 @@ If INITVALUE is missing, SYMBOL's value is not set.")
 
   sym = Fcar (args);
   tem = Fcdr (args);
-  if (!NULL (tem))
+  if (!NILP (tem))
     {
       tem = Fboundp (sym);
-      if (NULL (tem))
+      if (NILP (tem))
 	Fset (sym, Feval (Fcar (Fcdr (args))));
     }
   tem = Fcar (Fcdr (Fcdr (args)));
-  if (!NULL (tem))
+  if (!NILP (tem))
     {
-      if (!NULL (Vpurify_flag))
+      if (!NILP (Vpurify_flag))
 	tem = Fpurecopy (tem);
       Fput (sym, Qvariable_documentation, tem);
     }
@@ -566,9 +566,9 @@ If DOCSTRING starts with *, this variable is identified as a user option.\n\
   sym = Fcar (args);
   Fset (sym, Feval (Fcar (Fcdr (args))));
   tem = Fcar (Fcdr (Fcdr (args)));
-  if (!NULL (tem))
+  if (!NILP (tem))
     {
-      if (!NULL (Vpurify_flag))
+      if (!NILP (Vpurify_flag))
 	tem = Fpurecopy (tem);
       Fput (sym, Qvariable_documentation, tem);
     }
@@ -610,7 +610,7 @@ Each VALUEFORM can refer to the symbols already bound by this VARLIST.")
   GCPRO3 (args, elt, varlist);
 
   varlist = Fcar (args);
-  while (!NULL (varlist))
+  while (!NILP (varlist))
     {
       QUIT;
       elt = Fcar (varlist);
@@ -655,7 +655,7 @@ All the VALUEFORMs are evalled before any symbols are bound.")
   GCPRO2 (args, *temps);
   gcpro2.nvars = 0;
 
-  for (argnum = 0; !NULL (varlist); varlist = Fcdr (varlist))
+  for (argnum = 0; !NILP (varlist); varlist = Fcdr (varlist))
     {
       QUIT;
       elt = Fcar (varlist);
@@ -668,7 +668,7 @@ All the VALUEFORMs are evalled before any symbols are bound.")
   UNGCPRO;
 
   varlist = Fcar (args);
-  for (argnum = 0; !NULL (varlist); varlist = Fcdr (varlist))
+  for (argnum = 0; !NILP (varlist); varlist = Fcdr (varlist))
     {
       elt = Fcar (varlist);
       tem = temps[argnum++];
@@ -695,7 +695,7 @@ DEFUN ("while", Fwhile, Swhile, 1, UNEVALLED, 0,
 
   test = Fcar (args);
   body = Fcdr (args);
-  while (tem = Feval (test), !NULL (tem))
+  while (tem = Feval (test), !NILP (tem))
     {
       QUIT;
       Fprogn (body);
@@ -732,7 +732,7 @@ definitions to shadow the loaded ones for use in file byte-compilation.")
 	{
 	  QUIT;
 	  tem = Fassq (sym, env);
-	  if (NULL (tem))
+	  if (NILP (tem))
 	    {
 	      def = XSYMBOL (sym)->function;
 	      if (XTYPE (def) == Lisp_Symbol && !EQ (def, Qunbound))
@@ -751,7 +751,7 @@ definitions to shadow the loaded ones for use in file byte-compilation.")
 	}
       /* Right now TEM is the result from SYM in ENV,
 	 and if TEM is nil then DEF is SYM's function definition.  */
-      if (NULL (tem))
+      if (NILP (tem))
 	{
 	  /* SYM is not mentioned in ENV.
 	     Look at its function definition.  */
@@ -763,7 +763,7 @@ definitions to shadow the loaded ones for use in file byte-compilation.")
 	    {
 	      /* Autoloading function: will it be a macro when loaded?  */
 	      tem = Fcar (Fnthcdr (make_number (4), def));
-	      if (NULL (tem))
+	      if (NILP (tem))
 		break;
 	      /* Yes, load it and try again.  */
 	      do_autoload (def, sym);
@@ -776,7 +776,7 @@ definitions to shadow the loaded ones for use in file byte-compilation.")
       else
 	{
 	  expander = XCONS (tem)->cdr;
-	  if (NULL (expander))
+	  if (NILP (expander))
 	    break;
 	}
       form = apply1 (expander, XCONS (form)->cdr);
@@ -880,7 +880,7 @@ Both TAG and VALUE are evalled.")
 
   while (1)
     {
-      if (!NULL (tag))
+      if (!NILP (tag))
 	for (c = catchlist; c; c = c->next)
 	  {
 	    if (EQ (c->tag, tag))
@@ -959,7 +959,7 @@ See SIGNAL for more info.")
   c.gcpro = gcprolist;
   if (_setjmp (c.jmp))
     {
-      if (!NULL (h.var))
+      if (!NILP (h.var))
         specbind (h.var, Fcdr (c.val));
       val = Fprogn (Fcdr (Fcar (c.val)));
 
@@ -974,10 +974,10 @@ See SIGNAL for more info.")
   h.var = Fcar (args);
   h.handler = Fcdr (Fcdr (args));
   
-  for (val = h.handler; ! NULL (val); val = Fcdr (val))
+  for (val = h.handler; ! NILP (val); val = Fcdr (val))
     {
       tem = Fcar (val);
-      if ((!NULL (tem)) &&
+      if ((!NILP (tem)) &&
 	  (!CONSP (tem) || (XTYPE (XCONS (tem)->car) != Lisp_Symbol)))
 	error ("Invalid condition handler", tem);
     }
@@ -1069,7 +1069,7 @@ See  condition-case.")
       if (EQ (clause, Qlambda))
 	return debugger_value;
 
-      if (!NULL (clause))
+      if (!NILP (clause))
 	{
 	  struct handler *h = handlerlist;
 	  /* Restore the polling-suppression count.  */
@@ -1126,7 +1126,7 @@ find_handler_clause (handlers, conditions, sig, data, debugger_value_ptr)
       if (!CONSP (tem1))
 	continue;
       tem = Fmemq (Fcar (tem1), conditions);
-      if (!NULL (tem))
+      if (!NILP (tem))
         return tem1;
     }
   return Qnil;
@@ -1170,7 +1170,7 @@ Also, a symbol is commandp if its function definition is commandp.")
     {
       if (++i > 10) return Qnil;
       tem = Ffboundp (fun);
-      if (NULL (tem)) return Qnil;
+      if (NILP (tem)) return Qnil;
       fun = Fsymbol_function (fun);
     }
   if (XTYPE (fun) == Lisp_Subr)
@@ -1313,7 +1313,7 @@ DEFUN ("eval", Feval, Seval, 1, 1, 0,
       if (EQ (Vmocklisp_arguments, Qt))
         return Fsymbol_value (form);
       val = Fsymbol_value (form);
-      if (NULL (val))
+      if (NILP (val))
 	XFASTINT (val) = 0;
       else if (EQ (val, Qt))
 	XFASTINT (val) = 1;
@@ -1403,7 +1403,7 @@ DEFUN ("eval", Feval, Seval, 1, 1, 0,
 	  gcpro3.var = vals;
 	  gcpro3.nvars = 0;
 
-	  while (!NULL (args_left))
+	  while (!NILP (args_left))
 	    {
 	      vals[argnum++] = Feval (Fcar (args_left));
 	      args_left = Fcdr (args_left);
@@ -1489,7 +1489,7 @@ DEFUN ("eval", Feval, Seval, 1, 1, 0,
  done:
   if (!EQ (Vmocklisp_arguments, Qt))
     {
-      if (NULL (val))
+      if (NILP (val))
 	XFASTINT (val) = 0;
       else if (EQ (val, Qt))
 	XFASTINT (val) = 1;
@@ -1574,7 +1574,7 @@ Thus, (apply '+ 1 2 '(3 4)) returns 10.")
   /* Spread the last arg we got.  Its first element goes in
      the slot that it used to occupy, hence this value of I.  */
   i = nargs - 1;
-  while (!NULL (spread_arg))
+  while (!NILP (spread_arg))
     {
       funcall_args [i++] = XCONS (spread_arg)->car;
       spread_arg = XCONS (spread_arg)->cdr;
@@ -1592,7 +1592,7 @@ apply1 (fn, arg)
 {
   register Lisp_Object val;
   struct gcpro gcpro1;
-  if (NULL (arg))
+  if (NILP (arg))
     /* No need to protect if all we have is the function.  */
     return Ffuncall (1, &fn);
   /* We must protect the vector given to Fapply.
@@ -1947,7 +1947,7 @@ funcall_lambda (fun, nargs, arg_vector)
   XFASTINT (numargs) = nargs;
 
   i = 0;
-  for (syms_left = Fcar (Fcdr (fun)); !NULL (syms_left); syms_left = Fcdr (syms_left))
+  for (syms_left = Fcar (Fcdr (fun)); !NILP (syms_left); syms_left = Fcdr (syms_left))
     {
       QUIT;
       next = Fcar (syms_left);
@@ -2042,7 +2042,7 @@ unbind_to (count, value)
      int count;
      Lisp_Object value;
 {
-  int quitf = !NULL (Vquit_flag);
+  int quitf = !NILP (Vquit_flag);
   struct gcpro gcpro1;
 
   GCPRO1 (value);
@@ -2056,12 +2056,12 @@ unbind_to (count, value)
 	(*specpdl_ptr->func) (specpdl_ptr->old_value);
       /* Note that a "binding" of nil is really an unwind protect,
 	so in that case the "old value" is a list of forms to evaluate.  */
-      else if (NULL (specpdl_ptr->symbol))
+      else if (NILP (specpdl_ptr->symbol))
 	Fprogn (specpdl_ptr->old_value);
       else
         Fset (specpdl_ptr->symbol, specpdl_ptr->old_value);
     }
-  if (NULL (Vquit_flag) && quitf) Vquit_flag = Qt;
+  if (NILP (Vquit_flag) && quitf) Vquit_flag = Qt;
 
   UNGCPRO;
 
@@ -2125,7 +2125,7 @@ The debugger is entered when that frame exits, if the flag is non-nil.")
     }
 
   if (backlist)
-    backlist->debug_on_exit = !NULL (flag);
+    backlist->debug_on_exit = !NILP (flag);
 
   return flag;
 }
@@ -2161,7 +2161,7 @@ Output stream used is value of standard-output.")
       else if (backlist->nargs == MANY)
 	{
 	  write_string ("(", -1);
-	  for (tail = *backlist->args, i = 0; !NULL (tail); tail = Fcdr (tail), i++)
+	  for (tail = *backlist->args, i = 0; !NILP (tail); tail = Fcdr (tail), i++)
 	    {
 	      if (i) write_string (" ", -1);
 	      Fprin1 (Fcar (tail), Qnil);

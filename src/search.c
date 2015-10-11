@@ -108,7 +108,7 @@ compile_pattern (pattern, bufp, translate, backward)
   if (EQ (pattern, last_regexp)
       && translate == bufp->translate /* 92.4.10 by K.Handa */
       /* 93.7.13 by K.Handa */
-      && NULL (current_buffer->mc_flag) == !bufp->mc_flag
+      && NILP (current_buffer->mc_flag) == !bufp->mc_flag
       && (!bufp->syntax_version
 	  || bufp->syntax_version == syntax_table_version)
       && (!bufp->category_version
@@ -187,7 +187,7 @@ set_pattern (pattern, bufp, translate)
   bufp->used = XSTRING (temp)->size;
   bufp->translate = translate;
   /* 93.7.13 by K.Handa -- set fastmap */
-  bufp->mc_flag = !NULL (current_buffer->mc_flag);
+  bufp->mc_flag = !NILP (current_buffer->mc_flag);
   {
     Lisp_Object fmap, syntax_fmap, category_fmap;
     char *fastmap = bufp->fastmap;
@@ -197,7 +197,7 @@ set_pattern (pattern, bufp, translate)
     bufp->fastmap_accurate = 1;
 
     fmap = XVECTOR (pattern)->contents[1];
-    if (NULL (fmap) && NULL (syntax_fmap) && NULL (category_fmap)) {
+    if (NILP (fmap) && NILP (syntax_fmap) && NILP (category_fmap)) {
       bufp->can_be_null = 1;
     } else {
       bufp->can_be_null = 0;
@@ -289,11 +289,11 @@ PAT is looked backward from point.")
   /* Now, string may be STRING or CONS.  Type is checked in */
   /* compile_pattern () */
   compile_pattern (string, &searchbuf,
-		   (!NULL (current_buffer->case_fold_search) ?
-		    (char *) downcase_table : 0), !NULL (back));
+		   (!NILP (current_buffer->case_fold_search) ?
+		    (char *) downcase_table : 0), !NILP (back));
 
   /* Backward search requires extended regexp. */
-  if (!NULL(back) && !EXTENDED_REGEXP_P(&searchbuf))
+  if (!NILP(back) && !EXTENDED_REGEXP_P(&searchbuf))
     error ("Can't look backward with this pattern");
 
   immediate_quit = 1;
@@ -325,7 +325,7 @@ PAT is looked backward from point.")
   /* backward search, it should be BEGV - BEGV, ie. 0 */
   val = (0 <= re_match_2 (&searchbuf, p1, s1, p2, s2,
 			  point - BEGV, &search_regs,
-			  !NULL(back)? BEGV - BEGV: ZV - BEGV, !NULL(back))
+			  !NILP(back)? BEGV - BEGV: ZV - BEGV, !NILP(back))
 	 ? Qt : Qnil);
 /* end of patch */
   for (i = 0; i < RE_NREGS; i++)
@@ -357,7 +357,7 @@ matched by parenthesis constructs in the pattern.")
 #endif
   CHECK_STRING (string, 1);
 
-  if (NULL (start))
+  if (NILP (start))
     s = 0;
   else
     {
@@ -373,7 +373,7 @@ matched by parenthesis constructs in the pattern.")
 
   /* Type of `regexp' will be checked in compile_pattern(). */
   compile_pattern (regexp, &searchbuf,
-		   (!NULL (current_buffer->case_fold_search) ?
+		   (!NILP (current_buffer->case_fold_search) ?
 		    (char *) downcase_table : 0), 0);
   immediate_quit = 1;
   val = re_search (&searchbuf, XSTRING (string)->data, XSTRING (string)->size,
@@ -504,13 +504,13 @@ skip_chars (forwardp, string, lim)
   register unsigned int c;
   int negate = 0;
   register int i;
-  int mc_flag = !NULL (current_buffer->mc_flag);
+  int mc_flag = !NILP (current_buffer->mc_flag);
   unsigned char *b;
   struct compile_charset_information info, *ip = &info;
 
   CHECK_STRING (string, 0);
 
-  if (NULL (lim))
+  if (NILP (lim))
     XFASTINT (lim) = forwardp ? ZV : BEGV;
   else
     CHECK_NUMBER_COERCE_MARKER (lim, 1);
@@ -608,7 +608,7 @@ search_command (string, bound, noerror, count, direction, RE)
   int lim;
   int n = direction;
 
-  if (!NULL (count))
+  if (!NILP (count))
     {
       CHECK_NUMBER (count, 3);
       n *= XINT (count);
@@ -620,7 +620,7 @@ search_command (string, bound, noerror, count, direction, RE)
 			    /* which is call from search_buffer. */
 #endif
 
-  if (NULL (bound))
+  if (NILP (bound))
     lim = n > 0 ? ZV : BEGV;
   else
     {
@@ -635,11 +635,11 @@ search_command (string, bound, noerror, count, direction, RE)
     }
 
   np = search_buffer (string, point, lim, n, RE,
-		      (!NULL (current_buffer->case_fold_search) ?
+		      (!NILP (current_buffer->case_fold_search) ?
 		       downcase_table : 0));
   if (np <= 0)
     {
-      if (NULL (noerror))
+      if (NILP (noerror))
 	return signal_failure (string);
       if (!EQ (noerror, Qt))
 	{
@@ -1226,7 +1226,7 @@ Leaves point at end of replacement text.")
     args_out_of_range(make_number (search_regs.start[0]),
 		      make_number (search_regs.end[0]));
 
-  if (NULL (fixedcase))
+  if (NILP (fixedcase))
     {
       /* Decide how to casify by examining the matched text. */
 
@@ -1275,7 +1275,7 @@ Leaves point at end of replacement text.")
     }
 
   SET_PT (search_regs.end[0]);
-  if (!NULL (literal))
+  if (!NILP (literal))
     Finsert (1, &string);
   else
     {
@@ -1409,13 +1409,13 @@ LIST should have been created by calling match-data previously.")
   register int i;
   register Lisp_Object marker;
 
-  if (!CONSP (list) && !NULL (list))
+  if (!CONSP (list) && !NILP (list))
     list = wrong_type_argument (Qconsp, list);
 
   for (i = 0; i < RE_NREGS; i++)
     {
       marker = Fcar (list);
-      if (NULL (marker))
+      if (NILP (marker))
 	{
 	  search_regs.start[i] = -1;
 	  list = Fcdr (list);
@@ -1488,7 +1488,7 @@ DEFUN ("si:regexp-compile-pattern",
   struct re_pattern_buffer *p = &searchbuf;
 
   last_regexp = Qnil;			/* force to recompile */
-  compile_pattern (string, p, (!NULL (current_buffer->case_fold_search)?
+  compile_pattern (string, p, (!NILP (current_buffer->case_fold_search)?
 			       (char *) downcase_table : 0), 0);
 
   re_compile_fastmap (p);

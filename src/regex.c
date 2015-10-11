@@ -518,7 +518,7 @@ re_compile_pattern (pattern, size, bufp)
   int regnum = 1;
 
   bufp->fastmap_accurate = 0;
-  bufp->mc_flag = !NULL (current_buffer->mc_flag); /* 92.4.9 by K.Handa */
+  bufp->mc_flag = !NILP (current_buffer->mc_flag); /* 92.4.9 by K.Handa */
   if (bufp->syntax_fastmap) free (bufp->syntax_fastmap);
   bufp->syntax_fastmap = 0;
   if (bufp->category_fastmap) free (bufp->category_fastmap);
@@ -1392,7 +1392,7 @@ re_search_2 (pbufp, string1, size1, string2, size2, startpos, range, regs, mstop
   int total = size1 + size2;
   int val;
   int backward = (range < 0 && !pbufp->allocated); /* 92.3.6 by K.Handa */
-  int mc_flag = !NULL (current_buffer->mc_flag); /* 92.4.1 by K.Handa */
+  int mc_flag = !NILP (current_buffer->mc_flag); /* 92.4.1 by K.Handa */
   register unsigned char *startp, *endp; /* 92.4.1 by K.Handa */
 
   /* Update the fastmap now if not correct already */

@@ -68,9 +68,9 @@ check_category_table (obj)
      Lisp_Object obj;
 {
   register Lisp_Object tem;
-  if (NULL (obj)) return current_buffer->category_table;
+  if (NILP (obj)) return current_buffer->category_table;
   tem = Fcategory_table_p (obj);
-  if (NULL (tem))
+  if (NILP (tem))
     obj = wrong_type_argument (Qcategory_table_p, obj);
   return obj;
 }   
@@ -174,7 +174,7 @@ You can't 'new-category-mnemonic' with the returned mnemonic.")
 
   temp = XVECTOR (ctbl)->contents[256];
   for (i = 0; i < 95; i++)
-    if (!NULL (XVECTOR (temp)->contents[i])) *p++ = i + ' ';
+    if (!NILP (XVECTOR (temp)->contents[i])) *p++ = i + ' ';
   return (p == str ? Qnil : make_string (str, p - str));
 }
 
@@ -196,7 +196,7 @@ before really using it.")
 
   temp = XVECTOR (ctbl)->contents[256];
   for (i = 0; i < 95; i++)
-    if (NULL (XVECTOR (temp)->contents[i])) *p++ = i + ' ';
+    if (NILP (XVECTOR (temp)->contents[i])) *p++ = i + ' ';
   return (p == str ? Qnil : make_string (str, p - str));
 }
 
@@ -251,9 +251,9 @@ It is a copy of the TABLE, which defaults to the standard category table.")
   (table)
      Lisp_Object table;
 {
-  if (!NULL (table))
+  if (!NILP (table))
     table = check_category_table (table);
-  else if (NULL (Vstandard_category_table))
+  else if (NILP (Vstandard_category_table))
     /* Can only be null during initialization */
     return make_init_category_table(257);
   else table = Vstandard_category_table;
@@ -457,10 +457,10 @@ On success, returns T, else returns NIL.")
   ctbl = check_category_table (ctbl);
 
   m = XFASTINT (mnemonic) - ' ';
-  if (NULL (XVECTOR (XVECTOR (ctbl)->contents[256])->contents[m]))
+  if (NILP (XVECTOR (XVECTOR (ctbl)->contents[256])->contents[m]))
     error ("Invalid mnemonic: %c", m + ' ');
   
-  modify_category_entry (XFASTINT (c), m, ctbl, !NULL(reset));
+  modify_category_entry (XFASTINT (c), m, ctbl, !NILP(reset));
   category_table_version++;	/* 93.7.12 by K.Handa */
   return Qnil;
 }
@@ -490,7 +490,7 @@ insert_character_description(i)	/* 94.2.23 by K.Handa */
       sprintf(str, "[%02x]", str[k]);
       insert (str, 4);
     } else {
-      if (NULL (current_buffer->ctl_hexa)) /* 93.6.7 by K.Handa */
+      if (NILP (current_buffer->ctl_hexa)) /* 93.6.7 by K.Handa */
 	sprintf(str, "\\%03o", str[k]);
       else
 	sprintf(str, "\\x%02x", str[k]);
@@ -517,7 +517,7 @@ describe_category (ctbl, parent) /* 94.2.23 by K.Handae */
     category = v->contents[i];
 
     while (i < 0xFF
-	   && !NULL (Fcategory_equal (v->contents[i + 1], category)))
+	   && !NILP (Fcategory_equal (v->contents[i + 1], category)))
       i++;
 
     if (i != start) {
@@ -562,7 +562,7 @@ describe_mnemonic(description)
   
   str[1] = ':'; str[2] = ' ';
   for (i = 0; i < 95; i++)
-    if (!NULL (v->contents[i])) {
+    if (!NILP (v->contents[i])) {
       str[0] = i + ' ';
       insert (str, 3);
       insert1 (v->contents[i]);

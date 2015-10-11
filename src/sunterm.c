@@ -53,7 +53,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 #endif /* USG */
 
 #include "lisp.h"
-#undef NULL
 
 /* Allow m- file to inhibit use of interrupt-driven input.  */
 #ifdef BROKEN_FIONREAD
