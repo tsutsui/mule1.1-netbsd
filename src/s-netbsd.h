@@ -68,7 +68,6 @@
 #define NEED_TERMIOS
 #define HAVE_TERMIOS
 #define HAVE_TERMCAP_H
-//#define HAVE_TCATTR
 
 #define HAVE_TIMEVAL
 #define HAVE_SELECT
@@ -94,11 +93,8 @@
 #define BSTRING
 
 #define UNEXEC unexelf.o
-#define UNEXEC_USE_MAP_PRIVATE
 
-#define HAVE_TEXT_START
 #define ORDINARY_LINK
-#define LIBS_DEBUG
 
 #define LIB_X11_LIB -L/usr/X11R7/lib -Wl,-R/usr/X11R7/lib -lX11
 
