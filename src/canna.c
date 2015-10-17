@@ -153,6 +153,10 @@ static char rcs_id[] = "$Id: canna.c,v 1.35 1994/03/15 08:00:03 kon Exp $";
 #include "mule.h"
 #endif
 
+#ifdef CANNA3_7
+# define CANNA_NEW_WCHAR_AWARE
+#endif
+
 #ifdef CANNA2
 #define IROHA_BC
 #include "canna/jrkanji.h"
@@ -161,7 +165,9 @@ static char rcs_id[] = "$Id: canna.c,v 1.35 1994/03/15 08:00:03 kon Exp $";
 #include "iroha/jrkanji.h"
 #include "iroha/RK.h"
 #endif /* !CANNA2 */
+#ifndef CANNA3_7
 extern char *jrKanjiError;
+#endif
 
 #define KEYTOSTRSIZE 2048
 static unsigned char buf[KEYTOSTRSIZE];
@@ -327,6 +333,18 @@ Lisp_Object num;
   jrKanjiControl(0, KC_SETBUNSETSUKUGIRI, (char *)kugiri);
 }
 
+/*
+ * Mule-canna.c of XEmacs-21.4.14 reads
+ * "For whatever reason, calling Fding directly from libCanna loses".
+ * In any case following glue is needed for new jrBeepFunc prototype.
+ */
+static int
+call_Fding (void)
+{
+  Fding (Qnil);
+  return 0;
+}
+
 DEFUN ("canna-initialize", Fcanna_initialize, Scanna_initialize, 0, 3, 0,
 "Initialize ``canna'', which is a kana-to-kanji converter for GNU Emacs.\n\
 The first arg specifies if inserting space character between BUNSETSU when\n\
@@ -399,17 +417,18 @@ Lisp_Object num, server, rcfile;
     return Fcons(Qnil, val);
   }
   else {
-    extern Lisp_Object (*jrBeepFunc)(Lisp_Object);
-    Lisp_Object Fding(Lisp_Object);
+#ifndef CANNA_JR_BEEP_FUNC_DECLARED
+    extern int (*jrBeepFunc)(void);
+#endif
     Lisp_Object CANNA_mode_keys(void);
 
-    jrBeepFunc = Fding;
+    jrBeepFunc = call_Fding;
 
 #ifdef KC_SETAPPNAME
 #ifndef CANNA_MULE
-    wcKanjiControl(0, KC_SETAPPNAME, "nemacs");
+    jrKanjiControl(0, KC_SETAPPNAME, "nemacs");
 #else /* CANNA_MULE */
-    wcKanjiControl(0, KC_SETAPPNAME, "mule");
+    jrKanjiControl(0, KC_SETAPPNAME, "mule");
 #endif /* CANNA_MULE */
 #endif /* KC_SETAPPNAME */
 

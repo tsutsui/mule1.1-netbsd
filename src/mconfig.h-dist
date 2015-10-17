@@ -69,6 +69,8 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 /* 92.7.20 by K.Akira, 92.7.31 by K.Handa */
 /* Define CANNA if you want to use CANNA. */
 /* #define CANNA */
+/* Define CANNA3_7 to enable new APIs introduced from Canna 3.7 */
+/* #define CANNA3_7 */
 /* end of patch */
 
 /* 92.8.5 by M.Minda */
