@@ -42,7 +42,7 @@ what you give them.   Help stamp out software-hoarding!  */
 /* 92.7.16  modified for Mule Ver.0.9.5 by K.Handa <handa@etl.go.jp>
 	In re_match_2(), new syntaxcode Sextword is handled. */
 /* 92.8.6   modified for Mule Ver.0.9.6 by N.Shuji <narazaki@nttslb.NTT.JP>
-	notcategoryspec is processed correctly.
+	notcategoryspec is processed correctly. */
 /* 92.8.11  modified for Mule Ver.0.9.6 by H.Oota <oota@lsi.tmg.nec.co.jp>
 	In re_compile_pattern, p1 is coerced to (unsigned char *). */
 /* 92.11.12 modified for Mule Ver.0.9.7 by T.Enami <enami@sys.ptg.sony.co.jp>

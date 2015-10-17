@@ -48,9 +48,9 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 /* 92.5.21  modified for Mule Ver.0.9.4 by K.Kawabe <kawabe@sra.co.jp>
 	- Selection event is handled if HAVE_X_SELECTION is defined. */
 /* 92.6.27  modified for Mule Ver.0.9.5 by A.Tanaka <aries@isl.melco.co.jp>
-	- 'work' in MCSetFontSize() is declared outside.
+	- 'work' in MCSetFontSize() is declared outside. */
 /* 92.7.18  modified for Mule Ver.0.9.5 by Y.Niibe <gniibe@mri.co.jp>
-	- Mistype in xDefaultsValueTable) corrected.  fonthwb -> fonthbw
+	- Mistype in xDefaultsValueTable) corrected.  fonthwb -> fonthbw */
 /* 92.7.30  modified for Mule Ver.0.9.5
 			by I.Hirakura <hir@necbs6.uxp.bs2.mt.nec.co.jp>
 	In MCSetFont(), an argument -fnjp2 is also handled. */

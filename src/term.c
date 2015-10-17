@@ -37,7 +37,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
    			by M.Takashima <takasima@hpujjp0.yhp.co.jp>
 	insert_chars() collapsed when 'start' argument is nil.  Fixed. */
 /* 92.11.12 modified for Mule Ver.0.9.6 by K.Handa <handa@etl.go.jp>
-	In linecode_conversion(), handles private char-set correctly. 
+	In linecode_conversion(), handles private char-set correctly. */
 /* 92.11.30 modified for Mule Ver.0.9.7 by K.Handa <handa@etl.go.jp>
 	In linecode_conversion(), only the first char of a composite character
 	is displayed. */

@@ -479,7 +479,7 @@ get_display_line (vpos, hpos)
       new_screen->used[vpos] = 0;
       new_screen->highlight[vpos] = 0;
       new_screen->enable[vpos] = 1;
-      /* FREE_CMP_CHAR (new_screen, vpos);	/* 93.6.21 by K.Handa */
+      /* FREE_CMP_CHAR (new_screen, vpos); */	/* 93.6.21 by K.Handa */
     }
 
   if (hpos > new_screen->used[vpos])
@@ -566,7 +566,7 @@ scroll_screen_lines (from, end, amount)
 	{
 	  current_screen->contents[i][0] = '\0';
 	  current_screen->enable[i] = 1;
-	  /* FREE_CMP_CHAR (current_screen, i); /* 92.12.8 by K.Handa */
+	  /* FREE_CMP_CHAR (current_screen, i); */ /* 92.12.8 by K.Handa */
 	}
     }
   if (amount < 0)
@@ -603,7 +603,7 @@ scroll_screen_lines (from, end, amount)
 	{
 	  current_screen->contents[i][0] = '\0';
 	  current_screen->enable[i] = 1;
-	  /* FREE_CMP_CHAR (current_screen, i); /* 92.12.8 by K.Handa */
+	  /* FREE_CMP_CHAR (current_screen, i); */ /* 92.12.8 by K.Handa */
 	}
     }
   return 1;
@@ -1191,7 +1191,7 @@ update_line (vpos)
       tem = current_screen->cmp_char_idx[vpos];
       current_screen->cmp_char_idx[vpos] = new_screen->cmp_char_idx[vpos];
       new_screen->cmp_char_idx[vpos] = tem;
-/* end of patch */
+   end of patch */
       return;
     }
 
@@ -1368,7 +1368,7 @@ update_line (vpos)
    tem = current_screen->cmp_char_idx[vpos];
    current_screen->cmp_char_idx[vpos] = new_screen->cmp_char_idx[vpos];
    new_screen->cmp_char_idx[vpos] = tem;
-/* end of patch */
+   end of patch */
 }
 
 int
