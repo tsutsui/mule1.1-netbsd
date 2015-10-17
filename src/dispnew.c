@@ -1286,7 +1286,7 @@ update_line (vpos)
 	  olen = nlen - (nsp - osp);
 	}
       move_cursor (vpos, osp);
-      insert_chars ((char *)0, nsp - osp);
+      insert_chars ((int *)0, nsp - osp);
     }
   olen += nsp - osp;
 
