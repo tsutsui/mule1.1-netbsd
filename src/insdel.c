@@ -263,7 +263,7 @@ make_gap (increment)
 
 void
 insert_char (c)
-     unsigned char c;
+     const unsigned char c;
 {
   insert (&c, 1);
 }
@@ -283,7 +283,7 @@ InsStr (s)
 
 void
 insert (string, length)
-     register unsigned char *string;
+     register const unsigned char *string;
      register int length;
 /* 89.11.30 patch for point_type_marker by K.Handa */
 {
@@ -294,7 +294,7 @@ insert (string, length)
 
 void
 insert2 (string, length)
-     register unsigned char *string;
+     register const unsigned char *string;
      register int length;
 {
 /* end of patch */
@@ -390,7 +390,7 @@ insert_from_string2 (string, pos, length)
 
 void
 insert_before_markers (string, length)
-     unsigned char *string;
+     const unsigned char *string;
      register int length;
 {
   register int opoint = point;

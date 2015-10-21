@@ -438,7 +438,7 @@ static struct _xdeftab xDefaultsValueTable[]
 int (*handler)();
 
 static void x_init_1 (void);
-static int XInitWindow (void);
+static void XInitWindow (void);
 void XTmove_cursor (int, int);
 void x_clear_end_of_line (int);
 void XTclear_screen (void);
@@ -446,6 +446,8 @@ void MCDrawText(Display *, Drawable, GC, int, int, unsigned int *, int);
 void stufflines (int);
 void scraplines (int);
 int internal_socket_read(unsigned char *, int);
+int x_error_handler (Display *disp, XErrorEvent *event);
+void x_io_error_handler (void);
 void MCSetXChar2b(unsigned char, unsigned char, unsigned char, XChar2b *);
 
 /* HLmode -- Changes the GX function for output strings.  Could be used to
@@ -721,7 +723,7 @@ dumpchars (active_screen, numcols, tempX, tempY, tempHL)
 	MCDrawText(XXdisplay, XXwindow, tempHL ? XXgc_rev : XXgc_norm,
 			 tempX*XXfontw+XXInternalBorder,
 			 tempY*XXfonth+XXInternalBorder+XXbase,
-			 (char *) &active_screen->contents[tempY][tempX],
+			 &active_screen->contents[tempY][tempX],
 			 numcols);
 }
 
@@ -766,7 +768,7 @@ updateline (first)
 				  CurHL ? XXgc_rev : XXgc_norm,
 				  first*XXfontw+XXInternalBorder,
 				  local_cursor_vpos*XXfonth+XXInternalBorder+XXbase,
-				  (char *) &new_screen->contents[local_cursor_vpos][first],
+				  &new_screen->contents[local_cursor_vpos][first],
 				  temp_length);
 		if (temp_length < screen_width)
 			x_clear_end_of_line (temp_length);
@@ -976,7 +978,7 @@ CursorToggle ()
 			MCDrawText(XXdisplay, XXwindow, XXgc_norm,
 				    VisibleX*XXfontw+XXInternalBorder,
 				    VisibleY*XXfonth+XXInternalBorder+XXbase,
-				    (int *) &active_screen->contents[VisibleY][VisibleX],
+				    &active_screen->contents[VisibleY][VisibleX],
 				    1);
 		else if (CursorOutline) {
 		  unsigned int len, c; /* 92.11.12 by K.Handa */
@@ -987,7 +989,7 @@ CursorToggle ()
 			MCDrawText(XXdisplay, XXwindow, XXgc_norm,
 				    VisibleX*XXfontw+XXInternalBorder,
 				    VisibleY*XXfonth+XXInternalBorder+XXbase,
-				    (int *) &active_screen->contents[VisibleY][VisibleX],
+				    &active_screen->contents[VisibleY][VisibleX],
 				    1);
 			XDrawRectangle (XXdisplay, XXwindow, XXgc_curs_rev,
 					VisibleX*XXfontw+XXInternalBorder,
@@ -997,7 +999,7 @@ CursorToggle ()
 			MCDrawText(XXdisplay, XXwindow, XXgc_curs,
 				    VisibleX*XXfontw+XXInternalBorder,
 				    VisibleY*XXfonth+XXInternalBorder+XXbase,
-				    (int *) &active_screen->contents[VisibleY][VisibleX],
+				    &active_screen->contents[VisibleY][VisibleX],
 				    1);
 	      }
 	else {
@@ -1070,7 +1072,7 @@ CursorToggleRev ()
 		  MCDrawText(XXdisplay, XXwindow, XXgc_norm,
 			     VisibleXRev*XXfontw+XXInternalBorder,
 			     VisibleYRev*XXfonth+XXInternalBorder+XXbase,
-			     (int *) &active_screen->contents[VisibleYRev][VisibleXRev],
+			     &active_screen->contents[VisibleYRev][VisibleXRev],
 			     1);
 		else if (CursorOutline) {
 		  unsigned int len, c; /* 92.11.12 by K.Handa */
@@ -1081,7 +1083,7 @@ CursorToggleRev ()
 		  MCDrawText(XXdisplay, XXwindow, XXgc_norm,
 			     VisibleXRev*XXfontw+XXInternalBorder,
 			     VisibleYRev*XXfonth+XXInternalBorder+XXbase,
-			     (int *) &active_screen->contents[VisibleYRev][VisibleXRev],
+			     &active_screen->contents[VisibleYRev][VisibleXRev],
 			     1);
 		  XDrawRectangle (XXdisplay, XXwindow, XXgc_curs_rev,
 				  VisibleXRev*XXfontw+XXInternalBorder,
@@ -1091,7 +1093,7 @@ CursorToggleRev ()
 			MCDrawText(XXdisplay, XXwindow, XXgc_curs,
 				   VisibleXRev*XXfontw+XXInternalBorder,
 				   VisibleYRev*XXfonth+XXInternalBorder+XXbase,
-				   (int *) &active_screen->contents[VisibleYRev][VisibleXRev],
+				   &active_screen->contents[VisibleYRev][VisibleXRev],
 				   1);
 	      }
 	else {
@@ -2101,7 +2103,7 @@ XT_GetDefaults (class)
   return 0;
 }
 
-void
+int
 x_error_handler (disp, event)
      Display *disp;
      XErrorEvent *event;
@@ -2110,6 +2112,7 @@ x_error_handler (disp, event)
   XGetErrorText (disp, event->error_code, msg, 200);
   fprintf (stderr, "Fatal X-windows error: %s\n", msg);
   Fkill_emacs (make_number (70));
+  return 0;
 }
 
 void
@@ -2199,7 +2202,6 @@ x_term_init ()
 	XColor cdef;
 
 	extern Lisp_Object Vxterm, Vxterm1, Qt;
-	extern int XIgnoreError();
 	int  ix;
 	
 
@@ -3650,7 +3652,7 @@ MCDrawText(display, window, gc, x, y, lp, count)
 
 /* ------------------------------------------------------------
  */
-static int
+static void
 XInitWindow ()
 {
   extern int xargc;

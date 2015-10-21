@@ -73,7 +73,7 @@ static Lisp_Object Vuser_real_name;  /* login name of current user ID */
 static Lisp_Object Vuser_full_name;  /* full name of current user */
 static Lisp_Object Vuser_name;	/* user name from USER or LOGNAME.  */
 
-void insert_with_specified_function (void (*)(unsigned char *, int), void (*)(Lisp_Object, int, int), int, Lisp_Object *);
+void insert_with_specified_function (void (*)(const unsigned char *, int), void (*)(Lisp_Object, int, int), int, Lisp_Object *);
 
 void
 init_editfns ()
@@ -761,7 +761,7 @@ DEFUN ("insert", Finsert, Sinsert, 0, MANY, 0,
 
 void
 insert_with_specified_function (func, func_str, nargs, args)
-     void (*func)(unsigned char *, int);
+     void (*func)(const unsigned char *, int);
      void (*func_str)(Lisp_Object, int, int);
      int nargs;
      register Lisp_Object *args;
