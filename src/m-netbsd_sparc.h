@@ -27,9 +27,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #define LONGBITS 32		/* Number of bits in a long */
 
-/* SPARC has lowest-numbered byte as most significant */
-#define BIG_ENDIAN
-
 /* Define NO_ARG_ARRAY if you cannot take the address of the first of a
  * group of arguments and treat it as an array of the arguments.  */
 
@@ -39,16 +36,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
    On machines where char is signed, this is a no-op.  */
 
 #define SIGN_EXTEND_CHAR(c) (c)
-
-/* Say this machine is a sparc */
-
-#ifndef sparc
-#define sparc
-#endif
-
-#define START_FILES crt0.o /usr/lib/crt0.o 
-/* #define TEXT_START ({ extern void start __P((void)) asm ("start"); &start; }) */
-/* #define NO_REMAP */
 
 /* Use type int rather than a union, to represent Lisp_Object */
 
@@ -79,9 +66,3 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #if defined(__GNUC__) && !defined(alloca)
 #define alloca(n) __builtin_alloca(n)
 #endif
-
-
-/* Mask for address bits within a memory segment */
-
-/* #define SEGSIZ 512 */
-/* #define SEGMENT_MASK (SEGSIZ - 1) */

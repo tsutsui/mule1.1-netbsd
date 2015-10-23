@@ -31,12 +31,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #define SIGN_EXTEND_CHAR(c) (c)
 
-/* Say this machine is a 68000 */
-
-#ifndef m68000
-#define m68000
-#endif
-
 /* Use type int rather than a union, to represent Lisp_Object */
 
 #define NO_UNION_TYPE
