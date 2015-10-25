@@ -148,7 +148,7 @@ memory_full ()
 
 void *
 xmalloc (size)
-     int size;
+     size_t size;
 {
   register void *val;
   /* Avoid failure if malloc (0) returns 0.  */
@@ -162,7 +162,7 @@ xmalloc (size)
 void *
 xrealloc (block, size)
      void *block;
-     int size;
+     size_t size;
 {
   register void *val;
   /* Avoid failure if malloc (0) returns 0.  */
