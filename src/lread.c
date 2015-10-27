@@ -1299,7 +1299,7 @@ defvar_per_buffer (namestring, address, doc)
      char *doc;
 {
   Lisp_Object sym;
-  int offset;
+  Lisp_Object_Int offset;
   extern struct buffer buffer_local_symbols;
 
   sym = intern (namestring);
