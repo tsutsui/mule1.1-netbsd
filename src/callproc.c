@@ -126,8 +126,7 @@ const char *synch_process_death;
 int synch_process_retcode;
 
 Lisp_Object
-call_process_cleanup (fdpid)
-     Lisp_Object fdpid;
+call_process_cleanup (Lisp_Object fdpid)
 {
 /* 91.10.22 by M.Higashida */
 #ifdef MSDOS
@@ -174,9 +173,7 @@ Remaining arguments are strings passed as command arguments to PROGRAM.\n\
 Returns nil if BUFFER is 0; otherwise waits for PROGRAM to terminate\n\
 and returns a numeric exit status or a signal description string.\n\
 If you quit, the process is killed with SIGKILL.")
-  (nargs, args)
-     int nargs;
-     register Lisp_Object *args;
+  (int nargs, register Lisp_Object *args)
 {
   Lisp_Object display, buffer, path;
   Lisp_Object dummy = Qnil; /* 92.2.20 by K.Handa */
@@ -480,9 +477,7 @@ If you quit, the process is killed with SIGKILL.")
 }
 
 DEFUN ("call-process", Fcall_process, Scall_process, 1, MANY, 0, "")
-  (nargs, args)
-     int nargs;
-     register Lisp_Object *args;
+  (int nargs, register Lisp_Object *args)
 {
   return Fsi_call_process (nargs, args);
 }
@@ -501,9 +496,7 @@ Remaining arguments are strings passed as command arguments to PROGRAM.\n\
 Returns nil if BUFFER is 0; otherwise waits for PROGRAM to terminate\n\
 and returns a numeric exit status or a signal description string.\n\
 If you quit, the process is killed with SIGKILL.")
-  (nargs, args)
-     int nargs;
-     register Lisp_Object *args;
+  (int nargs, register Lisp_Object *args)
 {
   register Lisp_Object filename_string, start, end, status;
 /* 91.10.16 by S.Hirano, 93.6.1 by M.Higashida */
@@ -559,10 +552,8 @@ If you quit, the process is killed with SIGKILL.")
 
 #ifdef MSDOS /* 91.10.16 by S.Hirano, 92.11.14, 93.2.17 by M.Higashida */
 
-child_setup (in, out, err, new_argv, env)
-     int in, out, err;
-     register char **new_argv;
-     char **env;
+int
+child_setup (int in, int out, int err, register char **new_argv, char **env)
 {
   register int i;
   int st;
@@ -653,10 +644,8 @@ child_setup (in, out, err, new_argv, env)
 #else /* not MSDOS */
 #ifdef WIN32 /* 93.2.17, 93.2.25, 93.3.3 by M.Higashida */
 
-child_setup (in, out, err, new_argv, env)
-     int in, out, err;
-     register char **new_argv;
-     char **env;
+int
+child_setup (int in, int out, int err, register char **new_argv, char **env)
 {
   register int i;
   int st;
@@ -784,10 +773,7 @@ child_setup (in, out, err, new_argv, env)
 #else /* not WIN32 */
 
 void
-child_setup (in, out, err, new_argv, env)
-     int in, out, err;
-     register char **new_argv;
-     char **env;
+child_setup (int in, int out, int err, register char **new_argv, char **env)
 {
   register int pid = getpid();
 
@@ -884,7 +870,7 @@ child_setup (in, out, err, new_argv, env)
 /* end of patch */
 
 void
-init_callproc ()
+init_callproc (void)
 {
   register char * sh;
   extern char **environ;
@@ -946,7 +932,7 @@ init_callproc ()
 }
 
 void
-syms_of_callproc ()
+syms_of_callproc (void)
 {
   DEFVAR_LISP ("shell-file-name", &Vshell_file_name,
     "*File name to load inferior shells from.\n\

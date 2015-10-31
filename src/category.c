@@ -53,8 +53,7 @@ DEFUN ("category-table-p", Fcategory_table_p, Scategory_table_p, 1, 1, 0,
   "Return t if ARG is a category table.\n\
 Any vector of 257 elements will do as far as the last element\n\
 is a vetor of 127 elements, which are description strings for each category.")
-  (obj)
-     Lisp_Object obj;
+  (Lisp_Object obj)
 {
   if (XTYPE (obj) == Lisp_Vector && XVECTOR (obj)->size == 257
       && XTYPE (XVECTOR (obj)->contents[256]) == Lisp_Vector
@@ -64,8 +63,7 @@ is a vetor of 127 elements, which are description strings for each category.")
 }
 
 Lisp_Object
-check_category_table (obj)
-     Lisp_Object obj;
+check_category_table (Lisp_Object obj)
 {
   register Lisp_Object tem;
   if (NILP (obj)) return current_buffer->category_table;
@@ -78,7 +76,7 @@ check_category_table (obj)
 DEFUN ("category-table", Fcategory_table, Scategory_table, 0, 0, 0,
   "Return the current category table.\n\
 This is the one specified by the current buffer.")
-  ()
+  (void)
 {
   return current_buffer->category_table;
 }
@@ -87,7 +85,7 @@ DEFUN ("standard-category-table", Fstandard_category_table,
    Sstandard_category_table, 0, 0, 0,
   "Return the standard category table.\n\
 This is the one used for new buffers.")
-  ()
+  (void)
 {
   return Vstandard_category_table;
 }
@@ -95,14 +93,13 @@ This is the one used for new buffers.")
 struct Lisp_Category temp_category;
 
 void
-init_category(category)
-     struct Lisp_Category *category;
+init_category (struct Lisp_Category *category)
 {
   category->data[0] = category->data[1] = category->data[2] = 0;
 }
 
 Lisp_Object
-make_init_category()
+make_init_category (void)
 {
   register Lisp_Object category;
   Lisp_Object size, init;
@@ -112,9 +109,7 @@ make_init_category()
 }
 
 void
-update_category(src, mask)
-     struct Lisp_Category *src;
-     Lisp_Object mask;
+update_category (struct Lisp_Category *src, Lisp_Object mask)
 {
   unsigned int *s = &(src->data[0]), *d = &(XCATEGORY (mask)->data[0]);
 
@@ -123,8 +118,7 @@ update_category(src, mask)
 
 DEFUN ("category-equal", Fcategory_equal, Scategory_equal, 2, 2, 0,
   "T if two categories have identical contents.")
-  (c1, c2)
-     register Lisp_Object c1, c2;
+  (register Lisp_Object c1, register Lisp_Object c2)
 {
   if (XTYPE (c1) != Lisp_String
       || XTYPE (c2) != Lisp_String
@@ -143,8 +137,7 @@ STRING is a description for the category.\n\
 Optional third arg specifies CATEGORY-TABLE,\n\
 which defaults to the current buffer's category table.\n\
 Letters of 'a' thru 'z' are already used or kept for the system.")
-  (mnemonic, string, ctbl)
-     Lisp_Object mnemonic, string, ctbl;
+  (Lisp_Object mnemonic, Lisp_Object string, Lisp_Object ctbl)
 {
   int m;
 
@@ -163,8 +156,7 @@ DEFUN ("used-category-mnemonic",
 Optional argument specifies CATEGORY-TABLE,\n\
 which defaults to the current buffer's category table.\n\
 You can't 'new-category-mnemonic' with the returned mnemonic.")
-  (ctbl)
-     Lisp_Object ctbl;
+  (Lisp_Object ctbl)
 {
   int i;
   char str[95], *p = str;
@@ -185,8 +177,7 @@ Optional argument specifies CATEGORY-TABLE,\n\
 which defaults to the current buffer's category table.\n\
 You should 'new-category-mnemonic' with the returned mnemonic\n\
 before really using it.")
-  (ctbl)
-     Lisp_Object ctbl;
+  (Lisp_Object ctbl)
 {
   int i;
   char str[95], *p = str;
@@ -201,8 +192,7 @@ before really using it.")
 }
 
 Lisp_Object
-make_init_category_table(size)
-     register Lisp_Object size;
+make_init_category_table (register Lisp_Object size)
 {
   Lisp_Object val;
   int i = XFASTINT (size);
@@ -221,8 +211,7 @@ make_init_category_table(size)
 }
 
 Lisp_Object
-copy_category_table(table)
-     Lisp_Object table;
+copy_category_table (Lisp_Object table)
 {
   int i;
   Lisp_Object val = make_init_category_table(XVECTOR (table)->size);
@@ -248,8 +237,7 @@ copy_category_table(table)
 DEFUN ("copy-category-table", Fcopy_category_table, Scopy_category_table, 0, 1, 0,
   "Construct a new category table and return it.\n\
 It is a copy of the TABLE, which defaults to the standard category table.")
-  (table)
-     Lisp_Object table;
+  (Lisp_Object table)
 {
   if (!NILP (table))
     table = check_category_table (table);
@@ -265,8 +253,7 @@ It is a copy of the TABLE, which defaults to the standard category table.")
 DEFUN ("set-category-table", Fset_category_table, Sset_category_table, 1, 1, 0,
   "Select a new category table for the current buffer.\n\
 One argument, a category table.")
-  (table)
-     Lisp_Object table;
+  (Lisp_Object table)
 {
   table = check_category_table (table);
   current_buffer->category_table = table;
@@ -277,10 +264,7 @@ One argument, a category table.")
 
 /* 93.7.13 by K.Handa */
 int
-check_category(category, mnemonic, not)
-     struct Lisp_Category *category;
-     char mnemonic;
-     int not;
+check_category (struct Lisp_Category *category, char mnemonic, int not)
 {
   register unsigned int m1, m2;
 
@@ -291,10 +275,7 @@ check_category(category, mnemonic, not)
 /* end of patch */
 
 int
-check_category_at(p, len, ctbl, mnemonic, not)
-     register unsigned char *p;
-     register Lisp_Object ctbl;
-     unsigned int len, mnemonic, not;
+check_category_at (register unsigned char *p, unsigned int len, register Lisp_Object ctbl, unsigned int mnemonic, unsigned int not)
 {
   register Lisp_Object temp;
   register unsigned int m1, m2;
@@ -322,8 +303,7 @@ DEFUN ("check-category", Fcheck_category, Scheck_category, 2, 3, 0,
   "Return t if CHAR's category includes MNEMONIC, else return nil.\n\
 Optional third arg specifies CATEGORY-TABLE, which defaults to\n\
  the current buffer's category table.")
-  (c, mnemonic, ctbl)
-      Lisp_Object c, mnemonic, ctbl;
+  (Lisp_Object c, Lisp_Object mnemonic, Lisp_Object ctbl)
 {
   unsigned char str[3];
   int len;
@@ -342,8 +322,7 @@ DEFUN ("check-category-at", Fcheck_category_at, Scheck_category_at, 2, 3, 0,
  else return nil.\n\
 Optional third arg specifies CATEGORY-TABLE, which defaults to\n\
  the current buffer's category table.")
-  (pos, mnemonic, ctbl)
-      Lisp_Object pos, mnemonic, ctbl;
+  (Lisp_Object pos, Lisp_Object mnemonic, Lisp_Object ctbl)
 {
   CHECK_NUMBER_COERCE_MARKER (pos, 0);
   CHECK_MNEMONIC (mnemonic, 1);
@@ -355,9 +334,7 @@ Optional third arg specifies CATEGORY-TABLE, which defaults to\n\
 }
 
 struct Lisp_Category *
-char_category(c, ctbl)
-     register unsigned int c;
-     register Lisp_Object ctbl;
+char_category (register unsigned int c, register Lisp_Object ctbl)
 {				/* 93.2.12 by K.Handa */
   unsigned char str[4], *p = str;
   register int i = CHARtoSTR (c, str);
@@ -376,9 +353,7 @@ char_category(c, ctbl)
 }
 
 void
-pack_mnemonic_string(category, str)
-     struct Lisp_Category *category;
-     char *str;
+pack_mnemonic_string (struct Lisp_Category *category, char *str)
 {
   int j = 0, k;
   unsigned int c;
@@ -399,8 +374,7 @@ DEFUN ("char-category", Fchar_category, Schar_category, 1, 2, 0,
   "Return string of category mnemonics for CHAR in TABLE.\n\
 CHAR can be any multilingual character\n\
 TABLE defaults to the current buffer's category table.")
-  (c, ctbl)
-     Lisp_Object c, ctbl;
+  (Lisp_Object c, Lisp_Object ctbl)
 {
   struct Lisp_Category *ct;
   char str[95];
@@ -414,9 +388,7 @@ TABLE defaults to the current buffer's category table.")
 }
 
 void
-modify_category_entry(c, maskbit, ctbl, reset)
-     register unsigned int c, reset, maskbit;
-     Lisp_Object ctbl;
+modify_category_entry (register unsigned int c, register unsigned int maskbit, Lisp_Object ctbl, register unsigned int reset)
 {				/* 93.2.12 by K.Handa */
   Lisp_Object obj;
   unsigned char str[4], *p = str;
@@ -446,8 +418,7 @@ The category is changed only for table TABLE, which defaults to\n\
  the current buffer's category table.\n\
 If optionnal forth argument RESET is non NIL, CATEGORY is reset for CHAR.\n\
 On success, returns T, else returns NIL.")
-  (c, mnemonic, ctbl, reset)
-     Lisp_Object c, mnemonic, ctbl, reset;
+  (Lisp_Object c, Lisp_Object mnemonic, Lisp_Object ctbl, Lisp_Object reset)
 {
   Lisp_Object category;
   int m;
@@ -468,8 +439,7 @@ On success, returns T, else returns NIL.")
 /* Dump category table to buffer in human-readable format */
 
 void
-insert_character_description(i)	/* 94.2.23 by K.Handa */
-     unsigned int i;
+insert_character_description (unsigned int i) /* 94.2.23 by K.Handa */
 {				/* 93.6.7 by K.Handa */
   unsigned char str[5];		/* 92.7.10 by T.Enami */
 
@@ -500,9 +470,7 @@ insert_character_description(i)	/* 94.2.23 by K.Handa */
 }
 
 void
-describe_category (ctbl, parent) /* 94.2.23 by K.Handae */
-     Lisp_Object ctbl;
-     int parent;
+describe_category (Lisp_Object ctbl, int parent) /* 94.2.23 by K.Handae */
 {
   int i, start, deeper;
   char mnemonic, str[95];
@@ -551,8 +519,7 @@ describe_category (ctbl, parent) /* 94.2.23 by K.Handae */
 }
 
 void
-describe_mnemonic(description)
-     Lisp_Object description;
+describe_mnemonic (Lisp_Object description)
 {
   int i;
   struct Lisp_Vector *v = XVECTOR(description);
@@ -571,8 +538,7 @@ describe_mnemonic(description)
 }
 
 Lisp_Object
-describe_category_1 (ctbl)
-     Lisp_Object ctbl;
+describe_category_1 (Lisp_Object ctbl)
 {
   struct buffer *old = current_buffer;
   set_buffer_internal (XBUFFER (Vstandard_output));
@@ -585,7 +551,7 @@ describe_category_1 (ctbl)
 DEFUN ("describe-category", Fdescribe_category, Sdescribe_category, 0, 0, "",
   "Describe the category specifications in the category table.\n\
 The descriptions are inserted in a buffer, which is selected so you can see it.")
-  ()
+  (void)
 {
   internal_with_output_to_temp_buffer
      ("*Help*", describe_category_1, current_buffer->category_table);
@@ -594,7 +560,7 @@ The descriptions are inserted in a buffer, which is selected so you can see it."
 }
 
 void
-init_category_once ()
+init_category_once (void)
 {
   temp_category.size = 12;
   temp_category.data[0] = temp_category.data[1] = temp_category.data[2] = 0;
@@ -605,7 +571,7 @@ init_category_once ()
 }
 
 void
-syms_of_category ()
+syms_of_category (void)
 {
   Qcategory_table_p = intern ("category-table-p");
   staticpro (&Qcategory_table_p);

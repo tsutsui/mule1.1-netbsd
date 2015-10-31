@@ -101,11 +101,7 @@ static enum ccl_error_code ccl_error;
 #endif
 
 int
-ccl_interpreter(src, dst, nsrc, ndst, cmds, ip, endflag)
-     unsigned char *src, *dst;
-     int nsrc, ndst, *ip;
-     unsigned char *cmds;
-     register int endflag;
+ccl_interpreter (unsigned char *src, unsigned char *dst, int nsrc, int ndst, unsigned char *cmds, int *ip, register int endflag)
 {
   register int i;
   int *sphead = ccl_stack + STACKHEAD, *sptail = ccl_stack + STACKSIZE;
@@ -358,10 +354,7 @@ ccl_interpreter(src, dst, nsrc, ndst, cmds, ip, endflag)
 unsigned char *ccl_buf;
 
 int
-ccl_driver(src, dst, nsrc, ndst, mccode, encode)
-     unsigned char *src, *dst;
-     int nsrc, ndst, encode;
-     coding_type *mccode;
+ccl_driver (unsigned char *src, unsigned char *dst, int nsrc, int ndst, coding_type *mccode, int encode)
 {
   Lisp_Object ccl_prog;
   Lisp_Object regs, body;
@@ -424,7 +417,7 @@ ccl_driver(src, dst, nsrc, ndst, mccode, encode)
 
 DEFUN ("ccl-stack-size", Fccl_stack_size, Sccl_stack_size, 0, 0, 0,
   "Return stack size used in CCL interpreter.")
-  ()
+  (void)
 {
   Lisp_Object val = XFASTINT (STACKSIZE - STACKHEAD);
   return val;
@@ -432,7 +425,7 @@ DEFUN ("ccl-stack-size", Fccl_stack_size, Sccl_stack_size, 0, 0, 0,
 
 DEFUN ("ccl-register-count", Fccl_reg_count, Sccl_reg_count, 0, 0, 0,
   "Return count of registers used in CCL interpreter.")
-  ()
+  (void)
 {
   Lisp_Object val = XFASTINT (REGCOUNT);
   return val;
@@ -440,7 +433,7 @@ DEFUN ("ccl-register-count", Fccl_reg_count, Sccl_reg_count, 0, 0, 0,
 
 DEFUN ("ccl-register", Fccl_register, Sccl_register, 0, 0, 0,
   "Return the current contents of ccl register as a vector.")
-  ()
+  (void)
 {
   Lisp_Object val1 = XFASTINT (REGCOUNT), val2 = XFASTINT (0);
   int i;
@@ -454,7 +447,7 @@ DEFUN ("ccl-register", Fccl_register, Sccl_register, 0, 0, 0,
 
 DEFUN ("ccl-stack", Fccl_stack, Sccl_stack, 0, 0, 0,
   "Return the current contents of ccl stack as a vector.")
-  ()
+  (void)
 {
   Lisp_Object val1 = make_number (stack_idx - STACKHEAD), val2 = XFASTINT (0);
   int i;
@@ -468,7 +461,7 @@ DEFUN ("ccl-stack", Fccl_stack, Sccl_stack, 0, 0, 0,
 
 DEFUN ("ccl-reset-elapsed-time", Fccl_reset_etime, Sccl_reset_etime, 0, 0, 0,
   "Reset the internal value which holds a time elapsed by ccl interpreter.")
-  ()
+  (void)
 {
   int i;
 
@@ -478,14 +471,14 @@ DEFUN ("ccl-reset-elapsed-time", Fccl_reset_etime, Sccl_reset_etime, 0, 0, 0,
 
 DEFUN ("ccl-elapsed-time", Fccl_etime, Sccl_etime, 0, 0, 0,
   "Return a time elapsed by ccl interpreter as cons of sec and msec.")
-  ()
+  (void)
 {
   return Fcons (make_number ((int)(elapsed_time / 1000)),
 		make_number ((int)(elapsed_time % 1000)));
 }
 
 void
-syms_of_ccl ()
+syms_of_ccl (void)
 {
   defsubr (&Sccl_stack_size);
   defsubr (&Sccl_reg_count);

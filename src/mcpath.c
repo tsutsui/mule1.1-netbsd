@@ -74,15 +74,14 @@ DEFUN ("set-pathname-coding-system",
   Fset_pathname_coding_system, Sset_pathname_coding_system,
   1, 1, 0,
   "Set the pathname-coding-system to CODING_SYSTEM.")
-  (coding_system)
-     register Lisp_Object coding_system;
+  (register Lisp_Object coding_system)
 {
   Fcheck_code (coding_system);
   Fset (Qpathname_coding_system, coding_system);
 }
 
-static void mcpath_encode_code (cp)
-     coding_type *cp;
+static void
+mcpath_encode_code (coding_type *cp)
 {
   Lisp_Object coding_system;
 
@@ -95,9 +94,8 @@ static void mcpath_encode_code (cp)
   encode_code(coding_system, cp);
 }
 
-static int encode_path_1 (src, srcsize, dst, dstsize)
-     unsigned char *src, *dst;
-     unsigned int srcsize, dstsize;
+static int
+encode_path_1 (unsigned char *src, unsigned int srcsize, unsigned char *dst, unsigned int dstsize)
 {
   coding_type code;
 
@@ -125,9 +123,8 @@ static int encode_path_1 (src, srcsize, dst, dstsize)
   return -1;				/* use original */
 }
 
-static unsigned char *decode_path_1 (src, dst, dstsize)
-     unsigned char *src, *dst;
-     unsigned int dstsize;
+static unsigned char *
+decode_path_1 (unsigned char *src, unsigned char *dst, unsigned int dstsize)
 {
   coding_type code;
 
@@ -156,8 +153,8 @@ static unsigned char *decode_path_1 (src, dst, dstsize)
   return src;
 }
 
-static unsigned char *decode_path (path, ext_path)
-     unsigned char *path, ext_path[MAXPATHLEN];
+static unsigned char *
+decode_path (unsigned char *path, unsigned char ext_path[MAXPATHLEN])
 {
   return
     (
@@ -170,7 +167,8 @@ static unsigned char *decode_path (path, ext_path)
      : path);				/* in case of before initialization */
 }
 
-int mc_creat (path, mode)
+int
+mc_creat (int path, int mode)
 {
   unsigned char buffer[MAXPATHLEN];
   return creat (decode_path (path, buffer), mode);
@@ -179,19 +177,22 @@ int mc_creat (path, mode)
 #ifdef INTERRUPTABLE_OPEN
 #define open sys_open			/* call open in sysdep.c */
 #endif
-int mc_open (path, flag, mode)
+int
+mc_open (int path, int flag, int mode)
 {
   unsigned char buffer[MAXPATHLEN];
   return open (decode_path (path, buffer), flag, mode);
 }
 
-int mc_access (path, mode)
+int
+mc_access (int path, int mode)
 {
   unsigned char buffer[MAXPATHLEN];
   return access (decode_path (path, buffer), mode);
 }
 
-int mc_chmod (path, mode)
+int
+mc_chmod (int path, int mode)
 {
   unsigned char buffer[MAXPATHLEN];
   return chmod (decode_path (path, buffer), mode);
@@ -201,17 +202,15 @@ int mc_chmod (path, mode)
    In that case, use ordinary stat instead.  */
 
 #ifdef S_IFLNK
-int mc_lstat (path, st_addr)
-     unsigned char *path;
-     struct stat *st_addr;
+int
+mc_lstat (unsigned char *path, struct stat *st_addr)
 {
   unsigned char buffer[MAXPATHLEN];
   return lstat (decode_path (path, buffer), st_addr);
 }
 
-int mc_readlink (path, buf, size)
-     unsigned char *path, *buf;
-     int size;
+int
+mc_readlink (unsigned char *path, unsigned char *buf, int size)
 {
   unsigned char buffer[MAXPATHLEN], buffer2[MAXPATHLEN+1];
   int nread;
@@ -253,38 +252,38 @@ int mc_xstat (v, path, st_addr)
 #endif
 }
 
-int mc_unlink (path)
-     unsigned char *path;
+int
+mc_unlink (unsigned char *path)
 {
   unsigned char buffer[MAXPATHLEN];
   return unlink (decode_path (path, buffer));
 }
 
 #ifdef HAVE_RENAME
-int mc_rename (path, newpath)
-     unsigned char *path, *newpath;
+int
+mc_rename (unsigned char *path, unsigned char *newpath)
 {
   unsigned char buffer[MAXPATHLEN], buffer2[MAXPATHLEN];
   return rename (decode_path (path, buffer), decode_path (newpath, buffer2));
 }
 #endif
 
-int mc_link (path, newpath)
-     unsigned char *path, *newpath;
+int
+mc_link (unsigned char *path, unsigned char *newpath)
 {
   unsigned char buffer[MAXPATHLEN], buffer2[MAXPATHLEN];
   return link (decode_path (path, buffer), decode_path (newpath, buffer2));
 }
 
-int mc_symlink (path, newpath)
-     unsigned char *path, *newpath;
+int
+mc_symlink (unsigned char *path, unsigned char *newpath)
 {
   unsigned char buffer[MAXPATHLEN], buffer2[MAXPATHLEN];
   return symlink (decode_path (path, buffer), decode_path (newpath, buffer2));
 }
 
-int mc_chdir (path)
-     unsigned char *path;
+int
+mc_chdir (unsigned char *path)
 {
   unsigned char buffer[MAXPATHLEN];
   return chdir (decode_path (path, buffer));
@@ -292,9 +291,11 @@ int mc_chdir (path)
 
 #ifdef MSDOS
 #ifndef HAVE_GETWD
-unsigned char *mc_getcwd (null, size)
-     unsigned char *null;		/* in sysdep.c, always 0. */
-     size_t size;
+unsigned char *
+mc_getcwd (
+    unsigned char *null,		/* in sysdep.c, always 0. */
+    size_t size
+)
 {
   unsigned char buffer[MAXPATHLEN];
   unsigned char *path;
@@ -320,8 +321,8 @@ unsigned char *mc_getcwd (null, size)
   return path;
 }
 #else /* HAVE_GETWD */
-unsigned char *mc_getwd (path)
-     unsigned char path[];
+unsigned char *
+mc_getwd (unsigned char path[])
 {
   unsigned char *p;
  
@@ -347,8 +348,8 @@ unsigned char *mc_getwd (path)
  * following implement depends this.
  */
 #ifndef NO_MC_EXECVP
-void mc_execvp (path, argv)
-     unsigned char *path, *argv[];
+void
+mc_execvp (unsigned char *path, unsigned char *argv[])
 {
   unsigned char buffer[MAXPATHLEN];
   argv[0] = path = decode_path (path, buffer);
@@ -356,8 +357,8 @@ void mc_execvp (path, argv)
 }
 #endif /* !NO_MC_EXECVP */
 
-DIR *mc_opendir (path)
-     unsigned char *path;
+DIR *
+mc_opendir (unsigned char *path)
 {
   unsigned char buffer[MAXPATHLEN];
   return opendir (decode_path (path, buffer));
@@ -377,8 +378,8 @@ static struct
 } mcpath_directory_entry;
 #endif /* SYSV_SYSTEM_DIR || hpux */
 
-DIRENTRY *mc_readdir (d)
-     DIR *d;
+DIRENTRY *
+mc_readdir (DIR *d)
 {
   DIRENTRY *dp;
 
@@ -431,7 +432,8 @@ DIRENTRY *mc_readdir (d)
   return dp;
 }
 
-syms_of_mcpath ()
+int
+syms_of_mcpath (void)
 {
   Qpathname_coding_system = intern ("pathname-coding-system");
   Fset_pathname_coding_system (Qnil);

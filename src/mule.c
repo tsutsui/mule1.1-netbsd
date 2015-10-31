@@ -117,9 +117,7 @@ unsigned char rev_lc_table[256];
 
 /* Add direction, 92.8.2 Y.Niibe */
 void
-update_mc_table(lc, bytes, clm, type, graphic, final, direction, doc)
-     unsigned char lc, bytes, clm, type, graphic, final, direction;
-     char *doc;
+update_mc_table (unsigned char lc, unsigned char bytes, unsigned char clm, unsigned char type, unsigned char graphic, unsigned char final, unsigned char direction, char *doc)
 {
   char *p;
 
@@ -145,8 +143,7 @@ update_mc_table(lc, bytes, clm, type, graphic, final, direction, doc)
 
 /* 92.9.16 by K.Handa */
 int
-undefined_private_charset(bytes, width)
-     int bytes, width;
+undefined_private_charset (int bytes, int width)
 {
   int lc, from, to;
 
@@ -176,9 +173,7 @@ Rest of args are:\n\
  DOC: short description string.\n\
 If LEADING-CHAR >= 0xA0, it is regarded as extended leading-char\n\
 and BYTE and COLUMNS args are ignored.")
-  (nargs, args)
-     int nargs;
-     Lisp_Object *args;
+  (int nargs, Lisp_Object *args)
 {
   unsigned char lc, b, c, t, g, f, dir; /* 92.8.2 Y.Niibe */
   char *d;
@@ -218,8 +213,7 @@ and BYTE and COLUMNS args are ignored.")
 DEFUN ("leading-char", Fleading_char, Sleading_char, 2, 3, 0,
   "Return (extended) leading-char of character-set with TYPE and FINAL-CHAR.\n\
 Optional arg DIRECTION specifies writing direction (0:normal, 1:r2l).")
-  (type, final, direction)
-     Lisp_Object type, final, direction;
+  (Lisp_Object type, Lisp_Object final, Lisp_Object direction)
 {				/* 93.6.2 by K.Handa */
   Lisp_Object val;
   int dir = (NILP (direction) || XFASTINT (direction) == 0) ? 0 : 1;
@@ -243,8 +237,7 @@ Elements of the returned list are:\n\
  DIRECTION: 0 (left-to-right) or 1 (right-to-left)\n\
  DOC: short description string.\n\
 Return nil if LEADING-CHAR is invalid or not yet defined.")
-  (leading_char)
-     Lisp_Object leading_char;
+  (Lisp_Object leading_char)
 {				/* 92.9.2 by K.Handa */
   unsigned int lc;
 
@@ -267,8 +260,7 @@ DEFUN ("make-character", Fmake_character, Smake_character, 1, 4, 0,
   "Make multi-byte character from LEADING-CHAR and optional args ARG1,\n\
 ARG2, and ARG3.\n\
 LEADING-CHAR should be a leading-char or an extended leading-char.")
-  (leading_char, arg1, arg2, arg3)
-     Lisp_Object leading_char, arg1, arg2, arg3;
+  (Lisp_Object leading_char, Lisp_Object arg1, Lisp_Object arg2, Lisp_Object arg3)
 {				/* 92.9.2, 93.5.27 by K.Handa */
   unsigned int lc, i = 0;
   unsigned char buf[4];
@@ -303,8 +295,7 @@ Second arg IDX indicate which component should be returned as follows.\n\
  2: second byte of the character code,\n\
  3: third byte of the character code.\n\
 If the character does not have the componets, 0 is returned.")
-  (ch, idx)
-     Lisp_Object ch, idx;
+  (Lisp_Object ch, Lisp_Object idx)
 {				/* 92.9.2 by K.Handa */
   register unsigned int c;
   unsigned char s[4];
@@ -331,8 +322,7 @@ If the character does not have the componets, 0 is returned.")
 DEFUN ("char-leading-char", Fchar_leading_char, Schar_leading_char, 1, 1, 0,
   "Return (extended) leading character of CHAR.\n\
 If CHAR is not a multi-byte code, 0 is returned.")
-  (ch)
-     Lisp_Object ch;
+  (Lisp_Object ch)
 {			/* 92.7.2 by K.Handa -- calls char_leading_char() */
   Lisp_Object w;
   unsigned int c;
@@ -347,8 +337,7 @@ DEFUN ("char-bytes", Fchar_bytes, Schar_bytes, 1, 1, 0,
   "Return number of bytes CHAR will occupy in a buffer.\n\
 You can specify a character set to be concerned\n\
  by providing a leading character as CHAR.")
-  (ch)
-     Lisp_Object ch;
+  (Lisp_Object ch)
 {
   Lisp_Object w;
   unsigned int c;
@@ -361,8 +350,7 @@ You can specify a character set to be concerned\n\
 
 /* 93.6.17 by K.Handa */
 int
-charwidth (c)
-     unsigned int c;
+charwidth (unsigned int c)
 {
   if (c == '\t')
     c = current_buffer->tab_width;
@@ -386,8 +374,7 @@ charwidth (c)
 }
 
 int
-strwidth (s)
-     unsigned char *s;
+strwidth (unsigned char *s)
 {
   int i = 0;
   unsigned char *endp = s + strlen(s);
@@ -401,8 +388,7 @@ strwidth (s)
 
 DEFUN ("string-width", Fstring_width, Sstring_width, 1, 1, 0,
   "Return number of columns STRING will occupy when displayed with mc-flag t.")
-  (str)
-     Lisp_Object str;
+  (Lisp_Object str)
 {
   CHECK_STRING (str, 0);
   return make_number (strwidth (XSTRING (str)->data));
@@ -413,8 +399,7 @@ DEFUN ("char-width", Fchar_width, Schar_width, 1, 1, 0,
   "Return number of columns CHAR will occupy when displayed.\n\
 You can specify a character set to be concerned\n\
  by providing a leading character (not extended) of the charcter set as CHAR.")
-  (ch)
-       Lisp_Object ch;
+  (Lisp_Object ch)
 {				/* 92.7.2, 92.9.3 by K.Handa -- Big change */
   Lisp_Object w;
   int c;
@@ -432,8 +417,7 @@ DEFUN ("char-direction", Fchar_direction, Schar_direction, 1, 1, 0,
 You can specify a character set to be concerned\n\
  by providing a leading character of the charcter set as CHAR.\n\
 0: left-to-right, 1: right-to-left")
-  (c)
-       Lisp_Object c;
+  (Lisp_Object c)
 {
   Lisp_Object d;
 
@@ -448,8 +432,7 @@ You can specify a character set to be concerned\n\
 DEFUN ("chars-in-string", Fchars_in_string, Schars_in_string, 1, 1, 0,
   "Return number of characters in STRING.\n\
 Each multilingual/composite character is also counted as one.")
-  (string)
-     Lisp_Object string;
+  (Lisp_Object string)
 {
   register Lisp_Object val;
   register unsigned char *p, *endp;
@@ -477,8 +460,7 @@ The value is:\n\
  3: if POS is at a leading char of 4-byte sequence.\n\
  4: if POS is at a leading char of a composite character.\n\
 If POS is out of range or not at character boundary, NIL is returned.")
-  (pos)
-     Lisp_Object pos;
+  (Lisp_Object pos)
 {
   register Lisp_Object val;
   register unsigned char c;
@@ -501,8 +483,7 @@ If POS is out of range or not at character boundary, NIL is returned.")
 /* 92.9.11 by K.Handa */
 DEFUN ("redisplay-region", Fredisplay_region, Sredisplay_region, 2, 2, 0,
   "Force redisplaying the region in START and END.")
-  (b, e)
-     Lisp_Object b, e;
+  (Lisp_Object b, Lisp_Object e)
 {
   int beg, end;
 
@@ -524,8 +505,7 @@ extern Lisp_Object last_regexp;
 
 DEFUN ("re-compile", Fre_compile, Sre_compile, 1, 1, 0,
   "Return compiled code (by GNU Emacs original compiler) of RE by a string.")
-  (re)
-     Lisp_Object re;
+  (Lisp_Object re)
 {
   CHECK_STRING (re, 0);
   last_regexp = Qnil;
@@ -537,8 +517,7 @@ DEFUN ("define-word-pattern", Fdefine_word_pattern, Sdefine_word_pattern,
        1, 1, 0,
   "Don't call this function directly, instead use 'define-word' which\n\
 accept a pattern compiled by 'regexp-compile' with word-option t.")
-  (pattern)
-      Lisp_Object pattern;
+  (Lisp_Object pattern)
 {				/* 93.7.13 by K.Handa -- Big change */
   int i, len;
   char *p;
@@ -574,7 +553,7 @@ accept a pattern compiled by 'regexp-compile' with word-option t.")
 #endif /* emacs */
 
 void
-init_mc_once()
+init_mc_once (void)
 {
   int i,j;
 
@@ -618,7 +597,7 @@ init_mc_once()
 #ifdef emacs
 
 void
-syms_of_mc ()
+syms_of_mc (void)
 {
   defsubr (&Snew_character_set);
   defsubr (&Sleading_char);
@@ -783,8 +762,7 @@ syms_of_mc ()
 char inspect_str[1024];
 
 void
-inspect(obj)			/* Inspect Lisp Data */
-     Lisp_Object obj;
+inspect (Lisp_Object obj)	/* Inspect Lisp Data */
 {
   switch (XTYPE (obj)) {
   case Lisp_Symbol:
@@ -805,9 +783,7 @@ inspect(obj)			/* Inspect Lisp Data */
 }
 
 void
-inspect_vector(obj,idx)
-     Lisp_Object obj;
-     int idx;
+inspect_vector (Lisp_Object obj, int idx)
 {
   if (XTYPE(obj) != Lisp_Vector) {
     printf("Not a vector!\n");
@@ -823,9 +799,7 @@ inspect_vector(obj,idx)
 }
 
 void
-inspect_array(p, n)
-     unsigned char *p;
-     int n;
+inspect_array (unsigned char *p, int n)
 {
   int i;
 

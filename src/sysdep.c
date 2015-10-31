@@ -467,7 +467,7 @@ struct dostmode {
 /* end of patch */
 
 void
-discard_tty_input ()
+discard_tty_input (void)
 {
   TERMINAL buf;
 
@@ -523,8 +523,7 @@ you lose!
 #ifdef SIGTSTP
 
 void
-stuff_char (c)
-     char c;
+stuff_char (char c)
 {
 /* Should perhaps error if in batch mode */
 #ifdef TIOCSTI
@@ -537,7 +536,7 @@ stuff_char (c)
 #endif /* SIGTSTP */
 
 void
-init_baud_rate ()
+init_baud_rate (void)
 {
   TERMINAL sg;
 
@@ -569,8 +568,7 @@ init_baud_rate ()
 
 /*ARGSUSED*/
 void
-set_exclusive_use (fd)
-     int fd;
+set_exclusive_use (int fd)
 {
 #ifdef FIOCLEX
   ioctl (fd, FIOCLEX, 0);
@@ -580,7 +578,8 @@ set_exclusive_use (fd)
 
 #ifndef subprocesses
 
-wait_without_blocking ()
+void
+wait_without_blocking (void)
 {
 #ifndef MSDOS /* 93.3.4 by M.Higashida */
 #ifdef BSD
@@ -600,8 +599,7 @@ int wait_debugging;   /* Set nonzero to make following function work under dbx
    make sure it will get eliminated (not remain forever as a zombie) */
 
 void
-wait_for_termination (pid)
-     int pid;
+wait_for_termination (int pid)
 {
   while (1)
     {
@@ -686,8 +684,7 @@ wait_for_termination (pid)
  */
  
 void
-flush_pending_output (channel)
-     int channel;
+flush_pending_output (int channel)
 {
 #ifdef TCFLSH
   ioctl (channel, TCFLSH, 1);
@@ -708,8 +705,7 @@ flush_pending_output (channel)
     in Emacs.  No padding needed for insertion into an Emacs buffer.  */
 
 void
-child_setup_tty (out)
-     int out;
+child_setup_tty (int out)
 {
 #ifndef WIN32 /* 93.2.17 by M.Higashida */
   TERMINAL s;
@@ -815,8 +811,7 @@ child_setup_tty (out)
 
 /*ARGSUSED*/
 void
-setpgrp_of_tty (pid)
-     int pid;
+setpgrp_of_tty (int pid)
 {
 #ifdef IBMR2AIX
   tcsetpgrp ( 0, pid);
@@ -839,7 +834,7 @@ struct save_signal
 /* Suspend the Emacs process; give terminal to its superior.  */
 
 int
-sys_suspend ()
+sys_suspend (void)
 {
 #ifndef WIN32 /* 93.2.17 by M.Higashida */
 #ifdef VMS
@@ -967,8 +962,7 @@ sys_suspend ()
 }
 
 void
-save_signal_handlers (saved_handlers)
-     struct save_signal *saved_handlers;
+save_signal_handlers (struct save_signal *saved_handlers)
 {
   while (saved_handlers->code)
     {
@@ -979,8 +973,7 @@ save_signal_handlers (saved_handlers)
 }
 
 void
-restore_signal_handlers (saved_handlers)
-     struct save_signal *saved_handlers;
+restore_signal_handlers (struct save_signal *saved_handlers)
 {
   while (saved_handlers->code)
     {
@@ -994,7 +987,7 @@ restore_signal_handlers (saved_handlers)
 int old_fcntl_flags;
 
 void
-init_sigio ()
+init_sigio (void)
 {
 #ifdef FASYNC
   old_fcntl_flags = fcntl (0, F_GETFL, 0) & ~FASYNC;
@@ -1003,7 +996,7 @@ init_sigio ()
 }
 
 void
-reset_sigio ()
+reset_sigio (void)
 {
   unrequest_sigio ();
 }
@@ -1011,7 +1004,7 @@ reset_sigio ()
 #ifdef FASYNC		/* F_SETFL does not imply existance of FASYNC */
 
 void
-request_sigio ()
+request_sigio (void)
 {
 #ifdef SIGWINCH
   sigunblock (sigmask (SIGWINCH));
@@ -1022,7 +1015,7 @@ request_sigio ()
 }
 
 void
-unrequest_sigio ()
+unrequest_sigio (void)
 {
 #ifdef SIGWINCH
   sigblock (sigmask (SIGWINCH));
@@ -1034,14 +1027,16 @@ unrequest_sigio ()
 #else /* no FASYNC */
 #if defined(STRIDE) || defined(linux)		/* Stride doesn't have FASYNC - use FIOASYNC */
 
-request_sigio ()
+void
+request_sigio (void)
 {
   int on = 1;
   ioctl (0, FIOASYNC, &on);
   interrupts_deferred = 0;
 }
 
-unrequest_sigio ()
+void
+unrequest_sigio (void)
 {
   int off = 0;
 
@@ -1051,12 +1046,14 @@ unrequest_sigio ()
 
 #else /* not FASYNC, not STRIDE */
  
-request_sigio ()
+void
+request_sigio (void)
 {
   croak ("request_sigio");
 }
  
-unrequest_sigio ()
+void
+unrequest_sigio (void)
 {
   croak ("unrequest_sigio");
 }
@@ -1108,7 +1105,7 @@ static struct ltchars new_ltchars = {-1,-1,-1,-1,-1,-1};
 #endif 
 
 void
-init_sys_modes ()
+init_sys_modes (void)
 {
   TERMINAL tty;
 #ifdef TIOCGETC
@@ -1413,7 +1410,7 @@ init_sys_modes ()
    At the time this is called, init_sys_modes has not been done yet.  */
    
 int
-tabs_safe_p ()
+tabs_safe_p (void)
 {
   TERMINAL tty;
   if (noninteractive)
@@ -1446,8 +1443,7 @@ static int xheight = -1;
 /* end of patch */
 
 void
-get_screen_size (widthp, heightp)
-     int *widthp, *heightp;
+get_screen_size (int *widthp, int *heightp)
 {
 /* Define the 4.3 names in terms of the Sun names
    if the latter exist and the former do not.  */
@@ -1518,7 +1514,7 @@ get_screen_size (widthp, heightp)
 }
 
 void
-reset_sys_modes ()
+reset_sys_modes (void)
 {
   if (noninteractive)
     {
@@ -1610,8 +1606,7 @@ reset_sys_modes ()
 /* Set up the proper status flags for use of a pty.  */
 
 void
-setup_pty (fd)
-     int fd;
+setup_pty (int fd)
 {
   /* I'm told that TOICREMOTE does not mean control chars
      "can't be sent" but rather that they don't have
@@ -1661,7 +1656,8 @@ setup_pty (fd)
    This is called each time Emacs is resumed, also, but does nothing
    because input_chain is no longer zero.  */
 
-init_vms_input ()
+int
+init_vms_input (void)
 {
   int status;
   
@@ -1675,7 +1671,8 @@ init_vms_input ()
 
 /* Deassigning the input channel is done before exiting.  */
 
-stop_vms_input ()
+int
+stop_vms_input (void)
 {
   return SYS$DASSGN (input_chan);
 }
@@ -1685,7 +1682,8 @@ short input_buffer;
 /* Request reading one character into the keyboard buffer.
    This is done as soon as the buffer becomes empty.  */
 
-queue_kbd_input ()
+void
+queue_kbd_input (void)
 {
   int status;
   waiting_for_ast = 0;
@@ -1700,7 +1698,8 @@ int input_count;
 /* Ast routine that is called when keyboard input comes in
    in accord with the SYS$QIO above.  */
 
-kbd_input_ast ()
+void
+kbd_input_ast (void)
 {
   register int c = -1;
   int old_errno = errno;
@@ -1739,7 +1738,8 @@ kbd_input_ast ()
 
 /* Wait until there is something in kbd_buffer.  */
 
-wait_for_kbd_input ()
+void
+wait_for_kbd_input (void)
 {
   extern int have_process_input, process_exited;
 
@@ -1784,7 +1784,8 @@ wait_for_kbd_input ()
    and therefore there is no I/O request queued when we return.
    SYS$SETAST is used to avoid a timing error.  */
 
-end_kbd_input ()
+void
+end_kbd_input (void)
 {
 #ifdef ASTDEBUG
   printf ("At end_kbd_input.\n");
@@ -1810,8 +1811,10 @@ end_kbd_input ()
 
 /* Wait for either input available or time interval expiry.  */
 
-input_wait_timeout (timeval)
-     int timeval;		/* Time to wait, in seconds */
+int
+input_wait_timeout (
+    int timeval		/* Time to wait, in seconds */
+)
 {
   int time [2];
   static int zero = 0;
@@ -1842,8 +1845,8 @@ input_wait_timeout (timeval)
    and it stops working if you have ever quit out of it.
    This one continues to work.  */
 
-sys_sleep (timeval)
-     int timeval;
+void
+sys_sleep (int timeval)
 {
   int time [2];
   static int zero = 0;
@@ -1856,22 +1859,26 @@ sys_sleep (timeval)
     SYS$WAITFR (timer_ef);	  /* Wait for timer expiry only */
 }
 
-init_sigio ()
+void
+init_sigio (void)
 {
   request_sigio ();
 }
 
-reset_sigio ()
+void
+reset_sigio (void)
 {
   unrequest_sigio ();
 }
 
-request_sigio ()
+void
+request_sigio (void)
 {
   croak ("request sigio");
 }
 
-unrequest_sigio ()
+void
+unrequest_sigio (void)
 {
   croak ("unrequest sigio");
 }
@@ -1905,7 +1912,7 @@ unrequest_sigio ()
 
 #ifndef CANNOT_UNEXEC
 char *
-start_of_text ()
+start_of_text (void)
 {
 #ifdef TEXT_START
   return ((char *) TEXT_START);
@@ -1955,7 +1962,7 @@ start_of_text ()
  */
  
 char *
-start_of_data ()
+start_of_data (void)
 {
 #ifdef DATA_START
   return ((char *) DATA_START);
@@ -1977,7 +1984,7 @@ start_of_data ()
  */
  
 char *
-end_of_text ()
+end_of_text (void)
 {
 #ifdef TEXT_END
   return ((char *) TEXT_END);
@@ -1993,7 +2000,7 @@ end_of_text ()
  */
 
 char *
-end_of_data ()
+end_of_data (void)
 {
 #ifdef DATA_END
   return ((char *) DATA_END);
@@ -2026,7 +2033,7 @@ static struct utsname get_system_name_name;
 #endif /* USG */
 
 char *
-get_system_name ()
+get_system_name (void)
 {
 #ifdef USG
 #ifdef HAVE_GETHOSTNAME
@@ -2082,7 +2089,8 @@ jmp_buf read_alarm_throw;
 
 int read_alarm_should_throw;
 
-select_alarm ()
+int
+select_alarm (void)
 {
   select_alarmed = 1;
 #ifdef BSD4_1
@@ -2096,9 +2104,7 @@ select_alarm ()
 
 /* Only rfds are checked.  */
 int
-select (nfds, rfds, wfds, efds, timeout)
-     int nfds;
-     int *rfds, *wfds, *efds, *timeout;
+select (int nfds, int *rfds, int *wfds, int *efds, int *timeout)
 {
   int ravail = 0, orfds = 0, old_alarm;
   int timeoutval = timeout ? *timeout : 100000;
@@ -2227,7 +2233,8 @@ select (nfds, rfds, wfds, efds, timeout)
 #define BUFFER_SIZE_FACTOR 1
 #endif
 
-read_input_waiting ()
+int
+read_input_waiting (void)
 {
   extern unsigned char kbd_buffer[];
   extern unsigned char *kbd_ptr;
@@ -2258,7 +2265,8 @@ read_input_waiting ()
 
 #ifdef BSD4_1
 /* VARARGS */
-setpriority ()
+int
+setpriority (void)
 {
   return 0;
 }
@@ -2282,7 +2290,8 @@ sys_open (path, oflag, mode)
     return open (path, oflag);
 }
 
-init_sigio ()
+int
+init_sigio (void)
 {
   if (noninteractive)
     return;
@@ -2290,7 +2299,8 @@ init_sigio ()
   ioctl (0, TIOCLSET, &lmode);
 }
 
-reset_sigio ()
+int
+reset_sigio (void)
 {
   if (noninteractive)
     return;
@@ -2298,14 +2308,16 @@ reset_sigio ()
   ioctl (0, TIOCLSET, &lmode);
 }
 
-request_sigio ()
+int
+request_sigio (void)
 {
   sigrelse (SIGTINT);
 
   interrupts_deferred = 0;
 }
 
-unrequest_sigio ()
+int
+unrequest_sigio (void)
 {
   sighold (SIGTINT);
 
@@ -2317,27 +2329,28 @@ unrequest_sigio ()
 
 int sigheld; /* Mask of held signals */
 
-sigholdx (signum)
-     int signum;
+int
+sigholdx (int signum)
 {
   sigheld |= sigbit (signum);
   sighold (signum);
 }
 
-sigisheld (signum)
-     int signum;
+int
+sigisheld (int signum)
 {
   sigheld |= sigbit (signum);
 }
 
-sigunhold (signum)
-     int signum;
+int
+sigunhold (int signum)
 {
   sigheld &= ~sigbit (signum);
   sigrelse (signum);
 }
 
-sigfree ()    /* Free all held signals */
+int
+sigfree (void)    /* Free all held signals */
 {
   int i;
   for (i = 0; i < NSIG; i++)
@@ -2346,7 +2359,8 @@ sigfree ()    /* Free all held signals */
   sigheld = 0;
 }
 
-sigbit (i)
+int
+sigbit (int i)
 {
   return 1 << (i - 1);
 }
@@ -2362,7 +2376,7 @@ sigset_t signal_empty_mask, signal_full_mask;
 static struct sigaction new_action, old_action;
 
 void
-init_signals ()
+init_signals (void)
 {
   sigemptyset (&signal_empty_mask);
   sigfillset (&signal_full_mask);
@@ -2484,10 +2498,7 @@ bcopy (b1, b2, length)
 }
 
 int
-bcmp (b1, b2, length)	/* This could be a macro! */
-     register char *b1;
-     register char *b2;
-     register int length;
+bcmp (register char *b1, register char *b2, register int length) /* This could be a macro! */
 {
 #ifdef VMS
   struct dsc$descriptor_s src1 = {length, DSC$K_DTYPE_T, DSC$K_CLASS_S, b1};
@@ -2505,13 +2516,14 @@ bcmp (b1, b2, length)	/* This could be a macro! */
 #endif /* not BSTRING */
 
 #if defined(BSD4_1) || defined (WIN32) /* 93.2.17 by M.Higashida */
-long random ()
+long
+random (void)
 {
   return (rand ());
 }
 
-srandom (arg)
-     int arg;
+void
+srandom (int arg)
 {
   srand (arg);
 }
@@ -2535,14 +2547,14 @@ srandom (arg)
  */
   
 long
-random ()
+random (void)
 {
   /* Arrange to return a range centered on zero.  */
   return rand () - (1 << 14);
 }
 
-srandom (arg)
-     int arg;
+void
+srandom (int arg)
 {
   srand (arg);
 }
@@ -2560,8 +2572,7 @@ srandom (arg)
    resort, ask for VAX C's special idea of the TERM variable.  */
 #undef getenv
 char *
-sys_getenv (name)
-     char *name;
+sys_getenv (char *name)
 {
   register char *val;
   static char buf[256];
@@ -2597,7 +2608,8 @@ sys_getenv (name)
 /* Since VMS doesn't believe in core dumps, the only way to debug this beast is
    to force a call on the debugger from within the image. */
 #undef abort
-sys_abort ()
+void
+sys_abort (void)
 {
   reset_sys_modes ();
   LIB$SIGNAL (SS$_DEBUG);
@@ -2810,8 +2822,7 @@ char *sys_siglist[NSIG + 1] =
 #ifndef HAVE_GETWD
 
 char *
-getwd (pathname)
-     char *pathname;
+getwd (char *pathname)
 {
   char *npath, *spath;
   extern char *getcwd ();
@@ -2836,13 +2847,12 @@ getwd (pathname)
  *	that files be of same type (regular->regular, dir->dir, etc).
  */
 
-rename (from, to)
+int
+rename (
 #ifdef __STDC__ /* Avoid error if system has proper ANSI prototype.  */
-     const char *from;
-     const char *to;
-#else
-     char *from;
-     char *to;
+    char *from,
+    char *to
+)
 #endif
 {
   if (access (from, 0) == 0)
@@ -2857,7 +2867,8 @@ rename (from, to)
 #endif /* not HAVE_RENAME */
 
 /* VARARGS */
-setpriority ()
+int
+setpriority (void)
 {
   return (0);
 }
@@ -2868,7 +2879,8 @@ setpriority ()
  *	Substitute fork(2) for vfork(2) on USG flavors.
  */
 
-vfork ()
+int
+vfork (void)
 {
   return (fork ());
 }
@@ -2879,7 +2891,8 @@ vfork ()
 
 /* HPUX (among others) sets HAVE_TIMEVAL but does not implement utimes.  */
 
-utimes ()
+int
+utimes (void)
 {
 }
 #endif
@@ -2895,9 +2908,8 @@ struct utimbuf
    long modtime;
  };
 
-utimes (name, tvp)
-     char *name;
-     struct timeval tvp[];
+int
+utimes (char *name, struct timeval tvp[])
 {
   struct utimbuf utb;
   utb.actime  = tvp[0].tv_sec;
@@ -2913,7 +2925,8 @@ utimes (name, tvp)
 /* HPUX curses library references perror, but as far as we know
    it won't be called.  Anyway this definition will do for now.  */
 
-perror ()
+void
+perror (void)
 {
 }
 
@@ -2928,9 +2941,8 @@ perror ()
  *	until we are, then close the unsuccessful ones.
  */
 
-dup2 (oldd, newd)
-     int oldd;
-     int newd;
+int
+dup2 (int oldd, int newd)
 {
   register int fd, ret;
   
@@ -2965,9 +2977,8 @@ dup2 (oldd, newd)
 #ifdef HAVE_TIMEVAL
  
 /* ARGSUSED */
-gettimeofday (tp, tzp)
-     struct timeval *tp;
-     struct timezone *tzp;
+int
+gettimeofday (struct timeval *tp, struct timezone *tzp)
 {
 
   tp->tv_sec = time ((time_t *)0);    
@@ -2982,8 +2993,8 @@ gettimeofday (tp, tzp)
  *	This function will go away as soon as all the stubs fixed. (fnf)
  */
 
-croak (badfunc)
-     char *badfunc;
+void
+croak (char *badfunc)
 {
   printf ("%s not yet implemented\r\n", badfunc);
   reset_sys_modes ();
@@ -3090,8 +3101,9 @@ closedir (dirp)
 #ifdef NONSYSTEM_DIR_LIBRARY
 
 DIR *
-opendir (filename)
-     char *filename;	/* name of directory */
+opendir (
+    char *filename	/* name of directory */
+)
 {
   register DIR *dirp;		/* -> malloc'ed storage */
   register int fd;		/* file descriptor for read */
@@ -3116,8 +3128,9 @@ opendir (filename)
 }
 
 void
-closedir (dirp)
-     register DIR *dirp;		/* stream from opendir() */
+closedir (
+    register DIR *dirp		/* stream from opendir() */
+)
 {
   sys_close (dirp->dd_fd);
   free ((char *) dirp);
@@ -3137,8 +3150,9 @@ struct direct dir_static;	/* simulated directory contents */
 
 /* ARGUSED */
 struct direct *
-readdir (dirp)
-     register DIR *dirp;	/* stream from opendir() */
+readdir (
+    register DIR *dirp	/* stream from opendir() */
+)
 {
 #ifndef VMS
   register struct olddir *dp;	/* -> directory data */
@@ -3196,8 +3210,9 @@ readdir (dirp)
 
 /* ARGUSED */
 struct direct *
-readdirver (dirp)
-     register DIR *dirp;	/* stream from opendir() */
+readdirver (
+    register DIR *dirp	/* stream from opendir() */
+)
 {
   register struct dir$_name *dp; /* -> directory data */
   register struct dir$_version *dv; /* -> version data */
@@ -3241,8 +3256,9 @@ readdirver (dirp)
    Reuses the same static buffer each time it is called.  */
 
 char *
-vmserrstr (status)
-     int status;		/* VMS status code */
+vmserrstr (
+    int status		/* VMS status code */
+)
 {
   int bufadr[2];
   short len;
@@ -3290,9 +3306,7 @@ typedef union {
 #define F_OK 0	/* test for presence of file */
 
 int
-sys_access (path, mode)
-     char *path;
-     int mode;
+sys_access (char *path, int mode)
 {
   static char *user = NULL;
   char dir_fn[512];
@@ -3397,15 +3411,14 @@ static unsigned int uic;
 
 /* Called from init_sys_modes, so it happens not very often
    but at least each time Emacs is loaded.  */
-sys_access_reinit ()
+void
+sys_access_reinit (void)
 {
   uic = 0;
 }
 
 int
-sys_access (filename, type)
-     char * filename;
-     int type;
+sys_access (char *filename, int type)
 {
   struct FAB fab;
   struct XABPRO xab;
@@ -3494,8 +3507,7 @@ static char vtbuf[NAM$C_MAXRSS+1];
 
 /* translate a vms file spec to a unix path */
 char *
-sys_translate_vms (vfile)
-     char * vfile;
+sys_translate_vms (char *vfile)
 {
   char * p;
   char * targ;
@@ -3548,8 +3560,7 @@ static char utbuf[NAM$C_MAXRSS+1];
 
 /* translate a unix path to a VMS file spec */
 char *
-sys_translate_unix (ufile)
-     char * ufile;
+sys_translate_unix (char *ufile)
 {
   int slash_seen = 0;
   char *p;
@@ -3628,8 +3639,7 @@ sys_translate_unix (ufile)
 }
 
 char *
-getwd (pathname)
-     char *pathname;
+getwd (char *pathname)
 {
   char *ptr;
   strcpy (pathname, egetenv ("PATH"));
@@ -3644,7 +3654,8 @@ getwd (pathname)
   return pathname;
 }
 
-getppid ()
+int
+getppid (void)
 {
   long item_code = JPI$_OWNER;
   unsigned long parent_id;
@@ -3660,8 +3671,8 @@ getppid ()
 }
 
 #undef getuid
-unsigned
-sys_getuid ()
+unsigned int
+sys_getuid (void)
 {
   return (getgid () << 16) | getuid ();
 }
@@ -3759,8 +3770,7 @@ sys_write (fildes, buf, nbytes)
 static unsigned short int fab_final_pro;
 
 int
-creat_copy_attrs (old, new)
-     char *old, *new;
+creat_copy_attrs (char *old, char *new)
 {
   struct FAB fab = cc$rms_fab;
   struct XABPRO xabpro;
@@ -3953,12 +3963,8 @@ sys_creat (va_alist)
 #endif /* creat */
 
 /* fwrite to stdout is S L O W.  Speed it up by using fputc...*/
-unsigned
-sys_fwrite (ptr, size, num, fp)
-  void * ptr;
-  unsigned size;
-  unsigned num;
-  FILE * fp;
+void
+sys_fwrite (void *ptr, unsigned size, unsigned num, FILE *fp)
 {
   register int tot = num * size;
   register char *cptr = (char *)ptr;
@@ -3977,8 +3983,7 @@ sys_fwrite (ptr, size, num, fp)
  * "close (creat (fn, 0));" on Unix if fn already exists.
  */
 int
-vms_truncate (fn)
-     char *fn;
+vms_truncate (char *fn)
 {
   struct FAB xfab = cc$rms_fab;
   struct RAB xrab = cc$rms_rab;
@@ -4024,8 +4029,7 @@ vms_truncate (fn)
 static struct UAF retuaf;
 
 struct UAF *
-get_uaf_name (uname)
-     char * uname;
+get_uaf_name (char *uname)
 {
   register status;
   struct FAB uaf_fab;
@@ -4088,8 +4092,7 @@ get_uaf_name (uname)
 }
 
 struct UAF *
-get_uaf_uic (uic)
-     unsigned long uic;
+get_uaf_uic (unsigned long uic)
 {
   register status;
   struct FAB uaf_fab;
@@ -4155,8 +4158,7 @@ get_uaf_uic (uic)
 static struct passwd retpw;
 
 struct passwd *
-cnv_uaf_pw (up)
-     struct UAF * up;
+cnv_uaf_pw (struct UAF *up)
 {
   char * ptr;
 
@@ -4190,8 +4192,7 @@ static struct passwd retpw;
 #endif /* not READ_SYSUAF */
 
 struct passwd *
-getpwnam (name)
-     char * name;
+getpwnam (char *name)
 {
 #ifdef READ_SYSUAF
   struct UAF *up;
@@ -4232,8 +4233,7 @@ getpwnam (name)
 }
 
 struct passwd *
-getpwuid (uid)
-     unsigned long uid;
+getpwuid (unsigned long uid)
 {
 #ifdef READ_SYSUAF
   struct UAF * up;
@@ -4252,7 +4252,8 @@ getpwuid (uid)
 /* return total address space available to the current process.  This is
    the sum of the current p0 size, p1 size and free page table entries
    available. */
-vlimit ()
+unsigned long
+vlimit (void)
 {
   int item_code;
   unsigned long free_pages;
@@ -4287,9 +4288,8 @@ vlimit ()
   return free_pages + frep0va + (0x7fffffff - frep1va);
 }
 
-define_logical_name (varname, string)
-     char *varname;
-     char *string;
+int
+define_logical_name (char *varname, char *string)
 {
   struct dsc$descriptor_s strdsc =
     {strlen (string), DSC$K_DTYPE_T, DSC$K_CLASS_S, string};
@@ -4301,8 +4301,8 @@ define_logical_name (varname, string)
   return LIB$SET_LOGICAL (&envdsc, &strdsc, &lnmdsc, 0, 0);
 }
 
-delete_logical_name (varname)
-     char *varname;
+int
+delete_logical_name (char *varname)
 {
   struct dsc$descriptor_s envdsc =
     {strlen (varname), DSC$K_DTYPE_T, DSC$K_CLASS_S, varname};
@@ -4312,23 +4312,26 @@ delete_logical_name (varname)
   return LIB$DELETE_LOGICAL (&envdsc, &lnmdsc);
 }
 
-ulimit ()
+long int
+ulimit (void)
 {}
 
-setpriority ()
+int
+setpriority (void)
 {}
 
-setpgrp ()
+int
+setpgrp (void)
 {}
 
-execvp ()
+int
+execvp (void)
 {
   error ("execvp system call not implemented");
 }
 
 int
-rename (from, to)
-     char *from, *to;
+rename (char *from, char *to)
 {
   int status;
   struct FAB from_fab = cc$rms_fab, to_fab = cc$rms_fab;
@@ -4384,8 +4387,7 @@ static struct fibdef fib;	/* We need this initialized to zero */
 char vms_file_written[NAM$C_MAXRSS];
 
 int
-rename_sans_version (from,to)
-     char *from, *to;
+rename_sans_version (char *from, char *to)
 {
   short int chan;
   int stat;
@@ -4446,8 +4448,8 @@ rename_sans_version (from,to)
   return 0;
 }
 
-link (file, new)
-     char * file, * new;
+int
+link (char *file, char *new)
 {
   register status;
   struct FAB fab;
@@ -4513,8 +4515,8 @@ link (file, new)
   return 0;
 }
 
-croak (badfunc)
-     char *badfunc;
+void
+croak (char *badfunc)
 {
   printf ("%s not yet implemented\r\n", badfunc);
   reset_sys_modes ();
@@ -4522,13 +4524,14 @@ croak (badfunc)
 }
 
 long
-random ()
+random (void)
 {
   /* Arrange to return a range centered on zero.  */
   return rand () - (1 << 30);
 }
 
-srandom (seed)
+void
+srandom (int seed)
 {
   srand (seed);
 }
@@ -4536,8 +4539,8 @@ srandom (seed)
 
 #ifdef WRONG_NAME_INSQUE
 
-insque(q,p)
-     caddr_t q,p;
+void
+insque (caddr_t q, caddr_t p)
 {
   _insque(q,p);
 }
@@ -4547,7 +4550,8 @@ insque(q,p)
 #ifdef AIX
 
 /* Called from init_sys_modes.  */
-hft_init ()
+void
+hft_init (void)
 {
   int junk;
 
@@ -4600,7 +4604,8 @@ hft_init ()
 
 /* Reset the rubout key to backspace. */
 
-hft_reset ()
+void
+hft_reset (void)
 {
   struct hfbuf buf;
   struct hfkeymap keymap;
@@ -4640,8 +4645,10 @@ hft_reset ()
 
 /* 91.10.16 by S.Hirano, 91.10.20, 93.2.17 M.Higashida */
 #if defined(MSDOS) || defined(WIN32)
-input_wait_timeout (time_to_wait)
-     int time_to_wait;		/* Time to wait, in seconds */
+void
+input_wait_timeout (
+    int time_to_wait		/* Time to wait, in seconds */
+)
 {
   time_t tnow, tthen;
 
@@ -4662,26 +4669,26 @@ input_wait_timeout (time_to_wait)
     }
 }
 
-croak (badfunc)
-     char *badfunc;
+void
+croak (char *badfunc)
 {
   printf ("%s not yet implemented\r\n", badfunc);
   reset_sys_modes ();
   abort ();
 }
 
-unrequest_sigio () { croak ("unrequest_sigio"); }
-request_sigio () { croak ("request_sigio"); }
+void
+unrequest_sigio (void) { croak ("unrequest_sigio"); }
+void
+request_sigio (void) { croak ("request_sigio"); }
 
 #undef gethostname
 
-int
+void
 #ifdef WIN32
 PASCAL
 #endif
-gethostname (p, size)
-     char *p;
-     int size;
+gethostname (char *p, int size)
 {
   char *q;
 #ifdef WIN32 /* 93.3.3 by M.Higashida */
@@ -4703,8 +4710,7 @@ gethostname (p, size)
 }
 
 char *
-dostounix_filename (p)
-     register char *p;
+dostounix_filename (register char *p)
 {
   char *ret = p;
   while (p && *p) {
@@ -4717,12 +4723,17 @@ dostounix_filename (p)
 #endif /* MSDOS or WIN32 */
 
 #ifdef WIN32 /* 93.2.17 by M.Higashida */
-sleep (a) int a; { return _sleep (a * 1000); }
-kill (a, b) int a, b; { return -1; }
+int
+sleep (int a) { return _sleep (a * 1000); }
+int
+kill (int a, int b) { return -1; }
 sigsetmask (mask) int mask; { return 0; }
-getpid () { return _getpid (); }
-getdisk () { return (_getdrive () - 1); }
-setdisk (a) int a; { return _chdrive (a + 1); }
+int
+getpid (void) { return _getpid (); }
+int
+getdisk (void) { return (_getdrive () - 1); }
+int
+setdisk (int a) { return _chdrive (a + 1); }
 #endif /* WIN32 */
 /* end of patch */
 
@@ -4743,7 +4754,8 @@ setdisk (a) int a; { return _chdrive (a + 1); }
   (TIMEVAL_TO_MICROSEC (&(rp)->ru_utime) + \
    TIMEVAL_TO_MICROSEC (&(rp)->ru_stime))
 
-long clock ()
+long
+clock (void)
 {
   struct rusage rusage;
 

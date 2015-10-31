@@ -237,9 +237,7 @@ void get_lim_data (void);
 /* Cause reinitialization based on job parameters;
   also declare where the end of pure storage is. */
 void
-malloc_init (start, warnfun)
-     void *start;
-     void (*warnfun) (char *);
+malloc_init (void *start, void (*warnfun) (char *))
 {
   if (start)
     data_space_start = start;
@@ -252,8 +250,7 @@ malloc_init (start, warnfun)
    without actually requiring copying.  */
 
 int
-malloc_usable_size (mem)
-     char *mem;
+malloc_usable_size (char *mem)
 {
   struct mhead *p
     = (struct mhead *) (mem - ((sizeof (struct mhead) + 7) & ~7));
@@ -263,8 +260,9 @@ malloc_usable_size (mem)
 }
 
 static void
-morecore (nu)			/* ask system for more memory */
-     register int nu;		/* size index to get more of  */
+morecore (			/* ask system for more memory */
+     register int nu		/* size index to get more of  */
+)
 {
   register char *cp;
   register int nblks;
@@ -392,7 +390,7 @@ morecore (nu)			/* ask system for more memory */
 }
 
 static void
-getpool ()
+getpool (void)
 {
   register int nu;
   register char *cp = sbrk (0);
@@ -430,8 +428,7 @@ getpool ()
 }
 
 void *
-malloc (n)		/* get a block */
-     size_t n;
+malloc (size_t n)		/* get a block */
 {
   register struct mhead *p;
   register unsigned int nbytes;
@@ -506,8 +503,7 @@ malloc (n)		/* get a block */
 }
 
 void
-free (mem)
-     void *mem;
+free (void *mem)
 {
   register struct mhead *p;
   {
@@ -567,9 +563,7 @@ free (mem)
 }
 
 void *
-realloc (mem, n)
-     void *mem;
-     register size_t n;
+realloc (void *mem, register size_t n)
 {
   register struct mhead *p;
   register unsigned int tocopy;
@@ -629,8 +623,7 @@ realloc (mem, n)
 /* This is in case something linked with Emacs calls calloc.  */
 
 void *
-calloc (num, size)
-     size_t num, size;
+calloc (size_t num, size_t size)
 {
   register char *mem;
 
@@ -644,8 +637,7 @@ calloc (num, size)
 /* This is in case something linked with Emacs calls cfree.  */
 
 void
-cfree (mem)
-     void *mem;
+cfree (void *mem)
 {
   return free (mem);
 }
@@ -653,8 +645,7 @@ cfree (mem)
 #ifndef VMS
 
 char *
-memalign (alignment, size)
-     unsigned alignment, size;
+memalign (unsigned int alignment, unsigned int size)
 {
   register char *ptr = malloc (size + alignment);
   register char *aligned;
@@ -698,8 +689,7 @@ struct mstats_value
   };
 
 struct mstats_value
-malloc_stats (size)
-     int size;
+malloc_stats (int size)
 {
   struct mstats_value v;
   register int i;
@@ -723,7 +713,7 @@ malloc_stats (size)
   return v;
 }
 int
-malloc_mem_used ()
+malloc_mem_used (void)
 {
   int i;
   int size_used;
@@ -742,7 +732,7 @@ malloc_mem_used ()
 }
 
 int 
-malloc_mem_free ()
+malloc_mem_free (void)
 {
   int i;
   int size_unused;
@@ -772,13 +762,15 @@ malloc_mem_free ()
 /* 91.10.28, 92.11.4 by M.Higashida */
 #ifdef MSDOS
 #ifdef GO32
-get_lim_data ()
+void
+get_lim_data (void)
 {
   lim_data = 0x7fffffff; /* no limit */
 }
 #else
 #ifdef EMX
-get_lim_data ()
+void
+get_lim_data (void)
 {
   lim_data = ulimit (3, 0);
 }
@@ -787,7 +779,8 @@ get_lim_data ()
 #else /* not MSDOS */
 #ifdef USG
 
-get_lim_data ()
+void
+get_lim_data (void)
 {
 #ifdef ULIMIT_BREAK_VALUE
   lim_data = ULIMIT_BREAK_VALUE;
@@ -801,7 +794,8 @@ get_lim_data ()
 #else /* not USG */
 #if defined (BSD4_1) || defined (VMS)
 
-get_lim_data ()
+void
+get_lim_data (void)
 {
   lim_data = vlimit (LIM_DATA, -1);
 }
@@ -809,7 +803,7 @@ get_lim_data ()
 #else /* not BSD4_1 and not VMS */
 
 void
-get_lim_data ()
+get_lim_data (void)
 {
   struct rlimit XXrlimit;
 
@@ -870,8 +864,7 @@ static char *vms_end_brk = &vms_initial_buffer[VMS_ALLOCATION_SIZE-1];
 #include <stdio.h>
 
 char *
-sys_sbrk (incr)
-     int incr;
+sys_sbrk (int incr)
 {
   char *sbrk(), *temp, *ptr;
 

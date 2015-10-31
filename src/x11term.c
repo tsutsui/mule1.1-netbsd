@@ -453,8 +453,7 @@ void MCSetXChar2b(unsigned char, unsigned char, unsigned char, XChar2b *);
  */
 
 void
-HLmode (new)
-     int new;
+HLmode (int new)
 {
 	extern int inverse_video;
 	
@@ -466,8 +465,7 @@ HLmode (new)
    and not change whether it is highlighted.  */
 
 void
-XTreassert_line_highlight (highlight, vpos)
-     int highlight, vpos;
+XTreassert_line_highlight (int highlight, int vpos)
 {
 	HLmode (highlight);
 }
@@ -476,8 +474,7 @@ XTreassert_line_highlight (highlight, vpos)
    and change whether it is highlighted.  */
 
 void
-XTchange_line_highlight (new_highlight, vpos, first_unused_hpos)
-     int new_highlight, vpos, first_unused_hpos;
+XTchange_line_highlight (int new_highlight, int vpos, int first_unused_hpos)
 {
 	HLmode (new_highlight);
 	XTmove_cursor (vpos, 0);
@@ -491,7 +488,7 @@ XTchange_line_highlight (new_highlight, vpos, first_unused_hpos)
  */
 
 void
-XTset_terminal_modes ()
+XTset_terminal_modes (void)
 {
 	int stuffpending;
 #ifdef XDEBUG
@@ -519,8 +516,7 @@ XTset_terminal_modes ()
  */
 
 void
-XTmove_cursor (row, col)
-     register int row, col;
+XTmove_cursor (register int row, register int col)
 {
 	BLOCK_INPUT_DECLARE ();
 #ifdef XDEBUG
@@ -562,7 +558,7 @@ XTmove_cursor (row, col)
  */
 
 void
-cleanup ()
+cleanup (void)
 {
 	inverse_video = 0;
 	HLmode (0);
@@ -572,8 +568,7 @@ cleanup ()
    Leave cursor at END.  */
 
 void
-XTclear_end_of_line (end)
-     register int end;
+XTclear_end_of_line (register int end)
 {
   register int numcols;
   BLOCK_INPUT_DECLARE ();
@@ -615,8 +610,7 @@ XTclear_end_of_line (end)
    Leave cursor at START.  */
 
 void
-x_clear_end_of_line (start)
-     register int start;
+x_clear_end_of_line (register int start)
 {
   register int numcols;
   BLOCK_INPUT_DECLARE ();
@@ -655,7 +649,7 @@ x_clear_end_of_line (start)
 }
 
 void
-XTreset_terminal_modes ()
+XTreset_terminal_modes (void)
 {
 #ifdef XDEBUG
 	fprintf (stderr, "XTreset_terminal_modes\n");
@@ -665,7 +659,7 @@ XTreset_terminal_modes ()
 }
 
 void
-XTclear_screen ()
+XTclear_screen (void)
 {
 	BLOCK_INPUT_DECLARE ();
 
@@ -700,10 +694,7 @@ XTclear_screen ()
  */
 
 void
-dumpchars (active_screen, numcols, tempX, tempY, tempHL)
-     register struct matrix *active_screen;
-     register int numcols;
-     register int tempX, tempY, tempHL;
+dumpchars (register struct matrix *active_screen, register int numcols, register int tempX, register int tempY, register int tempHL)
 {
 	if (numcols <= 0)
 		return;
@@ -736,8 +727,7 @@ dumpchars (active_screen, numcols, tempX, tempY, tempHL)
  */
 
 void
-updateline (first)
-	int first;
+updateline (int first)
 {
 	register int temp_length;
 	BLOCK_INPUT_DECLARE ();
@@ -780,8 +770,9 @@ updateline (first)
 }
 
 void
-writechars (start, end)
-	register int *start, *end; /* 91.11.28 by K.Handa */
+writechars (
+    register int *start, register int *end /* 91.11.28 by K.Handa */
+)
 {
   BLOCK_INPUT_DECLARE ();
 
@@ -843,9 +834,10 @@ writechars (start, end)
 }
 
 static void
-XToutput_chars (start, len)
-     register unsigned int *start; /* 91.11.28 by K.Handa */
-     register int len;
+XToutput_chars (
+    register unsigned int *start, /* 91.11.28 by K.Handa */
+    register int len
+)
 {
 #ifdef XDEBUG
 	fprintf (stderr, "XToutput_chars (len %d)\n",len);
@@ -855,7 +847,7 @@ XToutput_chars (start, len)
 }
 
 void
-XTflash ()
+XTflash (void)
 {
 #ifdef HAVE_TIMEVAL
 #ifdef HAVE_SELECT
@@ -920,7 +912,7 @@ XTflash ()
 }	
 
 void
-XTfeep ()
+XTfeep (void)
 {
 	BLOCK_INPUT_DECLARE ();
 #ifdef XDEBUG
@@ -941,7 +933,7 @@ XTfeep ()
  */
 
 int
-CursorToggle ()
+CursorToggle (void)
 {
 	register struct matrix *active_screen;
 
@@ -1036,7 +1028,7 @@ CursorToggle ()
 
 /* 93.5.22 Y.Niibe */
 static int
-CursorToggleRev ()
+CursorToggleRev (void)
 {
 	register struct matrix *active_screen;
 
@@ -1136,7 +1128,7 @@ CursorToggleRev ()
 /* the midst of a screen update. */
 
 static void
-ClearCursor ()
+ClearCursor (void)
 {
 	BLOCK_INPUT_DECLARE ();
 
@@ -1166,7 +1158,7 @@ ClearCursor ()
 }
 
 void
-XTupdate_begin ()
+XTupdate_begin (void)
 {
 	BLOCK_INPUT_DECLARE ();
 	register int i;
@@ -1200,7 +1192,7 @@ XTupdate_begin ()
 }
 
 void
-XTupdate_end ()
+XTupdate_end (void)
 {	
 	BLOCK_INPUT_DECLARE ();
 
@@ -1254,8 +1246,7 @@ XTupdate_end ()
  */
 
 void
-dumprectangle (top, left, rows, cols)
-     register int top, left, rows, cols;
+dumprectangle (register int top, register int left, register int rows, register int cols)
 {
 	register struct matrix *active_screen;
 	register int ourindex;
@@ -1326,8 +1317,7 @@ dumprectangle (top, left, rows, cols)
  */
 
 void
-XTset_terminal_window (n)
-     register int n;
+XTset_terminal_window (register int n)
 {
 #ifdef XDEBUG
 	fprintf (stderr, "XTset_terminal_window\n");
@@ -1340,8 +1330,7 @@ XTset_terminal_window (n)
 }
 
 void
-XTins_del_lines (vpos, n)
-     int vpos, n;
+XTins_del_lines (int vpos, int n)
 {
 #ifdef XDEBUG
 	fprintf (stderr, "XTins_del_lines\n");
@@ -1359,9 +1348,7 @@ XTins_del_lines (vpos, n)
    or half of those characters if color.  */
 
 static void
-XTcalculate_costs (extra, costvec, ncostvec)
-     int extra;
-     int *costvec, *ncostvec;
+XTcalculate_costs (int extra, int *costvec, int *ncostvec)
 {
   int color_p = DisplayCells (XXdisplay, XXscreen) > 2;
 
@@ -1369,9 +1356,10 @@ XTcalculate_costs (extra, costvec, ncostvec)
 }
 
 static void
-XTinsert_chars (start, len)
-     register unsigned int *start; /* 91.11.28 by K.Handa */
-     register int len;
+XTinsert_chars (
+    register unsigned int *start, /* 91.11.28 by K.Handa */
+    register int len
+)
 {
 #ifdef XDEBUG
 	fprintf (stderr, "XTinsert_chars\n");
@@ -1381,8 +1369,7 @@ XTinsert_chars (start, len)
 }
 
 static void
-XTdelete_chars (n)
-     register int n;
+XTdelete_chars (register int n)
 {
 	char *msg = "Major foobars!  This shouldn't show up!";
 	
@@ -1394,8 +1381,7 @@ XTdelete_chars (n)
 }
 
 void
-stufflines (n)
-     register int n;
+stufflines (register int n)
 {
 	register int topregion, bottomregion;
 	register int length, newtop;
@@ -1435,8 +1421,7 @@ stufflines (n)
 }
 
 void
-scraplines (n)
-     register int n;
+scraplines (register int n)
 {
 	BLOCK_INPUT_DECLARE ();
 
@@ -1479,10 +1464,7 @@ scraplines (n)
  */
 
 int
-XTread_socket (sd, bufp, numchars)
-     register int sd;
-     register char *bufp;
-     register int numchars;
+XTread_socket (register int sd, register char *bufp, register int numchars)
 {
 #ifdef XDEBUG
 	fprintf(stderr,"XTread_socket\n");
@@ -1497,8 +1479,8 @@ XTread_socket (sd, bufp, numchars)
  */
 
 #ifdef sun
-char *stringFuncVal(keycode)
-	KeySym keycode;
+char *
+stringFuncVal (KeySym keycode)
 {
 	switch (keycode) {
 	case XK_L1:
@@ -1583,8 +1565,8 @@ char *stringFuncVal(keycode)
 }
 #else
 #ifndef AIX
-char *stringFuncVal(keycode)
-	KeySym keycode;
+char *
+stringFuncVal (KeySym keycode)
 {
 	switch (keycode) {
 	case XK_F1:
@@ -1656,9 +1638,7 @@ char *stringFuncVal(keycode)
 #endif /* not sun */
 
 int
-internal_socket_read(bufp, numchars)
-	register unsigned char *bufp;
-	register int numchars;
+internal_socket_read (register unsigned char *bufp, register int numchars)
 {
   /* Number of keyboard chars we have produced so far.  */
   int count = 0;
@@ -1942,14 +1922,14 @@ internal_socket_read(bufp, numchars)
  */
 
 void
-XExitGracefully ()
+XExitGracefully (void)
 {
 	XCleanUp();
 	exit (70);
 }
 
 int
-XIgnoreError ()
+XIgnoreError (void)
 {
 	return 0;
 }
@@ -1957,7 +1937,7 @@ XIgnoreError ()
 static int server_ping_timer;
 
 void
-xfixscreen ()
+xfixscreen (void)
 {
 	BLOCK_INPUT_DECLARE ();
 
@@ -1990,8 +1970,7 @@ xfixscreen ()
 static int  reversevideo;
 
 static int
-XT_GetDefaults (class)
-    char *class;
+XT_GetDefaults (char *class)
 {
   register struct _xdeftab *entry;
   char *iname, *cname;
@@ -2102,9 +2081,7 @@ XT_GetDefaults (class)
 }
 
 int
-x_error_handler (disp, event)
-     Display *disp;
-     XErrorEvent *event;
+x_error_handler (Display *disp, XErrorEvent *event)
 {
   char msg[200];
   XGetErrorText (disp, event->error_code, msg, 200);
@@ -2114,7 +2091,7 @@ x_error_handler (disp, event)
 }
 
 void
-x_io_error_handler ()
+x_io_error_handler (void)
 {
   int save_errno = errno;
   if (errno == EPIPE)
@@ -2127,8 +2104,7 @@ x_io_error_handler ()
 
 /* 92.10.13 by K.Handa */
 int
-x_get_lc_from_arg(arg)
-     char *arg;
+x_get_lc_from_arg (char *arg)
 {
   int lc;
   
@@ -2163,8 +2139,7 @@ x_get_lc_from_arg(arg)
    where a(bove) and b(elow) defaults to 1 and l defaults to 2.
    It also updates XXfonth, XXfontw, and XXbase. */
 void
-x_set_linespace(str)
-     char *str;
+x_set_linespace (char *str)
 {
   font_struct *f = &fonts[0];
   char *p;
@@ -2191,7 +2166,7 @@ x_set_linespace(str)
 /* end of patch */
 
 void
-x_term_init ()
+x_term_init (void)
 {
 	register char *vardisplay;
 	register int xxargc;
@@ -2686,7 +2661,7 @@ x_term_init ()
    This is called by init_keyboard via keyboard_init_hook.  */
 
 static void
-x_init_1 ()
+x_init_1 (void)
 {
 #ifdef F_SETOWN
 	extern int old_fcntl_owner;
@@ -2734,13 +2709,13 @@ x_init_1 ()
 }
 
 void
-XSetFlash ()
+XSetFlash (void)
 {
 	ring_bell_hook = XTflash;
 }
 
 void
-XSetFeep ()
+XSetFeep (void)
 {
 	ring_bell_hook = XTfeep;
 }
@@ -2750,8 +2725,7 @@ static char work[256];	/* 92.3.21 by T.Sakakibara, 92.6.27 by A.Tanaka  */
 
 /* 92.8.11 by K.Handa - Returns original string if we can't set size. */
 char *
-MCSetFontSize (str)
-     char *str;
+MCSetFontSize (char *str)
 {				/* 92.12.9 by K.Handa */
   char *p;
 
@@ -2775,8 +2749,7 @@ MCSetFontSize (str)
  *  are loaded by MCLoadFont().
  */
 static XFontStruct *
-XT_CalcForFont(fontname)
-    char  *fontname;
+XT_CalcForFont (char *fontname)
 {
     char *str = fontname;	/* 92.4.8 by M.Ishisone, 92.8.14 by K.Handa */
     unsigned long value;	/* 92.12.10 by K.Handa */
@@ -2831,8 +2804,7 @@ XT_CalcForFont(fontname)
 /* ------------------------------------------------------------
  */
 int
-XNewFont (newname)
-     register char *newname;
+XNewFont (register char *newname)
 {
 	XFontStruct *temp;
 	BLOCK_INPUT_DECLARE ();
@@ -2866,8 +2838,7 @@ XNewFont (newname)
 
 /* 92.12.10 by K.Handa */
 void
-x_set_fontname(lc)
-     unsigned int lc;
+x_set_fontname (unsigned int lc)
 {
   Lisp_Object val = XVECTOR (Vx_default_fonts)->contents[lc];
   if (XTYPE (val) == Lisp_String) {
@@ -2878,8 +2849,7 @@ x_set_fontname(lc)
 
 /* 93.6.25 by K.Handa */
 void
-x_set_encoding(lc)
-     unsigned int lc;
+x_set_encoding (unsigned int lc)
 {
   Lisp_Object val = XVECTOR (Vx_default_encoding)->contents[lc];
   if (XTYPE (val) == Lisp_Int)
@@ -2895,8 +2865,7 @@ x_set_encoding(lc)
 /* 92.11.11 by K.Handa - Return (XFontStruct *) */
 /* 93.6.25 by K.Handa - Info of ASCII font is always updated for no-font lc. */
 XFontStruct *
-MCLoadFont(lc)
-     register unsigned int lc;
+MCLoadFont (register unsigned int lc)
 {
   register unsigned int lc1;
   XFontStruct *fs;
@@ -2981,9 +2950,7 @@ MCLoadFont(lc)
 
 /* 92.9.11 by K.Handa */
 int
-MCNewFont (newname, lc, encoding)
-     register char *newname;
-     register unsigned char lc, encoding;
+MCNewFont (register char *newname, register unsigned char lc, register unsigned char encoding)
 {
   BLOCK_INPUT_DECLARE ();
 
@@ -3023,7 +2990,7 @@ MCNewFont (newname, lc, encoding)
 /* Flip foreground/background colors */
 
 void
-XFlipColor ()
+XFlipColor (void)
 {
 	Lisp_Object_Int tempcolor;
 	char *tempname;
@@ -3090,8 +3057,7 @@ static XClassHint  class_hint;
 
 
 static void
-XT_Set_Class_Hints(w)
-    Window  w;
+XT_Set_Class_Hints (Window w)
 {
 
     if (XXidentity == (char *) NULL)
@@ -3108,8 +3074,7 @@ XT_Set_Class_Hints(w)
 /* ------------------------------------------------------------
  */
 static void
-XT_Set_Command_Line(w)
-    Window  w;
+XT_Set_Command_Line (Window w)
 {
 
     XSetCommand(XXdisplay, w, xargv, xargc);
@@ -3121,8 +3086,7 @@ XT_Set_Command_Line(w)
 static char  hostname[100];
 
 static void
-XT_Set_Host(w)
-    Window  w;
+XT_Set_Host (Window w)
 {
 
     gethostname(hostname, 100);
@@ -3139,8 +3103,7 @@ XT_Set_Host(w)
  *  "optional-id: class-of-appl @ host"
  */
 static void
-XT_Set_Title(w)
-    Window  w;
+XT_Set_Title (Window w)
 {
     char  header_info[200];
 
@@ -3179,8 +3142,7 @@ XT_Set_Title(w)
  *
  */
 static void
-XT_Set_Icon_Title(w)
-    Window  w;
+XT_Set_Icon_Title (Window w)
 {
     char  title_info[100];
 
@@ -3212,12 +3174,15 @@ XT_Set_Icon_Title(w)
 /* Arg PR carries value returned by XGeometry at startup, or 0.  */
 
 static void
-XT_Set_Size_Hints(w, x, y, width, height, do_resize, pr)
-    int  x, y;			/* only used at Startup: do_resize == FALSE */
-    int  width, height;
-    Window  w;
-    Bool  do_resize;
-    int pr;
+XT_Set_Size_Hints (
+    Window w,
+    int x,
+    int y,			/* only used at Startup: do_resize == FALSE */
+    int width,
+    int height,
+    Bool do_resize,
+    int pr
+)
 {
 #ifndef X11R4
     XSizeHints  sizehints;
@@ -3347,8 +3312,7 @@ XT_Set_Size_Hints(w, x, y, width, height, do_resize, pr)
  */
 /*ARGSUSED*/
 static void
-XT_Set_Zoom_Sizes(w)
-    Window  w;
+XT_Set_Zoom_Sizes (Window w)
 {
 }
 
@@ -3357,8 +3321,7 @@ XT_Set_Zoom_Sizes(w)
  *  Set our state and icon parameters.
  */
 static void
-XT_Set_WM_Hints(w)
-    Window  w;
+XT_Set_WM_Hints (Window w)
 {
     XWMHints  wmhints;
 
@@ -3395,8 +3358,7 @@ XT_Set_WM_Hints(w)
  *  Change just the size of the window.
  */
 void
-XSetWindowSize(rows, cols)
-    int rows, cols;
+XSetWindowSize (int rows, int cols)
 {
     XT_Set_Size_Hints(XXwindow, 0, 0, cols, rows, NO_MANAGER, 0);
 }
@@ -3432,10 +3394,7 @@ typedef struct {		/* 92.11.10 by K.Handa */
    : NULL)
 
 unsigned char *
-MCSetChar(p, fsp, charp)
-     unsigned char *p;
-     XFontStruct **fsp;
-     XChar2b *charp;
+MCSetChar (unsigned char *p, XFontStruct **fsp, XChar2b *charp)
 {
   unsigned char lc, c1, c2, bytes;
 
@@ -3451,9 +3410,7 @@ MCSetChar(p, fsp, charp)
 }
 
 void
-MCSetXChar2b(lc, c1, c2, charp)
-     unsigned char lc, c1, c2;
-     XChar2b *charp;
+MCSetXChar2b (unsigned char lc, unsigned char c1, unsigned char c2, XChar2b *charp)
 {
   if (XVECTOR (Vx_ccl_programs)->contents[lc & 0x7F] != Qnil) {
     coding_type mccode;
@@ -3483,12 +3440,7 @@ MCSetXChar2b(lc, c1, c2, charp)
 /* end of patch */
 
 void
-MCDrawText(display, window, gc, x, y, lp, count)
-     Display *display;
-     Drawable window;
-     GC gc;
-     unsigned int *lp;
-     int x, y, count;
+MCDrawText (Display *display, Drawable window, GC gc, int x, int y, unsigned int *lp, int count)
 {
   /* 92.11.10 by K.Handa -- Big change for composite character. */
 
@@ -3651,7 +3603,7 @@ MCDrawText(display, window, gc, x, y, lp, count)
 /* ------------------------------------------------------------
  */
 static void
-XInitWindow ()
+XInitWindow (void)
 {
   extern int xargc;
   extern char **xargv;

@@ -111,7 +111,7 @@ char *re_syntax_table;
 static char re_syntax_table[256];
 
 static void
-init_syntax_once ()
+init_syntax_once (void)
 {
    register int c;
    static int done = 0;
@@ -169,7 +169,7 @@ static int obscure_syntax = 0;
    RE_NO_BK_PARENS and RE_NO_BK_VBAR.  */
 
 int
-re_set_syntax (syntax)
+re_set_syntax (int syntax)
 {
   int ret;
 
@@ -234,9 +234,8 @@ static void insert_jump (char, char *, char *, char *);
 /* 92.11.12 Modified by enami */
 /* Return Non zero value when we can fetch multi byte char at p. */
 /* Return value is pointer to next char, if non zero. */
-static unsigned char *valid_mc_p(p, pend)
-     unsigned char *p;
-     unsigned char *pend;
+static unsigned char *
+valid_mc_p (unsigned char *p, unsigned char *pend)
 {
   if (LC_P(*p))
     {
@@ -258,9 +257,8 @@ static unsigned char *valid_mc_p(p, pend)
 }
 
 /* Put one range entry at B.  Returns new pointer to end of table. */ 
-static unsigned char *put_range_entry (b, c1, c2)
-     unsigned char *b;
-     unsigned int c1, c2;
+static unsigned char *
+put_range_entry (unsigned char *b, unsigned int c1, unsigned int c2)
 {
 /* 93.6.5 by K.Handa */
 /*  for (c1 = REVERSE_BYTES(c1); c1; c1 >>= 8)
@@ -276,13 +274,7 @@ static unsigned char *put_range_entry (b, c1, c2)
 #define MASK_BITMAP(b,c) ((b)[(c) / BYTEWIDTH] |= 1 << ((c) % BYTEWIDTH))
 
 void
-init_compile_charset_information (ip, b, p, pend, translate, mc_flag, skip)
-     struct compile_charset_information *ip;
-     unsigned char *b;
-     unsigned char *p, *pend;
-     unsigned char *translate;
-     unsigned int mc_flag;
-     unsigned int skip;
+init_compile_charset_information (struct compile_charset_information *ip, unsigned char *b, unsigned char *p, unsigned char *pend, unsigned char *translate, unsigned int mc_flag, unsigned int skip)
 {
   ip->p = p;
   ip->pend = pend;
@@ -298,9 +290,8 @@ init_compile_charset_information (ip, b, p, pend, translate, mc_flag, skip)
   bzero (ip->bitmap, ip->bitmap_size);
 }
 
-static int mark_charset_entry (ip, c1, c2)
-     struct compile_charset_information *ip;
-     int c1, c2;
+static int
+mark_charset_entry (struct compile_charset_information *ip, int c1, int c2)
 {
   if (MC_CHAR_P(c1) || MC_CHAR_P(c2))
     {
@@ -320,8 +311,8 @@ static int mark_charset_entry (ip, c1, c2)
   return !0;
 }
 
-static int compile_charset_fetch_char (ip)
-     struct compile_charset_information *ip;
+static int
+compile_charset_fetch_char (struct compile_charset_information *ip)
 {
   int c;
 
@@ -340,11 +331,8 @@ static int compile_charset_fetch_char (ip)
   return c;
 }
 
-int lookup_charset (b, c, have_offset, nextp)
-     unsigned char *b;
-     int c;
-     int have_offset;
-     unsigned char **nextp;
+int
+lookup_charset (unsigned char *b, int c, int have_offset, unsigned char **nextp)
 {
   int found = 0;
   int offset;
@@ -409,8 +397,8 @@ int lookup_charset (b, c, have_offset, nextp)
   return found;
 }
 
-int compile_charset (ip)
-     struct compile_charset_information *ip;
+int
+compile_charset (struct compile_charset_information *ip)
 {
   int c1, c2;
 
@@ -459,10 +447,7 @@ int compile_charset (ip)
 }
 
 char *
-re_compile_pattern (pattern, size, bufp)
-     char *pattern;
-     int size;
-     struct re_pattern_buffer *bufp;
+re_compile_pattern (char *pattern, int size, struct re_pattern_buffer *bufp)
 {
   register char *b = bufp->buffer;
   register char *p = pattern;
@@ -1044,9 +1029,7 @@ re_compile_pattern (pattern, size, bufp)
   `opcode' is the opcode to store. */
 
 static void
-store_jump (from, opcode, to)
-     char *from, *to;
-     char opcode;
+store_jump (char *from, char opcode, char *to)
 {
   from[0] = opcode;
   from[1] = (to - (from + 3)) & 0377;
@@ -1061,9 +1044,7 @@ store_jump (from, opcode, to)
    If you call this function, you must zero out pending_exact.  */
 
 static void
-insert_jump (op, from, to, current_end)
-     char op;
-     char *from, *to, *current_end;
+insert_jump (char op, char *from, char *to, char *current_end)
 {
   register char *pto = current_end + 3;
   register char *pfrom = current_end;
@@ -1082,8 +1063,7 @@ insert_jump (op, from, to, current_end)
  The other components of bufp describe the pattern to be used.  */
 
 void
-re_compile_fastmap (bufp)
-     struct re_pattern_buffer *bufp;
+re_compile_fastmap (struct re_pattern_buffer *bufp)
 {
   unsigned char *pattern = (unsigned char *) bufp->buffer;
   int size = bufp->used;
@@ -1357,11 +1337,7 @@ re_compile_fastmap (bufp)
 /* Like re_search_2, below, but only one string is specified. */
 
 int
-re_search (pbufp, string, size, startpos, range, regs)
-     struct re_pattern_buffer *pbufp;
-     char *string;
-     int size, startpos, range;
-     struct re_registers *regs;
+re_search (struct re_pattern_buffer *pbufp, char *string, int size, int startpos, int range, struct re_registers *regs)
 {
   return re_search_2 (pbufp, 0, 0, string, size, startpos, range, regs, size);
 }
@@ -1379,14 +1355,17 @@ The value returned is the position at which the match was found,
  or -2 if error (such as failure stack overflow).  */
 
 int
-re_search_2 (pbufp, string1, size1, string2, size2, startpos, range, regs, mstop)
-     struct re_pattern_buffer *pbufp;
-     unsigned char *string1, *string2; /* 92.4.1 by K.Handa */
-     int size1, size2;
-     int startpos;
-     register int range;
-     struct re_registers *regs;
-     int mstop;
+re_search_2 (
+    struct re_pattern_buffer *pbufp,
+    unsigned char *string1, /* 92.4.1 by K.Handa */
+    int size1,
+    unsigned char *string2, /* 92.4.1 by K.Handa */
+    int size2,
+    int startpos,
+    register int range,
+    struct re_registers *regs,
+    int mstop
+)
 {
   register char *fastmap = pbufp->fastmap;
   register unsigned char *translate = (unsigned char *) pbufp->translate;
@@ -1536,11 +1515,7 @@ re_search_2 (pbufp, string1, size1, string2, size2, startpos, range, regs, mstop
 
 #ifndef emacs   /* emacs never uses this */
 int
-re_match (pbufp, string, size, pos, regs)
-     struct re_pattern_buffer *pbufp;
-     char *string;
-     int size, pos;
-     struct re_registers *regs;
+re_match (struct re_pattern_buffer *pbufp, char *string, int size, int pos, struct re_registers *regs)
 {
 				/* 91.12.12 by K.Handa */
   return re_match_2 (pbufp, 0, 0, string, size, pos, regs, size, 1);
@@ -1570,14 +1545,7 @@ static int bcmp_translate (unsigned char *, unsigned char *, register int, unsig
 
 /* 91.12.14 by K.Handa --  Big change for bi-direction match! */
 int
-re_match_2 (pbufp, string1, size1, string2, size2, pos, regs, mstop, backward)
-     struct re_pattern_buffer *pbufp;
-     unsigned char *string1, *string2;
-     int size1, size2;
-     int pos;
-     struct re_registers *regs;
-     int mstop;
-     register int backward;
+re_match_2 (struct re_pattern_buffer *pbufp, unsigned char *string1, int size1, unsigned char *string2, int size2, int pos, struct re_registers *regs, int mstop, register int backward)
 {
   register unsigned char *p = (unsigned char *) pbufp->buffer;
   register unsigned char *pend = p + pbufp->used;
@@ -2436,10 +2404,7 @@ re_match_2 (pbufp, string1, size1, string2, size2, pos, regs, mstop, backward)
 }
 
 static int
-bcmp_translate (s1, s2, len, translate)
-     unsigned char *s1, *s2;
-     register int len;
-     unsigned char *translate;
+bcmp_translate (unsigned char *s1, unsigned char *s2, register int len, unsigned char *translate)
 {
   register unsigned char *p1 = s1, *p2 = s2;
   while (len)
@@ -2457,8 +2422,7 @@ bcmp_translate (s1, s2, len, translate)
 static struct re_pattern_buffer re_comp_buf;
 
 char *
-re_comp (s)
-     char *s;
+re_comp (char *s)
 {
   if (!s)
     {
@@ -2479,8 +2443,7 @@ re_comp (s)
 }
 
 int
-re_exec (s)
-     char *s;
+re_exec (char *s)
 {
   int len = strlen (s);
   return 0 <= re_search (&re_comp_buf, s, len, 0, len, 0);
@@ -2529,9 +2492,8 @@ static char upcase[0400] =
     0370, 0371, 0372, 0373, 0374, 0375, 0376, 0377
   };
 
-main (argc, argv)
-     int argc;
-     char **argv;
+int
+main (int argc, char **argv)
 {
   char pat[80];
   struct re_pattern_buffer buf;
@@ -2578,8 +2540,8 @@ main (argc, argv)
 }
 
 #ifdef NOTDEF
-print_buf (bufp)
-     struct re_pattern_buffer *bufp;
+void
+print_buf (struct re_pattern_buffer *bufp)
 {
   int i;
 
@@ -2603,8 +2565,8 @@ print_buf (bufp)
 }
 #endif
 
-printchar (c)
-     char c;
+void
+printchar (char c)
 {
   if (c < 041 || c >= 0177)
     {
@@ -2617,8 +2579,8 @@ printchar (c)
     putchar (c);
 }
 
-error (string)
-     char *string;
+void
+error (char *string)
 {
   puts (string);
   exit (1);

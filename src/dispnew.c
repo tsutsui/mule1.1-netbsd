@@ -299,8 +299,7 @@ remake_screen_structures (void)
 }
 
 struct matrix *
-make_screen_structure (empty)
-     int empty;
+make_screen_structure (int empty)
 {
   int i;
   struct matrix *new = (struct matrix *) xmalloc (sizeof (struct matrix));
@@ -358,8 +357,7 @@ make_screen_structure (empty)
 /* end of patch */
 
 void
-free_screen_structure (matrix)
-     struct matrix *matrix;
+free_screen_structure (struct matrix *matrix)
 {
   int i;			/* 92.12.6 by K.Handa */
 
@@ -376,9 +374,7 @@ free_screen_structure (matrix)
 /* Return the hash code of contents of line VPOS of screen-matrix M.  */
 
 int
-line_hash_code (m, vpos)
-     struct matrix *m;
-     int vpos;
+line_hash_code (struct matrix *m, int vpos)
 {
   register unsigned int *body;	/* 91.10.23 by K.Handa */
   register int h = 0;
@@ -421,9 +417,7 @@ line_hash_code (m, vpos)
    unless the terminal requires those to be explicitly output.  */
 
 int
-line_draw_cost (m, vpos)
-     struct matrix *m;
-     int vpos;
+line_draw_cost (struct matrix *m, int vpos)
 {
   register unsigned int *body;	/* 91.10.23 by K.Handa */
   register int i;
@@ -446,15 +440,14 @@ line_draw_cost (m, vpos)
 /* cancel_line eliminates any request to display a line at position `vpos' */
 
 void
-cancel_line (vpos)
-     int vpos;
+cancel_line (int vpos)
 {
   new_screen->enable[vpos] = 0;
   FREE_CMP_CHAR (new_screen, vpos); /* 92.12.8 by K.Handa */
 }
 
 void
-clear_screen_records ()
+clear_screen_records (void)
 {
   int i;
 
@@ -468,9 +461,7 @@ clear_screen_records ()
    Return the text string where that line is stored.  */
 
 unsigned int *			/* 91.10.23 by K.Handa */
-get_display_line (vpos, hpos)
-     int vpos;
-     register int hpos;
+get_display_line (int vpos, register int hpos)
 {
   if (new_screen->enable[vpos] && new_screen->used[vpos] > hpos)
     abort ();
@@ -499,10 +490,7 @@ get_display_line (vpos, hpos)
    If the area is not allocated, allocate it.
    The return value is an index to the stored composite char. */
 unsigned int
-store_composite_char(m, vpos, hpos, cmpchars, cmpsize)
-     struct matrix *m;
-     int vpos, hpos, cmpsize;
-     unsigned char *cmpchars;
+store_composite_char (struct matrix *m, int vpos, int hpos, unsigned char *cmpchars, int cmpsize)
 {
   register unsigned char *p;
 
@@ -522,8 +510,7 @@ store_composite_char(m, vpos, hpos, cmpchars, cmpsize)
  Returns nonzero if done, zero if terminal cannot scroll them. */
 
 int
-scroll_screen_lines (from, end, amount)
-     Lisp_Object_Int from, end, amount;
+scroll_screen_lines (Lisp_Object_Int from, Lisp_Object_Int end, Lisp_Object_Int amount)
 {
   register int i;
 
@@ -613,10 +600,7 @@ scroll_screen_lines (from, end, amount)
    DISTANCE may be negative.  */
 
 void
-rotate_vector (v, size, distance)
-     void *v;
-     int size;
-     int distance;
+rotate_vector (void *v, int size, int distance)
 {
   char *vector = v;
   char *temp = (char *) alloca (size);
@@ -632,9 +616,7 @@ rotate_vector (v, size, distance)
 /* Like bcopy except never gets confused by overlap.  */
 
 void
-safe_bcopy (src, dst, size)
-     void *src, *dst;
-     int size;
+safe_bcopy (void *src, void *dst, int size)
 {
   char *from = src;
   char *to = dst;
@@ -667,8 +649,7 @@ safe_bcopy (src, dst, size)
  so that update_screen will not change those columns.  */
 
 void
-preserve_other_columns (w)
-     struct window *w;
+preserve_other_columns (struct window *w)
 {
   register int vpos;
   int start = XFASTINT (w->left);
@@ -710,8 +691,7 @@ preserve_other_columns (w)
  get_display_line will not complain. */
 
 void
-cancel_my_columns (w)
-     struct window *w;
+cancel_my_columns (struct window *w)
 {
   register int vpos;
   register int start = XFASTINT (w->left);
@@ -732,8 +712,9 @@ cancel_my_columns (w)
    see command_loop_1 where these are called.  */
 
 int
-direct_output_for_insert (c)
-     unsigned int c;		/* 92.1.28 by K.Handa */
+direct_output_for_insert (
+    unsigned int c		/* 92.1.28 by K.Handa */
+)
 {
 #ifndef COMPILER_REGISTER_BUG
   register
@@ -795,8 +776,7 @@ direct_output_for_insert (c)
 }
 
 int
-direct_output_forward_char (n)
-     int n;
+direct_output_forward_char (int n)
 {
   register struct window *w = XWINDOW (selected_window);
 
@@ -825,9 +805,7 @@ direct_output_forward_char (n)
    FORCE nonzero means do not stop for pending input.  */
 
 int
-update_screen (force, inhibit_hairy_id)
-     int force;
-     int inhibit_hairy_id;
+update_screen (int force, int inhibit_hairy_id)
 {
   register struct display_line **p;
   register struct display_line *l, *lnew;
@@ -949,7 +927,7 @@ update_screen (force, inhibit_hairy_id)
    at an improper time.  */
 
 void
-quit_error_check ()
+quit_error_check (void)
 {
   if (new_screen == 0)
     return;
@@ -962,7 +940,7 @@ quit_error_check ()
 /* Decide what insert/delete line to do, and do it */
 
 int
-scrolling ()
+scrolling (void)
 {
   int unchanged_at_top, unchanged_at_bottom;
   int window_size;
@@ -1036,8 +1014,7 @@ scrolling ()
 }
 
 void
-update_line (vpos)
-     int vpos;
+update_line (int vpos)
 {
 				/* 91.10.21 by K.Handa */
   register unsigned int *obody, *nbody, *op1, *op2, *np1;
@@ -1375,8 +1352,9 @@ update_line (vpos)
 }
 
 int
-count_blanks (str)
-     int *str;			/* 91.10.21 by K.Handa */
+count_blanks (
+    int *str			/* 91.10.21 by K.Handa */
+)
 {
   register int *p = str;	/* 91.10.21 by K.Handa */
   while (*str++ == ' ');
@@ -1384,8 +1362,9 @@ count_blanks (str)
 }
 
 int
-count_match (str1, str2)
-     int *str1, *str2;          /* 91.10.21 by K.Handa */
+count_match (
+    int *str1, int *str2          /* 91.10.21 by K.Handa */
+)
 {
   register int *p1 = str1;	/* 91.10.21 by K.Handa */
   register int *p2 = str2;	/* 91.10.21 by K.Handa */
@@ -1395,8 +1374,7 @@ count_match (str1, str2)
 
 /* 92.12.7 by K.Handa */
 int
-compare_char (c1, c2)
-     unsigned int c1, c2;
+compare_char (unsigned int c1, unsigned int c2)
 {
   register unsigned char *p1, *p2;
 
@@ -1421,8 +1399,7 @@ DEFUN ("open-termscript", Fopen_termscript, Sopen_termscript,
   1, 1, "FOpen termscript file: ",
   "Start writing all terminal output to FILE as well as the terminal.\n\
 FILE = nil means just close any termscript file currently open.")
-  (file)
-     Lisp_Object file;
+  (Lisp_Object file)
 {
   if (termscript != 0) fclose (termscript);
   termscript = 0;
@@ -1441,8 +1418,7 @@ DEFUN ("set-screen-height", Fset_screen_height, Sset_screen_height, 1, 2, 0,
   "Tell redisplay that the screen has LINES lines.\n\
 Optional second arg non-nil means that redisplay should use LINES lines\n\
 but that the idea of the actual height of the screen should not be changed.")
-  (n, pretend)
-     Lisp_Object n, pretend;
+  (Lisp_Object n, Lisp_Object pretend)
 {
   CHECK_NUMBER (n, 0);
   change_screen_size (XINT (n), 0, !NILP (pretend), 0, 0);
@@ -1453,8 +1429,7 @@ DEFUN ("set-screen-width", Fset_screen_width, Sset_screen_width, 1, 2, 0,
   "Tell redisplay that the screen has COLS columns.\n\
 Optional second arg non-nil means that redisplay should use COLS columns\n\
 but that the idea of the actual width of the screen should not be changed.")
-  (n, pretend)
-     Lisp_Object n, pretend;
+  (Lisp_Object n, Lisp_Object pretend)
 {
   CHECK_NUMBER (n, 0);
   change_screen_size (0, XINT (n), !NILP (pretend), 0, 0);
@@ -1463,21 +1438,21 @@ but that the idea of the actual width of the screen should not be changed.")
 
 DEFUN ("screen-height", Fscreen_height, Sscreen_height, 0, 0, 0,
   "Return number of lines on screen available for display.")
-  ()
+  (void)
 {
   return make_number (screen_height);
 }
 
 DEFUN ("screen-width", Fscreen_width, Sscreen_width, 0, 0, 0,
   "Return number of columns on screen available for display.")
-  ()
+  (void)
 {
   return make_number (screen_width);
 }
 
 #ifdef SIGWINCH
 void
-window_change_signal ()
+window_change_signal (void)
 {
   int width, height;
   int old_errno = errno;
@@ -1498,7 +1473,7 @@ window_change_signal ()
 /* Do any change in screen size that was requested by a signal.  */
 
 void
-do_pending_window_change ()
+do_pending_window_change (void)
 {
   /* If change_screen_size should have run before, run it now.  */
   while (delayed_size_change)
@@ -1525,8 +1500,7 @@ do_pending_window_change ()
    This is effective only is DELAYED is not set.  */
 
 void
-change_screen_size (newlength, newwidth, pretend, delayed, force)
-     register int newlength, newwidth, pretend, delayed, force;
+change_screen_size (register int newlength, register int newwidth, register int pretend, register int delayed, register int force)
 {
   /* Don't queue a size change if we won't really do anything.  */
   if ((newlength == 0 || newlength == screen_height)
@@ -1551,8 +1525,7 @@ change_screen_size (newlength, newwidth, pretend, delayed, force)
 }
 
 void
-change_screen_size_1 (newlength, newwidth, pretend, force)
-     register int newlength, newwidth, pretend, force;
+change_screen_size_1 (register int newlength, register int newwidth, register int pretend, register int force)
 {
   if ((newlength == 0 || newlength == screen_height)
       && (newwidth == 0 || newwidth == screen_width))
@@ -1586,7 +1559,7 @@ change_screen_size_1 (newlength, newwidth, pretend, force)
 
 DEFUN ("baud-rate", Fbaud_rate, Sbaud_rate, 0, 0, 0,
   "Return the output baud rate of the terminal.")
-  ()
+  (void)
 {
   Lisp_Object temp;
   XSET (temp, Lisp_Int, baud_rate);
@@ -1597,8 +1570,7 @@ DEFUN ("send-string-to-terminal", Fsend_string_to_terminal,
   Ssend_string_to_terminal, 1, 1, 0,
   "Send STRING to the terminal without alteration.\n\
 Control characters in STRING will have terminal-dependent effects.")
-  (str)
-     Lisp_Object str;
+  (Lisp_Object str)
 {
   CHECK_STRING (str, 0);
   fwrite (XSTRING (str)->data, 1, XSTRING (str)->size, stdout);
@@ -1615,8 +1587,7 @@ DEFUN ("ding", Fding, Sding, 0, 1, 0,
   "Beep, or flash the screen.\n\
 Terminates any keyboard macro currently executing unless an argument\n\
 is given.")
-  (arg)
-  Lisp_Object arg;
+  (Lisp_Object arg)
 {
   if (!NILP (arg))
     {
@@ -1632,7 +1603,7 @@ is given.")
 }
 
 void
-bell ()
+bell (void)
 {
   if (noninteractive)
     putchar (07);
@@ -1645,8 +1616,7 @@ bell ()
 
 DEFUN ("sleep-for", Fsleep_for, Ssleep_for, 1, 1, 0,
   "Pause, without updating display, for ARG seconds.")
-  (n)
-     Lisp_Object n;
+  (Lisp_Object n)
 {
   register int t;
 #ifndef subprocesses
@@ -1710,8 +1680,7 @@ DEFUN ("sleep-for", Fsleep_for, Ssleep_for, 1, 1, 0,
    Return 1 if the difference is negative, otherwise 0.  */
 
 int
-timeval_subtract (result, x, y)
-     struct timeval *result, x, y;
+timeval_subtract (struct timeval *result, struct timeval x, struct timeval y)
 {
   /* Perform the carry for the later subtraction by updating y.
      This is safer because on some systems
@@ -1744,8 +1713,7 @@ Optional second arg non-nil means don't redisplay.\n\
 Redisplay is preempted as always if input arrives, and does not happen\n\
 if input is available before it starts.\n\
 Value is t if waited the full time with no input arriving.")
-  (n, nodisp)
-     Lisp_Object n, nodisp;
+  (Lisp_Object n, Lisp_Object nodisp)
 {
 #ifndef subprocesses
 #ifdef HAVE_TIMEVAL
@@ -1808,7 +1776,7 @@ char *terminal_type;
   in the terminal package */
 
 void
-init_display ()
+init_display (void)
 {
 /* 92.3.31 by K.Handa, 92.10.17, 93.2.17 by M.Higashida */
 #ifdef HAVE_X_WINDOWS
@@ -1928,7 +1896,7 @@ For types not defined in VMS, use  define emacs_term \"TYPE\".\n\
 }
 
 void
-syms_of_display ()
+syms_of_display (void)
 {
   defsubr (&Sopen_termscript);
   defsubr (&Sding);

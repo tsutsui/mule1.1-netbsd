@@ -222,8 +222,7 @@ DEFUN ("canna-key-proc", Fcanna_key_proc, Scanna_key_proc,
 well-formed string and intermediate result to show the translation\n\
 information to a user.  Converted strings are stored in specific\n\
 variables.")
-	(ch)
-Lisp_Object ch;
+	(Lisp_Object ch)
 {
   jrKanjiStatus ks;
   int len;
@@ -234,10 +233,7 @@ Lisp_Object ch;
 }
 
 static Lisp_Object
-storeResults(buf, len, ks)
-unsigned char *buf;
-int len;
-jrKanjiStatus *ks;
+storeResults(unsigned char *buf, int len, jrKanjiStatus *ks)
 {
   Lisp_Object val = Qnil;
 
@@ -323,8 +319,7 @@ DEFUN ("canna-set-bunsetsu-kugiri", Fcanna_set_bunsetsu, Scanna_set_bunsetsu,
 "This function sets the clause separator.\n\
 If non-nil value is specified, the white space separator will be used.\n\
 No separator will be used otherwise.")
-(num)
-Lisp_Object num;
+(Lisp_Object num)
 {
   int kugiri; /* 文節区切りをするか？ */
 
@@ -353,8 +348,7 @@ The second arg specifies server.\n\
 The third arg specifies a file which will be used as a customization\n\
 description.\n\
 If nil is specified for each arg, the default value will be used.")
-(num, server, rcfile)
-Lisp_Object num, server, rcfile;
+(Lisp_Object num, Lisp_Object server, Lisp_Object rcfile)
 {
   Lisp_Object val;
   int res;
@@ -447,7 +441,7 @@ Lisp_Object num, server, rcfile;
 DEFUN ("canna-finalize", Fcanna_finalize, Scanna_finalize, 0, 0, 0,
 "finalize ``canna'', which is a kana-to-kanji converter for GNU Emacs.\n\
 This cause to write miscellaneous informations to kana-to-kanji dictionary.")
-()
+(void)
 {
   Lisp_Object val;
   unsigned char **p;
@@ -468,8 +462,7 @@ This cause to write miscellaneous informations to kana-to-kanji dictionary.")
 DEFUN ("canna-touroku-string", Fcanna_touroku_string, 
        Scanna_touroku_string, 1, 1, 0,
 "Register Kanji words into kana-to-kanji conversion dictionary.")
-	(str)
-Lisp_Object str;
+	(Lisp_Object str)
 {
   jrKanjiStatusWithValue ksv;
   jrKanjiStatus ks;
@@ -500,8 +493,7 @@ DEFUN ("canna-set-width", Fcanna_set_width,
        Scanna_set_width, 1, 1, 0,
 "Set status-line width information, which is used to display \n\
 kanji candidates.")
-	(num)
-Lisp_Object num;
+	(Lisp_Object num)
 {
   CHECK_NUMBER(num, 0);
 
@@ -512,8 +504,7 @@ Lisp_Object num;
 DEFUN ("canna-change-mode", Fcanna_change_mode,
        Scanna_change_mode, 1, 1, 0,
 "Change Japanese pre-edit mode.")
-	(num)
-Lisp_Object num;
+	(Lisp_Object num)
 {
   jrKanjiStatusWithValue ksv;
   jrKanjiStatus ks;
@@ -531,7 +522,7 @@ Lisp_Object num;
 }
 
 Lisp_Object
-CANNA_mode_keys()
+CANNA_mode_keys (void)
 {
 #define CANNAWORKBUFSIZE 32
   char xxx[CANNAWORKBUFSIZE];
@@ -550,8 +541,7 @@ CANNA_mode_keys()
 DEFUN ("canna-store-yomi", Fcanna_store_yomi, Scanna_store_yomi, 
        1, 2, 0,
 "Store yomi characters as a YOMI of kana-to-kanji conversion.")
-	(yomi, roma)
-Lisp_Object yomi, roma;
+	(Lisp_Object yomi, Lisp_Object roma)
 {
   jrKanjiStatusWithValue ksv;
   jrKanjiStatus ks;
@@ -596,8 +586,7 @@ Lisp_Object yomi, roma;
 DEFUN ("canna-do-function", Fcanna_do_function, Scanna_do_function, 
        1, 2, 0,
 "Do specified function at current mode.")
-	(num, ch)
-Lisp_Object num, ch;
+	(Lisp_Object num, Lisp_Object ch)
 {
   jrKanjiStatusWithValue ksv;
   jrKanjiStatus ks;
@@ -625,8 +614,7 @@ Lisp_Object num, ch;
 DEFUN ("canna-parse", Fcanna_parse, Scanna_parse, 
        1, 1, 0,
 "Parse customize string.")
-	(str)
-Lisp_Object str;
+	(Lisp_Object str)
 {
   jrKanjiStatusWithValue ksv;
   jrKanjiStatus ks;
@@ -655,7 +643,7 @@ Lisp_Object str;
 DEFUN ("canna-query-mode", Fcanna_query_mode, Scanna_query_mode, 
        0, 0, 0,
 "Get current mode string.")
-	()
+	(void)
 {
   unsigned char buf[256];
 
@@ -674,7 +662,7 @@ static unsigned char yomibuf[RKBUFSIZE];
 static short kugiri[RKBUFSIZE / 2];
 
 static int
-confirmContext()
+confirmContext (void)
 {
   if (IRCP_context < 0) {
     int context;
@@ -688,8 +676,7 @@ confirmContext()
 }
 
 static int
-byteLen(bun, len)
-int bun, len;
+byteLen (int bun, int len)
 {
   int i = 0, offset = 0, ch;
 
@@ -709,8 +696,7 @@ int bun, len;
 DEFUN ("canna-henkan-begin", Fcanna_henkan_begin, Scanna_henkan_begin,
        1, 1, 0,
 "かな漢字変換した結果を返還する。文節切りがしてある。")
-	(yomi)
-	Lisp_Object yomi;
+	(Lisp_Object yomi)
 {
   int nbun;
   Lisp_Object res;
@@ -733,8 +719,8 @@ DEFUN ("canna-henkan-begin", Fcanna_henkan_begin, Scanna_henkan_begin,
   return kanjiYomiList(IRCP_context, nbun);
 }
 
-static Lisp_Object kanjiYomiList(context, nbun)
-int context, nbun;
+static Lisp_Object
+kanjiYomiList (int context, int nbun)
 {
   Lisp_Object val, res = Qnil;
   unsigned char RkBuf[RKBUFSIZE];
@@ -762,8 +748,7 @@ int context, nbun;
 DEFUN ("canna-henkan-next", Fcanna_henkan_next, Scanna_henkan_next,
        1, 1, 0,
 "候補一覧を求める。")
-	(bunsetsu)
-	Lisp_Object bunsetsu;
+	(Lisp_Object bunsetsu)
 {
   int i, nbun, slen, len;
   unsigned char *p, RkBuf[RKBUFSIZE];
@@ -792,8 +777,7 @@ DEFUN ("canna-henkan-next", Fcanna_henkan_next, Scanna_henkan_next,
 DEFUN ("canna-bunsetu-henkou", Fcanna_bunsetu_henkou, Scanna_bunsetu_henkou,
        2, 2, 0,
 "文節の長さを指定する。")
-	(bunsetsu, bunlen)
-	Lisp_Object bunsetsu, bunlen;
+	(Lisp_Object bunsetsu, Lisp_Object bunlen)
 {
   int nbun, len;
 
@@ -812,8 +796,7 @@ DEFUN ("canna-bunsetu-henkou", Fcanna_bunsetu_henkou, Scanna_bunsetu_henkou,
 DEFUN ("canna-henkan-kakutei", Fcanna_henkan_kakutei, Scanna_henkan_kakutei,
        2, 2, 0,
 "候補選択。")
-	(bun, kouho)
-register Lisp_Object bun, kouho;
+	(register Lisp_Object bun, register Lisp_Object kouho)
 {
   if (confirmContext() == 0) {
     return Qnil;
@@ -826,7 +809,7 @@ register Lisp_Object bun, kouho;
 DEFUN ("canna-henkan-end", Fcanna_henkan_end, Scanna_henkan_end,
        0, 0, 0,
 "変換終了。")
-	()
+	(void)
 {
   if (confirmContext() == 0) {
     return Qnil;
@@ -838,7 +821,7 @@ DEFUN ("canna-henkan-end", Fcanna_henkan_end, Scanna_henkan_end,
 DEFUN ("canna-henkan-quit", Fcanna_henkan_quit, Scanna_henkan_quit,
        0, 0, 0,
 "変換終了。")
-	()
+	(void)
 {
   if (confirmContext() == 0) {
     return Qnil;
@@ -997,7 +980,7 @@ static int Vcanna_key_Cntrl_Down = IROHA_KEY_Cntrl_Down;
 static Lisp_Object VCANNA;				/* hir@nec, 1992.5.21 */
 
 void
-syms_of_canna ()
+syms_of_canna (void)
 {
   DEFVAR_LISP ("CANNA", &VCANNA, "");		/* hir@nec, 1992.5.21 */
   VCANNA = Qt;					/* hir@nec, 1992.5.21 */
@@ -1218,10 +1201,7 @@ syms_of_canna ()
 /* EUC multibyte string to MULE internal string */
 
 static void
-c2mu(cp, l, mp)
-char	*cp;
-int	l;
-char	*mp;
+c2mu (char *cp, int l, char *mp)
 {
   char	ch, *ep = cp+l;
   
@@ -1247,10 +1227,7 @@ char	*mp;
 /* MULE internal string to EUC multibyte string */
 
 static void
-m2c(mp, l, cp)
-unsigned char	*mp;
-int	l;
-unsigned char	*cp;
+m2c (unsigned char *mp, int l, unsigned char *cp)
 {
   unsigned char	ch, *ep = mp + l;;
   
@@ -1278,9 +1255,7 @@ unsigned char	*cp;
 
 /* make_string after converting EUC string to MULE internal string */
 static Lisp_Object
-mule_make_string(p,l)
-unsigned char *p;
-int l;
+mule_make_string (unsigned char *p, int l)
 {
   unsigned char cbuf[4096];
   
@@ -1290,9 +1265,7 @@ int l;
 
 /* return the MULE internal string length of EUC string */
 static int
-mule_strlen(p,l)
-unsigned char *p;
-int l;
+mule_strlen (unsigned char *p, int l)
 {
   unsigned char ch, *cp = p;
   int len = 0;
@@ -1320,9 +1293,7 @@ int l;
 
 /* count number of characters */
 static void
-count_char(p,len,pos,rev,clen,cpos,crev)
-unsigned char *p;	
-int len,pos,rev,*clen,*cpos,*crev;
+count_char (unsigned char *p, int len, int pos, int rev, int *clen, int *cpos, int *crev)
 {
   unsigned char *q = p;
   

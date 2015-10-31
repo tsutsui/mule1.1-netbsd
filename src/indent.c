@@ -94,7 +94,7 @@ will have a variable width)\n\
 Ignores finite width of screen, which means that this function may return\n\
 values greater than (screen-width).\n\
 Whether the line is visible (if `selective-display' is t) has no effect.")
-  ()
+  (void)
 {
   Lisp_Object temp;
   XFASTINT (temp) = current_column ();
@@ -104,13 +104,13 @@ Whether the line is visible (if `selective-display' is t) has no effect.")
 /* Cancel any recorded value of the horizontal position.  */
 
 void
-invalidate_current_column ()
+invalidate_current_column (void)
 {
   last_known_column_point = 0;
 }
 
 int
-current_column ()
+current_column (void)
 {
   register int col;
   register unsigned char *ptr, *stop, c;
@@ -224,8 +224,7 @@ current_column ()
 }
 
 void
-ToCol (col)
-     int col;
+ToCol (int col)
 {
   register int fromcol = current_column ();
   register int n;
@@ -263,8 +262,7 @@ DEFUN ("indent-to", Findent_to, Sindent_to, 1, 2, "NIndent to column: ",
   "Indent from point with tabs and spaces until COLUMN is reached.\n\
 Always do at least MIN spaces even if that goes past COLUMN;\n\
 by default, MIN is zero.")
-  (col, minimum)
-     Lisp_Object col, minimum;
+  (Lisp_Object col, Lisp_Object minimum)
 {
   int mincol;
   register int fromcol;
@@ -312,7 +310,7 @@ DEFUN ("current-indentation", Fcurrent_indentation, Scurrent_indentation,
   "Return the indentation of the current line.\n\
 This is the horizontal position of the character\n\
 following any initial whitespace.")
-  ()
+  (void)
 {
   Lisp_Object val;
 
@@ -321,8 +319,7 @@ following any initial whitespace.")
 }
 
 int
-position_indentation (pos)
-     register int pos;
+position_indentation (register int pos)
 {
   register int column = 0;
   register int tab_width = XINT (current_buffer->tab_width);
@@ -365,8 +362,7 @@ and point.  (eg control characters will have a width of 2 or 4, tabs\n\
 will have a variable width)\n\
 Ignores finite width of screen, which means that this function may be\n\
 passed values greater than (screen-width)")
-  (column)
-     Lisp_Object column;
+  (Lisp_Object column)
 {
   register int pos = point;
   register int col = current_column ();
@@ -479,8 +475,7 @@ static int c_w_d[2]; /* c_width_on_point and int dir_on_point */
 
 #define set_c_w_d(c_width,dir)    c_w_d[0] = c_width, c_w_d[1] = dir
 int *
-char_width_dir_on (pt,buffer_dir)
-     int pt, buffer_dir;
+char_width_dir_on (int pt, int buffer_dir)
 {
   register int mc_bytes;
   register unsigned int c;
@@ -553,15 +548,18 @@ char_width_dir_on (pt,buffer_dir)
 struct position val_compute_motion;
 
 struct position *
-compute_motion (from, fromvpos, fromhpos, to, tovpos, tohpos, width, hscroll, tab_offset, rev_hpos)  /* 92.8.2 Y.Niibe */
-
-     Lisp_Object_Int from;
-     int fromvpos, fromhpos; 
-     Lisp_Object_Int to, tovpos, tohpos;
-     register Lisp_Object_Int width;
-     Lisp_Object_Int hscroll;
-     int  tab_offset;
-     int rev_hpos;  /* hpos in reverse text */ /* 92.8.2 Y.Niibe */
+compute_motion (  /* 92.8.2 Y.Niibe */
+    Lisp_Object_Int from,
+    int fromvpos,
+    int fromhpos,
+    Lisp_Object_Int to,
+    Lisp_Object_Int tovpos,
+    Lisp_Object_Int tohpos,
+    register Lisp_Object_Int width,
+    Lisp_Object_Int hscroll,
+    int tab_offset,
+    int rev_hpos  /* hpos in reverse text */ /* 92.8.2 Y.Niibe */
+)
 {
   register int hpos = fromhpos;
   register int vpos = fromvpos;
@@ -1101,9 +1099,7 @@ compute_motion (from, fromvpos, fromhpos, to, tovpos, tohpos, width, hscroll, ta
 }
 
 int
-pos_tab_offset (w, pos)
-     struct window *w;
-     register int pos;
+pos_tab_offset (struct window *w, register int pos)
 {				/* 92.4.1 by Y.Niibe - completely rewritten */
   struct position val;
   int prevline;
@@ -1126,10 +1122,7 @@ pos_tab_offset (w, pos)
 struct position val_vmotion;
 
 struct position *
-vmotion (from, vtarget, width, hscroll, window)
-     register int from, vtarget, width;
-     int hscroll;
-     Lisp_Object window;
+vmotion (register int from, register int vtarget, register int width, int hscroll, Lisp_Object window)
 {
   struct position pos;
   /* vpos is cumulative vertical position, changed as from is changed */
@@ -1225,8 +1218,7 @@ Sets point to position found; this may be start of line\n\
  or just the start of a continuation line.\n\
 Returns number of lines moved; may be closer to zero than LINES\n\
  if beginning or end of buffer was reached.")
-  (lines)
-     Lisp_Object lines;
+  (Lisp_Object lines)
 {
   struct position pos;
   register struct window *w = XWINDOW (selected_window);
@@ -1245,7 +1237,7 @@ Returns number of lines moved; may be closer to zero than LINES\n\
 }
 
 void
-syms_of_indent ()
+syms_of_indent (void)
 {
   DEFVAR_BOOL ("indent-tabs-mode", &indent_tabs_mode,
     "*Indentation can insert tabs if this is non-nil.\n\

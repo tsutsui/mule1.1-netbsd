@@ -345,8 +345,7 @@ DEFUN ("wnn-server-open", Fwnn_open, Swnn_open,
   "Connect to jserver of host HNAME, make an environment with\n\
 login name LNAME in the server.\n\
 Return nil if error occurs")
-     (hname, lname)
-     register Lisp_Object hname, lname;
+     (register Lisp_Object hname, register Lisp_Object lname)
 {
   char	envname[32];
   char	langname[32];
@@ -400,7 +399,7 @@ Return nil if error occurs")
 DEFUN ("wnn-server-close", Fwnn_close, Swnn_close, 0, 0, 0,
        "Close the connection to jserver, Dictionary and friquency files\n\
 are not saved.")
-     ()
+     (void)
 {
   int	snum;
   if ((snum = check_wnn_server_type()) == -1) return Qnil;
@@ -426,9 +425,7 @@ DEFUN ("wnn-server-dict-add", Fwnn_dict_add, Swnn_dict_add, 5, MANY, 0,
        "Add dictionary specified by DIICT-FILE-NAME, FREQ-FILE-NAME,\n\
 PRIORITY, DICT-FILE-MODE, FREQ-FILE-MODE.\n\
 Specify password files of dictionary and frequency, PW1 and PW2, if needed.")
-     (nargs, args)
-     int			nargs;
-     register Lisp_Object	*args;
+     (int nargs, register Lisp_Object *args)
 {
   struct gcpro gcpro1;
   int	snum;
@@ -462,8 +459,7 @@ Specify password files of dictionary and frequency, PW1 and PW2, if needed.")
 DEFUN ("wnn-server-dict-delete", Fwnn_dict_delete, Swnn_dict_delete, 
        1, 1, 0,
        "Remove dictionary specified by DIC-NUMBER from buffer.")
-     (dicno)
-     register Lisp_Object dicno;
+     (register Lisp_Object dicno)
 {
   int	no;
   int	snum;
@@ -478,7 +474,7 @@ DEFUN ("wnn-server-dict-delete", Fwnn_dict_delete, Swnn_dict_delete,
 DEFUN ("wnn-server-dict-list", Fwnn_dict_list, Swnn_dict_list, 
        0, 0, 0,
        "Return information of dictionaries.")
-     ()
+     (void)
 {
   WNN_DIC_INFO	*dicinfo;
   int		cnt, i;
@@ -508,8 +504,7 @@ DEFUN ("wnn-server-dict-comment", Fwnn_dict_comment, Swnn_dict_comment,
        2, 2, 0,
        "Set comment to dictionary specified by DIC-NUMBER.\n\
 Comment string COMMENT")
-     (dicno, comment)
-     register Lisp_Object dicno, comment;
+     (register Lisp_Object dicno, register Lisp_Object comment)
 {
   w_char		wbuf[512];
   int	snum;
@@ -527,8 +522,7 @@ Comment string COMMENT")
 DEFUN ("wnn-server-set-rev", Fwnn_set_rev, Swnn_set_rev, 
        1, 1, 0,
        "Switch the translation mode to normal if T, or reverse if NIL.")
-     (rev)
-     register Lisp_Object rev;
+     (register Lisp_Object rev)
 {
   int	snum;
   if ((snum = check_wnn_server_type()) == -1) return Qnil;
@@ -547,8 +541,7 @@ DEFUN ("wnn-server-set-rev", Fwnn_set_rev, Swnn_set_rev,
 DEFUN ("wnn-server-henkan-begin", Fwnn_begin_henkan, Swnn_begin_henkan, 
        1, 1, 0,
        "Translate YOMI string to kanji. Retuen the number of bunsetsu.")
-     (hstring)
-     register Lisp_Object hstring;
+     (register Lisp_Object hstring)
 {
   int			cnt;
   w_char		wbuf[5000];
@@ -568,8 +561,7 @@ DEFUN ("wnn-server-henkan-begin", Fwnn_begin_henkan, Swnn_begin_henkan,
 DEFUN ("wnn-server-zenkouho", Fwnn_zenkouho, Swnn_zenkouho, 2, 2, 0,
        "Get zenkouho at BUNSETSU-NUMBER. Second argument DAI is T\n\
 if dai-bunsetsu, NIL if sho-bunsetsu. Return the current offset of zenkouho.")
-     (bunNo, dai)
-     register Lisp_Object bunNo, dai;
+     (register Lisp_Object bunNo, register Lisp_Object dai)
 {
   int		no, offset;
   int	snum;
@@ -596,8 +588,7 @@ if dai-bunsetsu, NIL if sho-bunsetsu. Return the current offset of zenkouho.")
 
 DEFUN ("wnn-server-get-zenkouho", Fwnn_get_zenkouho, Swnn_get_zenkouho,
        1, 1, 0, "Get kanji string of KOUHO-NUMBER")
-     (kouhoNo)
-     register Lisp_Object kouhoNo;
+     (register Lisp_Object kouhoNo)
 {
   unsigned char	kanji_buf[256];
   w_char	wbuf[256];
@@ -615,7 +606,7 @@ DEFUN ("wnn-server-get-zenkouho", Fwnn_get_zenkouho, Swnn_get_zenkouho,
 DEFUN ("wnn-server-zenkouho-bun", Fwnn_zenkouho_bun, Swnn_zenkouho_bun,
        0, 0, 0,
        "For Wnn.")
-     ()
+     (void)
 {
   int	snum;
   if ((snum = check_wnn_server_type()) == -1) return Qnil;
@@ -625,7 +616,7 @@ DEFUN ("wnn-server-zenkouho-bun", Fwnn_zenkouho_bun, Swnn_zenkouho_bun,
 DEFUN ("wnn-server-zenkouho-suu", Fwnn_zenkouho_suu, Swnn_zenkouho_suu,
        0, 0, 0,
        "Return the number of zen kouho")
-     ()
+     (void)
 {
   int	snum;
   if ((snum = check_wnn_server_type()) == -1) return Qnil;
@@ -634,8 +625,7 @@ DEFUN ("wnn-server-zenkouho-suu", Fwnn_zenkouho_suu, Swnn_zenkouho_suu,
 
 DEFUN ("wnn-server-dai-top", Fwnn_dai_top, Swnn_dai_top, 1, 1, 0,
        "Return T if bunsetsu BUN-NUMBER is dai-bunsetsu.")
-     (bunNo)
-     register Lisp_Object bunNo;
+     (register Lisp_Object bunNo)
 {
   int	snum;
   CHECK_NUMBER(bunNo, 0);
@@ -647,8 +637,7 @@ DEFUN ("wnn-server-dai-top", Fwnn_dai_top, Swnn_dai_top, 1, 1, 0,
 
 DEFUN ("wnn-server-dai-end", Fwnn_dai_end, Swnn_dai_end, 1, 1, 0,
        "Return the bunsetu number of the next dai-bunsetsu after BUN-NUMBER.")
-     (bunNo)
-     register Lisp_Object bunNo;
+     (register Lisp_Object bunNo)
 {
   int	snum;
   CHECK_NUMBER(bunNo, 0);
@@ -659,8 +648,7 @@ DEFUN ("wnn-server-dai-end", Fwnn_dai_end, Swnn_dai_end, 1, 1, 0,
 
 DEFUN ("wnn-server-henkan-kakutei", Fwnn_kakutei, Swnn_kakutei, 2, 2, 0,
        "Set candidate with OFFSET, DAI. DAI is T if dai-bunsetsu.")
-     (offset, dai)
-     register Lisp_Object offset, dai;
+     (register Lisp_Object offset, register Lisp_Object dai)
 {
   int	snum;
   CHECK_NUMBER(offset, 0);
@@ -678,8 +666,7 @@ DEFUN ("wnn-server-henkan-kakutei", Fwnn_kakutei, Swnn_kakutei, 2, 2, 0,
 DEFUN ("wnn-server-bunsetu-henkou", Fwnn_bunsetu_henkou, Swnn_bunsetu_henkou,
        3, 3, 0,
        "Change length of BUN-NUMBER bunsetu to LEN. DAI is T if dai-bunsetsu.")
-     (bunNo, len, dai)
-     register Lisp_Object bunNo, len, dai;
+     (register Lisp_Object bunNo, register Lisp_Object len, register Lisp_Object dai)
 {
   Lisp_Object	val;
   int		cnt, no;
@@ -697,8 +684,7 @@ DEFUN ("wnn-server-bunsetu-henkou", Fwnn_bunsetu_henkou, Swnn_bunsetu_henkou,
 
 DEFUN ("wnn-server-inspect", Fwnn_inspect, Swnn_inspect, 1, 1, 0,
        "Get bunsetsu information specified by BUN-NUMBER.")
-     (bunNo)
-     Lisp_Object  bunNo;
+     (Lisp_Object bunNo)
 {
   Lisp_Object		val;
   struct wnn_jdata	*info_buf;
@@ -736,7 +722,7 @@ DEFUN ("wnn-server-inspect", Fwnn_inspect, Swnn_inspect, 1, 1, 0,
 
 DEFUN ("wnn-server-henkan-quit", Fwnn_quit_henkan, Swnn_quit_henkan, 0, 0, 0,
        "do nothing")
-     ()
+     (void)
 {
   int	snum;
   if ((snum = check_wnn_server_type()) == -1) return Qnil;
@@ -747,8 +733,7 @@ DEFUN ("wnn-server-henkan-quit", Fwnn_quit_henkan, Swnn_quit_henkan, 0, 0, 0,
 DEFUN ("wnn-server-bunsetu-kanji", Fwnn_bunsetu_kanji, Swnn_bunsetu_kanji,
        1, 1, 0,
        "Get the pair of kanji and length of bunsetsu specified by BUN-NUMBER.")
-     (bunNo)
-     register Lisp_Object bunNo;
+     (register Lisp_Object bunNo)
 {
   register int		no;
   unsigned char		kanji_buf[256];
@@ -770,8 +755,7 @@ DEFUN ("wnn-server-bunsetu-kanji", Fwnn_bunsetu_kanji, Swnn_bunsetu_kanji,
 DEFUN ("wnn-server-bunsetu-yomi", Fwnn_bunsetu_yomi, Swnn_bunsetu_yomi,
        1, 1, 0,
        "Get the pair of yomi and length of bunsetsu specified by BUN-NUMBER.")
-     (bunNo)
-     register Lisp_Object bunNo;
+     (register Lisp_Object bunNo)
 {
   register int		no;
   unsigned char		yomi_buf[256];
@@ -793,7 +777,7 @@ DEFUN ("wnn-server-bunsetu-yomi", Fwnn_bunsetu_yomi, Swnn_bunsetu_yomi,
 DEFUN ("wnn-server-bunsetu-suu", Fwnn_bunsetu_suu, Swnn_bunsetu_suu,
        0, 0, 0,
        "Get the number of bunsetsu.")
-     ()
+     (void)
 {
   int	snum;
   if ((snum = check_wnn_server_type()) == -1) return Qnil;
@@ -804,8 +788,7 @@ DEFUN ("wnn-server-bunsetu-suu", Fwnn_bunsetu_suu, Swnn_bunsetu_suu,
 DEFUN ("wnn-server-hindo-update", Fwnn_hindo_update, Swnn_hindo_update,
        0, 1, 0,
        "Update frequency of bunsetsu specified by NUM-NUMBER.")
-     (bunNo)
-     Lisp_Object  bunNo;
+     (Lisp_Object bunNo)
 {
   int		no;
   Lisp_Object	val;
@@ -825,8 +808,7 @@ DEFUN ("wnn-server-hindo-update", Fwnn_hindo_update, Swnn_hindo_update,
 DEFUN ("wnn-server-word-add", Fwnn_word_toroku, Swnn_word_toroku, 5, 5, 0,
        "Add a word to dictionary. Arguments are\n\
 DIC-NUMBER, KANJI, YOMI, COMMENT, HINSI-NUMBER")
-     (dicno, kanji, yomi, comment, hinsi)
-     register Lisp_Object dicno, kanji, yomi, comment, hinsi;
+     (register Lisp_Object dicno, register Lisp_Object kanji, register Lisp_Object yomi, register Lisp_Object comment, register Lisp_Object hinsi)
 {
   w_char		yomi_buf[256], kanji_buf[256], comment_buf[256];
   int	snum;
@@ -851,8 +833,7 @@ DIC-NUMBER, KANJI, YOMI, COMMENT, HINSI-NUMBER")
 
 DEFUN ("wnn-server-word-delete", Fwnn_word_sakujo, Swnn_word_sakujo, 2, 2, 0,
        "Delete a word from dictionary, specified by DIC-NUMBER, SERIAL-NUMBER")
-     (no, serial)
-     register Lisp_Object no, serial;
+     (register Lisp_Object no, register Lisp_Object serial)
 {
   int	snum;
   CHECK_NUMBER(no, 0);
@@ -867,8 +848,7 @@ DEFUN ("wnn-server-word-delete", Fwnn_word_sakujo, Swnn_word_sakujo, 2, 2, 0,
 
 DEFUN ("wnn-server-word-use", Fwnn_word_use, Swnn_word_use, 2, 2, 0,
        "Toggle on/off word, specified by DIC-NUMBER and SERIAL-NUMBER")
-     (no, serial)
-     register Lisp_Object no, serial;
+     (register Lisp_Object no, register Lisp_Object serial)
 {
   int	snum;
   CHECK_NUMBER(no, 0);
@@ -882,8 +862,7 @@ DEFUN ("wnn-server-word-use", Fwnn_word_use, Swnn_word_use, 2, 2, 0,
 
 DEFUN ("wnn-server-word-info", Fwnn_word_info, Swnn_word_info, 2, 2, 0,
        "Return list of yomi, kanji, comment, hindo, hinshi.")
-     (no, serial)
-     register Lisp_Object no, serial;
+     (register Lisp_Object no, register Lisp_Object serial)
 {
   Lisp_Object		val;
   struct wnn_jdata	*info_buf;
@@ -917,8 +896,7 @@ DEFUN ("wnn-server-word-info", Fwnn_word_info, Swnn_word_info, 2, 2, 0,
 DEFUN ("wnn-server-word-hindo-set", Fwnn_hindo_set, Swnn_hindo_set, 3, 3, 0,
        "Set frequency to arbitrary value. Specified by DIC-NUMBER,\n\
 SERIAL-NUMBER, FREQUENCY")
-     (no, serial, hindo)
-     register Lisp_Object no, serial, hindo;
+     (register Lisp_Object no, register Lisp_Object serial, register Lisp_Object hindo)
 {
   int	snum;
   CHECK_NUMBER(no, 0);
@@ -939,8 +917,7 @@ SERIAL-NUMBER, FREQUENCY")
 DEFUN ("wnn-server-word-search", Fwnn_dict_search, Swnn_dict_search, 1, 1, 0,
        "Search a word YOMI from buffer.\n\
 Return list of (kanji hinshi freq dic_no serial).")
-     (yomi)
-     register Lisp_Object yomi;
+     (register Lisp_Object yomi)
 {
   Lisp_Object		val;
   struct wnn_jdata	*wordinfo;
@@ -976,7 +953,7 @@ Return list of (kanji hinshi freq dic_no serial).")
 
 DEFUN ("wnn-server-dict-save", Fwnn_dict_save, Swnn_dict_save, 0, 0, 0,
        "Save all dictianaries and grequency files.")
-     ()
+     (void)
 {
   int	snum;
   if ((snum = check_wnn_server_type()) == -1) return Qnil;
@@ -989,7 +966,7 @@ DEFUN ("wnn-server-get-param", Fwnn_get_param, Swnn_get_param,
        0, 0, 0,
        "Returns (n nsho hindo len jiri flag jisho sbn dbn_len sbn_cnt\n\
 suuji kana eisuu kigou toji_kakko fuzokogo kaikakko)")
-     ()
+     (void)
 {
   struct wnn_param	param;
   int	snum;
@@ -1019,9 +996,7 @@ DEFUN ("wnn-server-set-param", Fwnn_set_param, Swnn_set_param,
        17, MANY, 0,
        "Set parameters, n nsho hindo len jiri flag jisho sbn dbn_len sbn_cnt\n\
 suuji kana eisuu kigou toji_kakko fuzokogo kaikakko")
-     (nargs, args)
-     int nargs;
-     register Lisp_Object *args;
+     (int nargs, register Lisp_Object *args)
 {
   int             rc;
   struct wnn_param	param;
@@ -1054,7 +1029,7 @@ suuji kana eisuu kigou toji_kakko fuzokogo kaikakko")
 
 DEFUN ("wnn-server-get-msg", Fwnn_get_msg, Swnn_get_msg, 0, 0, 0,
        "Get message string from wnn_perror.")
-     ()
+     (void)
 {
   char mbuf[256];
   char 			*msgp;
@@ -1090,8 +1065,7 @@ DEFUN ("wnn-server-get-msg", Fwnn_get_msg, Swnn_get_msg, 0, 0, 0,
 
 DEFUN ("wnn-server-fuzokugo-set", Fwnn_fuzokugo_set, Swnn_fuzokugo_set,
        1, 1, 0, "For Wnn.")
-     (file)
-     register Lisp_Object file;
+     (register Lisp_Object file)
 {
   int	snum;
   CHECK_STRING(file, 0);
@@ -1104,7 +1078,7 @@ DEFUN ("wnn-server-fuzokugo-set", Fwnn_fuzokugo_set, Swnn_fuzokugo_set,
 
 DEFUN ("wnn-server-fuzokugo-get", Fwnn_fuzokugo_get, Swnn_fuzokugo_get,
        0, 0, 0, "For Wnn.")
-     ()
+     (void)
 {
   char	fname[256];
   int	snum;
@@ -1117,7 +1091,7 @@ DEFUN ("wnn-server-fuzokugo-get", Fwnn_fuzokugo_get, Swnn_fuzokugo_get,
 
 DEFUN ("wnn-server-isconnect", Fwnn_isconnect, Swnn_isconnect, 0, 0, 0,
        "For Wnn.")
-     ()
+     (void)
 {
   int	snum;
   if ((snum = check_wnn_server_type()) == -1) return Qnil;
@@ -1128,8 +1102,7 @@ DEFUN ("wnn-server-isconnect", Fwnn_isconnect, Swnn_isconnect, 0, 0, 0,
 
 DEFUN ("wnn-server-hinsi-dicts", Fwnn_hinsi_dicts, Swnn_hinsi_dicts, 1, 1, 0,
        "For Wnn.")
-     (hinsi)
-     register Lisp_Object hinsi;
+     (register Lisp_Object hinsi)
 {
   int		*area;
   int		cnt;
@@ -1150,8 +1123,7 @@ DEFUN ("wnn-server-hinsi-dicts", Fwnn_hinsi_dicts, Swnn_hinsi_dicts, 1, 1, 0,
 
 DEFUN ("wnn-server-hinsi-list", Fwnn_hinsi_list, Swnn_hinsi_list, 2, 2, 0,
        "For Wnn.")
-     (dicno, name)
-     register Lisp_Object dicno, name;
+     (register Lisp_Object dicno, register Lisp_Object name)
 {
   int		cnt;
   Lisp_Object	val;
@@ -1180,8 +1152,7 @@ DEFUN ("wnn-server-hinsi-list", Fwnn_hinsi_list, Swnn_hinsi_list, 2, 2, 0,
 
 DEFUN ("wnn-server-hinsi-name", Fwnn_hinsi_name, Swnn_hinsi_name, 1, 1, 0,
        "For Wnn.")
-     (no)
-     register Lisp_Object no;
+     (register Lisp_Object no)
 {
   unsigned char	name[256];
   w_char		*wname;
@@ -1199,8 +1170,7 @@ DEFUN ("wnn-server-hinsi-name", Fwnn_hinsi_name, Swnn_hinsi_name, 1, 1, 0,
 DEFUN ("wnn-server-hinsi-number", Fwnn_hinsi_number, Swnn_hinsi_number,
        1, 1, 0,
        "For Wnn.")
-     (name)
-     register Lisp_Object name;
+     (register Lisp_Object name)
 {
   w_char		w_buf[256];
   int		no;
@@ -1214,7 +1184,7 @@ DEFUN ("wnn-server-hinsi-number", Fwnn_hinsi_number, Swnn_hinsi_number,
 }
 
 void
-syms_of_wnn()
+syms_of_wnn (void)
 {
   int i;
 
@@ -1288,10 +1258,7 @@ syms_of_wnn()
 }
 
 void
-w2m(wp, mp, lc)
-     w_char		*wp;
-     unsigned char	*mp;
-     unsigned char	lc;
+w2m(w_char *wp, unsigned char *mp, unsigned char lc)
 {
   w_char	wc;
   w_char	pzy[10];
@@ -1342,9 +1309,7 @@ w2m(wp, mp, lc)
 }
 
 void
-m2w(mp, wp)
-     unsigned char	*mp;
-     w_char		*wp;
+m2w(unsigned char *mp, w_char *wp)
 {
   unsigned int ch;
   
@@ -1380,15 +1345,13 @@ m2w(mp, wp)
 }
 
 void
-_xp(x)
-int x;
+_xp (int x)
 {
     printf("%x\n", x); fflush(stdout);
 }
 
 /* static */ void
-w2y(w)
-w_char *w;
+w2y (w_char *w)
 {
   unsigned long		pbuf[5000], ybuf[5000];
   unsigned long		*pin;
@@ -1416,10 +1379,7 @@ w_char *w;
 }
 
 void
-c2m(cp, mp, lc)
-     unsigned char	*cp;
-     unsigned char	*mp;
-     unsigned char	lc;
+c2m (unsigned char *cp, unsigned char *mp, unsigned char lc)
 {
   unsigned char		ch;
   while(ch = *cp) {
@@ -1433,9 +1393,7 @@ c2m(cp, mp, lc)
 }
 
 int
-dai_end(no, server)
-     int	no;
-     int	server;
+dai_end (int no, int server)
 {
   for(no++; no < jl_bun_suu(wnnfns_buf[server])
       && !jl_dai_top(wnnfns_buf[server], no); no++);
@@ -1443,8 +1401,7 @@ dai_end(no, server)
 }
 
 static int
-yes_or_no(s)
-unsigned char *s;
+yes_or_no (unsigned char *s)
 {
   unsigned char		mbuf[512];
   unsigned char		lc;
@@ -1464,8 +1421,7 @@ unsigned char *s;
 }
 
 static void
-puts2(s)
-char *s;
+puts2 (char *s)
 {
   Lisp_Object		args[1];
   char			mbuf[512];
@@ -1479,7 +1435,7 @@ char *s;
 }
 
 int
-check_wnn_server_type()
+check_wnn_server_type (void)
 {
   if (Vwnn_server_type == Qjserver) {
     return WNNSERVER_J;

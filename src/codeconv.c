@@ -153,7 +153,7 @@ Lisp_Object Qpriority;
 DEFUN ("set-coding-priority-internal", Fset_code_priority, Sset_code_priority,
        0, 0, 0,
   "Don't call this directly, use set-code-priority instead.")
-  ()
+  (void)
 {
   Lisp_Object val;
   int i, j;
@@ -169,8 +169,7 @@ DEFUN ("set-coding-priority-internal", Fset_code_priority, Sset_code_priority,
 
 /* 92.7.10 by K.Handa */
 unsigned char
-lookup(c, lcg0, lcg1, lcg2, lcg3, esc_cntl)
-     unsigned char c, *lcg0, *lcg1, *lcg2, *lcg3, esc_cntl;
+lookup (unsigned char c, unsigned char *lcg0, unsigned char *lcg1, unsigned char *lcg2, unsigned char *lcg3, unsigned char esc_cntl)
 {
   register unsigned char lc = LCINV, *lcp;
 
@@ -225,8 +224,7 @@ lookup(c, lcg0, lcg1, lcg2, lcg3, esc_cntl)
 /* end of patch */
 
 int
-code_detect_iso2022(buf, endp)
-     unsigned char *buf, *endp;
+code_detect_iso2022 (unsigned char *buf, unsigned char *endp)
 {
   int mask = M_ISO_7 | M_ISO_8_1 | M_ISO_8_2 | M_ISO_ELSE;
   unsigned char lcg0, lcg1, lcg2, lcg3;
@@ -280,8 +278,7 @@ code_detect_iso2022(buf, endp)
 }
 
 int
-code_detect_internal(buf, endp)
-     unsigned char *buf, *endp;
+code_detect_internal (unsigned char *buf, unsigned char *endp)
 {
   unsigned char c;
 
@@ -301,8 +298,7 @@ code_detect_internal(buf, endp)
 }
 
 int
-code_detect_sjis(buf, endp)
-     unsigned char *buf, *endp;
+code_detect_sjis (unsigned char *buf, unsigned char *endp)
 {
   unsigned char c;
 
@@ -320,8 +316,7 @@ code_detect_sjis(buf, endp)
 }
 
 int
-code_detect_big5(buf, endp)
-     unsigned char *buf, *endp;
+code_detect_big5 (unsigned char *buf, unsigned char *endp)
 {
   unsigned char c;
 
@@ -343,9 +338,7 @@ code_detect_big5(buf, endp)
    If there's no possible coding system, M_BIN is returned. */
 
 int
-code_detect(buf, n)
-     unsigned char *buf;
-     int n;
+code_detect (unsigned char *buf, int n)
 {
   unsigned char c, *endp = buf + n;
   int mask = M_ALL;
@@ -387,9 +380,7 @@ code_detect(buf, n)
 }
 
 int
-eol_detect(buf, n)
-     unsigned char *buf;
-     int n;
+eol_detect (unsigned char *buf, int n)
 {
   unsigned char c, *endp = buf + n;
 
@@ -414,8 +405,7 @@ DEFUN ("code-detect-region", Fcode_detect_region, Scode_detect_region,
 Returned value is a list of possible coding-system ordered by priority.\n\
 If only ASCII characters are found, it returns *autoconv* or its\n\
 subsidieary coding-system accoding to a detected end-of-line type.")
-  (b, e)
-     Lisp_Object b, e;
+  (Lisp_Object b, Lisp_Object e)
 {
   Lisp_Object val, val2, val3;
   int beg, end, mask, eol, i;
@@ -473,10 +463,7 @@ subsidieary coding-system accoding to a detected end-of-line type.")
 
 /* Encode to INTERNAL. */
 int
-a2g(src, dst, n, mccode)
-     unsigned char *src, *dst;
-     unsigned int n;
-     coding_type *mccode;
+a2g (unsigned char *src, unsigned char *dst, unsigned int n, coding_type *mccode)
 {
   register unsigned char *dp, c;
   register unsigned int cntl, eol = CODE_FORM (mccode) & CODE_EOL_MASK;
@@ -513,10 +500,7 @@ a2g(src, dst, n, mccode)
 }
 
 int
-s2g(src, dst, n, mccode)
-     unsigned char *src, *dst;
-     unsigned int n;
-     coding_type *mccode;
+s2g (unsigned char *src, unsigned char *dst, unsigned int n, coding_type *mccode)
 {
   register unsigned char *dp = dst, c;
   register unsigned int cntl, ch, form, eol;
@@ -562,10 +546,7 @@ s2g(src, dst, n, mccode)
 }
 
 int
-b2g(src, dst, n, mccode)
-     unsigned char *src, *dst;
-     unsigned int n;
-     coding_type *mccode;
+b2g (unsigned char *src, unsigned char *dst, unsigned int n, coding_type *mccode)
 {
   register unsigned char *dp = dst, c;
   register unsigned int cntl, ch, form, eol;
@@ -610,10 +591,7 @@ b2g(src, dst, n, mccode)
 
 /* ISO2022 Interpreter */
 int
-i2g(src, dst, n, mccode)
-     register unsigned char *src, *dst;
-     unsigned int n;
-     coding_type *mccode;
+i2g (register unsigned char *src, register unsigned char *dst, unsigned int n, coding_type *mccode)
 {
   unsigned char lcg0, lcg1, lcg2, lcg3;
   register unsigned char c, lc, *dp = dst;
@@ -778,11 +756,7 @@ i2g(src, dst, n, mccode)
 }
 
 int
-encode(mccode, src, dst, n, found)
-     coding_type *mccode;
-     unsigned int n;
-     unsigned char *src, *dst;
-     Lisp_Object *found;
+encode (coding_type *mccode, unsigned char *src, unsigned char *dst, unsigned int n, Lisp_Object *found)
 {
   int len = 0, eol = CODE_EOL_AUTO;
 
@@ -846,10 +820,7 @@ encode(mccode, src, dst, n, found)
 /* decode from INTERNAL */
 
 int
-g2a(src, dst, n, mccode)
-     unsigned char *src, *dst;
-     unsigned int n;
-     coding_type *mccode;
+g2a (unsigned char *src, unsigned char *dst, unsigned int n, coding_type *mccode)
 {
   register unsigned char *dp, c;
   register unsigned int selective = CODE_CNTL (mccode) & CC_SELECTIVE;
@@ -883,10 +854,7 @@ g2a(src, dst, n, mccode)
 }
 
 int
-g2s(src, dst, n, mccode)
-     unsigned char *src, *dst;
-     unsigned int n;
-     coding_type *mccode;
+g2s (unsigned char *src, unsigned char *dst, unsigned int n, coding_type *mccode)
 {
   register unsigned char *dp = dst, c;
   register unsigned int cntl, ch, form, selective;
@@ -926,10 +894,7 @@ g2s(src, dst, n, mccode)
 }
 
 int
-g2b(src, dst, n, mccode)
-     unsigned char *src, *dst;
-     unsigned int n;
-     coding_type *mccode;
+g2b (unsigned char *src, unsigned char *dst, unsigned int n, coding_type *mccode)
 {
   register unsigned char *dp = dst, c, c1;
   register unsigned int cntl, ch, form, selective, eol;
@@ -969,9 +934,7 @@ g2b(src, dst, n, mccode)
 
 /* ISO2022 encodeer */
 unsigned char *
-designate(dp, oldlc, lc, graphic, form)
-     register unsigned char *dp, oldlc, lc, graphic;
-     register unsigned int form;
+designate (register unsigned char *dp, register unsigned char oldlc, register unsigned char lc, register unsigned char graphic, register unsigned int form)
 {
   char *inter94 = "()*+", *inter96= ",-./";
 
@@ -1054,10 +1017,7 @@ designate(dp, oldlc, lc, graphic, form)
 }
 
 int
-g2i(src, dst, n, mccode)
-     register unsigned char *src, *dst;
-     unsigned int n;
-     coding_type *mccode;
+g2i (register unsigned char *src, register unsigned char *dst, unsigned int n, coding_type *mccode)
 {
   register unsigned char *dp = dst, charmask, c;
   register char *p;
@@ -1256,10 +1216,7 @@ g2i(src, dst, n, mccode)
 }
 
 int
-decode(mccode, src, dst, n)
-     unsigned char *src, *dst;
-     unsigned int n;
-     coding_type *mccode;
+decode (coding_type *mccode, unsigned char *src, unsigned char *dst, unsigned int n)
 {
   int len;
 
@@ -1308,8 +1265,7 @@ char *current_conv_buf;
 int current_conv_buf_size;
 
 char *
-get_conversion_buffer(size,type)
-     int size, type;
+get_conversion_buffer (int size, int type)
 {
   size = CONV_BUF_SIZE (size, type); /* 93.2.10 by K.Handa */
   if (size > current_conv_buf_size) {
@@ -1327,8 +1283,7 @@ get_conversion_buffer(size,type)
 /* 92.12.21 by K.Handa */
 DEFUN ("coding-system-p", Fcoding_system_p, Scoding_system_p, 1, 1, 0,
   "T if OBJECT is a coding-system.")
-  (obj)
-     register Lisp_Object obj;
+  (register Lisp_Object obj)
 {
   if (NILP (obj))
     return Qt;
@@ -1348,8 +1303,7 @@ DEFUN ("coding-system-p", Fcoding_system_p, Scoding_system_p, 1, 1, 0,
 
 DEFUN ("non-nil-coding-system-p", Fnon_nil_coding_system_p, Snon_nil_coding_system_p, 1, 1, 0,
   "T if OBJECT is a non-nil coding-system.")
-  (obj)
-     register Lisp_Object obj;
+  (register Lisp_Object obj)
 {
   if (NILP (obj))
     return Qnil;
@@ -1358,8 +1312,7 @@ DEFUN ("non-nil-coding-system-p", Fnon_nil_coding_system_p, Snon_nil_coding_syst
 
 DEFUN ("read-coding-system", Fread_coding_system, Sread_coding_system, 1, 1, 0,
   "Read a coding-system from the minibuffer, prompting with string PROMPT.")
-  (prompt)
-     Lisp_Object prompt;
+  (Lisp_Object prompt)
 {
   return Fcompleting_read (prompt, Vobarray, Qcoding_system_p, Qt, Qnil);
 }
@@ -1367,8 +1320,7 @@ DEFUN ("read-coding-system", Fread_coding_system, Sread_coding_system, 1, 1, 0,
 DEFUN ("read-non-nil-coding-system",
        Fread_non_nil_coding_system, Sread_non_nil_coding_system, 1, 1, 0,
   "Read a non-nil coding-system from the minibuffer, prompting with string PROMPT.")
-  (prompt)
-     Lisp_Object prompt;
+  (Lisp_Object prompt)
 {
   return Fcompleting_read (prompt, Vobarray, Qnon_nil_coding_system_p,
 			   Qt, Qnil);
@@ -1380,8 +1332,7 @@ CODING-SYSTEM is valid if it is a symbol and has \"coding-system\" property.\n\
 The value of property should be a vector of length 5.\n\
 See document of make-coding-system for more detail.\n\
 If not valid, coding-system-error is signaled.")
-  (code)
-     Lisp_Object code;
+  (Lisp_Object code)
 {				/* 92.4.7 by K.Handa */
   Lisp_Object prop;
 
@@ -1395,9 +1346,7 @@ If not valid, coding-system-error is signaled.")
 }
 
 void
-encode_code(code, mccode)
-     Lisp_Object code;
-     coding_type *mccode;
+encode_code (Lisp_Object code, coding_type *mccode)
 {
   Lisp_Object type, prop, eol_type, *flags;
   int lcg0, lcg1, lcg2, lcg3;
@@ -1465,8 +1414,7 @@ encode_code(code, mccode)
 DEFUN ("s2e", Fs2e, Ss2e, 2, 2, 0,
   "Convert Shift-JIS code C1, C2 to EUC code e1, e2,\n\
 and return cons of them.")
-  (c1, c2)
-     Lisp_Object c1, c2;
+  (Lisp_Object c1, Lisp_Object c2)
 {
   Lisp_Object e1, e2;
 
@@ -1478,8 +1426,7 @@ and return cons of them.")
 DEFUN ("e2s", Fe2s, Se2s, 2, 2, 0,
   "Convert EUC code E1, E2 to Shift-JIS code c1, c2,\n\
 and return cons of them.")
-  (e1, e2)
-     Lisp_Object e1, e2;
+  (Lisp_Object e1, Lisp_Object e2)
 {
   Lisp_Object c1, c2;
 
@@ -1492,8 +1439,7 @@ and return cons of them.")
 DEFUN ("b2m", Fb2m, Sb2m, 2, 2, 0,
   "Convert Big5 code BIG5 of type ETEN to a character.\n\
 If ETEN is nil, HKU type is assumed.")
-  (big5, eten)
-     Lisp_Object big5, eten;
+  (Lisp_Object big5, Lisp_Object eten)
 {
   unsigned char a1, a2, str[4];
   Lisp_Object ch;
@@ -1510,8 +1456,7 @@ DEFUN ("m2b", Fm2b, Sm2b, 2, 2, 0,
   "Convert a Big5 character CHAR to Big5 code of type ETEN.\n\
 If ETEN is nil, converted HKU code.\n\
 If CHAR is not a Big5 character, nil is returned. ")
-  (ch, eten)
-     Lisp_Object ch, eten;
+  (Lisp_Object ch, Lisp_Object eten)
 {
   unsigned char a1, a2, str[4];
   unsigned int c;
@@ -1535,8 +1480,7 @@ DEFUN ("code-convert-region", Fcode_convert_region,
   "Convert coding sytem of the text between START and END from SOURCE\n\
 to TARGET.  On successful conversion returns t,\n\
 else returns nil without modifying buffer.")
-  (b, e, src, tgt)
-      Lisp_Object b, e, src, tgt;
+  (Lisp_Object b, Lisp_Object e, Lisp_Object src, Lisp_Object tgt)
 {
   int len, beg, end, pos;
   char *buf;
@@ -1595,8 +1539,7 @@ DEFUN ("code-convert-string", Fcode_convert_string,
   "Convert code in STRING from SOURCE code to TARGET code,\n\
 and return the result string on successful converion.\n\
 If fails, return nil.")
-  (str, src, tgt)
-      Lisp_Object str, src, tgt;
+  (Lisp_Object str, Lisp_Object src, Lisp_Object tgt)
 {
   int len;
   char *buf;
@@ -1625,14 +1568,14 @@ If fails, return nil.")
 #endif /* 0 */
 
 void
-init_codeconv()
+init_codeconv (void)
 {
   current_conv_buf_size = CONVERSION_BUFFER_SIZE;
   current_conv_buf = conversion_buffer;
 }
 
 void
-syms_of_codeconv ()
+syms_of_codeconv (void)
 {
   Lisp_Object val;
 

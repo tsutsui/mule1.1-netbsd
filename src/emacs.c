@@ -196,8 +196,7 @@ int fatal_error_in_progress;
 
 /* Handle bus errors, illegal instruction, etc. */
 void
-fatal_error_signal (sig)
-     int sig;
+fatal_error_signal (int sig)
 {
 #ifdef BSD
   int tpgrp;
@@ -245,10 +244,7 @@ fatal_error_signal (sig)
 /* Code for dealing with Lisp access to the Unix command line */
 
 static void
-init_cmdargs (argc, argv, skip_args)
-     int argc;
-     char **argv;
-     int skip_args;
+init_cmdargs (int argc, char **argv, int skip_args)
 {
   register int i;
 
@@ -322,10 +318,7 @@ void syms_of_emacs (void);
 
 /* ARGSUSED */
 int
-main (argc, argv, envp)
-     int argc;
-     char **argv;
-     char **envp;
+main (int argc, char **argv, char **envp)
 {
   int skip_args = 0;
 
@@ -800,8 +793,7 @@ DEFUN ("kill-emacs", Fkill_emacs, Skill_emacs, 0, 1, "P",
   "Exit the Emacs job and kill it.  ARG means no query.\n\
 If emacs is running noninteractively and ARG is an integer,\n\
 return ARG as the exit program code.")
-  (arg)
-     Lisp_Object arg;
+  (Lisp_Object arg)
 {
   Lisp_Object answer;
   int i;
@@ -866,8 +858,7 @@ return ARG as the exit program code.")
 DEFUN ("dump-emacs-data", Fdump_emacs_data, Sdump_emacs_data, 1, 1, 0,
   "Dump current state of Emacs into data file FILENAME.\n\
 This function exists on systems that use HAVE_SHM.")
-  (intoname)
-     Lisp_Object intoname;
+  (Lisp_Object intoname)
 {
   extern int my_edata;
   Lisp_Object tem;
@@ -896,8 +887,7 @@ This function exists on systems that use HAVE_SHM.")
 DEFUN ("dump-emacs", Fdump_emacs, Sdump_emacs, 2, 2, 0,
   "Dump current state of Emacs into executable file FILENAME.\n\
 Take symbols from SYMFILE (presumably the file you executed to run Emacs).")
-  (intoname, symname)
-     Lisp_Object intoname, symname;
+  (Lisp_Object intoname, Lisp_Object symname)
 {
   extern int my_edata;
   Lisp_Object tem;
@@ -964,8 +954,7 @@ Take symbols from SYMFILE (presumably the file you executed to run Emacs).")
 #endif
 
 Lisp_Object
-decode_env_path (evarname, defalt)
-     char *evarname, *defalt;
+decode_env_path (char *evarname, char *defalt)
 {
   register char *path, *p;
 
@@ -998,7 +987,7 @@ decode_env_path (evarname, defalt)
 }
 
 void
-syms_of_emacs ()
+syms_of_emacs (void)
 {
 #ifndef CANNOT_DUMP
 #ifdef HAVE_SHM

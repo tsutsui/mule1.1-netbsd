@@ -92,11 +92,7 @@ extern int minibuf_prompt_width;
 void read_minibuf_unwind (void);
 
 Lisp_Object
-read_minibuf (map, initial, prompt, expflag)
-     Lisp_Object map;
-     Lisp_Object initial;
-     Lisp_Object prompt;
-     int expflag;
+read_minibuf (Lisp_Object map, Lisp_Object initial, Lisp_Object prompt, int expflag)
 {
   register Lisp_Object val;
   int count = specpdl_ptr - specpdl;
@@ -185,8 +181,7 @@ read_minibuf (map, initial, prompt, expflag)
  used for nonrecursive minibuffer invocations */
 
 Lisp_Object
-get_minibuffer (depth)
-     int depth;
+get_minibuffer (int depth)
 {
   Lisp_Object tail, num, buf;
   char name[14];
@@ -214,7 +209,7 @@ get_minibuffer (depth)
  and it restores the current window, buffer, etc. */
 
 void
-read_minibuf_unwind ()
+read_minibuf_unwind (void)
 {
   /* Erase the minibuffer we were using at this level.  */
   Fset_buffer (XWINDOW (minibuf_window)->buffer);
@@ -244,8 +239,7 @@ Third arg KEYMAP is a keymap to use whilst reading; the default is\n\
   minibuffer-local-map.\n\
 If fourth arg READ is non-nil, then interpret the result as a lisp object\n\
   and return that object  (ie  (car (read-from-string <input-string>)))")
-  (prompt, initial_input, keymap, read)
-     Lisp_Object prompt, initial_input, keymap, read;
+  (Lisp_Object prompt, Lisp_Object initial_input, Lisp_Object keymap, Lisp_Object read)
 {
   CHECK_STRING (prompt, 0);
   if (!NILP (initial_input))
@@ -261,8 +255,7 @@ DEFUN ("read-minibuffer", Fread_minibuffer, Sread_minibuffer, 1, 2, 0,
   "Return a Lisp object read using the minibuffer.\n\
 Prompt with PROMPT.  If non-nil, optional second arg INITIAL-CONTENTS\n\
 is a string to insert in the minibuffer before reading.")
-  (prompt, initial_contents)
-     Lisp_Object prompt, initial_contents;
+  (Lisp_Object prompt, Lisp_Object initial_contents)
 {
   CHECK_STRING (prompt, 0);
   if (!NILP (initial_contents))
@@ -274,8 +267,7 @@ DEFUN ("eval-minibuffer", Feval_minibuffer, Seval_minibuffer, 1, 2, 0,
   "Return value of Lisp expression read using the minibuffer.\n\
 Prompt with PROMPT.  If non-nil, optional second arg INITIAL-CONTENTS\n\
 is a string to insert in the minibuffer before reading.")
-  (prompt, initial_contents)
-     Lisp_Object prompt, initial_contents;
+  (Lisp_Object prompt, Lisp_Object initial_contents)
 {
   return Feval (Fread_minibuffer (prompt, initial_contents));
 }
@@ -285,8 +277,7 @@ is a string to insert in the minibuffer before reading.")
 DEFUN ("read-string", Fread_string, Sread_string, 1, 2, 0,
   "Read a string from the minibuffer, prompting with string PROMPT.\n\
 If non-nil second arg INITIAL-INPUT is a string to insert before reading.")
-  (prompt, initial_input)
-     Lisp_Object prompt, initial_input;
+  (Lisp_Object prompt, Lisp_Object initial_input)
 {
   return Fread_from_minibuffer (prompt, initial_input, Qnil, Qnil);
 }
@@ -294,8 +285,7 @@ If non-nil second arg INITIAL-INPUT is a string to insert before reading.")
 DEFUN ("read-no-blanks-input", Fread_no_blanks_input, Sread_no_blanks_input, 2, 2, 0,
   "Args PROMPT and INIT, strings.  Read a string from the terminal, not allowing blanks.\n\
 Prompt with PROMPT, and provide INIT as an initial value of the input string.")
-  (prompt, init)
-     Lisp_Object prompt, init;
+  (Lisp_Object prompt, Lisp_Object init)
 {
   CHECK_STRING (prompt, 0);
   CHECK_STRING (init, 1);
@@ -306,8 +296,7 @@ Prompt with PROMPT, and provide INIT as an initial value of the input string.")
 DEFUN ("read-command", Fread_command, Sread_command, 1, 1, 0,
   "One arg PROMPT, a string.  Read the name of a command and return as a symbol.\n\
 Prompts with PROMPT.")
-  (prompt)
-     Lisp_Object prompt;
+  (Lisp_Object prompt)
 {
   return Fintern (Fcompleting_read (prompt, Vobarray, Qcommandp, Qt, Qnil),
 		  Qnil);
@@ -317,8 +306,7 @@ Prompts with PROMPT.")
 DEFUN ("read-function", Fread_function, Sread_function, 1, 1, 0,
   "One arg PROMPT, a string.  Read the name of a function and return as a symbol.\n\
 Prompts with PROMPT.")
-  (prompt)
-     Lisp_Object prompt;
+  (Lisp_Object prompt)
 {
   return Fintern (Fcompleting_read (prompt, Vobarray, Qfboundp, Qt, Qnil),
 		  Qnil);
@@ -329,8 +317,7 @@ DEFUN ("read-variable", Fread_variable, Sread_variable, 1, 1, 0,
   "One arg PROMPT, a string.  Read the name of a user variable and return\n\
 it as a symbol.  Prompts with PROMPT.\n\
 A user variable is one whose documentation starts with a \"*\" character.")
-  (prompt)
-     Lisp_Object prompt;
+  (Lisp_Object prompt)
 {
   return Fintern (Fcompleting_read (prompt, Vobarray,
 				    Quser_variable_p, Qt, Qnil),
@@ -342,8 +329,7 @@ DEFUN ("read-buffer", Fread_buffer, Sread_buffer, 1, 3, 0,
 Prompts with PROMPT.\n\
 Optional second arg is value to return if user enters an empty line.\n\
 If optional third arg REQUIRE-MATCH is non-nil, only existing buffer names are allowed.")
-  (prompt, def, require_match)
-     Lisp_Object prompt, def, require_match;
+  (Lisp_Object prompt, Lisp_Object def, Lisp_Object require_match)
 {
   Lisp_Object tem;
   Lisp_Object args[3];
@@ -381,8 +367,7 @@ If optional third argument PREDICATE is non-nil,\n\
 it is used to test each possible match.\n\
 The match is a candidate only if PREDICATE returns non-nil.\n\
 The argument given to PREDICATE is the alist element or the symbol from the obarray.")
-  (string, alist, pred)
-     Lisp_Object string, alist, pred;
+  (Lisp_Object string, Lisp_Object alist, Lisp_Object pred)
 {
   Lisp_Object bestmatch, tail, elt, eltstring;
   int bestmatchsize;
@@ -538,9 +523,11 @@ The argument given to PREDICATE is the alist element or the symbol from the obar
    else number of chars that match at the beginning.  */
 
 int
-scmp (s1, s2, len)
-     register unsigned char *s1, *s2; /* 92.9.20 by T.Enami */
-     int len;
+scmp (
+    register unsigned char *s1,
+    register unsigned char *s2, /* 92.9.20 by T.Enami */
+    int len
+)
 {
   register int l = len;
 
@@ -577,8 +564,7 @@ If optional third argument PREDICATE is non-nil,\n\
 it is used to test each possible match.\n\
 The match is a candidate only if PREDICATE returns non-nil.\n\
 The argument given to PREDICATE is the alist element or the symbol from the obarray.")
-  (string, alist, pred)
-     Lisp_Object string, alist, pred;
+  (Lisp_Object string, Lisp_Object alist, Lisp_Object pred)
 {
   Lisp_Object tail, elt, eltstring;
   Lisp_Object allmatches;
@@ -685,8 +671,7 @@ If REQUIRE-MATCH is non-nil, the user is not allowed to exit unless\n\
  If it is also not t, Return does not exit if it does non-null completion.\n\
 If INITIAL-INPUT is non-nil, insert it in the minibuffer initially.\n\
 Case is ignored if ambient value of  completion-ignore-case  is non-nil.")
-  (prompt, table, pred, require_match, init)
-     Lisp_Object prompt, table, pred, require_match, init;
+  (Lisp_Object prompt, Lisp_Object table, Lisp_Object pred, Lisp_Object require_match, Lisp_Object init)
 {
   Lisp_Object val;
   int count = specpdl_ptr - specpdl;
@@ -702,8 +687,7 @@ Case is ignored if ambient value of  completion-ignore-case  is non-nil.")
 }
 
 void
-temp_echo_area_contents (m)
-     char *m;
+temp_echo_area_contents (char *m)
 {
   int osize = ZV;
   Lisp_Object oinhibit;
@@ -734,7 +718,7 @@ Lisp_Object assoc_for_completion (Lisp_Object, Lisp_Object);
  * 6 no completion happened
  */
 int
-do_completion ()
+do_completion (void)
 {
   Lisp_Object completion, tem;
   int completedp;
@@ -803,9 +787,7 @@ do_completion ()
 /* Like assoc but assumes KEY is a string, and ignores case if appropriate.  */
 
 Lisp_Object
-assoc_for_completion (key, list)
-     register Lisp_Object key;
-     Lisp_Object list;
+assoc_for_completion (register Lisp_Object key, Lisp_Object list)
 {
   register Lisp_Object tail;
 
@@ -831,7 +813,7 @@ assoc_for_completion (key, list)
 
 DEFUN ("minibuffer-complete", Fminibuffer_complete, Sminibuffer_complete, 0, 0, "",
   "Complete the minibuffer contents as far as possible.")
-  ()
+  (void)
 {
   register int i = do_completion ();
   switch (i)
@@ -856,7 +838,7 @@ DEFUN ("minibuffer-complete-and-exit", Fminibuffer_complete_and_exit,
 Exit if the name is valid with no completion needed.\n\
 If name was completed to a valid match,\n\
 a repetition of this command will exit.")
-  ()
+  (void)
 {
   register int i;
 
@@ -891,7 +873,7 @@ a repetition of this command will exit.")
 DEFUN ("minibuffer-complete-word", Fminibuffer_complete_word, Sminibuffer_complete_word,
   0, 0, "",
   "Complete the minibuffer contents at most a single word.")
-  ()
+  (void)
 {
   Lisp_Object completion, tem;
   register int i;
@@ -1016,8 +998,7 @@ DEFUN ("display-completion-list", Fdisplay_completion_list, Sdisplay_completion_
   "Display in a buffer the list of completions, COMPLETIONS.\n\
 Each element may be just a symbol or string\n\
 or may be a list of two strings to be printed as if concatenated.")
-  (completions)
-     Lisp_Object completions;
+  (Lisp_Object completions)
 {
   register Lisp_Object tail, elt;
   register int i;
@@ -1059,7 +1040,7 @@ or may be a list of two strings to be printed as if concatenated.")
 DEFUN ("minibuffer-completion-help", Fminibuffer_completion_help, Sminibuffer_completion_help,
   0, 0, "",
   "Display a list of possible completions of the current minibuffer contents.")
-  ()
+  (void)
 {
   Lisp_Object completions;
   message ("Making completion list...");
@@ -1080,7 +1061,7 @@ DEFUN ("minibuffer-completion-help", Fminibuffer_completion_help, Sminibuffer_co
 
 DEFUN ("self-insert-and-exit", Fself_insert_and_exit, Sself_insert_and_exit, 0, 0, "",
   "Terminate minibuffer input.")
-  ()
+  (void)
 {
   self_insert_internal (last_command_char, 0);
   Fthrow (Qexit, Qnil);
@@ -1088,14 +1069,14 @@ DEFUN ("self-insert-and-exit", Fself_insert_and_exit, Sself_insert_and_exit, 0, 
 
 DEFUN ("exit-minibuffer", Fexit_minibuffer, Sexit_minibuffer, 0, 0, "",
   "Terminate this minibuffer argument.")
-  ()
+  (void)
 {
   Fthrow (Qexit, Qnil);
 }
 
 DEFUN ("minibuffer-depth", Fminibuffer_depth, Sminibuffer_depth, 0, 0, 0,
   "Return current depth of activations of minibuffer, a nonnegative integer.")
-  ()
+  (void)
 {
   return make_number (minibuf_level);
 }
@@ -1103,8 +1084,7 @@ DEFUN ("minibuffer-depth", Fminibuffer_depth, Sminibuffer_depth, 0, 0, 0,
 DEFUN ("minibuffer-extend-prompt", Fminibuffer_extend_prompt,
        Sminibuffer_extend_prompt, 1, 1, 0,
   "Show STRING before prompt of minibuffer.")
-  (str)
-     Lisp_Object str;
+  (Lisp_Object str)
 {
   char *s;
 
@@ -1119,14 +1099,14 @@ DEFUN ("minibuffer-extend-prompt", Fminibuffer_extend_prompt,
 
 
 void
-init_minibuf_once ()
+init_minibuf_once (void)
 {
   Vminibuffer_list = Qnil;
   staticpro (&Vminibuffer_list);
 }
 
 void
-syms_of_minibuf ()
+syms_of_minibuf (void)
 {
   minibuf_level = 0;
   minibuf_prompt = 0;
@@ -1210,7 +1190,7 @@ recursive minibuffers.");
 }
 
 void
-keys_of_minibuf ()
+keys_of_minibuf (void)
 {
   ndefkey (Vminibuffer_local_map, Ctl ('g'), "abort-recursive-edit");
   ndefkey (Vminibuffer_local_map, Ctl ('m'), "exit-minibuffer");

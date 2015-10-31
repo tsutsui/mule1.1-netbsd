@@ -146,8 +146,7 @@ Lisp_Object Qbytecode;
 
 DEFUN ("byte-code", Fbyte_code, Sbyte_code, 3, 3, 0,
   "")
-  (bytestr, vector, maxdepth)
-     Lisp_Object bytestr, vector, maxdepth;
+  (Lisp_Object bytestr, Lisp_Object vector, Lisp_Object maxdepth)
 {
   struct gcpro gcpro1, gcpro2, gcpro3;
   int count = specpdl_ptr - specpdl;
@@ -734,7 +733,7 @@ DEFUN ("byte-code", Fbyte_code, Sbyte_code, 3, 3, 0,
 }
 
 void
-syms_of_bytecode ()
+syms_of_bytecode (void)
 {
   Qbytecode = intern ("byte-code");
   staticpro (&Qbytecode);

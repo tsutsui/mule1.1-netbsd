@@ -48,16 +48,15 @@ int bufsize = 128;
 #endif
 
 #ifndef emacs
-static
-memory_out ()
+static void
+memory_out (void)
 {
   write (2, "Virtual memory exhausted\n", 25);
   exit (1);
 }
 
 static int
-xmalloc (size)
-     int size;
+xmalloc (int size)
 {
   register tem = malloc (size);
   if (!tem)
@@ -66,9 +65,7 @@ xmalloc (size)
 }
 
 static int
-xrealloc (ptr, size)
-     int ptr;
-     int size;
+xrealloc (int ptr, int size)
 {
   register tem = realloc (ptr, size);
   if (!tem)
@@ -84,14 +81,13 @@ xrealloc (ptr, size)
 
 static char *term_entry;
 
-static char *tgetst1 ();
+static char *tgetst1 (char *, char **);
 
 /* This is the main subroutine that is used to search
    an entry for a particular capability */
 
 static char *
-find_capability (bp, cap)
-     register char *bp, *cap;
+find_capability (register char *bp, register char *cap)
 {
   for (; *bp; bp++)
     if (bp[0] == ':'
@@ -102,7 +98,7 @@ find_capability (bp, cap)
 }
 
 int
-tgetnum (cap)
+tgetnum (char *cap)
      char *cap;
 {
   register char *ptr = find_capability (term_entry, cap);
@@ -112,8 +108,7 @@ tgetnum (cap)
 }
 
 int
-tgetflag (cap)
-     char *cap;
+tgetflag (char *cap)
 {
   register char *ptr = find_capability (term_entry, cap);
   return 0 != ptr && ptr[-1] == ':';
@@ -125,9 +120,7 @@ tgetflag (cap)
    If `area' is zero, space is allocated with `malloc'.  */
 
 char *
-tgetstr (cap, area)
-     char *cap;
-     char **area;
+tgetstr (char *cap, char **area)
 {
   register char *ptr = find_capability (term_entry, cap);
   if (!ptr || (ptr[-1] != '=' && ptr[-1] != '~'))
@@ -151,9 +144,7 @@ static char esctab[]
    or to newly allocated storage if area is 0.  */
 
 static char *
-tgetst1 (ptr, area)
-     char *ptr;
-     char **area;
+tgetst1 (char *ptr, char **area)
 {
   register char *p, *r;
   register int c;
@@ -233,10 +224,8 @@ static short speeds[] =
 #endif /* not VMS */
   };
 
-tputs (string, nlines, outfun)
-     register char *string;
-     int nlines;
-     register int (*outfun) ();
+void
+tputs (register char *string, int nlines, register int (*outfun) (char))
 {
   register int padcount = 0;
 
@@ -289,10 +278,11 @@ struct buffer
 
 /* Forward declarations of static functions */
 
-static int scan_file ();
-static char *gobble_line ();
+static int scan_file (char *, int, register struct buffer *);
+static char *gobble_line (int, register struct buffer *, char *);
 static int compare_contin ();
-static int name_match ();
+static int compare_contin (register char *, register char *);
+static int name_match (char *, char *);
 
 /* 91.10.16 by S.Hirano, 93.2.25 by M.Higashida */
 #ifdef MSDOS
@@ -311,8 +301,7 @@ static int name_match ();
 #include <nam.h>
 
 static int
-legal_filename_p (fn)
-     char *fn;
+legal_filename_p (char *fn)
 {
   struct FAB fab = cc$rms_fab;
   struct NAM nam = cc$rms_nam;
@@ -338,8 +327,7 @@ legal_filename_p (fn)
    If `bp' is zero, space is dynamically allocated.  */
 
 Lisp_Object_Int
-tgetent (bp, name)
-     char *bp, *name;
+tgetent (char *bp, char *name)
 {
   register char *tem;
   register int fd;
@@ -493,10 +481,7 @@ tgetent (bp, name)
    or returns 0 if no entry found in the file.  */
 
 static int
-scan_file (string, fd, bufp)
-     char *string;
-     int fd;
-     register struct buffer *bufp;
+scan_file (char *string, int fd, register struct buffer *bufp)
 {
   register char *tem;
   register char *end;
@@ -534,8 +519,7 @@ scan_file (string, fd, bufp)
    by termcap entry LINE.  */
 
 static int
-name_match (line, name)
-     char *line, *name;
+name_match (char *line, char *name)
 {
   register char *tem;
 
@@ -550,8 +534,7 @@ name_match (line, name)
 }
 
 static int
-compare_contin (str1, str2)
-     register char *str1, *str2;
+compare_contin (register char *str1, register char *str2)
 {
   register int c1, c2;
   while (1)
@@ -589,10 +572,7 @@ compare_contin (str1, str2)
    thing as one line.  The caller decides when a line is continued.  */
 
 static char *
-gobble_line (fd, bufp, append_end)
-     int fd;
-     register struct buffer *bufp;
-     char *append_end;
+gobble_line (int fd, register struct buffer *bufp, char *append_end)
 {
   register char *end;
   register int nread;
@@ -640,9 +620,8 @@ gobble_line (fd, bufp, append_end)
 
 #include <stdio.h>
 
-main (argc, argv)
-     int argc;
-     char **argv;
+int
+main (int argc, char **argv)
 {
   char *term;
   char *buf;
@@ -666,8 +645,8 @@ main (argc, argv)
   printf ("am: %d\n", tgetflag ("am"));
 }
 
-tprint (cap)
-     char *cap;
+void
+tprint (char *cap)
 {
   char *x = tgetstr (cap, 0);
   register char *y;

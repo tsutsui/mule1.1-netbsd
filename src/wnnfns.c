@@ -347,8 +347,7 @@ Lisp_Object	Qwnn_unknown_fail;
 /* Lisp functions definition */
 DEFUN ("wnn-server-open", Fwnn_open, Swnn_open, 2, 2, 0,
 	"For Wnn.")
-	(hname, lname)
-register Lisp_Object hname, lname;
+	(register Lisp_Object hname, register Lisp_Object lname)
 {
 	if ( 
 	    (hname != Qnil  &&  XTYPE (hname) != Lisp_String)
@@ -384,7 +383,7 @@ register Lisp_Object hname, lname;
 
 DEFUN ("wnn-server-close", Fwnn_close, Swnn_close, 0, 0, 0,
 	"For Wnn.")
-	()
+	(void)
 {
 	int	val;
 
@@ -397,8 +396,7 @@ DEFUN ("wnn-server-close", Fwnn_close, Swnn_close, 0, 0, 0,
 
 DEFUN ("wnn-server-use-dict", Fwnn_use_dict, Swnn_use_dict, 4, 4, 0,
 	"For Wnn.")
-	(dfname, hfname, prio, readonly)
-register Lisp_Object dfname, hfname, prio, readonly;
+	(register Lisp_Object dfname, register Lisp_Object hfname, register Lisp_Object prio, register Lisp_Object readonly)
 {
 	Lisp_Object	val;
 	int	v, rflag;
@@ -429,8 +427,7 @@ register Lisp_Object dfname, hfname, prio, readonly;
 DEFUN ("wnn-server-henkan-begin", Fwnn_begin_henkan, Swnn_begin_henkan, 
        1, 1, 0,
 	"For Wnn.")
-	(hstring)
-register Lisp_Object hstring;
+	(register Lisp_Object hstring)
 {
 	register int		i;
 	register KOUHO_ENT	*kp;
@@ -469,8 +466,7 @@ register Lisp_Object hstring;
 
 DEFUN ("wnn-server-henkan-next", Fwnn_jikouho, Swnn_jikouho, 1, 1, 0,
 	"For Wnn.")
-	(bunNo)
-register Lisp_Object bunNo;
+	(register Lisp_Object bunNo)
 {
 	Lisp_Object	val;
 	JIKOUHO_ENT	*jp;
@@ -515,8 +511,7 @@ register Lisp_Object bunNo;
 
 DEFUN ("wnn-server-henkan-kakutei", Fwnn_kakutei, Swnn_kakutei, 2, 2, 0,
 	"For Wnn.")
-	(bunNo, kouhoNo)
-register Lisp_Object bunNo, kouhoNo;
+	(register Lisp_Object bunNo, register Lisp_Object kouhoNo)
 {
 	int		bno, kno;
 	Lisp_Object	val;
@@ -556,8 +551,7 @@ register Lisp_Object bunNo, kouhoNo;
 DEFUN ("wnn-bunsetu-kouho-inspect", Fwnn_inspect_henkan, Swnn_inspect_henkan,
        2, 2, 0,
 	"For Wnn.")
-	(bunNo, kouhoNo)
-register Lisp_Object bunNo, kouhoNo;
+	(register Lisp_Object bunNo, register Lisp_Object kouhoNo)
 {
         Lisp_Object     val;
 	int		bno, kno;
@@ -600,8 +594,7 @@ register Lisp_Object bunNo, kouhoNo;
 DEFUN ("wnn-server-bunsetu-henkou", Fwnn_bunsetu_henkou, Swnn_bunsetu_henkou,
        2, 2, 0,
 	"For Wnn.")
-	(bunNo, len)
-register Lisp_Object bunNo, len;
+	(register Lisp_Object bunNo, register Lisp_Object len)
 {
 	Lisp_Object	val;
 	KOUHO_ENT	*kp;
@@ -638,7 +631,7 @@ register Lisp_Object bunNo, len;
 
 DEFUN ("wnn-server-henkan-quit", Fwnn_quit_henkan, Swnn_quit_henkan, 0, 0, 0,
 	"For Wnn.")
-	()
+	(void)
 {
 	Vwnn_error_code = Qnil;
 	return Qt;
@@ -646,8 +639,7 @@ DEFUN ("wnn-server-henkan-quit", Fwnn_quit_henkan, Swnn_quit_henkan, 0, 0, 0,
 
 DEFUN ("wnn-server-henkan-end", Fwnn_end_henkan, Swnn_end_henkan, 0, 1, 0,
 	"For Wnn.")
-	(bunNo)
-Lisp_Object  bunNo;
+	(Lisp_Object bunNo)
 {
 	if(XTYPE(bunNo) != Lisp_Int && bunNo != Qnil){
 		Vwnn_error_code = Qwnn_arguments_missmatch;
@@ -684,8 +676,7 @@ Lisp_Object  bunNo;
 
 DEFUN ("wnn-server-set-current-dict", Fwnn_set_current_dict, Swnn_set_current_dict, 1, 1, 0,
 	"For Wnn.")
-	(dno)
-register Lisp_Object dno;
+	(register Lisp_Object dno)
 {
 	if(XTYPE(dno) != Lisp_Int) {
 		Vwnn_error_code = Qwnn_arguments_missmatch;
@@ -709,8 +700,7 @@ register Lisp_Object dno;
 
 DEFUN ("wnn-server-dict-add", Fwnn_dict_toroku, Swnn_dict_toroku, 3, 3, 0,
 	"For Wnn.")
-	(kanji, yomi, bunpo)
-register Lisp_Object kanji, yomi, bunpo;
+	(register Lisp_Object kanji, register Lisp_Object yomi, register Lisp_Object bunpo)
 {
 	char	*yp, *kp;
 	int	ret, ysize, ksize, btype;
@@ -749,8 +739,7 @@ register Lisp_Object kanji, yomi, bunpo;
 
 DEFUN ("wnn-server-dict-delete", Fwnn_dict_sakujo, Swnn_dict_sakujo, 2, 2, 0,
 	"For Wnn.")
-	(no, yomi)
-register Lisp_Object no, yomi;
+	(register Lisp_Object no, register Lisp_Object yomi)
 {
 	int	ysize, ret;
 	char	*yp;
@@ -783,8 +772,7 @@ register Lisp_Object no, yomi;
 
 DEFUN ("wnn-server-dict-info", Fwnn_dict_joho, Swnn_dict_joho, 1, 1, 0,
 	"For Wnn.")
-	(yomi)
-register Lisp_Object yomi;
+	(register Lisp_Object yomi)
 {
 	JISHOJOHO	jbuf[JISHO_BUF_SIZE];
 	wchar		kbuf[KANJI_LEN];
@@ -821,7 +809,7 @@ register Lisp_Object yomi;
 }
 
 DEFUN ("wnn-server-getevf", Fwnn_getevf, Swnn_getevf, 0, 0, 0,	"For Wnn.")
-	()
+	(void)
 {
         int             p0, p1, p2, p3, p4, p5;
         int             rc;
@@ -846,9 +834,7 @@ DEFUN ("wnn-server-getevf", Fwnn_getevf, Swnn_getevf, 0, 0, 0,	"For Wnn.")
 }
 
 DEFUN ("wnn-server-setevf", Fwnn_setevf, Swnn_setevf, 6, MANY, 0, "For Wnn.")
-      (nargs, args)
-     int nargs;
-     register Lisp_Object *args;
+      (int nargs, register Lisp_Object *args)
 {
         int             rc;
 
@@ -883,8 +869,7 @@ DEFUN ("wnn-server-setevf", Fwnn_setevf, Swnn_setevf, 6, MANY, 0, "For Wnn.")
 
 DEFUN ("wnn-server-file-access", Fwnn_file_access, Swnn_file_access, 2, 2, 0,
 	"For Wnn.")
-	(fname, fmode)
-register Lisp_Object fname, fmode;
+	(register Lisp_Object fname, register Lisp_Object fmode)
 {
 
 	if(XTYPE(fname) != Lisp_String
@@ -917,8 +902,7 @@ register Lisp_Object fname, fmode;
 DEFUN ("wnn-server-make-directory", Fwnn_make_directory,
          Swnn_make_directory, 1, 1, 0,
 	"For Wnn.")
-	(pathname)
-register Lisp_Object pathname;
+	(register Lisp_Object pathname)
 {
 
 	if(XTYPE(pathname) != Lisp_String) {
@@ -945,8 +929,7 @@ register Lisp_Object pathname;
 
 DEFUN ("wnn-dict-status", Fwnn_dict_satus, Swnn_dict_satus, 1, 1, 0,
 	"For Wnn.")
-	(fname)
-register Lisp_Object fname;
+	(register Lisp_Object fname)
 {
 	int	ret;
 
@@ -969,7 +952,7 @@ register Lisp_Object fname;
 
 DEFUN ("wnn-server-dict-save", Fwnn_dict_save, Swnn_dict_save, 0, 0, 0,
 	"For Wnn.")
-	()
+	(void)
 {
 	if(!wnnExist) {
 		Vwnn_error_code = Qwnn_no_connection;
@@ -988,8 +971,7 @@ DEFUN ("wnn-server-dict-save", Fwnn_dict_save, Swnn_dict_save, 0, 0, 0,
 }
 
 Lisp_Object
-makeBunsetsu(kp)
-KOUHO_ENT	*kp;
+makeBunsetsu(KOUHO_ENT *kp)
 {
 	Lisp_Object	val1, val2;
 	int		kanalen;
@@ -1017,9 +999,7 @@ KOUHO_ENT	*kp;
 }
 
 Lisp_Object
-makeKouho(jp, no)
-JIKOUHO_ENT	*jp;
-int		no;
+makeKouho(JIKOUHO_ENT *jp, int no)
 {
 	Lisp_Object	val;
 	int		fl;
@@ -1042,9 +1022,7 @@ int		no;
 
 
 Lisp_Object
-makeInspect(jp, no)
-JIKOUHO_ENT	*jp;
-int		no;
+makeInspect(JIKOUHO_ENT *jp, int no)
 {
 	int		fl;
 	KOUHO_ENT	*kp;
@@ -1084,8 +1062,7 @@ int		no;
 }
 
 Lisp_Object
-makeInspectKp(bno)
-int             bno;
+makeInspectKp (int bno)
 {
         KOUHO_ENT	*kp;
 	int		kanalen;
@@ -1126,8 +1103,7 @@ int             bno;
 
 
 Lisp_Object
-makeJishoJoho(jp)
-JISHOJOHO	*jp;
+makeJishoJoho(JISHOJOHO *jp)
 {
 	char		*cp;
 	Lisp_Object	str, bumpo, hindo, jisho, serial, val;
@@ -1148,7 +1124,8 @@ JISHOJOHO	*jp;
 	return val;
 }
 
-wnn_exit()
+int
+wnn_exit (void)
 {
 	int	ret1, ret2;
 
@@ -1168,7 +1145,8 @@ wnn_exit()
 	return -2;
 }
 
-syms_of_wnn()
+void
+syms_of_wnn (void)
 {
 	defsubr(&Swnn_open);
 	defsubr(&Swnn_close);
@@ -1311,10 +1289,8 @@ syms_of_wnn()
 	Qwnn_unknown_fail = intern(":unknown-fail");
 }
 
-w2c(wp, cp, len)
-wchar	*wp;
-char	*cp;
-int	len; /* length of go */
+void
+w2c (wchar *wp, char *cp, int len /* length of go */)
 {
 	wchar	wc;
 
@@ -1331,8 +1307,8 @@ int	len; /* length of go */
 	*cp = 0;
 }
 
-wcstrlen(wp)
-wchar	*wp;
+int
+wcstrlen(wchar *wp)
 {
 	wchar	wc;
 	int	len = 0;
@@ -1346,9 +1322,8 @@ wchar	*wp;
 	return len;
 }
 
-wcstrlen2(wp, wsize)
-wchar	*wp;
-int	wsize;	/* wchar size */
+int
+wcstrlen2(wchar *wp, int wsize /* wchar size */)
 {
 	wchar	wc;
 	int	len = 0;
@@ -1363,9 +1338,8 @@ int	wsize;	/* wchar size */
 	return len;
 }
 
-c2w(cp, wp)
-unsigned char	*cp;
-wchar	*wp;
+void
+c2w(unsigned char *cp, wchar *wp)
 {
 	unsigned char	ch;
 
@@ -1385,8 +1359,8 @@ wchar	*wp;
 
 /* Return bit position as bunpo code index:
 for unknown value, return 1000; 89-Dec-12 */
-bunpoCode(val)
-int	val;
+int
+bunpoCode (int val)
 {
 	int	ret = 0;
 
@@ -1399,7 +1373,8 @@ int	val;
 	else return 1000;
 }
 
-errorSet()
+int
+errorSet (void)
 {
 	switch(wnn_errorno) {
 	case WNN_NO_EXIST:

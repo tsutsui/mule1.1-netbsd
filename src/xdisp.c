@@ -222,7 +222,7 @@ int display_mode_element (struct window *, int, int, int, int, int, Lisp_Object)
 
 DEFUN ("redraw-display", Fredraw_display, Sredraw_display, 0, 0, "",
   "Clear the screen and output again what is supposed to appear on it.")
-  ()
+  (void)
 {
   if (screen_height == 0) abort (); /* Some bug zeros some core */
   if (reset_terminal_on_clear)
@@ -249,9 +249,7 @@ int message_buf_print;
 /* dump an informative message to the minibuf */
 /* VARARGS 1 */
 void
-message (m, a1, a2, a3)
-     Lisp_Object_Int a1, a2, a3;
-     char *m;
+message (char *m, Lisp_Object_Int a1, Lisp_Object_Int a2, Lisp_Object_Int a3)
 {
   if (noninteractive)
     {
@@ -287,8 +285,7 @@ message (m, a1, a2, a3)
 
 /* Specify m, a string, as a message in the minibuf.  */
 void
-message1 (m)
-     char *m;
+message1 (char *m)
 {
   if (noninteractive)
     {
@@ -311,7 +308,7 @@ message1 (m)
 }
 
 void
-display_echo_area_contents ()
+display_echo_area_contents (void)
 {
   register Lisp_Object_Int vpos;
 
@@ -357,10 +354,7 @@ display_echo_area_contents ()
 /* 92.8.2, 93.5.22 Y.Niibe */
 
 static void
-r2l_double_cursor_set (pos_p,w,p)
-     struct position *pos_p;
-     struct window *w;
-     int p;
+r2l_double_cursor_set (struct position *pos_p, struct window *w, int p)
 {
   int *ip;
   int c_width, dir;
@@ -470,7 +464,7 @@ r2l_double_cursor_set (pos_p,w,p)
    entered recursively.  */
 
 void
-redisplay ()
+redisplay (void)
 {
   register struct window *w = XWINDOW (selected_window);
   register int pause;
@@ -713,7 +707,7 @@ update:
    unless another message has been requested in its place.  */
 
 void
-redisplay_preserve_echo_area ()
+redisplay_preserve_echo_area (void)
 {
   if (echo_area_contents == 0 && prev_echo_area_contents != 0)
     {
@@ -726,9 +720,7 @@ redisplay_preserve_echo_area ()
 }
 
 void
-mark_window_display_accurate (window, flag)
-     Lisp_Object window;
-     int flag;
+mark_window_display_accurate (Lisp_Object window, int flag)
 {
   register struct window *w;
 
@@ -770,7 +762,7 @@ int do_id = 1;
 /* Entry point to redisplay all windows */
 
 void
-redisplay_all_windows ()
+redisplay_all_windows (void)
 {
   buffer_shared = 0;
 
@@ -778,17 +770,14 @@ redisplay_all_windows ()
 }
 
 void
-redisplay_windows (window)
-     Lisp_Object window;
+redisplay_windows (Lisp_Object window)
 {
   for (; !NILP (window); window = XWINDOW (window)->next)
     redisplay_window (window, 0);
 }
 
 void
-redisplay_window (window, just_this_one)
-     Lisp_Object window;
-     int just_this_one;
+redisplay_window (Lisp_Object window, int just_this_one)
 {
   register struct window *w = XWINDOW (window);
   Lisp_Object_Int height;
@@ -1035,9 +1024,7 @@ done:
    starting at position `pos'.  */
 
 void
-try_window (window, pos)
-     Lisp_Object window;
-     register int pos;
+try_window (Lisp_Object window, register int pos)
 {
   register struct window *w = XWINDOW (window);
   register int height = XFASTINT (w->height) - !EQ (window, minibuf_window);
@@ -1089,8 +1076,7 @@ static int debug_start_vpos, debug_stop_vpos, debug_scroll_amount;
 static int debug_dont_scroll;
 
 int
-try_window_id (window)
-     Lisp_Object window;
+try_window_id (Lisp_Object window)
 {
   int pos;
   register struct window *w = XWINDOW (window);
@@ -1470,8 +1456,7 @@ try_window_id (window)
 
 /* patch for attribute by K.Handa  89.11.24, 92.1.30 */
 Lisp_Object
-current_attribute(pos)
-     int pos;
+current_attribute (int pos)
 {
   register unsigned int i, attr = 0;
   Lisp_Object p1, p2;
@@ -1504,12 +1489,7 @@ current_attribute(pos)
 struct position val_display_text_line;
 
 struct position *
-display_text_line (w, start, vpos, hpos, taboffset)
-     struct window *w;
-     Lisp_Object_Int start;
-     Lisp_Object_Int vpos;
-     Lisp_Object_Int hpos;
-     int taboffset;
+display_text_line (struct window *w, Lisp_Object_Int start, Lisp_Object_Int vpos, Lisp_Object_Int hpos, int taboffset)
 {
   register int pos = start;
   register unsigned int c;
@@ -2255,8 +2235,7 @@ display_text_line (w, start, vpos, hpos, taboffset)
 /* Display the mode line for window w */
 
 void
-display_mode_line (w)
-     struct window *w;
+display_mode_line (struct window *w)
 {
   register int vpos = XFASTINT (w->height) + XFASTINT (w->top) - 1;
   register int left = XFASTINT (w->left);
@@ -2303,14 +2282,7 @@ display_mode_line (w)
    so as to concatenate the elements.  */
 
 int
-display_mode_element (w, vpos, hpos, depth, minendcol, maxendcol, elt)
-     struct window *w;
-     int vpos;
-     register int hpos;
-     int depth;
-     int minendcol;
-     register int maxendcol;
-     register Lisp_Object elt;
+display_mode_element (struct window *w, int vpos, register int hpos, int depth, int minendcol, register int maxendcol, register Lisp_Object elt)
 {
  tail_recurse:
   if (depth > 10)
@@ -2489,10 +2461,7 @@ display_mode_element (w, vpos, hpos, depth, minendcol, maxendcol, elt)
 
 /* 92.2.20 by K.Handa */
 void
-decode_mode_spec_coding(code, buf, eol)
-     Lisp_Object code;
-     char *buf;
-     int eol;
+decode_mode_spec_coding (Lisp_Object code, char *buf, int eol)
 {
   if (NILP (code)) {
     *buf = '-';
@@ -2517,10 +2486,7 @@ decode_mode_spec_coding(code, buf, eol)
    for window W, generated by character C and width MAXWIDTH.  */
 
 char *
-decode_mode_spec (w, c, maxwidth)
-     struct window *w;
-     register char c;
-     register int maxwidth;
+decode_mode_spec (struct window *w, register char c, register int maxwidth)
 {
   Lisp_Object obj = Qnil;
   char *decode_mode_spec_buf = (char *) temp_screen->total_contents;
@@ -2700,13 +2666,7 @@ decode_mode_spec (w, c, maxwidth)
   Returns ending hpos */
 
 Lisp_Object_Int
-display_string (w, vpos, string, hpos, truncate, mincol, maxcol)
-     struct window *w;
-     int vpos;
-     unsigned char *string;
-     int hpos;
-     char truncate;
-     Lisp_Object_Int mincol, maxcol;
+display_string (struct window *w, int vpos, unsigned char *string, int hpos, char truncate, Lisp_Object_Int mincol, Lisp_Object_Int maxcol)
 {
   register unsigned int c;	/* 92.3.21 by K.Handa */
   register unsigned int *p1;	/* 91.10.21 by K.Handa */
@@ -2880,7 +2840,7 @@ display_string (w, vpos, string, hpos, truncate, mincol, maxcol)
 /* 92.1.17, 92.9.30 by K.Handa */
 DEFUN ("update-mode-lines", Fupdate_mode_lines, Supdate_mode_lines, 0, 0, 0,
   "Update mode-lines.")
-  ()
+  (void)
 {
   update_mode_lines++;
   return Qnil;
@@ -2888,7 +2848,7 @@ DEFUN ("update-mode-lines", Fupdate_mode_lines, Supdate_mode_lines, 0, 0, 0,
 /* end of patch */
 
 void
-syms_of_xdisp ()
+syms_of_xdisp (void)
 {
   staticpro (&last_arrow_position);
   staticpro (&last_arrow_string);
@@ -2944,7 +2904,7 @@ for terminal, use 'md (bold or extra bright)' of termcap.");
 
 /* initialize the window system */
 void
-init_xdisp ()
+init_xdisp (void)
 {
   Lisp_Object root_window;
 #ifndef COMPILER_REGISTER_BUG
