@@ -710,6 +710,7 @@ DEFUN ("canna-henkan-begin", Fcanna_henkan_begin, Scanna_henkan_begin,
        1, 1, 0,
 "かな漢字変換した結果を返還する。文節切りがしてある。")
 	(yomi)
+	Lisp_Object yomi;
 {
   int nbun;
   Lisp_Object res;
@@ -762,6 +763,7 @@ DEFUN ("canna-henkan-next", Fcanna_henkan_next, Scanna_henkan_next,
        1, 1, 0,
 "候補一覧を求める。")
 	(bunsetsu)
+	Lisp_Object bunsetsu;
 {
   int i, nbun, slen, len;
   unsigned char *p, RkBuf[RKBUFSIZE];
@@ -791,6 +793,7 @@ DEFUN ("canna-bunsetu-henkou", Fcanna_bunsetu_henkou, Scanna_bunsetu_henkou,
        2, 2, 0,
 "文節の長さを指定する。")
 	(bunsetsu, bunlen)
+	Lisp_Object bunsetsu, bunlen;
 {
   int nbun, len;
 
