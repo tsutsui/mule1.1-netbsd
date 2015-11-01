@@ -117,8 +117,6 @@ what you give them.   Help stamp out software-hoarding!  */
 #include "vlimit.h"
 #endif
 
-extern char *start_of_data ();
-
 #ifdef BSD
 #ifndef DATA_SEG_BITS
 #define start_of_data() &etext
@@ -132,6 +130,10 @@ extern char *start_of_data ();
 
 #ifndef emacs
 #define start_of_data() &etext
+#endif
+
+#ifndef start_of_data
+extern char *start_of_data (void);
 #endif
 
 #define ISALLOC ((char) 0xf7)	/* magic byte that implies allocation */

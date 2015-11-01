@@ -1024,6 +1024,7 @@ extern Lisp_Object Fprin1_to_string (Lisp_Object);
 extern Lisp_Object Fprinc (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fterpri (Lisp_Object);
 extern Lisp_Object Fprint (Lisp_Object, Lisp_Object);
+extern Lisp_Object Fwith_output_to_temp_buffer (Lisp_Object);
 extern Lisp_Object Fwrite_char (Lisp_Object, Lisp_Object);
 extern Lisp_Object Vstandard_output, Qstandard_output;
 extern void temp_output_buffer_setup (char *);
@@ -1122,6 +1123,7 @@ extern void do_autoload (Lisp_Object, Lisp_Object);
 extern Lisp_Object Vprefix_arg, Qminus, Vcurrent_prefix_arg;
 extern Lisp_Object Fchar_equal (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fdelete_region (Lisp_Object, Lisp_Object);
+extern Lisp_Object Fgetenv (Lisp_Object);
 extern Lisp_Object Fgoto_char (Lisp_Object);
 extern Lisp_Object Fcurrent_time_string (void);
 extern Lisp_Object Finsert_after_markers (int, Lisp_Object *);
@@ -1434,6 +1436,7 @@ extern Lisp_Object Fnext_window (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fother_window (Lisp_Object);
 extern Lisp_Object Fpos_visible_in_window_p (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fprevious_window (Lisp_Object);
+extern Lisp_Object Frecenter (Lisp_Object);
 extern Lisp_Object Freplace_buffer_in_windows (Lisp_Object);
 extern Lisp_Object Fsave_window_excursion (Lisp_Object);
 extern Lisp_Object Fscroll_down (Lisp_Object);
@@ -1554,6 +1557,7 @@ extern void insert_from_string_before_markers (Lisp_Object, int, int);
 
 /* defined in macros.c */
 extern Lisp_Object Fcall_last_kbd_macro (Lisp_Object);
+extern Lisp_Object Fend_kbd_macro (Lisp_Object);
 extern Lisp_Object Fexecute_kbd_macro (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fstart_kbd_macro (Lisp_Object);
 
@@ -1595,6 +1599,7 @@ extern Lisp_Object Fupdate_mode_lines (void);
 extern Lisp_Object current_attribute (int);
 
 /* defined in xfns.c or x11fns.c */
+extern Lisp_Object Fcoordinates_in_window_p (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fx_color_p (void);
 extern Lisp_Object Fx_debug (Lisp_Object);
 extern Lisp_Object Fx_flip_color (void);
@@ -1647,6 +1652,7 @@ extern Lisp_Object Fchar_component (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fchar_direction (Lisp_Object);
 extern Lisp_Object Fchar_leading_char (Lisp_Object);
 extern Lisp_Object Fchar_width (Lisp_Object);
+extern Lisp_Object Fcharacter_set (Lisp_Object);
 extern Lisp_Object Fchars_in_string (Lisp_Object);
 extern Lisp_Object Fdefine_word_pattern (Lisp_Object);
 extern Lisp_Object Fleading_char (Lisp_Object, Lisp_Object, Lisp_Object);
@@ -1655,6 +1661,66 @@ extern Lisp_Object Fnew_character_set (int, Lisp_Object *);
 extern Lisp_Object Fre_compile (Lisp_Object);
 extern Lisp_Object Fredisplay_region (Lisp_Object, Lisp_Object);
 extern Lisp_Object Fstring_width (Lisp_Object);
+
+/* defined in wnn4fns.c */
+extern Lisp_Object Fwnn_open (Lisp_Object, Lisp_Object);
+extern Lisp_Object Fwnn_close (void);
+extern Lisp_Object Fwnn_dict_add (int, Lisp_Object *);
+extern Lisp_Object Fwnn_dict_delete (Lisp_Object);
+extern Lisp_Object Fwnn_dict_list (void);
+extern Lisp_Object Fwnn_dict_comment (Lisp_Object, Lisp_Object);
+extern Lisp_Object Fwnn_set_rev (Lisp_Object);
+extern Lisp_Object Fwnn_begin_henkan (Lisp_Object);
+extern Lisp_Object Fwnn_zenkouho (Lisp_Object, Lisp_Object);
+extern Lisp_Object Fwnn_get_zenkouho (Lisp_Object);
+extern Lisp_Object Fwnn_zenkouho_bun (void);
+extern Lisp_Object Fwnn_zenkouho_suu (void);
+extern Lisp_Object Fwnn_dai_top (Lisp_Object);
+extern Lisp_Object Fwnn_dai_end (Lisp_Object);
+extern Lisp_Object Fwnn_kakutei (Lisp_Object, Lisp_Object);
+extern Lisp_Object Fwnn_bunsetu_henkou (Lisp_Object, Lisp_Object, Lisp_Object);
+extern Lisp_Object Fwnn_inspect (Lisp_Object);
+extern Lisp_Object Fwnn_quit_henkan (void);
+extern Lisp_Object Fwnn_bunsetu_kanji (Lisp_Object);
+extern Lisp_Object Fwnn_bunsetu_yomi (Lisp_Object);
+extern Lisp_Object Fwnn_bunsetu_suu (void);
+extern Lisp_Object Fwnn_hindo_update (Lisp_Object);
+extern Lisp_Object Fwnn_word_toroku (Lisp_Object, Lisp_Object, Lisp_Object, Lisp_Object, Lisp_Object);
+extern Lisp_Object Fwnn_word_sakujo (Lisp_Object, Lisp_Object);
+extern Lisp_Object Fwnn_word_use (Lisp_Object, Lisp_Object);
+extern Lisp_Object Fwnn_word_info (Lisp_Object, Lisp_Object);
+extern Lisp_Object Fwnn_hindo_set (Lisp_Object, Lisp_Object, Lisp_Object);
+extern Lisp_Object Fwnn_dict_search (Lisp_Object);
+extern Lisp_Object Fwnn_dict_save (void);
+extern Lisp_Object Fwnn_get_param (void);
+extern Lisp_Object Fwnn_set_param (int, Lisp_Object *);
+extern Lisp_Object Fwnn_get_msg (void);
+extern Lisp_Object Fwnn_fuzokugo_set (Lisp_Object);
+extern Lisp_Object Fwnn_fuzokugo_get (void);
+extern Lisp_Object Fwnn_isconnect (void);
+extern Lisp_Object Fwnn_hinsi_dicts (Lisp_Object);
+extern Lisp_Object Fwnn_hinsi_list (Lisp_Object, Lisp_Object);
+extern Lisp_Object Fwnn_hinsi_name (Lisp_Object);
+extern Lisp_Object Fwnn_hinsi_number (Lisp_Object);
+
+/* defined in canna.c */
+extern Lisp_Object Fcanna_key_proc (Lisp_Object);
+extern Lisp_Object Fcanna_set_bunsetsu (Lisp_Object);
+extern Lisp_Object Fcanna_initialize (Lisp_Object, Lisp_Object, Lisp_Object);
+extern Lisp_Object Fcanna_finalize (void);
+extern Lisp_Object Fcanna_touroku_string (Lisp_Object);
+extern Lisp_Object Fcanna_set_width (Lisp_Object);
+extern Lisp_Object Fcanna_change_mode (Lisp_Object);
+extern Lisp_Object Fcanna_store_yomi (Lisp_Object, Lisp_Object);
+extern Lisp_Object Fcanna_do_function (Lisp_Object, Lisp_Object);
+extern Lisp_Object Fcanna_parse (Lisp_Object);
+extern Lisp_Object Fcanna_query_mode (void);
+extern Lisp_Object Fcanna_henkan_begin (Lisp_Object);
+extern Lisp_Object Fcanna_henkan_next (Lisp_Object);
+extern Lisp_Object Fcanna_bunsetu_henkou (Lisp_Object, Lisp_Object);
+extern Lisp_Object Fcanna_henkan_kakutei (Lisp_Object, Lisp_Object);
+extern Lisp_Object Fcanna_henkan_end (void);
+extern Lisp_Object Fcanna_henkan_quit (void);
 
 /* Nonzero means Emacs has already been initialized.
    Used during startup to detect startup of dumped Emacs.  */
