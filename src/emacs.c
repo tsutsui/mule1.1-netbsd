@@ -328,7 +328,6 @@ main (argc, argv, envp)
      char **envp;
 {
   int skip_args = 0;
-  extern int errno;
 
 #ifdef HAVE_PERSONALITY_LINUX32
   /* See if there is a gap between the end of BSS and the heap.

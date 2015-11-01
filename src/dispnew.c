@@ -1480,7 +1480,6 @@ void
 window_change_signal ()
 {
   int width, height;
-  extern int errno;
   int old_errno = errno;
 
 #ifdef nec_ews_svr2				/* hir@nec, 1990.3.10 */

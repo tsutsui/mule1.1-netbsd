@@ -101,7 +101,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #ifdef WIN32
 #undef sys_errlist
 #endif
-extern int errno;
 #if !defined(VMS) && (defined(LINUX) && \
 			!(defined (__GLIBC__) && (__GLIBC__ >= 2)))
 extern char *sys_errlist[];
