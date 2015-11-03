@@ -1476,8 +1476,7 @@ DEFUN ("si:regexp-compile-pattern",
  /* translation tables.  It has been certified on various cases. */
 /*
 void
-compute_trt_inverse (trt)
-     register unsigned char *trt;
+compute_trt_inverse (register unsigned char *trt)
 {
   register int i = 0400;
   register unsigned char c, q;

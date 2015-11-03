@@ -53,8 +53,7 @@ Lisp_Object Qboundp, Qfboundp;
 Lisp_Object Qcdr;
 
 Lisp_Object
-wrong_type_argument (predicate, value)
-     register Lisp_Object predicate, value;
+wrong_type_argument (register Lisp_Object predicate, register Lisp_Object value)
 {
   register Lisp_Object tem;
   do

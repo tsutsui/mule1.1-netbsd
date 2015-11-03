@@ -236,13 +236,12 @@ mc_readlink (unsigned char *path, unsigned char *buf, int size)
 #endif
 
 #ifndef STAT_IS_XSTAT		/* hir, 1993.10.22 */
-int mc_stat (path, st_addr)
+int
+mc_stat (unsigned char *path, struct stat *st_addr)
 #else
-int mc_xstat (v, path, st_addr)
-     int v;
+int
+mc_xstat (int v, unsigned char *path, struct stat *st_addr)
 #endif
-     unsigned char *path;
-     struct stat *st_addr;
 {
   unsigned char buffer[MAXPATHLEN];
 #ifndef STAT_IS_XSTAT		/* hir, 1993.10.22 */

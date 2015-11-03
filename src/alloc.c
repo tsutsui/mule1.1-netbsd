@@ -145,8 +145,7 @@ memory_full (void)
 /* like malloc and realloc but check for no memory left */
 
 void *
-xmalloc (size)
-     size_t size;
+xmalloc (size_t size)
 {
   register void *val;
   /* Avoid failure if malloc (0) returns 0.  */
@@ -158,9 +157,7 @@ xmalloc (size)
 }
 
 void *
-xrealloc (block, size)
-     void *block;
-     size_t size;
+xrealloc (void *block, size_t size)
 {
   register void *val;
   /* Avoid failure if malloc (0) returns 0.  */

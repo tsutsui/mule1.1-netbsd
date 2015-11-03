@@ -1145,12 +1145,8 @@ function x-new-display instead.")
   time, emacs, and X conventions force me into this crock. --rlk
   */
 
-window_fetch (font, x, y, width, height, geo, deflt, border, str)
-     Font font;
-     int *x, *y, *width, *height;
-     char *geo, *deflt;
-     int border;
-     char *str;
+Lisp_Object 
+window_fetch (Font font, int *x, int *y, int *width, int *height, char *geo, char *deflt, int border, char *str)
 {
   OpaqueFrame frame;
   Window tempwindow;
@@ -1281,9 +1277,7 @@ See the documentation of x-rebind-key for more information.")
   return Qnil;
 }
 
-XExitWithCoreDump (Disp, Event)
-     Display *Disp;
-     XErrorEvent *Event;
+XExitWithCoreDump (Display *Disp, XErrorEvent *Event)
 {
   XCleanUp ();
   abort ();
