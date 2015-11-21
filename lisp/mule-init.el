@@ -79,32 +79,32 @@
     nil
   ;; You have X window.
   (let ((fonts
-	 '["-*-fixed-medium-r-*--*-*-iso8859-1" 0 ; ASCII
-	   "-*-fixed-medium-r-*--*-*-iso8859-1" 1 ; Latin-1
-	   "-*-fixed-medium-r-*--*-*-iso8859-2" 1 ; Latin-2
-	   "-*-fixed-medium-r-*--*-*-iso8859-3" 1 ; Latin-3
-	   "-*-fixed-medium-r-*--*-*-iso8859-4" 1 ; Latin-4
+	 '["-*-fixed-medium-r-*--14-*-iso8859-1" 0 ; ASCII
+	   "-*-fixed-medium-r-*--14-*-iso8859-1" 1 ; Latin-1
+	   "-*-fixed-medium-r-*--14-*-iso8859-2" 1 ; Latin-2
+	   "-*-fixed-medium-r-*--14-*-iso8859-3" 1 ; Latin-3
+	   "-*-fixed-medium-r-*--14-*-iso8859-4" 1 ; Latin-4
 	   nil 0			; not used
-	   "-*-fixed-medium-r-*--*-*-iso8859-7" 1 ; Greek
+	   "-*-fixed-medium-r-*--14-*-iso8859-7" 1 ; Greek
 	   nil 0			; Arabic
-	   "-*-fixed-medium-r-*--*-*-iso8859-8" 1 ; Hebrew
-	   "-*-fixed-medium-r-*--*-*-jisx0201.1976-*" 1 ; Kana
-	   "-*-fixed-medium-r-*--*-*-jisx0201.1976-*" 0 ; Roman
+	   "-*-fixed-medium-r-*--14-*-iso8859-8" 1 ; Hebrew
+	   "-*-fixed-medium-r-*--14-*-jisx0201.1976-*" 1 ; Kana
+	   "-*-fixed-medium-r-*--14-*-jisx0201.1976-*" 0 ; Roman
 	   nil 0			; not used
-	   "-*-fixed-medium-r-*--*-*-iso8859-5" 1 ; Cyrillic
-	   "-*-fixed-medium-r-*--*-*-iso8859-9" 1 ; Latin-5
+	   "-*-fixed-medium-r-*--14-*-iso8859-5" 1 ; Cyrillic
+	   "-*-fixed-medium-r-*--14-*-iso8859-9" 1 ; Latin-5
 	   nil 0			; not used
 	   nil 0			; not used
-	   "-*-fixed-medium-r-*--*-*-jisx0208.1983-*" 0 ; old JIS
-	   "-*-song-medium-r-*--*-*-gb2312.1980-*" 0 ; Chinese
-	   "-*-fixed-medium-r-*--*-*-jisx0208.1983-*" 0 ; Japanese
-	   "-*-mincho-medium-r-*--*-*-ksc5601.1987-*" 0 ; Korean
-	   "-*-fixed-medium-r-*--*-*-jisx0212.1990-*" 0 ; Japanese supplement
+	   "-*-fixed-medium-r-*--14-*-jisx0208.1983-*" 0 ; old JIS
+	   "-*-song-medium-r-*--14-*-gb2312.1980-*" 0 ; Chinese
+	   "-*-fixed-medium-r-*--14-*-jisx0208.1983-*" 0 ; Japanese
+	   "-*-mincho-medium-r-*--14-*-ksc5601.1987-*" 0 ; Korean
+	   "-*-fixed-medium-r-*--14-*-jisx0212.1990-*" 0 ; Japanese supplement
 	   nil 0			; CNS 11643 Set 1
 	   nil 0			; CNS 11643 Set 2
 	   nil 0			; CNS 11643 Set 14
-	   "-*-fixed-medium-r-*--*-*-big5*-*" 0 ; Big5
-	   "-*-fixed-medium-r-*--*-*-big5*-*" 0 ; Big5
+	   "-*-fixed-medium-r-*--14-*-big5*-*" 0 ; Big5
+	   "-*-fixed-medium-r-*--14-*-big5*-*" 0 ; Big5
 	   ])
 	i)
     (setq i (/ (length fonts) 2))
@@ -113,11 +113,11 @@
       (aset x-default-fonts i (aref fonts (* i 2)))
       (aset x-default-encoding i (aref fonts (1+ (* i 2))))))
   (set-x-default-font
-   lc-sisheng "-*-fixed-medium-r-*--*-*-*-*-*-*-sisheng_cwnn-0" 0)
+   lc-sisheng "-*-fixed-medium-r-*--14-*-*-*-*-*-sisheng_cwnn-0" 0)
   (set-x-default-font
-   lc-thai "-*-fixed-medium-r-*--*-*-*-*-*-*-tis620.2529-1" 1)
+   lc-thai "-*-fixed-medium-r-*--14-*-*-*-*-*-tis620.2529-1" 1)
   (set-x-default-font
-   lc-ascr2l "-*-fixed-medium-r-*--*-*-*-*-*-*-iso8859-1" 0)
+   lc-ascr2l "-*-fixed-medium-r-*--14-*-*-*-*-*-iso8859-1" 0)
   )
 
 ;; If you want to load multiple files, you'ld better load a file of main
