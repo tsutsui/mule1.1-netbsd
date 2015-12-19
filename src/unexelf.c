@@ -861,17 +861,17 @@ unexec (char *new_name, char *old_name, unsigned data_start, unsigned bss_start,
 	alignment = OLD_SECTION_H (old_bss_index).sh_addralign;
 
 #ifdef __sgi
-	 /* According to r02kar@x4u2.desy.de (Karsten Kuenne)
-	    and oliva@gnu.org (Alexandre Oliva), on IRIX 5.2, we
-	    always get "Program segment above .bss" when dumping
-								    when the executable doesn't have an sbss section.  */
+	  /* According to r02kar@x4u2.desy.de (Karsten Kuenne)
+	     and oliva@gnu.org (Alexandre Oliva), on IRIX 5.2, we
+	     always get "Program segment above .bss" when dumping
+	     when the executable doesn't have an sbss section.  */
       if (old_sbss_index != -1)
 #endif /* __sgi */
       if (NEW_PROGRAM_H (n).p_vaddr + NEW_PROGRAM_H (n).p_filesz
-	 > (old_sbss_index == -1
-	    ? old_bss_addr
-	    : round_up (old_bss_addr, alignment)))
-	fatal ("Program segment above .bss in %s\n", old_name, 0);
+	  > (old_sbss_index == -1
+	     ? old_bss_addr
+	     : round_up (old_bss_addr, alignment)))
+	  fatal ("Program segment above .bss in %s\n", old_name, 0);
 
       if (NEW_PROGRAM_H (n).p_type == PT_LOAD
 	  && (round_up ((NEW_PROGRAM_H (n)).p_vaddr
