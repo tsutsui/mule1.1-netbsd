@@ -244,12 +244,13 @@ extern Lisp_Object Qexit;
 #undef WRETCODE
 #define WRETCODE(w) WEXITSTATUS (w)
 
-#if !defined(__NetBSD__)
+#if !defined(HAVE_STRERROR)
 extern errno;
 extern sys_nerr;
-#if defined(LINUX) && !(defined (__GLIBC__) && (__GLIBC__ >= 2))
 extern char *sys_errlist[];
-#endif
+#define err_str(a) ((a) < sys_nerr ? sys_errlist[a] : "unknown error")
+#else
+#define err_str(a) strerror(a)
 #endif
 
 #if !defined(BSD4_1) && !defined(WIN32) /* 93.2.17 by M.Higashida */
@@ -2224,7 +2225,7 @@ wait_reading_process_input (int time_limit, Lisp_Object_Int read_kbd, int do_dis
 	    abort ();
 #endif /* not AIX */
 	  else
-	    error("select error: %s", sys_errlist[xerrno]);
+	    error("select error: %s", err_str(xerrno));
 #endif /* not WIN32 */
 	}
 #ifdef SIGIO

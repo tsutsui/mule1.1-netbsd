@@ -76,6 +76,7 @@
 #define SYS_SIGLIST_DECLARED
 #define HAVE_GETWD
 #define HAVE_SYS_WAIT_H
+#define HAVE_STRERROR
 
 #define SYSV_STREAMS
 
