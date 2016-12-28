@@ -150,7 +150,7 @@ printchar (
 }
 
 static void
-strout (char *ptr, int size, Lisp_Object printcharfun)
+strout (const char *ptr, int size, Lisp_Object printcharfun)
 {
   int i = 0;
 
