@@ -836,7 +836,7 @@ struct save_signal
 
 /* Suspend the Emacs process; give terminal to its superior.  */
 
-int
+void
 sys_suspend (void)
 {
 #ifndef WIN32 /* 93.2.17 by M.Higashida */
