@@ -226,8 +226,6 @@ int preemption_index;
 int debug_preemption_vpos = -1;
 int debug_preemption_char_count = -1;
 
-extern int num_input_chars;
-
 /* 93.5.22 Y.Niibe -- Nonzero means display double cursor */
 int r2l_double_cursor;
 
