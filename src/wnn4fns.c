@@ -527,15 +527,16 @@ DEFUN ("wnn-server-set-rev", Fwnn_set_rev, Swnn_set_rev,
   int	snum;
   if ((snum = check_wnn_server_type()) == -1) return Qnil;
   if(rev == Qnil){
-    if((!wnnfns_buf[snum]) || (!wnnfns_env_norm[snum])) return;
+    if((!wnnfns_buf[snum]) || (!wnnfns_env_norm[snum])) return Qnil;
     jl_env_set(wnnfns_buf[snum], wnnfns_env_norm[snum]);
     wnnfns_norm = 1;
   }
   else{
-    if((!wnnfns_buf[snum]) || (!wnnfns_env_rev[snum])) return;
+    if((!wnnfns_buf[snum]) || (!wnnfns_env_rev[snum])) return Qnil;
     jl_env_set(wnnfns_buf[snum], wnnfns_env_rev[snum]);
     wnnfns_norm = 0;
   }
+  return Qnil;
 }
 
 DEFUN ("wnn-server-henkan-begin", Fwnn_begin_henkan, Swnn_begin_henkan, 
