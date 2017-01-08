@@ -2807,7 +2807,7 @@ process_send_signal (Lisp_Object process, int signo, Lisp_Object current_group, 
 	  ioctl (XFASTINT (p->infd), TIOCGETC, &c);
 #endif
 	  send_process (proc, &c.t_intrc, 1);
-	  return Qnil;
+	  return;
 	case SIGQUIT:
 #ifdef DECOSF
 	  if (ioctl (XFASTINT (p->infd), TIOCGETC, &c) < 0) break;
@@ -2815,7 +2815,7 @@ process_send_signal (Lisp_Object process, int signo, Lisp_Object current_group, 
 	  ioctl (XFASTINT (p->infd), TIOCGETC, &c);
 #endif
 	  send_process (proc, &c.t_quitc, 1);
-	  return Qnil;
+	  return;
 #ifdef SIGTSTP
 	case SIGTSTP:
 #ifdef DECOSF
@@ -2824,7 +2824,7 @@ process_send_signal (Lisp_Object process, int signo, Lisp_Object current_group, 
 	  ioctl (XFASTINT (p->infd), TIOCGLTC, &lc);
 #endif
 	  send_process (proc, &lc.t_suspc, 1);
-	  return Qnil;
+	  return;
 #endif
 	}
 #endif /* have TIOCGLTC and have TIOCGETC */
@@ -2871,7 +2871,7 @@ process_send_signal (Lisp_Object process, int signo, Lisp_Object current_group, 
 	  ioctl (XFASTINT (p->infd), TCGETA, &t);
 #endif
 	  send_process (proc, &t.c_cc[VINTR], 1);
-	  return Qnil;
+	  return;
 	case SIGQUIT:
 #ifdef DECOSF
 	  if (ioctl (XFASTINT (p->infd), TCGETA, &t) < 0) break;
@@ -2879,7 +2879,7 @@ process_send_signal (Lisp_Object process, int signo, Lisp_Object current_group, 
 	  ioctl (XFASTINT (p->infd), TCGETA, &t);
 #endif
 	  send_process (proc, &t.c_cc[VQUIT], 1);
-	  return Qnil;
+	  return;
 #ifdef SIGTSTP
 	case SIGTSTP:
 #ifdef DECOSF
@@ -2888,7 +2888,7 @@ process_send_signal (Lisp_Object process, int signo, Lisp_Object current_group, 
 	  ioctl (XFASTINT (p->infd), TCGETA, &t);
 #endif
 	  send_process (proc, &t.c_cc[VSWTCH], 1);
-	  return Qnil;
+	  return;
 #endif
 	}
 #endif /* HAVE_TERMIOS */
@@ -2901,15 +2901,15 @@ process_send_signal (Lisp_Object process, int signo, Lisp_Object current_group, 
 	case SIGINT:
 	  ioctl (XFASTINT (p->infd), TCGETS, &t);
 	  send_process (proc, &t.c_cc[VINTR], 1);
-	  return Qnil;
+	  return;
 	case SIGQUIT:
 	  ioctl (XFASTINT (p->infd), TCGETS, &t);
 	  send_process (proc, &t.c_cc[VQUIT], 1);
-	  return Qnil;
+	  return;
 	case SIGTSTP:
 	  ioctl (XFASTINT (p->infd), TCGETS, &t);
 	  send_process (proc, &t.c_cc[VSUSP], 1);
-	  return Qnil;
+	  return;
 	}
 #endif /* USG and HAVE_TCATTR */
 
