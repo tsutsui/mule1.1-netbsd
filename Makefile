@@ -89,8 +89,8 @@ install: all mkdir lockdir
 	$(INSTALL) -c etc/ctags ${BINDIR}/ctags
 	$(INSTALL) -c etc/m2ps ${BINDIR}/m2ps
 	$(INSTALL) $(INSTALLFLAGS) src/xemacs ${BINDIR}/xemacs
-	$(INSTALL) -c -m 444 etc/mule.1 ${MANDIR}/mule.1
-	$(INSTALL) -c -m 444 etc/m2ps.1 ${MANDIR}/m2ps.1
+	$(INSTALL) -c -m 444 etc/mule.1 ${MAN1DIR}/mule.1
+	$(INSTALL) -c -m 444 etc/m2ps.1 ${MAN1DIR}/m2ps.1
 	-rm -f ${BINDIR}/mule
 	mv ${BINDIR}/xemacs ${BINDIR}/mule
 
