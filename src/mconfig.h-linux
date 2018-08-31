@@ -62,7 +62,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. */
 #endif
 
 #ifdef WNN4
-#define LIBWNN -lwnn
+#define LIBWNN -lwnn -lcrypt
 #define INCWNN -I/usr/include/wnn
 #endif  /* not WNN4 */
 
