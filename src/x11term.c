@@ -3621,6 +3621,7 @@ XInitWindow (void)
 	  free (XXcurrentfont);
 	  XXcurrentfont = (char *) xmalloc (6);
 	  strcpy (XXcurrentfont, "fixed");
+	  fonts[0].name = XXcurrentfont;
 	  goto retry;
 	}
       fatal ("X server unable to find requested font `%s'\n",

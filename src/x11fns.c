@@ -156,6 +156,7 @@ extern Window XXwindow;
 extern Cursor EmacsCursor;
 extern short MouseCursor[], MouseMask[];
 extern char *XXcurrentfont;
+extern font_struct fonts[];
 extern int informflag;
 
 extern int WindowMapped;
@@ -614,10 +615,9 @@ Return t if the fonts is loaded successfully, else return nil.")
 	} else
 /* end of patch */
 	if (!XNewFont (newfontname)) {
-		/* 93.4.30 by Y.Kawabe
 		free (XXcurrentfont);
 		XXcurrentfont = newfontname;
-		*/
+	        fonts[0].name = XXcurrentfont;
 		return Qt;
 	}
       badfont:
