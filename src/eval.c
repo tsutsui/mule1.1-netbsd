@@ -1693,6 +1693,7 @@ call4 (Lisp_Object fn, Lisp_Object arg, Lisp_Object arg1, Lisp_Object arg2, Lisp
   args[2] = arg1;
   args[3] = arg2;
   args[4] = arg3;
+  gcpro1.var = args;
   val = Ffuncall (5, args);
 #else /* not NO_ARG_ARRAY */
   val = Ffuncall (5, &fn);
