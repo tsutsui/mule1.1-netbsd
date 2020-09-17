@@ -133,9 +133,15 @@ main (argc, argv)
 
   if (cwd == 0)
     {
+#if !defined(HAVE_STRERROR)
       fprintf (stderr, "%s: %s (%s)\n", argv[0],
 	       "Cannot get current working directory",
 	       (errno < sys_nerr) ? sys_errlist[errno] : "unknown error");
+#else
+      fprintf (stderr, "%s: %s (%s)\n", argv[0],
+	       "Cannot get current working directory",
+	       strerror(errno));
+#endif
       exit (1);
     }
 

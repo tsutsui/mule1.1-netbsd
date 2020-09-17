@@ -325,10 +325,14 @@ pfatal_with_name (name)
 {
   char *s;
 
+#if !defined(HAVE_STRERROR)
   if (errno < sys_nerr)
     s = concat ("", sys_errlist[errno], " for %s");
   else
     s = "cannot open %s";
+#else
+  s = strerror(errno);
+#endif
   fatal (s, name);
 }
 
@@ -337,10 +341,14 @@ pfatal_and_delete (name)
 {
   char *s;
 
+#if !defined(HAVE_STRERROR)
   if (errno < sys_nerr)
     s = concat ("", sys_errlist[errno], " for %s");
   else
     s = "cannot open %s";
+#else
+  s = strerror(errno);
+#endif
 
   unlink (name);
   fatal (s, name);
@@ -706,10 +714,14 @@ get_errmsg ()
   extern int errno, sys_nerr;
   char *s;
 
+#if !defined(HAVE_STRERROR)
   if (errno < sys_nerr)
     s = sys_errlist[errno];
   else
     s = "unknown error";
+#else
+  s = strerror(errno);
+#endif
   return (s);
 }
 
