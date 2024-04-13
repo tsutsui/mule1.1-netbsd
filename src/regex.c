@@ -453,7 +453,6 @@ re_compile_pattern (char *pattern, int size, struct re_pattern_buffer *bufp)
   register char *p = pattern;
   char *pend = pattern + size;
   register unsigned Lisp_Object_Int c, c1;
-  char *p1;
   unsigned char *translate = (unsigned char *) bufp->translate;
 
   /* address of the count-byte of the most recently inserted "exactn" command.
@@ -674,7 +673,6 @@ re_compile_pattern (char *pattern, int size, struct re_pattern_buffer *bufp)
 	      /* Note that EXTEND_BUFFER clobbers c */ \
 		EXTEND_BUFFER;
 
-	    int i;
 	    int size = 3 + (1 << BYTEWIDTH) / BYTEWIDTH;
 	    struct compile_charset_information info, *ip = &info;
 

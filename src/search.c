@@ -486,7 +486,6 @@ skip_chars (int forwardp, Lisp_Object string, Lisp_Object lim)
   register unsigned char *p, *pend;
   register unsigned int c;
   int negate = 0;
-  register int i;
   int mc_flag = !NILP (current_buffer->mc_flag);
   unsigned char *b;
   struct compile_charset_information info, *ip = &info;

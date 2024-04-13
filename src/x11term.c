@@ -455,8 +455,6 @@ void MCSetXChar2b(unsigned char, unsigned char, unsigned char, XChar2b *);
 void
 HLmode (int new)
 {
-	extern int inverse_video;
-	
 	CurHL = new;
 }
 
@@ -490,13 +488,11 @@ XTchange_line_highlight (int new_highlight, int vpos, int first_unused_hpos)
 void
 XTset_terminal_modes (void)
 {
-	int stuffpending;
 #ifdef XDEBUG
 	fprintf (stderr, "XTset_terminal_modes\n");
 #endif
 
 	InUpdate = 0;
-	stuffpending = 0;
 	if (!initialized) {
 		CursorExists = 0;
 		CursorOutline = 1;
@@ -852,7 +848,7 @@ XTflash (void)
 #ifdef HAVE_TIMEVAL
 #ifdef HAVE_SELECT
 	XGCValues gcv_temp;
-	struct timeval wakeup, now;
+	struct timeval wakeup;
 	BLOCK_INPUT_DECLARE ();
 
 #ifdef XDEBUG
@@ -1371,8 +1367,6 @@ XTinsert_chars (
 static void
 XTdelete_chars (register int n)
 {
-	char *msg = "Major foobars!  This shouldn't show up!";
-	
 #ifdef XDEBUG
 	fprintf (stderr, "XTdelete_chars (num %d local_cursor_hpos %d)\n",n,local_cursor_hpos);
 #endif
@@ -1647,7 +1641,6 @@ internal_socket_read (register unsigned char *bufp, register int numchars)
   BLOCK_INPUT_DECLARE ();
   XEvent event;
   /* Must be static since data is saved between calls.  */
-  static XComposeStatus status;
   KeySym keysym;
   SIGMASKTYPE oldmask;
 
@@ -2174,7 +2167,7 @@ x_term_init (void)
 	char *ptr;
 	XColor cdef;
 
-	extern Lisp_Object Vxterm, Vxterm1, Qt;
+	extern Lisp_Object Vxterm, Qt;
 	int  ix;
 	
 
@@ -2994,7 +2987,6 @@ XFlipColor (void)
 {
 	Lisp_Object_Int tempcolor;
 	char *tempname;
-	XColor forec, backc;
 	BLOCK_INPUT_DECLARE ();
 
 	BLOCK_INPUT ();
@@ -3448,7 +3440,7 @@ MCDrawText (Display *display, Drawable window, GC gc, int x, int y, unsigned int
   MCCompositeChar *cmp;
   XChar2b *chars;
   int i, j, xx, *ncharsp;
-  unsigned int lc0 = 0xFF, lc1, mask;
+  unsigned int lc0 = 0xFF, lc1;
   register unsigned char c1, c2, attr0 = 0xFF, attr1;
   GC gc_back =			/* 92.3.19, 93.4.13 by K.Handa */
     gc == XXgc_norm ? XXgc_rev : gc == XXgc_rev ? XXgc_norm : XXgc_curs_rev;
@@ -3535,7 +3527,6 @@ MCDrawText (Display *display, Drawable window, GC gc, int x, int y, unsigned int
 	  item->x = x + XXfontw * i;
 	  item->fs = MCLoadFont(lc0);
 	  item->y = y + fonts[lc0 & 0x7F].yoffset;
-	  mask = fonts[lc0 & 0x7F].encoding ? 0xFF : 0x7F;
 	  item->attribute = attr0;
 	  if (attr0 & MTRX_INVERSE2)
 	    item->gc = gc_back,
@@ -3610,7 +3601,6 @@ XInitWindow (void)
   int x, y, width, height, pr;
   char  *dp;
   Window  desktop;
-  XColor forec, backc;
 
  retry:
   fontinfo = XT_CalcForFont(XXcurrentfont);

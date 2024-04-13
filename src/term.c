@@ -705,8 +705,8 @@ linecode_conversion (int len, register unsigned int *src, register unsigned char
     *dp++ = MTRX_CODEL(*src);
   else {
     register unsigned int *s = src, *endp = src + len;
-    unsigned char attr, lc, c0, c1, form;
-    unsigned char old_attr = 0, old_lc = LCASCII;
+    unsigned char attr, lc, c0, c1;
+    unsigned char old_attr = 0;
     coding_type mccode;		/* 92.9.11 by K.Handa */
     unsigned char buf[4], *b;	/* 92.11.13 by K.Handa */
 
@@ -761,9 +761,8 @@ linecode_conversion (int len, register unsigned int *src, register unsigned char
 void
 output_chars (register int *string, int len)
 {
-  register char *p;
-  register int n, len2;
-  register char *buf, *string2;
+  register int len2;
+  register char *string2;
   register int c;
 
   if (output_chars_hook)
@@ -819,7 +818,7 @@ void
 insert_chars (register int *start, int len)
 {
   register char *buf, *start2;
-  register int c, len2;
+  register int c;
 
   if (insert_chars_hook)
     {

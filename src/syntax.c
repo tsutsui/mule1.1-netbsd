@@ -371,7 +371,7 @@ DEFUN ("modify-syntax-entry", Fmodify_syntax_entry, Smodify_syntax_entry, 2, 3,
   match = *p;
   if (match) p++;
   if (LC_P(match)) {
-    while (NONASCII_P(*p)) *p++;
+    while (NONASCII_P(*p)) p++;
     match = *(p - 1);
   }
   if (match == ' ') match = 0;

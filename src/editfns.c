@@ -281,7 +281,7 @@ There's no validity check of character boundary.")
   (Lisp_Object str, Lisp_Object idx, Lisp_Object ch)
 {
   unsigned char s[4];		/* 92.9.5 by K.Handa */
-  int idxval, len, size;
+  int idxval, len;
 
   CHECK_NUMBER (idx, 1);
   CHECK_CHARACTER (ch, 2);

@@ -669,7 +669,6 @@ DEFUN ("wnn-server-bunsetu-henkou", Fwnn_bunsetu_henkou, Swnn_bunsetu_henkou,
        "Change length of BUN-NUMBER bunsetu to LEN. DAI is T if dai-bunsetsu.")
      (register Lisp_Object bunNo, register Lisp_Object len, register Lisp_Object dai)
 {
-  Lisp_Object	val;
   int		cnt, no;
   int	snum;
   CHECK_NUMBER(bunNo, 0);
@@ -688,7 +687,6 @@ DEFUN ("wnn-server-inspect", Fwnn_inspect, Swnn_inspect, 1, 1, 0,
      (Lisp_Object bunNo)
 {
   Lisp_Object		val;
-  struct wnn_jdata	*info_buf;
   unsigned char		cbuf[512];
   w_char		wbuf[256];
   int			bun_no, yomilen, jirilen, i;
@@ -792,7 +790,6 @@ DEFUN ("wnn-server-hindo-update", Fwnn_hindo_update, Swnn_hindo_update,
      (Lisp_Object bunNo)
 {
   int		no;
-  Lisp_Object	val;
   int	snum;
   if ((snum = check_wnn_server_type()) == -1) return Qnil;
   if (bunNo == Qnil) no = -1;
@@ -925,7 +922,6 @@ Return list of (kanji hinshi freq dic_no serial).")
   int			i, count;
   w_char			wbuf[256];
   unsigned char		kanji_buf[256];
-  int			kanji_len;
   int			snum;
   unsigned char		lc;
   CHECK_STRING(yomi, 0);

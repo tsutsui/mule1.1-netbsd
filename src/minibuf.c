@@ -1086,8 +1086,6 @@ DEFUN ("minibuffer-extend-prompt", Fminibuffer_extend_prompt,
   "Show STRING before prompt of minibuffer.")
   (Lisp_Object str)
 {
-  char *s;
-
   CHECK_STRING (str, 0);
   minibuf_prompt
     = (char *) xrealloc (minibuf_prompt,

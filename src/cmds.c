@@ -109,7 +109,7 @@ On attempt to pass beginning or end of buffer, stop and signal error.")
 int
 forward_point (int n)
 {
-  int pos = point, c;
+  int pos = point;
 
   if (NILP(current_buffer->mc_flag))
     pos += n;
@@ -335,7 +335,6 @@ self_insert_internal (
   register enum syntaxcode synt;
   register int c = c1, pos, len;
   unsigned char str[4];		/* 92.10.26 by T.Saneto, 92.11.30 by K.Handa */
-  register unsigned char *p;
 
   len = CHARtoSTR (c1, str);
 

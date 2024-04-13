@@ -101,7 +101,6 @@ init_category (struct Lisp_Category *category)
 Lisp_Object
 make_init_category (void)
 {
-  register Lisp_Object category;
   Lisp_Object size, init;
 
   XFASTINT (size) = 12; XFASTINT (init) = 0;
@@ -420,7 +419,6 @@ If optionnal forth argument RESET is non NIL, CATEGORY is reset for CHAR.\n\
 On success, returns T, else returns NIL.")
   (Lisp_Object c, Lisp_Object mnemonic, Lisp_Object ctbl, Lisp_Object reset)
 {
-  Lisp_Object category;
   int m;
 
   CHECK_CHARACTER (c, 0);
@@ -473,7 +471,7 @@ void
 describe_category (Lisp_Object ctbl, int parent) /* 94.2.23 by K.Handae */
 {
   int i, start, deeper;
-  char mnemonic, str[95];
+  char str[95];
   struct Lisp_Vector *v = XVECTOR (ctbl);
   Lisp_Object category;
   int indent = !parent ? 0 : parent < 0x100 ? 2 : 4;

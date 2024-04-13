@@ -104,7 +104,10 @@ int
 ccl_interpreter (unsigned char *src, unsigned char *dst, int nsrc, int ndst, unsigned char *cmds, int *ip, register int endflag)
 {
   register int i;
-  int *sphead = ccl_stack + STACKHEAD, *sptail = ccl_stack + STACKSIZE;
+  int *sphead = ccl_stack + STACKHEAD;
+#if 0
+  int *sptail = ccl_stack + STACKSIZE;
+#endif
   register int *p, *sp = ccl_stack + stack_idx;
   register unsigned char c, *cmd = cmds + *ip, *s = src, *d = dst;
   register unsigned char *send = src + nsrc;
@@ -357,7 +360,7 @@ int
 ccl_driver (unsigned char *src, unsigned char *dst, int nsrc, int ndst, coding_type *mccode, int encode)
 {
   Lisp_Object ccl_prog;
-  Lisp_Object regs, body;
+  Lisp_Object regs;
   clock_t etime;
   int i, ip;
   unsigned char *prog;
@@ -463,8 +466,6 @@ DEFUN ("ccl-reset-elapsed-time", Fccl_reset_etime, Sccl_reset_etime, 0, 0, 0,
   "Reset the internal value which holds a time elapsed by ccl interpreter.")
   (void)
 {
-  int i;
-
   elapsed_time = 0;
   return Qnil;
 }

@@ -541,7 +541,7 @@ static Lisp_Object
 window_loop (int type, register Lisp_Object obj)
 {
   register Lisp_Object w, tem, ret_w;
-  Lisp_Object w1, start_w;
+  Lisp_Object w1;
   register struct window *p, *q;
 
   w = minibuf_window;
@@ -1601,7 +1601,6 @@ function for more information.")
   register struct save_window_data *data;
   struct Lisp_Vector *saved_windows;
   register struct saved_window *p;
-  register Lisp_Object tem;
   Lisp_Object new_current_buffer;
   int k;
 

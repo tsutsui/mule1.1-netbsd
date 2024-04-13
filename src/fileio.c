@@ -1848,7 +1848,6 @@ Third arg CODE specifies the coding-system object used in the file,\n\
 /* 91.10.29 by K.Handa */
   coding_type mccode;
   Lisp_Object found_code = code;
-  char *buf;
   unsigned char read_buf[READ_BUF_SIZE]; /* 92.5.28 by K.Handa */
 /* end of patch */
 /* 91.10.16 by S.Hirano, 92.11.1 by M.Higashida */
@@ -2353,7 +2352,12 @@ e_write ( /* 91.10.29 by K.Handa */
 )
 {				/* 91.10.29, 93.5.11 by K.Handa, Big change */
   char buf[WRITE_BUF_SIZE];
-  register char *p, *end;
+#if defined(VMS) || 0
+  register char *p;
+#endif
+#if 0
+  register char *end;
+#endif
   int n = len, done;
 
   if (!EQ (current_buffer->selective_display, Qt)
@@ -2663,7 +2667,9 @@ DIR defaults to current buffer's directory default.")
   Lisp_Object val, insdef, tem;
   struct gcpro gcpro1, gcpro2;
   register char *homedir;
+#ifdef VMS
   int count;
+#endif
 
   if (NILP (dir))
     dir = current_buffer->directory;

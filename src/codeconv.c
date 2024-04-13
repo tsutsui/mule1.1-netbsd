@@ -156,7 +156,7 @@ DEFUN ("set-coding-priority-internal", Fset_code_priority, Sset_code_priority,
   (void)
 {
   Lisp_Object val;
-  int i, j;
+  int i;
   
   for (i = 0; i <= IDX_BIN; i++) {
     val = Fget (code_category[i], Qpriority);
@@ -1020,7 +1020,6 @@ int
 g2i (register unsigned char *src, register unsigned char *dst, unsigned int n, coding_type *mccode)
 {
   register unsigned char *dp = dst, charmask, c;
-  register char *p;
   register unsigned char lcg0, lcg1, lcg2, lcg3;
   unsigned int form, cntl, ch, selective, eol;
   unsigned char lc, char_boundary;
@@ -1334,8 +1333,6 @@ See document of make-coding-system for more detail.\n\
 If not valid, coding-system-error is signaled.")
   (Lisp_Object code)
 {				/* 92.4.7 by K.Handa */
-  Lisp_Object prop;
-
   CHECK_SYMBOL (code, 0);
 
   if (!NILP (Fcoding_system_p (code)))
@@ -1577,8 +1574,6 @@ init_codeconv (void)
 void
 syms_of_codeconv (void)
 {
-  Lisp_Object val;
-
   Qcoding_system_error = intern ("coding-system-error");
   staticpro (&Qcoding_system_error); /* 94.2.8 by K.Handa */
 

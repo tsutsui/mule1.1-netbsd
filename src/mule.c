@@ -119,8 +119,6 @@ unsigned char rev_lc_table[256];
 void
 update_mc_table (unsigned char lc, unsigned char bytes, unsigned char clm, unsigned char type, unsigned char graphic, unsigned char final, unsigned char direction, char *doc)
 {
-  char *p;
-
   if (lc < LCPRV11EXT) {	/* 91.10.19 by K.Handa */
     char_bytes[lc] = bytes;
     char_width[lc] = clm;
@@ -520,7 +518,6 @@ accept a pattern compiled by 'regexp-compile' with word-option t.")
   (Lisp_Object pattern)
 {				/* 93.7.13 by K.Handa -- Big change */
   int i, len;
-  char *p;
   Lisp_Object temp;
   struct Lisp_String *s;
 

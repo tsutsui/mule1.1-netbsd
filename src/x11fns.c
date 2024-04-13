@@ -654,8 +654,6 @@ DEFUN ("x-set-linespace", Fx_set_linespace, Sx_set_linespace, 1, 1,
        "Set linespace.")
   (Lisp_Object arg)
 {
-  int i1, i2;
-
   BLOCK_INPUT_DECLARE ();
 
   check_xterm ();
@@ -763,7 +761,6 @@ the appropriate function to act upon this event.")
 	register char key_mask;
 	register Lisp_Object tempx;
 	register Lisp_Object tempy;
-	extern int meta_prefix_char;
 	
 	check_xterm ();
 

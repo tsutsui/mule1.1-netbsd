@@ -1162,7 +1162,6 @@ mark_object (Lisp_Object *objptr)
 static void
 mark_buffer (Lisp_Object buf)
 {
-  Lisp_Object tem;
   register struct buffer *buffer = XBUFFER (buf);
   register Lisp_Object *ptr;
 

@@ -357,8 +357,6 @@ make_screen_structure (int empty)
 void
 free_screen_structure (struct matrix *matrix)
 {
-  int i;			/* 92.12.6 by K.Handa */
-
   if (matrix->total_contents)
     free (matrix->total_contents);
   free (matrix->contents);
@@ -805,8 +803,6 @@ direct_output_forward_char (int n)
 int
 update_screen (int force, int inhibit_hairy_id)
 {
-  register struct display_line **p;
-  register struct display_line *l, *lnew;
   register int i;
   int pause;
   int preempt_count = baud_rate / 2400 + 1;

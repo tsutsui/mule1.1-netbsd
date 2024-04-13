@@ -1072,6 +1072,7 @@ static struct dg_sys_info_load_info load_info;  /* what-a-mouthful! */
 
 #else /* Not DGUX */
 
+#ifndef HAVE_GETLOADAVG
 static int ldav_initialized;
 static int ldav_channel;
 #ifdef LOAD_AVE_TYPE
@@ -1083,6 +1084,7 @@ static struct nlist ldav_nl[2];
 #define channel ldav_channel
 #define initialized ldav_initialized
 #define nl ldav_nl
+#endif /* Not HAVE_GETLOADAVG */
 #endif /* Not DGUX */
 #endif /* not LOAD_AVE_MACH */
 

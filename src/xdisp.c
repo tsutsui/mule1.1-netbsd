@@ -468,7 +468,6 @@ redisplay (void)
 {
   register struct window *w = XWINDOW (selected_window);
   register int pause;
-  int inhibit_hairy_id = 0;
   int must_finish = 0;
   int all_windows;
   register Lisp_Object_Int tlbufpos, tlendpos;
@@ -1458,7 +1457,6 @@ try_window_id (Lisp_Object window)
 Lisp_Object
 current_attribute (int pos)
 {
-  register unsigned int i, attr = 0;
   Lisp_Object p1, p2;
 
   if (NILP (p1 = current_buffer->attributed_region))
@@ -2453,7 +2451,6 @@ display_mode_element (struct window *w, int vpos, register int hpos, int depth, 
 			      minendcol, maxendcol));
     }
 
- end:
   if (minendcol > hpos)
     hpos = display_string (w, vpos, "", hpos, 0, minendcol, -1);
   return hpos;
