@@ -1,0 +1,108 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-linux:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: install packages
+        run: |
+          uname -a
+          sudo apt-get update -q
+          sudo apt-get upgrade -qy
+          sudo apt-get install -qy make gcc libx11-dev ncurses-dev libwnn-dev
+
+      - uses: actions/checkout@v4
+
+      - name: configure and make
+        run: |
+          sudo sh -c "echo 0 > /proc/sys/kernel/randomize_va_space"
+          cp src/config.h-linux src/config.h
+          cp src/mconfig.h-linux src/mconfig.h
+          sed -E '/^;\(load "japanese"\)/s/^;//' lisp/mule-init.el > lisp/site-init.el
+          make
+          sudo make install
+
+  build-linux-qemu:
+    name: "build-linux qemu"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [386, arm, arm64]
+        include:
+          - arch: 386
+            image: i386/ubuntu:latest
+            platform: linux/386
+          - arch: arm
+            image: arm32v7/ubuntu:latest
+            platform: linux/arm/v7
+          - arch: arm64
+            image: arm64v8/ubuntu:latest
+            platform: linux/arm64
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: ${{ matrix.arch }}
+
+      - name: Run build process with Docker
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ${{ matrix.image }}
+          options: |
+            --privileged
+            --platform ${{ matrix.platform }}
+            --volume ${{ github.workspace }}:/build
+            --workdir /build
+          run: |
+            uname -a
+            apt-get update -q
+            apt-get upgrade -qy
+            apt-get install -qy make gcc libx11-dev ncurses-dev libwnn-dev
+            sysctl kernel.randomize_va_space=0
+            cp src/config.h-linux src/config.h
+            cp src/mconfig.h-linux src/mconfig.h
+            sed -E '/^;\(load "japanese"\)/s/^;//' lisp/mule-init.el > lisp/site-init.el
+            make
+            make install
+
+  build-netbsd:
+    name: "build-netbsd (NetBSD/amd64 10.0 with pkgsrc)"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install packages and run configure and make (on the NetBSD VM)
+        uses: vmactions/netbsd-vm@v1
+        with:
+          release: "10.0"
+          usesh: true
+          copyback: false
+          prepare: |
+            uname -a
+            PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R7/bin:/usr/pkg/bin:/usr/pkg/sbin:/usr/games:/usr/local/bin:/usr/local/sbin
+            export PATH
+            ftp -o - https://cdn.NetBSD.org/pub/NetBSD/NetBSD-`uname -r`/amd64/binary/sets/xbase.tar.xz | tar -C / -zxpf - ./usr/X11R7/bin ./usr/X11R7/include ./usr/X11R7/lib ./usr/X11R7/share
+            ftp -o - https://cdn.NetBSD.org/pub/NetBSD/NetBSD-`uname -r`/amd64/binary/sets/xcomp.tar.xz | tar -C / -zxpf - ./usr/X11R7/include ./usr/X11R7/lib ./usr/X11R7/share
+            pkg_add ja-FreeWnn-lib
+
+          run: |
+            PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R7/bin:/usr/pkg/bin:/usr/pkg/sbin:/usr/games:/usr/local/bin:/usr/local/sbin
+            export PATH
+            cp src/config.h-netbsd src/config.h
+            cp src/mconfig.h-netbsd src/mconfig.h
+            sed -E '/^;\(load "japanese"\)/s/^;//' lisp/mule-init.el > lisp/site-init.el
+            make
+            make install
