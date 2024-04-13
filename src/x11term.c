@@ -445,7 +445,7 @@ void stufflines (int);
 void scraplines (int);
 int internal_socket_read(unsigned char *, int);
 int x_error_handler (Display *disp, XErrorEvent *event);
-void x_io_error_handler (void);
+void x_io_error_handler (int);
 void MCSetXChar2b(unsigned char, unsigned char, unsigned char, XChar2b *);
 
 /* HLmode -- Changes the GX function for output strings.  Could be used to
@@ -1922,7 +1922,7 @@ internal_socket_read (register unsigned char *bufp, register int numchars)
  */
 
 void
-XExitGracefully (void)
+XExitGracefully (int sig)
 {
 	XCleanUp();
 	exit (70);
@@ -2091,7 +2091,7 @@ x_error_handler (Display *disp, XErrorEvent *event)
 }
 
 void
-x_io_error_handler (void)
+x_io_error_handler (int sig)
 {
   int save_errno = errno;
   if (errno == EPIPE)

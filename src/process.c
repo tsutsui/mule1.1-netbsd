@@ -2624,7 +2624,7 @@ This is intended for use by asynchronous process output filters and sentinels.")
 jmp_buf send_process_frame;
 
 void
-send_process_trap (void)
+send_process_trap (int sig)
 {
 #ifndef WIN32 /* 93.2.17 by M.Higashida */
 #ifdef BSD4_1
