@@ -968,7 +968,7 @@ See SIGNAL for more info.")
 }
 
 Lisp_Object
-internal_condition_case (Lisp_Object (*bfun)(void), Lisp_Object handlers, Lisp_Object (*hfun)(Lisp_Object))
+internal_condition_case (Lisp_Object (*bfun)(Lisp_Object), Lisp_Object handlers, Lisp_Object (*hfun)(Lisp_Object))
 {
   Lisp_Object val;
   struct catchtag c;
@@ -995,7 +995,7 @@ internal_condition_case (Lisp_Object (*bfun)(void), Lisp_Object handlers, Lisp_O
   h.tag = &c;
   handlerlist = &h;
 
-  val = (*bfun) ();
+  val = (*bfun) (Qnil);
   catchlist = c.next;
   handlerlist = h.next;
   return val;

@@ -835,7 +835,7 @@ writechars (
 
 static void
 XToutput_chars (
-    register unsigned int *start, /* 91.11.28 by K.Handa */
+    register int *start, /* 91.11.28 by K.Handa */
     register int len
 )
 {
@@ -1357,7 +1357,7 @@ XTcalculate_costs (int extra, int *costvec, int *ncostvec)
 
 static void
 XTinsert_chars (
-    register unsigned int *start, /* 91.11.28 by K.Handa */
+    register *start, /* 91.11.28 by K.Handa */
     register int len
 )
 {
