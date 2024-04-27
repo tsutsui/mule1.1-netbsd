@@ -85,3 +85,14 @@ extern FILE *bdf_fopen();
 #ifndef CHARSETS
 #define CHARSETS "CHARSETS"
 #endif
+
+FILE *bdf_fopen (char *, char *);
+void bdf_reset_font(int);
+void bdf_set_filename(int, char *);
+void bdf_init_font(void);
+void bdf_init_glyph(glyph_struct *);
+void bdf_initialize(char *, char *, int);
+int bdf_proceed_line(FILE *, char *);
+int bdf_proceed_line2(FILE *, char *, char *);
+int bdf_load_font(int);
+int bdf_load_glyph(int, int, glyph_struct *);

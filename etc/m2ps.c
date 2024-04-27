@@ -100,38 +100,56 @@ int shortmemory = ShortMemory;
 /* Main staffs */
 /***************/
 
+void warning1(char *, int);
+void warning2(char *, int, int);
+void fatal(char *);
+void set_font(int, int);
+void renew_font(int);
+int set_glyph1(int, int);
+int find_encoding(font_struct *, int);
+int set_glyph2(int, int);
+void swap_buf(unsigned char *, int, int);
+void textmode(void);
+void control_char(int);
+void invalid_char(int);
+void ps_bot(void);
+void ps_eot(void);
+void ps_newfont(int, int);
+void ps_setfont(int);
+void ps_newglyph(int, glyph_struct *);
+void ps_bop(void);
+void ps_eop(void);
+
 extern font_struct *font;
 
 extern glyph_struct glyph;	/* 92.11.6 by K.Shibata */
 
 int clm, row, current_lc;
 
-warning1(format, arg)
-     char *format;
-     int arg;
+void
+warning1(char *format, int arg)
 {
   fprintf(stderr, format, arg);
   fflush(stderr);
 }
 
-warning2(format, arg1, arg2)
-     char *format;
-     int arg1, arg2;
+void
+warning2(char *format, int arg1, int arg2)
 {
   fprintf(stderr, format, arg1, arg2);
   fflush(stderr);
 }
 
-fatal(msg)
-     char *msg;
+void
+fatal(char *msg)
 {
   fprintf(stderr, "m2ps: %s\n", msg);
   fflush(stderr);
   exit(1);
 }
 
-set_font(lc, cache)
-     int lc, cache;
+void
+set_font(int lc, int cache)
 {				/* 93.5.7 by K.Handa -- Big change */
   if (font[lc].loaded == 0) {
     bdf_reset_font(lc);
@@ -154,16 +172,16 @@ set_font(lc, cache)
   }
 }
 
-renew_font(lc)
-     int lc;
+void
+renew_font(int lc)
 {
   bzero(((font_extra *)font[lc].extra)->new, 256 * (sizeof (char)));
 }
 
 /* Load specified glyph, then return the index to glyph.  Note the index
    is within the range of [0,255].  Return -1 if error. */
-set_glyph1(lc, c)
-     int lc, c;
+int
+set_glyph1(int lc, int c)
 {
   int idx = OFFIDX1(c);
   font_struct *fontp = &font[lc];
@@ -180,9 +198,8 @@ set_glyph1(lc, c)
   return (idx);
 }
 
-find_encoding(fontp, idx)
-     font_struct *fontp;
-     int idx;
+int
+find_encoding(font_struct *fontp, int idx)
 {
   font_extra *ext = (font_extra *)fontp->extra;
   int i, min_count = ext->count[0], j = 0;
@@ -208,8 +225,8 @@ find_encoding(fontp, idx)
 /* Load specified glyph, replacing previously loaded glyph if necessary,
    then return the index to glyph.  Note the index is within the range
    of [0,255].  Return -1 if error. */
-set_glyph2(lc, c)
-     int lc, c;
+int
+set_glyph2(int lc, int c)
 {
   int idx = OFFIDX2((unsigned int)c), code;
   font_struct *fontp = &font[lc];
@@ -233,9 +250,8 @@ set_glyph2(lc, c)
   return code;
 }
 
-swap_buf(buf, from, to)
-     unsigned char *buf;
-     int from, to;
+void
+swap_buf(unsigned char *buf, int from, int to)
 {
   int i, j;
   unsigned char buf2[1024], *p = buf2;
@@ -250,7 +266,8 @@ swap_buf(buf, from, to)
   bcopy(buf2, buf + from, to - from);
 }
 
-textmode()
+void
+textmode(void)
 {
   register int i, j, k, c, lc;
   char buf[1024];		/* 92.11.6 by K.Shibata */
@@ -411,8 +428,8 @@ textmode()
   ps_eot();
 }
 
-control_char(c)
-     int c;
+void
+control_char(int c)
 {
   c += '@';
   set_font(0, 1);
@@ -422,8 +439,8 @@ control_char(c)
   }
 }    
 
-invalid_char(c)
-     int c;
+void
+invalid_char(int c)
 {
   int i;
 
@@ -439,9 +456,8 @@ invalid_char(c)
   }
 }
 
-main(argc, argv)
-     int argc;
-     char *argv[];
+int
+main(int argc, char *argv[])
 {
   register int i = 1;
   char *bdf_path = NULL, *charsets = NULL;
@@ -495,7 +511,8 @@ main(argc, argv)
 /* PostScript staffs */
 /*********************/
 
-ps_bot()
+void
+ps_bot(void)
 {
   int c;
   FILE *fp;
@@ -514,7 +531,8 @@ ps_bot()
   printf("/ShortMemory %s def\n", (shortmemory ? "true" : "false"));
 }
 
-ps_eot()
+void
+ps_eot(void)
 {
   printf("end\n");
 }
@@ -522,8 +540,8 @@ ps_eot()
 /* Define new PS font for a leading char LC.
    No_cache flag is for the fonts be modified (replacing the glyphs, etc.)
    at execution time. */
-ps_newfont(lc, cache)
-     int lc, cache;
+void
+ps_newfont(int lc, int cache)
 {
   printf("/F%02x /FF%02x %d [%d %d %d %d] %d %s nf\n",
 	 lc, lc, ((font_extra *)font[lc].extra)->fs,
@@ -532,15 +550,14 @@ ps_newfont(lc, cache)
 	 (cache ? "true" : "false"));
 }
 
-ps_setfont(lc)
-     int lc;
+void
+ps_setfont(int lc)
 {
   printf("F%02x f\n", lc);
 }
 
-ps_newglyph(encoding, glyph)
-     int encoding;
-     glyph_struct *glyph;
+void
+ps_newglyph(int encoding, glyph_struct *glyph)
 {
   printf("/C%d%s[ %d %d %d %d %d %d %d %d %d <%s> ] g\n",
 	 encoding, (encoding < 10 ? "XX " : encoding < 100 ? "X " : " "),
@@ -552,7 +569,8 @@ ps_newglyph(encoding, glyph)
 	 glyph->bitmap);
 }
 
-ps_bop()
+void
+ps_bop(void)
 {
   int lc;
 
@@ -566,7 +584,8 @@ ps_bop()
   }
 }
 
-ps_eop()
+void
+ps_eop(void)
 {
   printf("ep\n");
 }

@@ -103,8 +103,8 @@ static char *line, *dummy;
 #define MAXPATHLEN 256
 #endif
 
-FILE *bdf_fopen (dirs, file)
-     char *dirs, *file;
+FILE *
+bdf_fopen (char *dirs, char *file)
 {
   char path[MAXPATHLEN];	/* 93.2.10 by I.Hirakura */
 #ifdef MSDOS
@@ -154,8 +154,8 @@ FILE *bdf_fopen (dirs, file)
     }
 }
 
-bdf_reset_font(lc)
-     int lc;
+void
+bdf_reset_font(int lc)
 {
   int size1, size2;
   font_struct *fontp = &font[lc];
@@ -184,9 +184,8 @@ bdf_reset_font(lc)
   }
 }
 
-bdf_set_filename(lc, filename)
-     int lc;
-     char *filename;
+void
+bdf_set_filename(int lc, char *filename)
 {
   char *p;
 
@@ -201,7 +200,8 @@ bdf_set_filename(lc, filename)
     font[lc].encoding = 0;
 }
 
-bdf_init_font()
+void
+bdf_init_font(void)
 {
   int i, bytes;
   char *p;
@@ -237,16 +237,15 @@ bdf_init_font()
   }
 }
 
-bdf_init_glyph(glyphp)
-     glyph_struct *glyphp;
+void
+bdf_init_glyph(glyph_struct *glyphp)
 {
   glyphp->bitmap_size = 100;
   glyphp->bitmap = malloc(glyph.bitmap_size * (sizeof (char)));
 }
 
-bdf_initialize(bp, ch, emacs)
-     char *bp, *ch;
-     int emacs;
+void
+bdf_initialize(char *bp, char *ch, int emacs)
 {
   in_emacs = emacs;
   line = (char *)malloc(LINE_BUF_SIZE);
@@ -257,9 +256,8 @@ bdf_initialize(bp, ch, emacs)
   bdf_init_glyph(&glyph);
 }
 
-bdf_proceed_line(fp, str)
-     FILE *fp;
-     char *str;
+int
+bdf_proceed_line(FILE *fp, char *str)
 {
   int len = strlen(str);
   do {
@@ -269,9 +267,8 @@ bdf_proceed_line(fp, str)
   return 1;
 }
 
-bdf_proceed_line2(fp, str, stop)
-     FILE *fp;
-     char *str, *stop;
+int
+bdf_proceed_line2(FILE *fp, char *str, char *stop)
 {
   int len1 = strlen(str), len2 = strlen(stop);
   do {
@@ -282,8 +279,8 @@ bdf_proceed_line2(fp, str, stop)
   return 1;
 }
 
-bdf_load_font(lc)
-     int lc;
+int
+bdf_load_font(int lc)
 {
   font_struct *fontp = &font[lc];
   int i, j, bbw, bbh, bbox, bboy;
@@ -340,9 +337,8 @@ bdf_load_font(lc)
   return 1;
 }
 
-bdf_load_glyph(lc, idx, glyph)
-     int lc, idx;
-     glyph_struct *glyph;
+int
+bdf_load_glyph(int lc, int idx, glyph_struct *glyph)
 {
   font_struct *fontp = &font[lc];
   int i, j;
