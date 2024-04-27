@@ -39,6 +39,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #if !defined(HAVE_SOCKETS) && !defined(HAVE_SYSVIPC)
 #include <stdio.h>
 
+int
 main (argc, argv)
      int argc;
      char **argv;
@@ -62,6 +63,7 @@ main (argc, argv)
 #include <unistd.h>
 #include <sys/stat.h>
 
+int
 main (argc, argv)
      int argc;
      char **argv;
@@ -182,6 +184,7 @@ main (argc, argv)
 #include <sys/msg.h>
 #include <stdio.h>
 
+int
 main (argc, argv)
      int argc;
      char **argv;
