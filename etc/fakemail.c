@@ -23,7 +23,8 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #if defined (BSD) && !defined (BSD4_1)
 /* This program isnot used in BSD, so just avoid loader complaints.  */
-main ()
+int
+main (int argc, char *argv[])
 {
 }
 #else /* not BSD 4.2 (or newer) */
@@ -47,6 +48,7 @@ main ()
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
+#include <unistd.h>
 #include <pwd.h>
 
 /* Type definitions */
@@ -460,6 +462,7 @@ args_size (the_header)
   return size;
 }
 
+void
 parse_header (the_header, where)
      header the_header;
      register char *where;
@@ -557,6 +560,7 @@ write_header (the_header)
   return;
 }
 
+int
 main (argc, argv)
      int argc;
      char **argv;
