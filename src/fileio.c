@@ -2320,7 +2320,7 @@ Optional sixth argument CODE specifies the coding-system object\n\
     return Qnil;
 
   if (!auto_saving)
-    message ("Wrote %s", fn);
+    message ("Wrote %s", (Lisp_Object_Int)fn, 0, 0);
 
   return Qnil;
 }
@@ -2465,11 +2465,11 @@ auto_save_error (Lisp_Object obj)
   unsigned char *name = XSTRING (current_buffer->name)->data;
 
   bell ();
-  message ("Autosaving...error for %s", name);
+  message ("Autosaving...error for %s", (Lisp_Object_Int)name, 0, 0);
   Fsleep_for (make_number (1));
-  message ("Autosaving...error!for %s", name);
+  message ("Autosaving...error!for %s", (Lisp_Object_Int)name, 0, 0);
   Fsleep_for (make_number (1));
-  message ("Autosaving...error for %s", name);
+  message ("Autosaving...error for %s", (Lisp_Object_Int)name, 0, 0);
   Fsleep_for (make_number (1));
   return Qnil;
 }
@@ -2533,7 +2533,7 @@ Non-nil argument means do not print any message if successful.")
 	    {
 	      /* It has shrunk too much; don't checkpoint. */
 	      message ("Buffer %s has shrunk a lot; not autosaving it",
-		       XSTRING (b->name)->data);
+		       (Lisp_Object_Int)XSTRING (b->name)->data, 0, 0);
 	      Fsleep_for (make_number (1));
 	      continue;
 	    }

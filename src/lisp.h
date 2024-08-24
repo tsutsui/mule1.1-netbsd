@@ -1594,6 +1594,8 @@ extern void record_insert (Lisp_Object, Lisp_Object);
 extern Lisp_Object truncate_undo_list (Lisp_Object, int, int);
 
 /* defined in xdisp.c */
+extern void message (char *, Lisp_Object_Int, Lisp_Object_Int, Lisp_Object_Int);
+extern void message1 (char *);
 extern Lisp_Object Fredraw_display (void);
 extern Lisp_Object Fupdate_mode_lines (void);
 extern Lisp_Object current_attribute (int);
