@@ -314,7 +314,7 @@ static int wnnfns_norm;
 static unsigned char lc_wnn_server_type[NSERVER] = {LCJP, LCCN, LCINV, LCKR};
 
 static int yes_or_no(unsigned char *);
-static void puts2(char *);
+static int puts2(char *);
 int check_wnn_server_type(void);
 void w2m(w_char *, unsigned char *, unsigned char);
 void m2w(unsigned char *, w_char *);
@@ -1417,18 +1417,19 @@ yes_or_no (unsigned char *s)
   else return (1);
 }
 
-static void
+static int
 puts2 (char *s)
 {
   Lisp_Object		args[1];
   char			mbuf[512];
   unsigned char		lc;
   int			snum;
-  if ((snum = check_wnn_server_type()) == -1) return;
+  if ((snum = check_wnn_server_type()) == -1) return 0;
   lc = lc_wnn_server_type[snum];
   c2m(s, mbuf, lc);
   args[0] = make_string(mbuf, strlen(mbuf));
   Fmessage(1, args);
+  return 0;
 }
 
 int
