@@ -23,7 +23,7 @@ jobs:
           uname -a
           apt-get update -q
           apt-get upgrade -qy
-          apt-get install -qy make gcc libx11-dev ncurses-dev libwnn-dev
+          apt-get install -qy make gcc libx11-dev ncurses-dev libwnn-dev libcanna1g-dev
 
       - uses: actions/checkout@v4
 
@@ -31,7 +31,8 @@ jobs:
         run: |
           sh -c "echo 0 > /proc/sys/kernel/randomize_va_space"
           cp src/config.h-linux src/config.h
-          cp src/mconfig.h-linux src/mconfig.h
+          #cp src/mconfig.h-linux src/mconfig.h
+          sed -E '/^\/\* #define CANNA/s/(\/\* | \*\/)//g' src/mconfig.h-linux > src/mconfig.h
           sed -E '/^;\(load "japanese"\)/s/^;//' lisp/mule-init.el > lisp/site-init.el
           make
           make install
@@ -75,10 +76,11 @@ jobs:
             uname -a
             apt-get update -q
             apt-get upgrade -qy
-            apt-get install -qy make gcc libx11-dev ncurses-dev libwnn-dev
+            apt-get install -qy make gcc libx11-dev ncurses-dev libwnn-dev libcanna1g-dev
             sysctl kernel.randomize_va_space=0
             cp src/config.h-linux src/config.h
-            cp src/mconfig.h-linux src/mconfig.h
+            #cp src/mconfig.h-linux src/mconfig.h
+            sed -E '/^\/\* #define CANNA/s/(\/\* | \*\/)//g' src/mconfig.h-linux > src/mconfig.h
             sed -E '/^;\(load "japanese"\)/s/^;//' lisp/mule-init.el > lisp/site-init.el
             make
             make install
@@ -98,11 +100,12 @@ jobs:
             uname -a
             ftp -o - https://cdn.NetBSD.org/pub/NetBSD/NetBSD-`uname -r`/amd64/binary/sets/xbase.tar.xz | tar -C / -zxpf - ./usr/X11R7/bin ./usr/X11R7/include ./usr/X11R7/lib ./usr/X11R7/share
             ftp -o - https://cdn.NetBSD.org/pub/NetBSD/NetBSD-`uname -r`/amd64/binary/sets/xcomp.tar.xz | tar -C / -zxpf - ./usr/X11R7/include ./usr/X11R7/lib ./usr/X11R7/share
-            pkg_add ja-FreeWnn-lib
+            pkg_add ja-FreeWnn-lib Canna-lib
 
           run: |
             cp src/config.h-netbsd src/config.h
-            cp src/mconfig.h-netbsd src/mconfig.h
+            #cp src/mconfig.h-netbsd src/mconfig.h
+            sed -E '/^\/\* #define CANNA/s/(\/\* | \*\/)//g' src/mconfig.h-netbsd > src/mconfig.h
             sed -E '/^;\(load "japanese"\)/s/^;//' lisp/mule-init.el > lisp/site-init.el
             make
             make install
