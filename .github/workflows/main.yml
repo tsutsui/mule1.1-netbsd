@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        container: [ "ubuntu:22.04", "ubuntu:latest", "debian:12", "debian:11" ]
+        container: [ "ubuntu:22.04", "ubuntu:latest", "debian:12", "debian:11", "archlinux:base" ]
 
     runs-on: ubuntu-latest
 
@@ -21,9 +21,16 @@ jobs:
       - name: install packages
         run: |
           uname -a
-          apt-get update -q
-          apt-get upgrade -qy
-          apt-get install -qy make gcc libx11-dev ncurses-dev libwnn-dev libcanna1g-dev
+          case "${{ matrix.container }}" in
+          ubuntu*|debian*)
+            apt-get update -q
+            apt-get upgrade -qy
+            apt-get install -qy make gcc libx11-dev ncurses-dev libwnn-dev libcanna1g-dev
+            ;;
+          archlinux*)
+            pacman -Syyu --noconfirm make gcc libx11 ncurses
+            ;;
+          esac
 
       - uses: actions/checkout@v4
 
@@ -32,7 +39,14 @@ jobs:
           sh -c "echo 0 > /proc/sys/kernel/randomize_va_space"
           cp src/config.h-linux src/config.h
           #cp src/mconfig.h-linux src/mconfig.h
-          sed -E '/^\/\* #define CANNA/s/(\/\* | \*\/)//g' src/mconfig.h-linux > src/mconfig.h
+          case "${{ matrix.container }}" in
+          ubuntu*|debian*)
+            sed -E '/^\/\* #define CANNA/s/(\/\* | \*\/)//g' src/mconfig.h-linux > src/mconfig.h
+            ;;
+          archlinux*)
+            sed -E 's/^(#define EGG)$/\/\* \1 \*\//' src/mconfig.h-linux > src/mconfig.h
+            ;;
+          esac
           sed -E '/^;\(load "japanese"\)/s/^;//' lisp/mule-init.el > lisp/site-init.el
           make
           make install
