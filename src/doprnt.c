@@ -120,7 +120,7 @@ doprnt (char *buffer, register int bufsize, char *format, int nargs, char **args
 	      if (cnt == nargs)
 		error ("Format string wants too many arguments");
 				/* 92.6.24 by T.Enami */
-	      bufptr += (i = CHARtoSTR (args[cnt], bufptr));
+	      bufptr += (i = CHARtoSTR ((Lisp_Object_Int)args[cnt], bufptr));
 	      cnt++;
 	      bufsize -= i;
 	      continue;
