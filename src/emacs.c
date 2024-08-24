@@ -926,7 +926,7 @@ Take symbols from SYMFILE (presumably the file you executed to run Emacs).")
   }
 #else /* not MSDOS and EMX */
   unexec (XSTRING (intoname)->data,
-	  !EQ (symname, Qnil) ? XSTRING (symname)->data : 0, &my_edata, 0, 0);
+	  !EQ (symname, Qnil) ? XSTRING (symname)->data : 0, (unsigned long)&my_edata, 0, 0);
 #endif /* not MSDOS and EMX */
 /* end of patch */
 #endif /* not VMS */

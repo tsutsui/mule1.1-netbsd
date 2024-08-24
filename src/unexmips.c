@@ -104,7 +104,7 @@ struct headers {
 
 unexec (new_name, a_name, data_start, bss_start, entry_address)
      char *new_name, *a_name;
-     unsigned Lisp_Object_Int data_start, bss_start, entry_address;
+     unsigned long data_start, bss_start, entry_address;
 {
   int new, old;
   Lisp_Object_Int pagesize, brk;
