@@ -188,8 +188,8 @@ If you quit, the process is killed with SIGKILL.")
   int return_status;
 #endif
   int count = specpdl_ptr - specpdl;
-  register unsigned char **new_argv /* 91.11.6 by K.Handa */
-    = (unsigned char **) alloca ((max (2, nargs - 3)) * sizeof (char *));
+  register char **new_argv /* 91.11.6 by K.Handa */
+    = (char **) alloca ((max (2, nargs - 3)) * sizeof (char *));
   struct buffer *old = current_buffer;
   coding_type mccode;		/* 91.10.28, 92.9.11 by K.Handa */
   encode_code(Fcheck_code(nargs < 5 ? Qnil : args[4]), &mccode);

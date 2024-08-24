@@ -1034,7 +1034,7 @@ Remaining arguments are strings to give program as arguments.")
 {
   Lisp_Object buffer, name, program, proc, tem;
   Lisp_Object incode, outcode;	/* 91.11.6 by K.Handa */
-  register unsigned char **new_argv;
+  register char **new_argv;
   register int i;
 
   buffer = args[1];
@@ -1052,7 +1052,7 @@ Remaining arguments are strings to give program as arguments.")
   incode = Fcheck_code(args[2]);
   outcode = Fcheck_code(args[3]);
 
-  new_argv = (unsigned char **) alloca ((nargs - 3) * sizeof (char *));
+  new_argv = (char **) alloca ((nargs - 3) * sizeof (char *));
 
   for (i = 5; i < nargs; i++)
     {
