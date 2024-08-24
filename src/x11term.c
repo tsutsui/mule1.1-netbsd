@@ -445,7 +445,8 @@ void stufflines (int);
 void scraplines (int);
 int internal_socket_read(unsigned char *, int);
 int x_error_handler (Display *disp, XErrorEvent *event);
-void x_io_error_handler (int);
+int x_io_error_handler (Display *);
+void x_connection_signal (int);
 void MCSetXChar2b(unsigned char, unsigned char, unsigned char, XChar2b *);
 
 /* HLmode -- Changes the GX function for output strings.  Could be used to
@@ -1922,7 +1923,13 @@ XExitGracefully (int sig)
 }
 
 int
-XIgnoreError (void)
+XIgnoreError (Display *disp, XErrorEvent *event)
+{
+	return 0;
+}
+
+int
+XIgnoreIOError (Display *display)
 {
 	return 0;
 }
@@ -2083,8 +2090,8 @@ x_error_handler (Display *disp, XErrorEvent *event)
   return 0;
 }
 
-void
-x_io_error_handler (int sig)
+int
+x_io_error_handler (Display *display)
 {
   int save_errno = errno;
   if (errno == EPIPE)
@@ -2093,6 +2100,13 @@ x_io_error_handler (int sig)
   errno = save_errno;
   perror ("Fatal X-windows I/O error");
   kill (0, SIGILL);
+  return 0;
+}
+
+void
+x_connection_signal (int signalnum)
+{
+  x_io_error_handler (XXdisplay);
 }
 
 /* 92.10.13 by K.Handa */
@@ -2195,7 +2209,7 @@ x_term_init (void)
 
 	XSetErrorHandler (x_error_handler);
 	XSetIOErrorHandler (x_io_error_handler);
-	signal (SIGPIPE, x_io_error_handler);
+	signal (SIGPIPE, x_connection_signal);
 
 	WindowMapped = 0;
 	baud_rate = 9600;

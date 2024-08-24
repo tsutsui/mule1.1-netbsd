@@ -40,6 +40,8 @@ typedef struct {
 
 extern char *XXlinespacestr;
 
+extern int XIgnoreError (Display *, XErrorEvent *);
+extern int XIgnoreIOError (Display *);
 extern void xfixscreen (void);
 extern int x_set_cursor_colors (void);
 extern void x_set_fontname (unsigned int);
