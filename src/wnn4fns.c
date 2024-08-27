@@ -295,6 +295,15 @@
 #include "jllib.h"
 #include "cplib.h"
 
+/* XXX:
+  There is no declaration of cwnn_yincod_pzy().
+  cwnn_pzy_yincod() is declared in FreeWnn-1.1.1-a023/Wnn/include/etc.h
+  but FreeWnn-1.1.1-a023/Wnn/include/Makefile.in doesn't install it
+  (and jdata.h required by etc.h). */
+#include "rk_spclval.h"
+extern int cwnn_pzy_yincod(letter *, letter *, int);
+extern int cwnn_yincod_pzy(w_char *, w_char, int);
+
 #define EGG_TIMEOUT 5
 #define NSERVER 4
 #define WNNSERVER_J 0
@@ -1350,8 +1359,8 @@ _xp (int x)
 /* static */ void
 w2y (w_char *w)
 {
-  unsigned long		pbuf[5000], ybuf[5000];
-  unsigned long		*pin;
+  letter		pbuf[5000], ybuf[5000];
+  letter		*pin;
   w_char *y;
   int len;
 
