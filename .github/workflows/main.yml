@@ -32,7 +32,7 @@ jobs:
             ;;
           esac
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: configure and make
         run: |
@@ -70,7 +70,7 @@ jobs:
             platform: linux/arm64
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v3
@@ -104,7 +104,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install packages and run configure and make (on the NetBSD VM)
         uses: vmactions/netbsd-vm@v1
         with:
