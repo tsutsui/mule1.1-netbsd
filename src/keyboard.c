@@ -75,10 +75,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #include "mule.h"
 
 /* Get FIONREAD, if it is available.  */
-#ifdef USG
-#include <termio.h>
-#include <fcntl.h>
-#else /* not USG */
 #ifndef VMS
 /* 91.10.16 by S.Hirano, 93.2.25 by M.Higashida */
 #ifdef MSDOS
@@ -95,7 +91,10 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #endif /* not MSDOS */
 /* end of patch */
 #endif /* not VMS */
-#endif /* not USG */
+
+#if defined(USG) || defined(HAVE_TERMIOS)
+#include <fcntl.h>
+#endif
 
 #if defined(WIN32) && defined(USE_FATFS) /* 93.2.25 by M.Higashida */
 #include "emacssig.h"
