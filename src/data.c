@@ -1043,7 +1043,7 @@ DEFUN ("int-to-string", Fint_to_string, Sint_to_string, 1, 1, 0,
   char buffer[20];
 
   CHECK_NUMBER (num, 0);
-  sprintf (buffer, "%d", XINT (num));
+  sprintf (buffer, "%ld", (long) XINT (num));
   return build_string (buffer);
 }
 
