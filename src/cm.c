@@ -24,9 +24,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #ifdef HAVE_TERMCAP_H
 #include <termcap.h>
 #endif
-#ifdef TERMINFO
-#include <term.h>
-#endif
 #include "cm.h"
 #if defined(WIN32) && defined(USE_FATFS) /* 93.2.25 by M.Higashida */
 #include "termhook.h"
@@ -37,9 +34,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #define	BIG	9999		/* 9999 good on VAXen.  For 16 bit machines
 				   use about 2000.... */
 
-#ifndef TERMINFO
-char *tgoto (const char *, int, int);
-#endif
+extern char *tgoto (const char *, int, int);
 
 extern char *BC, *UP;
 
