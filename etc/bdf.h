@@ -75,9 +75,6 @@ extern font_struct *font;
 #define UNDEFINE2(font,idx) \
   (((font_extra *)font->extra)->defined[(idx) / 32] &= ~(1 << ((idx) % 32)))
 
-extern FILE *bdf_fopen();
-
-
 #ifndef BDF_PATH
 #define BDF_PATH "/usr/share/src/X.V11R5/mit/fonts/bdf/misc"
 #endif
