@@ -65,7 +65,6 @@
     }									\
   while (0)
 
-#define NEED_TERMIOS
 #define HAVE_TERMIOS
 
 #define HAVE_TIMEVAL
