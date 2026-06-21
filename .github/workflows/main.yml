@@ -3,13 +3,22 @@ name: CI
 on:
   push:
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build-linux:
     strategy:
       fail-fast: false
       matrix:
-        container: [ "ubuntu:22.04", "ubuntu:24.04", "debian:12", "debian:11", "archlinux:base" ]
+        container:
+          - "ubuntu:22.04"
+          - "ubuntu:24.04"
+          - "debian:11"
+          - "debian:12"
+          - "archlinux:base"
 
     runs-on: ubuntu-latest
 
@@ -60,13 +69,13 @@ jobs:
         arch: [386, arm, arm64]
         include:
           - arch: 386
-            image: i386/ubuntu:latest
+            image: debian:12
             platform: linux/386
           - arch: arm
-            image: arm32v7/ubuntu:latest
+            image: debian:12
             platform: linux/arm/v7
           - arch: arm64
-            image: arm64v8/ubuntu:latest
+            image: debian:12
             platform: linux/arm64
 
     steps:
